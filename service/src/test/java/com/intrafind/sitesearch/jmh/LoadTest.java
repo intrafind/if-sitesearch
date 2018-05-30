@@ -83,7 +83,7 @@ public class LoadTest {
         AUTOCOMPLETE_QUERIES.put("inv", 8);
         AUTOCOMPLETE_QUERIES.put("bank", 1);
         AUTOCOMPLETE_QUERIES.put("fond", 1);
-        AUTOCOMPLETE_QUERIES.put("welt", 5);
+        AUTOCOMPLETE_QUERIES.put("welt", 4);
         AUTOCOMPLETE_QUERIES.put("\uD83E\uDD84", -1);
 
         SEARCH_DATA.put(LOAD_SITE_ID, SEARCH_QUERIES); // https://www.migrosbank.ch/de, https://blog.migrosbank.ch/de

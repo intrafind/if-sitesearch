@@ -17,10 +17,10 @@ http {
 
  upstream ifinder-search-service {
     least_conn;
-        server 10.105.217.74:9605;
-        #server sitesearch-search-service:9605;
-        #server sitesearch-search-service-1:9605;
-        #server sitesearch-search-service:9605 backup;
+        #server 10.105.217.74:9605; # Kubernetes downstream
+        server sitesearch-search-service:9605;
+        server sitesearch-search-service-1:9605;
+        server sitesearch-search-service:9605 backup;
   }
 
   upstream blue {
