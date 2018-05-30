@@ -1,9 +1,9 @@
 /* Remote State not functioning yet. Fix after ifinder core runs stabily
 terraform {
   backend "gcs" {
-    bucket  = "tf-dev2"
+    bucket  = "sitesearch-terraform-prod"
     prefix  = "terraform/state"
-    project = "my-project-1493972604180"
+    project = "woven-alpha-150909"
     credentials = "/srv/minion/compute-engine-default-service-account.json"
   }
 }*/
