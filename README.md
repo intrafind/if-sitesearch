@@ -58,9 +58,6 @@ to the `config` folder inside this project.
 * gsutil -m iam -r ch allUsers:objectViewer gs://site-search-europe/test5
 * gsutil -m cp -r ./2018-04-06 gs://site-search-europe/test3
 * gsutil -m rm -r gs://site-search-europe/test1
-* gsutil cp -z css -a public-read app.css gs://site-search-europe/searchbar/2018-04-06/app/css/
-* gsutil cp -z js -a public-read app.js gs://site-search-europe/searchbar/2018-01-15/app/js/
-* gsutil cp -z json -a public-read sitesearch.json gs://site-search-europe/searchbar/2018-01-15/config/
     
 # Attribution
 * Made with ♥ in Munich
