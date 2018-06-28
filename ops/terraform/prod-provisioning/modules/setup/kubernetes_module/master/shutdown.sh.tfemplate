@@ -1,1 +1,1 @@
-sudo kubeadm reset
+sudo kubeadm reset --force
