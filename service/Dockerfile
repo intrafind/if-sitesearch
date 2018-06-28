@@ -1,4 +1,4 @@
-FROM openjdk:10-jre
+FROM openjdk:10-jre as service
 
 MAINTAINER Alexander Orlov <alexander.orlov@intrafind.de>
 
