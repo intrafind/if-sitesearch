@@ -106,48 +106,6 @@ server {
 server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
-    server_name demo.analyzelaw.com;
-
-    include /etc/nginx/snippets/ssl.conf;
-
-    location / {
-        include /etc/nginx/snippets/cors-headers.conf;
-
-        proxy_pass http://dev.analyzelaw.com;
-    }
-}
-
-server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
-    server_name esche-demo.analyzelaw.com;
-
-    include /etc/nginx/snippets/ssl.conf;
-
-    location / {
-        include /etc/nginx/snippets/cors-headers.conf;
-
-        proxy_pass http://94.130.190.226;
-    }
-}
-
-server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
-    server_name dev.analyzelaw.com;
-
-    include /etc/nginx/snippets/ssl.conf;
-
-    location / {
-        include /etc/nginx/snippets/cors-headers.conf;
-
-        proxy_pass http://95.216.41.34;
-    }
-}
-
-server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
     server_name dev.sitesearch.cloud;
 
     include /etc/nginx/snippets/ssl.conf;
@@ -156,33 +114,6 @@ server {
         include /etc/nginx/snippets/cors-headers.conf;
 
         proxy_pass http://if-sitesearch:8001;
-    }
-}
-
-#server {
-#    listen 443 ssl http2;
-#    listen [::]:443 ssl http2;
-#    server_name logs.sitesearch.cloud;
-#
-#    include /etc/nginx/snippets/ssl.conf;
-#
-#    auth_basic "BI";
-#    auth_basic_user_file /etc/nginx/.htpasswd; # supply this via env vars somehow or as raw file at build time
-#
-#    location / {
-#        proxy_pass http://ops-kibana:5601;
-#    }
-#}
-
-server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
-    server_name team.sitesearch.cloud;
-
-    include /etc/nginx/snippets/ssl.conf;
-
-    location / {
-        return 301 https://teams.microsoft.com/l/team/19%3a09eed7a6301c4722bccf0c5d8138e43d%40thread.skype/conversations?groupId=160a111e-ad5f-4b7a-9fed-44ec87100c5a&tenantId=09bb6857-2fbd-4b58-9c1a-93213574239a;
     }
 }
 
