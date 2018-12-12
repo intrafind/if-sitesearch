@@ -16,14 +16,9 @@
 
 package com.intrafind.sitesearch;
 
-import com.intrafind.sitesearch.dto.Subscription;
 import com.intrafind.sitesearch.service.SimpleAutocompleteClient;
 import com.intrafind.sitesearch.service.SimpleIndexClient;
 import com.intrafind.sitesearch.service.SimpleSearchClient;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -35,6 +30,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
@@ -52,34 +48,41 @@ public class SimpleClientTest {
     //    http://www.baeldung.com/spring-5-webclient
     private WebTestClient webTestClient = WebTestClient
             .bindToServer()
-            .baseUrl("http://localhost:8080")
+            .baseUrl("http://sitesearch:" + Application.SERVICE_SECRET + "@localhost:8080")
             .build();
 
     private WebClient webClient = WebClient
             .builder()
-            .baseUrl("http://localhost:8080")
+            .baseUrl("http://sitesearch:" + Application.SERVICE_SECRET + "@localhost:8080")
             .build();
 
     @Test
-    public void test() {
+    public void test() throws Exception {
         final var simpleIndex = new SimpleIndexClient();
         final var simpleAutocomplete = new SimpleAutocompleteClient();
         final var simpleSearch = new SimpleSearchClient();
 
         //    http://www.baeldung.com/spring-5-webclient
         WebClient client1 = WebClient.create();
-        WebClient client2 = WebClient.create("http://localhost:8080");
+        WebClient client2 = WebClient.create("https://sitesearch:" + Application.SERVICE_SECRET + "@logs.sitesearch.cloud");
 
 //        --add-modules java.net.http
         final HttpClient httpClient = HttpClient.newHttpClient();
-        HttpRequest httpRequest;
-        HttpHeaders httpHeaders;
-        HttpResponse<Subscription> httpResponse;
+        HttpRequest httpRequest = HttpRequest.newBuilder()
+                .uri(URI.create("https://sitesearch:" + Application.SERVICE_SECRET + "@logs.sitesearch.cloud"))
+                .GET()
+                .build();
 
-        final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-        credentialsProvider.setCredentials(AuthScope.ANY,
-                new UsernamePasswordCredentials("sitesearch", System.getenv("SERVICE_SECRET"))
-        );
+        System.out.println("<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        HttpHeaders httpHeaders;
+        final HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        LOG.info(httpResponse + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        assertEquals(httpResponse.statusCode(), HttpStatus.OK.value());
+
+//        final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+//        credentialsProvider.setCredentials(AuthScope.ANY,
+//                new UsernamePasswordCredentials("sitesearch", Application.SERVICE_SECRET)
+//        );
         assertTrue(true);
     }
 }
