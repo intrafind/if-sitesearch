@@ -2,11 +2,11 @@
 
 echo "== startup-script =="
 # toolchain
-docker start teamcity-server
-sudo rm /home/ubuntu/buildAgent/logs/buildAgent.properties.lock
-/home/ubuntu/buildAgent/bin/agent.sh start
-docker start teamcity-agent-venus
-docker start teamcity-agent-merkur
+#docker start teamcity-server
+#sudo rm /home/ubuntu/BuildAgent/logs/buildAgent.properties.lock
+#/home/ubuntu/BuildAgent/bin/agent.sh start
+#docker start teamcity-agent-venus
+#docker start teamcity-agent-merkur
 
 docker start sitesearch-elasticsearch # replaced by Kubernetes
 docker start sitesearch-elasticsearch-1 # replaced by Kubernetes
