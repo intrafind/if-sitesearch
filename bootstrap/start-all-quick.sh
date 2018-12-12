@@ -16,9 +16,9 @@ docker start sitesearch-search-service-1 # replaced by Kubernetes
 
 docker start if-sitesearch
 docker start if-sitesearch-green
-docker start if-sitesearch-green-1
+docker restart if-sitesearch-green-1
 docker start if-sitesearch-blue
-docker start if-sitesearch-blue-1
+docker restart if-sitesearch-blue-1
 
 docker restart consul
 
@@ -33,7 +33,7 @@ docker-compose --file opt/docker-compose-bg.yaml -p tmp up -d
 
 docker exec router nginx -s reload
 sleep 30
-docker start router
+docker restart router
 docker exec router nginx -s reload
 echo "/== startup-script =="
 
