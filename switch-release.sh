@@ -41,7 +41,7 @@ startComponent() {
     runService $1
 }
 
-ssh ubuntu@main.sitesearch.cloud docker push $img_fqn
+docker push $img_fqn
 
 if isBlueUp; then
     echo "blue is active"
