@@ -16,7 +16,7 @@ isBlueUp() {
 }
 
 runService() {
-    docker run -d --name $1 \
+    ssh ubuntu@main.sitesearch.cloud docker run -d --name $1 \
         --log-driver=gelf \
         --log-opt gelf-address=udp://logs.sitesearch.cloud:12201 \
         --env SIS_API_SERVICE_URL=$SIS_API_SERVICE_URL \
@@ -37,11 +37,11 @@ runService() {
 }
 
 startComponent() {
-    docker rm -f $1
+    ssh ubuntu@main.sitesearch.cloud docker rm -f $1
     runService $1
 }
 
-docker push $img_fqn
+ssh ubuntu@main.sitesearch.cloud docker push $img_fqn
 
 if isBlueUp; then
     echo "blue is active"
@@ -50,7 +50,7 @@ if isBlueUp; then
     startComponent ${green}
     startComponent ${green}-1
     sleep 21
-    docker exec router switch.sh green
+    ssh ubuntu@main.sitesearch.cloud docker exec router switch.sh green
 
 else
     echo "blue is inactive"
@@ -59,5 +59,5 @@ else
     startComponent ${blue}
     startComponent ${blue}-1
     sleep 21
-    docker exec router switch.sh blue
+    ssh ubuntu@main.sitesearch.cloud docker exec router switch.sh blue
 fi

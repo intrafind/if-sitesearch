@@ -26,17 +26,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.net.URI;
 import java.net.http.HttpClient;
-import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Base64;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -68,21 +69,15 @@ public class SimpleClientTest {
 
 //        --add-modules java.net.http
         final HttpClient httpClient = HttpClient.newHttpClient();
+        final byte[] credentials = ("sitesearch:" + Application.SERVICE_SECRET).getBytes();
+        final String basicAuthHeader = "Basic " + Base64.getEncoder().encodeToString(credentials);
         HttpRequest httpRequest = HttpRequest.newBuilder()
-                .uri(URI.create("https://sitesearch:" + Application.SERVICE_SECRET + "@logs.sitesearch.cloud"))
+                .uri(URI.create("https://logs.sitesearch.cloud"))
+                .header("authorization", basicAuthHeader)
                 .GET()
                 .build();
 
-        System.out.println("<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        HttpHeaders httpHeaders;
         final HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        LOG.info(httpResponse + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-//        assertEquals(httpResponse.statusCode(), HttpStatus.OK.value());
-
-//        final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-//        credentialsProvider.setCredentials(AuthScope.ANY,
-//                new UsernamePasswordCredentials("sitesearch", Application.SERVICE_SECRET)
-//        );
-        assertTrue(true);
+        assertEquals(HttpStatus.OK.value(), httpResponse.statusCode());
     }
 }
