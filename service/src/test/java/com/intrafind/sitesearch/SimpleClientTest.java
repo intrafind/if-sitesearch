@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -69,11 +70,11 @@ public class SimpleClientTest {
 
 //        --add-modules java.net.http
         final HttpClient httpClient = HttpClient.newHttpClient();
-        final byte[] credentials = ("sitesearch:" + Application.SERVICE_SECRET).getBytes();
-        final String basicAuthHeader = "Basic " + Base64.getEncoder().encodeToString(credentials);
+        final var credentials = ("sitesearch:" + Application.SERVICE_SECRET).getBytes();
+        final var basicAuthHeader = "Basic " + Base64.getEncoder().encodeToString(credentials);
         HttpRequest httpRequest = HttpRequest.newBuilder()
-                .uri(URI.create("https://logs.sitesearch.cloud"))
-                .header("authorization", basicAuthHeader)
+                .uri(URI.create("https://elasticsearch.sitesearch.cloud/twitter/_doc/1"))
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .GET()
                 .build();
 

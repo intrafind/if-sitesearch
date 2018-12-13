@@ -63,7 +63,7 @@ http {
 
         include /etc/nginx/snippets/ssl.conf;
 
-        #        auth_basic "BI Insights";
+        auth_basic "Authentication";
         auth_basic_user_file /etc/nginx/.htpasswd;
 
         location / {
