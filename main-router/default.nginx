@@ -59,6 +59,21 @@ http {
     server {
         listen 443 ssl http2;
         listen [::]:443 ssl http2;
+        server_name elasticsearch.sitesearch.cloud;
+
+        include /etc/nginx/snippets/ssl.conf;
+
+        #        auth_basic "BI Insights";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+
+        location / {
+            proxy_pass http://elk-elasticsearch:9200;
+        }
+    }
+
+    server {
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
         server_name docker-registry.intrafind.net;
 
         include /etc/nginx/snippets/ssl.conf;
