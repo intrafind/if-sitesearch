@@ -38,7 +38,7 @@ echo ssh ubuntu@main.sitesearch.cloud docker run -d --name $1 --log-driver=gelf 
 }
 
 startComponent() {
-    ssh ubuntu@main.sitesearch.cloud docker rm -f $1
+#    ssh ubuntu@main.sitesearch.cloud docker rm -f $1
     runService $1
 }
 
