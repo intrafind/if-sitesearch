@@ -28,6 +28,30 @@ http {
     server {
         listen 443 ssl http2;
         listen [::]:443 ssl http2;
+        server_name www.intrafind.net;
+
+        include /etc/nginx/snippets/ssl.conf;
+
+        location / {
+            return 301 https://www.intrafind.de;
+        }
+    }
+
+    server {
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
+        server_name intrafind.net;
+
+        include /etc/nginx/snippets/ssl.conf;
+
+        location / {
+            return 301 https://www.intrafind.de;
+        }
+    }
+
+    server {
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
         server_name docker-registry.sitesearch.cloud;
 
         include /etc/nginx/snippets/ssl.conf;
