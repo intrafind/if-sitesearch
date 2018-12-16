@@ -16,8 +16,7 @@ isBlueUp() {
 }
 
 runService() {
-echo ssh ubuntu@main.sitesearch.cloud docker run -d --name $1 --log-driver=gelf --log-opt gelf-address=udp://logs.sitesearch.cloud:12201 --env SIS_API_SERVICE_URL=$SIS_API_SERVICE_URL --env SERVICE_SECRET=$SERVICE_SECRET --env SIS_SERVICE_HOST=$SIS_SERVICE_HOST --env WOO_COMMERCE_CONSUMER_KEY=${WOO_COMMERCE_CONSUMER_KEY} --env WOO_COMMERCE_CONSUMER_SECRET=${WOO_COMMERCE_CONSUMER_SECRET} --env ADMIN_SITE_SECRET=$ADMIN_SITE_SECRET --env INVISIBLE_RECAPTCHA_SITE_SECRET=${INVISIBLE_RECAPTCHA_SITE_SECRET} --env SPRING_SECURTY_USER_PASSWORD=$SPRING_SECURITY_USER_PASSWORD --env BUILD_NUMBER=$BUILD_NUMBER --env SCM_HASH=$SCM_HASH --env SECURITY_OAUTH2_CLIENT_CLIENT_SECRET=$SECURITY_OAUTH2_CLIENT_CLIENT_SECRET --restart unless-stopped --network sitesearch docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest
-echo    ssh ubuntu@main.sitesearch.cloud docker run -d --name $1 \
+    ssh ubuntu@main.sitesearch.cloud docker run -d --name $1 \
         --log-driver=gelf \
         --log-opt gelf-address=udp://logs.sitesearch.cloud:12201 \
         --env SIS_API_SERVICE_URL=$SIS_API_SERVICE_URL \
@@ -37,7 +36,7 @@ echo    ssh ubuntu@main.sitesearch.cloud docker run -d --name $1 \
 }
 
 startComponent() {
-#    ssh ubuntu@main.sitesearch.cloud docker rm -f $1
+    ssh ubuntu@main.sitesearch.cloud docker rm -f $1
     runService $1
 }
 
