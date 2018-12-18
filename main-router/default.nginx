@@ -33,7 +33,7 @@ http {
         include /etc/nginx/snippets/ssl.conf;
 
         location / {
-            return 301 https://www.intrafind.de;
+            return 301 http://intrafind.de;
         }
     }
 
@@ -45,7 +45,7 @@ http {
         include /etc/nginx/snippets/ssl.conf;
 
         location / {
-            return 301 https://www.intrafind.de;
+            return 301 http://intrafind.de;
         }
     }
 
