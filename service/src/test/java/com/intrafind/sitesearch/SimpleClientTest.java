@@ -16,6 +16,7 @@
 
 package com.intrafind.sitesearch;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intrafind.sitesearch.service.SimpleAutocompleteClient;
 import com.intrafind.sitesearch.service.SimpleIndexClient;
 import com.intrafind.sitesearch.service.SimpleSearchClient;
@@ -28,6 +29,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -58,6 +60,8 @@ public class SimpleClientTest {
             .baseUrl("http://sitesearch:" + Application.SERVICE_SECRET + "@localhost:8080")
             .build();
 
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
     @Test
     public void test() throws Exception {
         final var simpleIndex = new SimpleIndexClient();
@@ -65,20 +69,33 @@ public class SimpleClientTest {
         final var simpleSearch = new SimpleSearchClient();
 
         //    http://www.baeldung.com/spring-5-webclient
-        WebClient client1 = WebClient.create();
-        WebClient client2 = WebClient.create("https://sitesearch:" + Application.SERVICE_SECRET + "@logs.sitesearch.cloud");
+//        WebClient client1 = WebClient.create();
+//        WebClient client2 = WebClient.create("https://sitesearch:" + Application.SERVICE_SECRET + "@logs.sitesearch.cloud");
 
 //        --add-modules java.net.http
         final HttpClient httpClient = HttpClient.newHttpClient();
         final var credentials = ("sitesearch:" + Application.SERVICE_SECRET).getBytes();
         final var basicAuthHeader = "Basic " + Base64.getEncoder().encodeToString(credentials);
-        HttpRequest httpRequest = HttpRequest.newBuilder()
-                .uri(URI.create("https://elasticsearch.sitesearch.cloud/twitter/_doc/1"))
+
+        final var httpRequestCreate = HttpRequest.newBuilder()
+                .uri(URI.create("https://elasticsearch.sitesearch.cloud/site-profile/_doc/0-0-0-0-0"))
+                .version(HttpClient.Version.HTTP_2)
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .PUT(HttpRequest.BodyPublishers.ofString("{}"))
+//                .PUT(MAPPER.writeValueAsBytes())
+                .build();
+        final var profileCreated = httpClient.send(httpRequestCreate, HttpResponse.BodyHandlers.ofString());
+        assertEquals(HttpStatus.OK.value(), profileCreated.statusCode());
+
+        final var profileFetch = HttpRequest.newBuilder()
+                .uri(URI.create("https://elasticsearch.sitesearch.cloud/site-profile/_doc/0-0-0-0-0"))
+                .version(HttpClient.Version.HTTP_2)
                 .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .GET()
                 .build();
 
-        final HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        final HttpResponse<String> httpResponse = httpClient.send(profileFetch, HttpResponse.BodyHandlers.ofString());
         assertEquals(HttpStatus.OK.value(), httpResponse.statusCode());
     }
 }
