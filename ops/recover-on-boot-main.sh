@@ -25,5 +25,7 @@ docker start teamcity-agent-merkur
 
 docker-compose --file /srv/if-sitesearch/opt/docker-compose-elk.yaml -p main up -d
 
+docker start gitlab
+
+sleep 5
 docker start main-router
-#docker exec main-router nginx -s reload
