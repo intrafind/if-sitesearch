@@ -149,7 +149,7 @@ http {
         include /etc/nginx/snippets/ssl.conf;
 
         location / {
-            proxy_pass http://gitlab:80;
+            proxy_pass http://gitlab;
         }
     }
 
