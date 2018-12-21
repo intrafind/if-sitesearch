@@ -150,6 +150,7 @@ http {
 
         location / {
             proxy_pass http://gitlab;
+            client_max_body_size 1G;
         }
     }
 
