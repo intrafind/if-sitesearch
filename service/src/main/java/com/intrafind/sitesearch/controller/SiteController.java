@@ -187,12 +187,12 @@ public class SiteController {
     }
 
     @RequestMapping(path = "{siteId}/pages/{pageId}", method = RequestMethod.DELETE)
-    ResponseEntity deleteById(
+    private ResponseEntity deleteById(
             @PathVariable(name = "siteId") UUID siteId,
             @PathVariable(name = "pageId") String pageId,
             @RequestParam(name = "siteSecret") UUID siteSecret
     ) {
-        LOG.info("delete-event" + pageId);
+        LOG.debug("DELETE pageId: {}", pageId);
         if (siteService.delete(siteId, siteSecret, pageId)) {
             return ResponseEntity.noContent().build();
         } else {

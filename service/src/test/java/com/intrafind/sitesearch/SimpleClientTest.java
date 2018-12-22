@@ -73,7 +73,7 @@ public class SimpleClientTest {
 //        WebClient client2 = WebClient.create("https://sitesearch:" + Application.SERVICE_SECRET + "@logs.sitesearch.cloud");
 
 //        --add-modules java.net.http
-        final HttpClient httpClient = HttpClient.newHttpClient();
+        final var httpClient = HttpClient.newHttpClient();
         final var credentials = ("sitesearch:" + Application.SERVICE_SECRET).getBytes();
         final var basicAuthHeader = "Basic " + Base64.getEncoder().encodeToString(credentials);
 

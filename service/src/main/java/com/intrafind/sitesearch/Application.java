@@ -44,6 +44,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -51,7 +52,7 @@ import java.util.UUID;
 @EnableSwagger2
 public class Application {
     private static final Logger LOG = LoggerFactory.getLogger(Application.class);
-    static final String SERVICE_SECRET = System.getenv("SERVICE_SECRET");
+    public static final String SERVICE_SECRET = System.getenv("SERVICE_SECRET");
     public static final URI IFINDER_CORE = URI.create("https://sitesearch:" + SERVICE_SECRET + "@" + System.getenv("SIS_SERVICE_HOST") + "/hessian"); // TODO consider trying json endpoint
     private static final String WOO_COMMERCE_CONSUMER_KEY = System.getenv("WOO_COMMERCE_CONSUMER_KEY");
     private static final String WOO_COMMERCE_CONSUMER_SECRET = System.getenv("WOO_COMMERCE_CONSUMER_SECRET");
@@ -83,7 +84,7 @@ public class Application {
         try {
             final var response = SiteCrawler.HTTP_CLIENT.newCall(request).execute();
             if (isExistingOrder(response)) {
-                final var rawSubscription = response.body().bytes();
+                final var rawSubscription = Objects.requireNonNull(response.body()).bytes();
                 final var order = CrawlerController.MAPPER.readValue(rawSubscription, WooCommerceOrder.class);
 
                 final var subscriptionPlan = order.getLineItems().get(0).getSku();

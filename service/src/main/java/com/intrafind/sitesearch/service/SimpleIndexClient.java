@@ -18,12 +18,20 @@ package com.intrafind.sitesearch.service;
 
 import com.intrafind.api.Document;
 import com.intrafind.api.index.Index;
+import com.intrafind.sitesearch.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -50,6 +58,23 @@ public class SimpleIndexClient implements Index {
     @Override
     public void delete(String... documents) {
         LOG.warn("SimpleIndexService#delete");
+        final var httpClient = HttpClient.newHttpClient();
+        final var credentials = ("sitesearch:" + Application.SERVICE_SECRET).getBytes();
+        final var basicAuthHeader = "Basic " + Base64.getEncoder().encodeToString(credentials);
+
+        final var call = HttpRequest.newBuilder()
+                .uri(URI.create("https://elasticsearch.sitesearch.cloud/site-profile/_doc/0-0-0-0-0"))
+                .version(HttpClient.Version.HTTP_2)
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
+                .GET()
+                .build();
+        try {
+            final HttpResponse<String> httpResponse = httpClient.send(call, HttpResponse.BodyHandlers.ofString());
+            LOG.info("documents: {} - statusCode: {}", documents, httpResponse.statusCode());
+        } catch (IOException | InterruptedException e) {
+            LOG.warn("documents: {} - exceptionMessage: {}", e.getMessage());
+        }
+
         IFIndexService.INDEX_SERVICE.delete(documents);
     }
 }

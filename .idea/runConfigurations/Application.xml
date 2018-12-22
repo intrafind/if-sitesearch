@@ -3,8 +3,18 @@
     <module name="service" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.intrafind.sitesearch.Application" />
     <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="SHORTEN_COMMAND_LINE" value="ARGS_FILE" />
     <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
     <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateResources" />
-    <method />
+    <additionalParameters>
+      <param>
+        <option name="enabled" value="true" />
+        <option name="name" value="SPRING_CONFIG_NAME" />
+        <option name="value" value="&quot;application, local&quot;" />
+      </param>
+    </additionalParameters>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
   </configuration>
 </component>

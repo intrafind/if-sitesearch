@@ -30,6 +30,22 @@
  * limitations under the License.
  */
 
+/*
+ * Copyright 2018 IntraFind Software AG. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 // Migrate to Kotlin https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/
 plugins {
     java
@@ -56,6 +72,7 @@ dependencies {
 
 //    configurations.compile.exclude(module = "spring-boot-starter-tomcat")
 //    configurations.compile.exclude(group = "org.springframework.boot", module = "undertow-websockets-jsr")
+//    configurations.compile.exclude(module = "undertow-websockets-jsr")
 
     runtimeOnly("org.apache.tika:tika-parsers:$tikaVersion")
     compile("org.apache.tika:tika:$tikaVersion")
@@ -70,7 +87,9 @@ dependencies {
     compile("com.caucho:hessian:4.0.51")
 
     compile("org.springframework.boot:spring-boot-starter-webflux:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-undertow:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-undertow:$springBootVersion") {
+        exclude(module = "undertow-websockets-jsr")
+    }
 
     compile("io.springfox:springfox-swagger2:$swaggerVersion")
     compile("io.springfox:springfox-swagger-ui:$swaggerVersion")
