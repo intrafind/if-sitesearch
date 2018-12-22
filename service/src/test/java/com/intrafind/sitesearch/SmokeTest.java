@@ -46,6 +46,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -323,7 +324,7 @@ public class SmokeTest {
         assertEquals(HttpStatus.OK.value(), response.code());
         assertNull(response.headers().get(HttpHeaders.LOCATION));
         assureCorsHeaders(response.headers(), HEADER_SIZE);
-        FetchedPage fetchedPage = MAPPER.readValue(response.body().byteStream(), FetchedPage.class);
+        FetchedPage fetchedPage = MAPPER.readValue(Objects.requireNonNull(response.body()).byteStream(), FetchedPage.class);
         assertEquals(entropyToCheckInUpdate, fetchedPage.getUrl());
         assertFalse(fetchedPage.getBody().isEmpty());
         assertFalse(fetchedPage.getTitle().isEmpty());

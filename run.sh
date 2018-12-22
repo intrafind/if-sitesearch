@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+# add "--debug-jvm" to attach debugger
 {
 #    SPRING_PROFILES_ACTIVE=oss \
     SPRING_CONFIG_NAME="application, local" \
