@@ -58,6 +58,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -74,7 +75,7 @@ public class SiteService {
      */
     public static final UUID ADMIN_SITE_SECRET = UUID.fromString(System.getenv("ADMIN_SITE_SECRET"));
 
-    private static final String SITE_CONFIGURATION_DOCUMENT_PREFIX = "site-configuration-";
+    static final String SITE_CONFIGURATION_DOCUMENT_PREFIX = "site-configuration-";
     private static final String CRAWL_STATUS_SINGLETON_DOCUMENT = "crawl-status";
     /**
      * Field is updated whenever a document is (re-)indexed.
@@ -95,7 +96,7 @@ public class SiteService {
     public Optional<FetchedPage> indexExistingPage(String id, UUID siteId, UUID siteSecret, SitePage page) {
         if (siteId != null && siteSecret != null) { // credentials are provided as a tuple only
             final var fetchedSiteSecret = fetchSiteSecret(siteId);
-            if (!fetchedSiteSecret.isPresent()) { // site does not exist
+            if (fetchedSiteSecret.isEmpty()) { // site does not exist
                 return Optional.empty();
             } else if (siteSecret.equals(fetchedSiteSecret.get())) { // authorized
                 return indexDocument(id, siteId, page);
@@ -177,13 +178,13 @@ public class SiteService {
                 }
             });
 
-            return new SiteProfile(siteId, UUID.fromString(document.get("secret")), email, configs);
+            return new SiteProfile(siteId, UUID.fromString(Objects.requireNonNull(document.get("secret"))), email, configs);
         });
     }
 
     public Optional<UUID> fetchSiteSecret(UUID siteId) {
         final var siteConfiguration = indexService.fetch(Index.ALL, SITE_CONFIGURATION_DOCUMENT_PREFIX + siteId).stream().findAny();
-        return siteConfiguration.map(document -> UUID.fromString(document.get("secret")));
+        return siteConfiguration.map(document -> UUID.fromString(Objects.requireNonNull(document.get("secret"))));
     }
 
     public Optional<List<String>> fetchAllDocuments(final UUID siteId) {
@@ -253,7 +254,7 @@ public class SiteService {
         if (found.isPresent()) {
             final Document foundDocument = found.get();
             final FetchedPage representationOfFoundDocument = new FetchedPage(
-                    UUID.fromString(foundDocument.get(Fields.TENANT)),
+                    UUID.fromString(Objects.requireNonNull(foundDocument.get(Fields.TENANT))),
                     foundDocument.getId(),
                     foundDocument.get(Fields.TITLE),
                     foundDocument.get(Fields.BODY),
@@ -271,7 +272,7 @@ public class SiteService {
     public Optional<SiteIndexSummary> indexFeed(URI feedUrl, UUID siteId, UUID siteSecret, Boolean stripHtmlTags, Boolean isGeneric, boolean clearIndex) {
         if (siteId != null && siteSecret != null) { // credentials are provided as a tuple only
             final Optional<UUID> fetchedSiteSecret = fetchSiteSecret(siteId);
-            if (!fetchedSiteSecret.isPresent()) { // tenant does not exist
+            if (fetchedSiteSecret.isEmpty()) { // tenant does not exist
                 return Optional.empty();
             } else if (siteSecret.equals(fetchedSiteSecret.get())) { // authorized
                 if (clearIndex) {
@@ -539,7 +540,7 @@ public class SiteService {
             return Optional.empty();
         } else {
             final Map<String, String> pagesToDelete = documents.getDocuments().stream()
-                    .filter(document -> Instant.parse(document.get(PAGE_TIMESTAMP)).isBefore(obsoletePageThreshold)) // TODO pre-filter it in the service call to search-service
+                    .filter(document -> Instant.parse(Objects.requireNonNull(document.get(PAGE_TIMESTAMP))).isBefore(obsoletePageThreshold)) // TODO pre-filter it in the service call to search-service
                     .collect(Collectors.toMap(Document::getId, value -> value.get(Fields.URL)));
             final int numberOfPagesToDelete = pagesToDelete.entrySet().size();
             deleteWithoutFurtherChecks(pagesToDelete.keySet().toArray(new String[0])); // TODO finish THIS!!!!!!

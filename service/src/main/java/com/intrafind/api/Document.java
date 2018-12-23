@@ -16,19 +16,28 @@
 
 package com.intrafind.api;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public final class Document implements Serializable {
+    @JsonAlias(value = {"id", "_id"})
     private final String id;
     private final Map<String, List<String>> fields = new TreeMap<>();
+    @JsonProperty(value = "_source")
+    private final Object source = new Object();
 
-    //    private Document() {
-//        this.id = "";
-//    }
+    public Object getSource() {
+        return source;
+    }
+
     protected Document() {
         this.id = null;
     }
