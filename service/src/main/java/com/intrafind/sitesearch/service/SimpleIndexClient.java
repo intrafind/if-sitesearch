@@ -67,7 +67,7 @@ public class SimpleIndexClient implements Index {
                     .version(HttpClient.Version.HTTP_2)
                     .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .PUT(HttpRequest.BodyPublishers.ofString(MAPPER.writeValueAsString(documents[0].getSource())))
+                    .PUT(HttpRequest.BodyPublishers.ofString(MAPPER.writeValueAsString(documents[0].getFields())))
                     .build();
             final var response = client.send(call, HttpResponse.BodyHandlers.ofString());
             LOG.debug("documents: {} - status: {} - body: {}", documents, response.statusCode(), response.body());
