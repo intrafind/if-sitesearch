@@ -28,13 +28,14 @@ import java.util.TreeMap;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class Document implements Serializable {
-    @JsonAlias(value = {"id", "_id"})
+    @JsonAlias(value = {"_id", "id"})
     private final String id;
-    private final Map<String, List<String>> fields = new TreeMap<>();
     @JsonProperty(value = "_source")
-    private final Object source = new Object();
+//    @JsonAlias(value = {"_source"})
+    private final Map<String, Object> source = new TreeMap<>();
+    private final Map<String, List<String>> fields = new TreeMap<>();
 
-    public Object getSource() {
+    public Map getSource() {
         return source;
     }
 
@@ -60,7 +61,10 @@ public final class Document implements Serializable {
 
     public String get(final String key) {
         final var values = this.getAll(key);
-        return values != null && !values.isEmpty() ? values.get(0) : null;
+        if (values == null)
+            return (String) source.get(key);
+        else
+            return !values.isEmpty() ? values.get(0) : "";
     }
 
     public List<String> getAll(final String key) {

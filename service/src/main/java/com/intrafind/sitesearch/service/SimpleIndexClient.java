@@ -16,6 +16,7 @@
 
 package com.intrafind.sitesearch.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intrafind.api.Document;
 import com.intrafind.api.index.Index;
 import com.intrafind.sitesearch.Application;
@@ -34,6 +35,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,40 +47,95 @@ import java.util.List;
 public class SimpleIndexClient implements Index {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleIndexClient.class);
     private static final String ELASTICSEARCH_SERVICE = "https://elasticsearch.sitesearch.cloud";
-    private static final HttpClient httpClient = HttpClient.newHttpClient();
+    private static final HttpClient client = HttpClient.newHttpClient();
     private static final byte[] credentials = ("sitesearch:" + Application.SERVICE_SECRET).getBytes();
     private static final String basicAuthHeader = "Basic " + Base64.getEncoder().encodeToString(credentials);
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     @Override
     public void index(Document... documents) {
-        LOG.warn("SimpleIndexService#index");
-        IFIndexService.INDEX_SERVICE.index(documents);
+        LOG.debug("SimpleIndexService#index");
+        if (documents == null || documents.length > 1)
+            throw new IllegalArgumentException(Arrays.toString(documents));
+
+        final var docId = documents[0].getId();
+        final var indexType = getIndexType(docId);
+
+        try {
+            final var call = HttpRequest.newBuilder()
+                    .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_doc/" + docId))
+                    .version(HttpClient.Version.HTTP_2)
+                    .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .PUT(HttpRequest.BodyPublishers.ofString(MAPPER.writeValueAsString(documents[0].getSource())))
+                    .build();
+            final var response = client.send(call, HttpResponse.BodyHandlers.ofString());
+            LOG.debug("documents: {} - status: {} - body: {}", documents, response.statusCode(), response.body());
+        } catch (IOException | InterruptedException e) {
+            LOG.warn("documents: {} - exception: {}", e.getMessage());
+        }
     }
 
     @Override
     public List<Document> fetch(String[] options, String... documents) {
-        LOG.warn("SimpleIndexService#fetch");
-        return IFIndexService.INDEX_SERVICE.fetch(options, documents);
-    }
+        LOG.debug("SimpleIndexService#fetch");
 
-    @Override
-    public void delete(String... documents) {
-        LOG.warn("SimpleIndexService#delete: " + documents + " | " + documents.toString() + " | " + Arrays.toString(documents) + " | \n" + "{\"query\": {\"terms\": {\"_id\": " + Arrays.toString(documents) + "}}}");
+        if (documents == null || documents.length > 1)
+            throw new IllegalArgumentException(Arrays.toString(documents));
+
+        final var docId = documents[0];
+        final var indexType = getIndexType(docId);
 
         final var call = HttpRequest.newBuilder()
-                .uri(URI.create(ELASTICSEARCH_SERVICE + "/site-profile/_delete_by_query"))
+                .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_doc/" + docId))
                 .version(HttpClient.Version.HTTP_2)
                 .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .POST(HttpRequest.BodyPublishers.ofString("{\"query\": {\"terms\": {\"_id\": [\"" + documents[0] + "\"]}}}"))
+                .GET()
                 .build();
         try {
-            final HttpResponse<String> httpResponse = httpClient.send(call, HttpResponse.BodyHandlers.ofString());
-            LOG.debug("documents: {} - status: {} - body: {}", documents, httpResponse.statusCode(), httpResponse.body());
+            final var response = client.send(call, HttpResponse.BodyHandlers.ofString());
+            LOG.debug("documents: {} - status: {} - body: {}", documents, response.statusCode(), response.body());
+            final var doc = MAPPER.readValue(response.body(), Document.class);
+            return Collections.singletonList(doc);
         } catch (IOException | InterruptedException e) {
             LOG.warn("documents: {} - exception: {}", e.getMessage());
         }
 
-//        IFIndexService.INDEX_SERVICE.delete(documents);
+        return Collections.emptyList();
+    }
+
+    @Override
+    public void delete(String... documents) {
+        LOG.debug("SimpleIndexService#delete");
+        if (documents == null || documents.length > 1)
+            throw new IllegalArgumentException(Arrays.toString(documents));
+
+        final var docId = documents[0];
+        final String indexType = getIndexType(docId);
+
+        final var call = HttpRequest.newBuilder()
+                .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_delete_by_query"))
+                .version(HttpClient.Version.HTTP_2)
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .POST(HttpRequest.BodyPublishers.ofString("{\"query\": {\"terms\": {\"_id\": [\"" + docId + "\"]}}}"))
+                .build();
+        try {
+            final var response = client.send(call, HttpResponse.BodyHandlers.ofString());
+            LOG.debug("documents: {} - status: {} - body: {}", documents, response.statusCode(), response.body());
+        } catch (IOException | InterruptedException e) {
+            LOG.warn("documents: {} - exception: {}", e.getMessage());
+        }
+    }
+
+    private String getIndexType(String document) {
+        final String indexType;
+        if (document.contains(SiteService.SITE_CONFIGURATION_DOCUMENT_PREFIX)) {
+            indexType = "site-profile";
+        } else {
+            indexType = "site-page";
+        }
+        return indexType;
     }
 }
