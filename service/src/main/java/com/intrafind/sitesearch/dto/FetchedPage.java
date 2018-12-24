@@ -17,6 +17,7 @@
 package com.intrafind.sitesearch.dto;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -42,7 +43,7 @@ public class FetchedPage {
         this.id = id;
         this.timestamp = timestamp;
         this.thumbnail = thumbnail;
-        this.sisLabels = sisLabels;
+        this.sisLabels = sisLabels == null ? Collections.emptyList() : sisLabels;
     }
 
     public String getThumbnail() {
