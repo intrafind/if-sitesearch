@@ -145,19 +145,8 @@ public class SiteService {
         }
     }
 
-//    @Value("${spring.profiles.active}")
-//    private String activeProfile;
-
     public Optional<SiteProfile> fetchSiteProfile(UUID siteId) {
         final var siteProfile = indexService.fetch(Index.ALL, SITE_CONFIGURATION_DOCUMENT_PREFIX + siteId).stream().findAny();
-//        if ("oss".equals(activeProfile) && siteProfile.isPresent()) {
-//            try {
-//                return Optional.of(MAPPER.readValue(MAPPER.writeValueAsString(siteProfile.get().getSource()), SiteProfile.class));
-//            } catch (IOException e) {
-//                LOG.warn(e.getMessage());
-//                return Optional.empty();
-//            }
-//        }
         return siteProfile.map(document -> {
             final Set<URI> urls;
             if (document.getAll("urls") == null) {

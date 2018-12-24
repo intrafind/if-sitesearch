@@ -29,14 +29,8 @@ import java.util.TreeMap;
 public final class Document implements Serializable {
     @JsonAlias(value = {"_id", "id"})
     private final String id;
-    //    @JsonProperty(value = "_source")
     @JsonAlias(value = {"fields", "_source"})
-//    private final Map<String, Object> source = new TreeMap<>();
     private final Map<String, List<String>> fields = new TreeMap<>();
-
-//    public Map getSource() {
-//        return source;
-//    }
 
     protected Document() {
         this.id = null;
@@ -60,9 +54,6 @@ public final class Document implements Serializable {
 
     public String get(final String key) {
         final var values = this.getAll(key);
-//        if (values == null)
-//            return (String) source.get(key);
-//        else
         return values != null && !values.isEmpty() ? values.get(0) : "";
     }
 
