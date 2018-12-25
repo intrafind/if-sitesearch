@@ -93,7 +93,7 @@ public class SimpleClientTest {
         deletePage();
     }
 
-    private static final String email = "user@examaple.com";
+    private static final String EMAIL = "user@examaple.com";
 
     @Test
     public void crudSiteProfile() throws Exception {
@@ -101,26 +101,26 @@ public class SimpleClientTest {
         fetchSiteProfile();
     }
 
-    private void updateSiteProfile() throws Exception {
-        final var siteProfile = new SiteProfile(SITE_ID, SITE_SECRET, email, Collections.emptyList());
+    private void updateSiteProfile() {
+        final var siteProfile = new SiteProfile(SITE_ID, SITE_SECRET, EMAIL, Collections.emptyList());
         final var createdProfile = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/profile?siteSecret=" + SITE_SECRET,
                 HttpMethod.PUT, new HttpEntity<>(siteProfile), SiteProfile.class);
 
         assertEquals(HttpStatus.OK, createdProfile.getStatusCode());
         assertNotNull(createdProfile.getBody());
-        assertEquals(email, createdProfile.getBody().getEmail());
+        assertEquals(EMAIL, createdProfile.getBody().getEmail());
         assertEquals(SITE_ID, createdProfile.getBody().getId());
         assertEquals(SITE_SECRET, createdProfile.getBody().getSecret());
         assertEquals(Collections.emptyList(), createdProfile.getBody().getConfigs());
     }
 
-    private void fetchSiteProfile() throws Exception {
+    private void fetchSiteProfile() {
         final var createdProfile = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/profile?siteSecret=" + SITE_SECRET,
                 HttpMethod.GET, HttpEntity.EMPTY, SiteProfile.class);
 
         assertEquals(HttpStatus.OK, createdProfile.getStatusCode());
         assertNotNull(createdProfile.getBody());
-        assertEquals(email, createdProfile.getBody().getEmail());
+        assertEquals(EMAIL, createdProfile.getBody().getEmail());
         assertEquals(SITE_ID, createdProfile.getBody().getId());
         assertEquals(SITE_SECRET, createdProfile.getBody().getSecret());
         assertEquals(Collections.emptyList(), createdProfile.getBody().getConfigs());

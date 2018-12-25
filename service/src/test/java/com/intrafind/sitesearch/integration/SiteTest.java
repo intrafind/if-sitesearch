@@ -103,12 +103,21 @@ public class SiteTest {
         return newlyCreatedPage.getBody();
     }
 
+    private static final SiteProfileUpdate SITE_PROFILE_CREATION = new SiteProfileUpdate(
+            configs,
+            CrawlerTest.TEST_EMAIL_ADDRESS
+    );
+
+    private CrawlStatus findSearchSiteCrawlStatus(SitesCrawlStatus sitesCrawlStatus) {
+        return sitesCrawlStatus.getSites().stream().filter(siteStatus -> siteStatus.getSiteId().equals(CrawlerTest.CRAWL_SITE_ID)).findAny().get();
+    }
+
     @Test
     public void fetchAndUpdateCrawlStatus() {
         final var crawlStatus = caller.exchange(SiteController.ENDPOINT + "/crawl/status?serviceSecret=" +
                 ADMIN_SITE_SECRET, HttpMethod.GET, HttpEntity.EMPTY, SitesCrawlStatus.class);
         assertEquals(HttpStatus.OK, crawlStatus.getStatusCode());
-        final var initSize = crawlStatus.getBody().getSites().size();
+        final var initSize = Objects.requireNonNull(crawlStatus.getBody()).getSites().size();
         assertTrue(1 <= initSize);
         assertNotNull(findSearchSiteCrawlStatus(crawlStatus.getBody()).getSiteId());
         assertTrue(Instant.now().isAfter(Instant.parse(findSearchSiteCrawlStatus(crawlStatus.getBody()).getCrawled())));
@@ -123,7 +132,7 @@ public class SiteTest {
         final var crawlStatusUpdate = caller.exchange(SiteController.ENDPOINT + "/crawl/status?serviceSecret=" +
                 ADMIN_SITE_SECRET, HttpMethod.PUT, new HttpEntity<>(updatedCrawlStatus), SitesCrawlStatus.class);
         assertEquals(HttpStatus.OK, crawlStatus.getStatusCode());
-        assertNotNull(findSearchSiteCrawlStatus(crawlStatusUpdate.getBody()).getSiteId());
+        assertNotNull(findSearchSiteCrawlStatus(Objects.requireNonNull(crawlStatusUpdate.getBody())).getSiteId());
         assertEquals(now, Instant.parse(findSearchSiteCrawlStatus(crawlStatusUpdate.getBody()).getCrawled()));
         assertTrue(Instant.now().isAfter(Instant.parse(findSearchSiteCrawlStatus(crawlStatusUpdate.getBody()).getCrawled())));
 
@@ -131,20 +140,11 @@ public class SiteTest {
         final var crawlStatusUpdated = caller.exchange(SiteController.ENDPOINT + "/crawl/status?serviceSecret=" +
                 ADMIN_SITE_SECRET, HttpMethod.GET, HttpEntity.EMPTY, SitesCrawlStatus.class);
         assertEquals(HttpStatus.OK, crawlStatusUpdated.getStatusCode());
-        assertEquals(initSize, crawlStatusUpdated.getBody().getSites().size());
+        assertEquals(initSize, Objects.requireNonNull(crawlStatusUpdated.getBody()).getSites().size());
         assertNotNull(findSearchSiteCrawlStatus(crawlStatusUpdated.getBody()).getSiteId());
         assertEquals(now, Instant.parse(findSearchSiteCrawlStatus(crawlStatusUpdated.getBody()).getCrawled()));
         assertTrue(Instant.now().isAfter(Instant.parse(findSearchSiteCrawlStatus(crawlStatusUpdated.getBody()).getCrawled())));
     }
-
-    private CrawlStatus findSearchSiteCrawlStatus(SitesCrawlStatus sitesCrawlStatus) {
-        return sitesCrawlStatus.getSites().stream().filter(siteStatus -> siteStatus.getSiteId().equals(CrawlerTest.CRAWL_SITE_ID)).findAny().get();
-    }
-
-    public static final SiteProfileUpdate SITE_PROFILE_CREATION = new SiteProfileUpdate(
-            configs,
-            CrawlerTest.TEST_EMAIL_ADDRESS
-    );
 
     private SiteCreation createNewSite(SiteProfileUpdate siteProfileCreation) {
         final var actual = caller.exchange(SiteController.ENDPOINT, HttpMethod.POST, new HttpEntity<>(siteProfileCreation), SiteCreation.class);

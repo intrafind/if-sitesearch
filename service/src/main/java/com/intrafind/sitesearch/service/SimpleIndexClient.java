@@ -47,11 +47,11 @@ import java.util.List;
 @Repository
 public class SimpleIndexClient implements Index {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleIndexClient.class);
-    private static final String ELASTICSEARCH_SERVICE = "https://elasticsearch.sitesearch.cloud";
-    private static final HttpClient client = HttpClient.newHttpClient();
+    static final String ELASTICSEARCH_SERVICE = "https://elasticsearch.sitesearch.cloud";
+    static final HttpClient CLIENT = HttpClient.newHttpClient();
     private static final byte[] credentials = ("sitesearch:" + Application.SERVICE_SECRET).getBytes();
-    private static final String basicAuthHeader = "Basic " + Base64.getEncoder().encodeToString(credentials);
-    public static final ObjectMapper MAPPER = new ObjectMapper();
+    static final String BASIC_AUTH_HEADER = "Basic " + Base64.getEncoder().encodeToString(credentials);
+    static final ObjectMapper MAPPER = new ObjectMapper();
 
     @Override
     public void index(Document... documents) {
@@ -64,12 +64,11 @@ public class SimpleIndexClient implements Index {
         try {
             final var call = HttpRequest.newBuilder()
                     .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_doc/" + docId))
-                    .version(HttpClient.Version.HTTP_2)
-                    .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
+                    .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .PUT(HttpRequest.BodyPublishers.ofString(MAPPER.writeValueAsString(documents[0].getFields())))
                     .build();
-            final var response = client.send(call, HttpResponse.BodyHandlers.ofString());
+            final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
             LOG.debug("documents: {} - status: {} - body: {}", documents, response.statusCode(), response.body());
         } catch (IOException | InterruptedException e) {
             LOG.warn("documents: {} - exception: {}", e.getMessage());
@@ -86,12 +85,12 @@ public class SimpleIndexClient implements Index {
 
         final var call = HttpRequest.newBuilder()
                 .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_doc/" + docId))
-                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
+                .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .GET()
                 .build();
         try {
-            final var response = client.send(call, HttpResponse.BodyHandlers.ofString());
+            final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
             LOG.debug("documents: {} - status: {} - body: {}", documents, response.statusCode(), response.body());
             if (HttpStatus.OK.value() != response.statusCode())
                 return Collections.emptyList();
@@ -114,12 +113,12 @@ public class SimpleIndexClient implements Index {
 
         final var call = HttpRequest.newBuilder()
                 .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_delete_by_query"))
-                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
+                .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .POST(HttpRequest.BodyPublishers.ofString("{\"query\": {\"terms\": {\"_id\": [\"" + docId + "\"]}}}"))
                 .build();
         try {
-            final var response = client.send(call, HttpResponse.BodyHandlers.ofString());
+            final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
             LOG.debug("documents: {} - status: {} - body: {}", documents, response.statusCode(), response.body());
         } catch (IOException | InterruptedException e) {
             LOG.warn("documents: {} - exception: {}", e.getMessage());

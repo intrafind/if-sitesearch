@@ -22,7 +22,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Repository;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+import static com.intrafind.sitesearch.service.SimpleIndexClient.BASIC_AUTH_HEADER;
+import static com.intrafind.sitesearch.service.SimpleIndexClient.CLIENT;
+import static com.intrafind.sitesearch.service.SimpleIndexClient.ELASTICSEARCH_SERVICE;
+import static com.intrafind.sitesearch.service.SimpleIndexClient.MAPPER;
 
 /**
  * Should serve as a persistence client that works on a different index than the search client.
@@ -36,6 +49,35 @@ public class SimpleSearchClient implements Search {
     @Override
     public Hits search(String searchQuery, Object... parameters) {
         LOG.warn("SimpleSearchService");
-        return IFSearchService.SEARCH_SERVICE_CLIENT.search(searchQuery, parameters);
+        try {
+            final var call = HttpRequest.newBuilder()
+                    .uri(URI.create(ELASTICSEARCH_SERVICE + "/site-page/_search"))
+                    .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .POST(HttpRequest.BodyPublishers.ofString("{" +
+                            "    \"query\": {" +
+                            "        \"bool\": {" +
+                            "            \"must\": {" +
+                            "                \"query_string\": {" +
+                            "                    \"query\": \"" + searchQuery + "\"" +
+                            "                }" +
+                            "            }" +
+                            "        }" +
+                            "    }" +
+                            "}"))
+                    .build();
+
+            final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
+            LOG.debug("searchQuery: {} - status: {} - body: {}", searchQuery, response.statusCode(), response.body());
+            if (HttpStatus.OK.value() != response.statusCode())
+                return null;
+            final var hits = MAPPER.readValue(response.body(), Hits.class);
+            return hits;
+        } catch (IOException | InterruptedException e) {
+            LOG.warn("documents: {} - exception: {}", e.getMessage());
+        }
+
+        return null;
+//        return IFSearchService.SEARCH_SERVICE_CLIENT.search(searchQuery, parameters);
     }
 }
