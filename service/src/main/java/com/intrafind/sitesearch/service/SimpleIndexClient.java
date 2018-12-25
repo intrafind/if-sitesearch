@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Repository;
 
@@ -50,11 +51,10 @@ public class SimpleIndexClient implements Index {
     private static final HttpClient client = HttpClient.newHttpClient();
     private static final byte[] credentials = ("sitesearch:" + Application.SERVICE_SECRET).getBytes();
     private static final String basicAuthHeader = "Basic " + Base64.getEncoder().encodeToString(credentials);
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    public static final ObjectMapper MAPPER = new ObjectMapper();
 
     @Override
     public void index(Document... documents) {
-        LOG.debug("SimpleIndexService#index");
         if (documents == null || documents.length > 1)
             throw new IllegalArgumentException(Arrays.toString(documents));
 
@@ -78,8 +78,6 @@ public class SimpleIndexClient implements Index {
 
     @Override
     public List<Document> fetch(String[] options, String... documents) {
-        LOG.debug("SimpleIndexService#fetch");
-
         if (documents == null || documents.length > 1)
             throw new IllegalArgumentException(Arrays.toString(documents));
 
@@ -88,7 +86,6 @@ public class SimpleIndexClient implements Index {
 
         final var call = HttpRequest.newBuilder()
                 .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_doc/" + docId))
-                .version(HttpClient.Version.HTTP_2)
                 .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .GET()
@@ -96,6 +93,8 @@ public class SimpleIndexClient implements Index {
         try {
             final var response = client.send(call, HttpResponse.BodyHandlers.ofString());
             LOG.debug("documents: {} - status: {} - body: {}", documents, response.statusCode(), response.body());
+            if (HttpStatus.OK.value() != response.statusCode())
+                return Collections.emptyList();
             final var doc = MAPPER.readValue(response.body(), Document.class);
             return Collections.singletonList(doc);
         } catch (IOException | InterruptedException e) {
@@ -107,7 +106,6 @@ public class SimpleIndexClient implements Index {
 
     @Override
     public void delete(String... documents) {
-        LOG.debug("SimpleIndexService#delete");
         if (documents == null || documents.length > 1)
             throw new IllegalArgumentException(Arrays.toString(documents));
 

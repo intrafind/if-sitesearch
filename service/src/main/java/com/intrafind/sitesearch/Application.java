@@ -53,7 +53,7 @@ import java.util.UUID;
 public class Application {
     private static final Logger LOG = LoggerFactory.getLogger(Application.class);
     public static final String SERVICE_SECRET = System.getenv("SERVICE_SECRET");
-    public static final URI IFINDER_CORE = URI.create("https://sitesearch:" + SERVICE_SECRET + "@" + System.getenv("SIS_SERVICE_HOST") + "/hessian"); // TODO consider trying json endpoint
+    public static final URI IFINDER_CORE = URI.create("https://sitesearch:" + SERVICE_SECRET + "@" + System.getenv("SIS_SERVICE_HOST") + "/hessian");
     private static final String WOO_COMMERCE_CONSUMER_KEY = System.getenv("WOO_COMMERCE_CONSUMER_KEY");
     private static final String WOO_COMMERCE_CONSUMER_SECRET = System.getenv("WOO_COMMERCE_CONSUMER_SECRET");
     private static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";
@@ -70,7 +70,7 @@ public class Application {
     }
 
     @RequestMapping(path = "/subscriptions/woo-commerce/{subscriptionId}", method = RequestMethod.POST)
-    ResponseEntity<Subscription> subscribeViaSite(
+    private ResponseEntity<Subscription> subscribeViaSite(
             @PathVariable(value = "subscriptionId") String subscriptionId,
             @RequestParam(value = "affiliate", required = false) String affiliate
     ) {
@@ -115,7 +115,7 @@ public class Application {
     }
 
     @RequestMapping(path = "/subscriptions/github", method = RequestMethod.POST)
-    ResponseEntity<Object> subscribeViaGitHub(
+    private ResponseEntity<Object> subscribeViaGitHub(
             @RequestHeader(value = "X-GitHub-Delivery") UUID delivery,
             @RequestHeader(value = "X-GitHub-Event") String event,
             @RequestHeader(value = "X-Hub-Signature") String signature,

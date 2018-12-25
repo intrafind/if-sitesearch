@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -80,17 +81,10 @@ public class SiteTest {
     public void init() {
     }
 
-    private SiteCreation createNewSite(SiteProfileUpdate siteProfileCreation) {
-        final var actual = caller.exchange(SiteController.ENDPOINT, HttpMethod.POST, new HttpEntity<>(siteProfileCreation), SiteCreation.class);
-
-        assertEquals(HttpStatus.CREATED, actual.getStatusCode());
-        assertNotNull(actual.getBody());
-        assertNotNull(actual.getBody().getSiteId());
-        assertNotNull(actual.getBody().getSiteSecret());
-        assertEquals(SmokeTest.SITES_API + actual.getBody().getSiteId(), actual.getHeaders().get(HttpHeaders.LOCATION).get(0));
-
-        return actual.getBody();
-    }
+    private static final List<SiteProfile.Config> configs = Arrays.asList(
+            new SiteProfile.Config(URI.create("https://subdomain.example.com"), SiteProfile.Config.DEFAULT_PAGE_BODY_CSS_SELECTOR, true, false),
+            new SiteProfile.Config(URI.create("https://example.com"), SiteProfile.Config.DEFAULT_PAGE_BODY_CSS_SELECTOR, false, true)
+    );
 
     private FetchedPage createNewPage(UUID siteId, UUID siteSecret) {
         final var simple = buildPage();
@@ -147,22 +141,31 @@ public class SiteTest {
         return sitesCrawlStatus.getSites().stream().filter(siteStatus -> siteStatus.getSiteId().equals(CrawlerTest.CRAWL_SITE_ID)).findAny().get();
     }
 
+    public static final SiteProfileUpdate SITE_PROFILE_CREATION = new SiteProfileUpdate(
+            configs,
+            CrawlerTest.TEST_EMAIL_ADDRESS
+    );
+
+    private SiteCreation createNewSite(SiteProfileUpdate siteProfileCreation) {
+        final var actual = caller.exchange(SiteController.ENDPOINT, HttpMethod.POST, new HttpEntity<>(siteProfileCreation), SiteCreation.class);
+
+        assertEquals(HttpStatus.CREATED, actual.getStatusCode());
+        assertNotNull(actual.getBody());
+        assertNotNull(actual.getBody().getSiteId());
+        assertNotNull(actual.getBody().getSiteSecret());
+        assertEquals(SmokeTest.SITES_API + actual.getBody().getSiteId(), Objects.requireNonNull(actual.getHeaders().get(HttpHeaders.LOCATION)).get(0));
+
+        return actual.getBody();
+    }
+
     @Test
     public void createNewSiteWithProfile() {
-        final var configs = Arrays.asList(
-                new SiteProfile.Config(URI.create("https://subdomain.example.com"), SiteProfile.Config.DEFAULT_PAGE_BODY_CSS_SELECTOR, true, false),
-                new SiteProfile.Config(URI.create("https://example.com"), SiteProfile.Config.DEFAULT_PAGE_BODY_CSS_SELECTOR, false, true)
-        );
-        final var siteProfileCreation = new SiteProfileUpdate(
-                configs,
-                CrawlerTest.TEST_EMAIL_ADDRESS
-        );
-        final var createdSiteProfile = createNewSite(siteProfileCreation);
+        final var createdSiteProfile = createNewSite(SITE_PROFILE_CREATION);
 
         final var actual = caller.exchange(SiteController.ENDPOINT + "/" + createdSiteProfile.getSiteId() +
                 "/profile?siteSecret=" + createdSiteProfile.getSiteSecret(), HttpMethod.GET, HttpEntity.EMPTY, SiteProfile.class);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(createdSiteProfile.getSiteId(), actual.getBody().getId());
+        assertEquals(createdSiteProfile.getSiteId(), Objects.requireNonNull(actual.getBody()).getId());
         assertEquals(createdSiteProfile.getSiteSecret(), actual.getBody().getSecret());
         assertEquals(CrawlerTest.TEST_EMAIL_ADDRESS, actual.getBody().getEmail());
         assertEquals(configs, actual.getBody().getConfigs());
@@ -181,7 +184,7 @@ public class SiteTest {
         final var siteProfileUpdate = new SiteProfileUpdate(createdSiteProfile.getSiteSecret(), "update." + CrawlerTest.TEST_EMAIL_ADDRESS, configs);
         final var updatedSite = caller.exchange(SiteController.ENDPOINT + "/" + createdSiteProfile.getSiteId() + "/profile?siteSecret=" + createdSiteProfile.getSiteSecret(),
                 HttpMethod.PUT, new HttpEntity<>(siteProfileUpdate), SiteProfileUpdate.class);
-        assertEquals(createdSiteProfile.getSiteSecret(), updatedSite.getBody().getSecret());
+        assertEquals(createdSiteProfile.getSiteSecret(), Objects.requireNonNull(updatedSite.getBody()).getSecret());
         assertEquals("update." + CrawlerTest.TEST_EMAIL_ADDRESS, updatedSite.getBody().getEmail());
         assertEquals(configs, updatedSite.getBody().getConfigs());
         assertEquals(2, updatedSite.getBody().getConfigs().size());
