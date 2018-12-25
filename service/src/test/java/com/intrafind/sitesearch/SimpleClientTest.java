@@ -29,7 +29,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -39,6 +38,7 @@ import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -60,26 +60,59 @@ public class SimpleClientTest {
             .build();
 
     private static final UUID SITE_ID = UUID.fromString("b7fde685-33f4-4a79-9ac3-ee3b75b83fa3");
-    private static final String PAGE_ID = "1009a7b98d2d1f4408f729696ce259d46a2242287e66fc2656edf31b41755001";
     private static final UUID SITE_SECRET = UUID.fromString("56158b15-0d87-49bf-837d-89085a4ec88d");
+    private static final String PAGE_ID = "b020c11f8b9827d09ae028a9745201d8a533f1493f16b1a8c7331e9bc4d988a6";
     private final HttpClient CLIENT = HttpClient.newHttpClient();
 
-    @Test
-    public void updatePage() throws Exception {
+
+    private void updatePage() {
 //    http://www.baeldung.com/spring-5-webclient
 //        WebClient client1 = WebClient.create();
 //        WebClient client2 = WebClient.create("https://sitesearch:" + Application.SERVICE_SECRET + "@logs.sitesearch.cloud");
 
-        final ResponseEntity<FetchedPage> response = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/pages/" + PAGE_ID + "?siteSecret=" + SITE_SECRET,
+        final var response = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/pages?siteSecret=" + SITE_SECRET,
                 HttpMethod.PUT, new HttpEntity<>(SiteTest.buildPage()), FetchedPage.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals(PAGE_ID, response.getBody().getId());
-        assertEquals(SiteTest.buildPage().getUrl(), response.getBody().getUrl());
-        assertEquals("", response.getBody().getThumbnail());
         assertEquals(SITE_ID, response.getBody().getSiteId());
+        assertEquals(SiteTest.buildPage().getUrl(), response.getBody().getUrl());
         assertEquals(SiteTest.buildPage().getSisLabels(), response.getBody().getSisLabels());
         assertEquals(SiteTest.buildPage().getTitle(), response.getBody().getTitle());
+        assertEquals("", response.getBody().getThumbnail());
+    }
+
+    @Test
+    public void crudPage() throws Exception {
+        updatePage();
+        fetchPage();
+        deletePage();
+    }
+
+    private void fetchPage() {
+        final var response = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/pages?url=" + SiteTest.buildPage().getUrl(),
+                HttpMethod.GET, HttpEntity.EMPTY, FetchedPage.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(PAGE_ID, response.getBody().getId());
+        assertEquals(SITE_ID, response.getBody().getSiteId());
+        assertEquals(SiteTest.buildPage().getUrl(), response.getBody().getUrl());
+        assertEquals(SiteTest.buildPage().getSisLabels(), response.getBody().getSisLabels());
+        assertEquals(SiteTest.buildPage().getTitle(), response.getBody().getTitle());
+        assertEquals("", response.getBody().getThumbnail());
+    }
+
+    private void deletePage() {
+        final var deletedPage = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/pages?url=" + SiteTest.buildPage().getUrl() + "&siteSecret=" + SITE_SECRET,
+                HttpMethod.DELETE, HttpEntity.EMPTY, FetchedPage.class);
+        assertEquals(HttpStatus.NO_CONTENT, deletedPage.getStatusCode());
+        assertNull(deletedPage.getBody());
+
+        final var fetchDeleted = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/pages?url=" + SiteTest.buildPage().getUrl(),
+                HttpMethod.GET, HttpEntity.EMPTY, FetchedPage.class);
+        assertEquals(HttpStatus.NOT_FOUND, fetchDeleted.getStatusCode());
+        assertNull(fetchDeleted.getBody());
     }
 }
