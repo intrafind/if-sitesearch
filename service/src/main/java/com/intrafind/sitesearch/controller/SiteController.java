@@ -127,22 +127,25 @@ public class SiteController {
         return indexed.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-//    @RequestMapping(path = "{siteId}/pages/{pageId}", method = RequestMethod.PUT)
-//    private ResponseEntity<FetchedPage> updateExistingPageInSiteIndex(
-//            @PathVariable(name = "siteId") UUID siteId,
-//            @PathVariable("pageId") String pageId,
-//            @RequestParam(name = "siteSecret") UUID siteSecret,
-//            @RequestBody SitePage page
-//    ) {
-//        if (pageId.length() != 64) { // just good enough but not sufficient to guarantee a valid, collision-safe GLOBAL pageId
-//            return ResponseEntity.badRequest().build();
-//        }
-//        // TODO use SiteUpdate DTO with NO siteId & NO siteSecret provided
-//
-//        // TODO make sure that an existing page is actually updated
-//        final var indexed = siteService.indexExistingPage(pageId, siteId, siteSecret, page);
-//        return indexed.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-//    }
+    /**
+     * Ony for internal use or service-layer use. Should not be exposed externally.
+     */
+    @RequestMapping(path = "{siteId}/pages/{pageId}", method = RequestMethod.PUT)
+    private ResponseEntity<FetchedPage> updateExistingPageInSiteIndex(
+            @PathVariable(name = "siteId") UUID siteId,
+            @PathVariable("pageId") String pageId,
+            @RequestParam(name = "siteSecret") UUID siteSecret,
+            @RequestBody SitePage page
+    ) {
+        if (pageId.length() != 64) { // just good enough but not sufficient to guarantee a valid, collision-safe GLOBAL pageId
+            return ResponseEntity.badRequest().build();
+        }
+        // TODO use SiteUpdate DTO with NO siteId & NO siteSecret provided
+
+        // TODO make sure that an existing page is actually updated
+        final var indexed = siteService.indexExistingPage(pageId, siteId, siteSecret, page);
+        return indexed.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
     @RequestMapping(path = "{siteId}", method = RequestMethod.GET)
     private ResponseEntity<List<String>> fetchAll(
