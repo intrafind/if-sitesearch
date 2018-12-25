@@ -18,6 +18,7 @@ package com.intrafind.sitesearch;
 
 import com.intrafind.sitesearch.controller.SiteController;
 import com.intrafind.sitesearch.dto.FetchedPage;
+import com.intrafind.sitesearch.dto.SiteProfile;
 import com.intrafind.sitesearch.integration.SiteTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +36,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.net.http.HttpClient;
+import java.util.Collections;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -91,30 +93,37 @@ public class SimpleClientTest {
         deletePage();
     }
 
+    private static final String email = "user@examaple.com";
+
     @Test
     public void crudSiteProfile() throws Exception {
         updateSiteProfile();
-//        fetchPage();
-//        deletePage();
+        fetchSiteProfile();
     }
 
     private void updateSiteProfile() throws Exception {
-//        final var response = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/profile?siteSecret=" + SITE_SECRET,
-////                HttpMethod.PUT, new HttpEntity<>(SimpleIndexClient.MAPPER.readValue("'{\n" +
-////                        "    \"id\": [\"b7fde685-33f4-4a79-9ac3-ee3b75b83fa3\"],\n" +
-////                        "    \"secret\": [\"56158b15-0d87-49bf-837d-89085a4ec88d\"],\n" +
-////                        "    \"email\": [\"user@example.com\"]\n" +
-////                        "    }'", Object.class)), Object.class);
-//                HttpMethod.PUT, new HttpEntity<>(SiteTest.SITE_PROFILE_CREATION), SiteProfile.class);
-//
-//        assertEquals(HttpStatus.OK, response.getStatusCode());
-//        assertNotNull(response.getBody());
-//        assertEquals(PAGE_ID, response.getBody().getId());
-//        assertEquals(SITE_ID, response.getBody().getSiteId());
-//        assertEquals(SiteTest.buildPage().getUrl(), response.getBody().getUrl());
-//        assertEquals(SiteTest.buildPage().getSisLabels(), response.getBody().getSisLabels());
-//        assertEquals(SiteTest.buildPage().getTitle(), response.getBody().getTitle());
-//        assertEquals("", response.getBody().getThumbnail());
+        final var siteProfile = new SiteProfile(SITE_ID, SITE_SECRET, email, Collections.emptyList());
+        final var createdProfile = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/profile?siteSecret=" + SITE_SECRET,
+                HttpMethod.PUT, new HttpEntity<>(siteProfile), SiteProfile.class);
+
+        assertEquals(HttpStatus.OK, createdProfile.getStatusCode());
+        assertNotNull(createdProfile.getBody());
+        assertEquals(email, createdProfile.getBody().getEmail());
+        assertEquals(SITE_ID, createdProfile.getBody().getId());
+        assertEquals(SITE_SECRET, createdProfile.getBody().getSecret());
+        assertEquals(Collections.emptyList(), createdProfile.getBody().getConfigs());
+    }
+
+    private void fetchSiteProfile() throws Exception {
+        final var createdProfile = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/profile?siteSecret=" + SITE_SECRET,
+                HttpMethod.GET, HttpEntity.EMPTY, SiteProfile.class);
+
+        assertEquals(HttpStatus.OK, createdProfile.getStatusCode());
+        assertNotNull(createdProfile.getBody());
+        assertEquals(email, createdProfile.getBody().getEmail());
+        assertEquals(SITE_ID, createdProfile.getBody().getId());
+        assertEquals(SITE_SECRET, createdProfile.getBody().getSecret());
+        assertEquals(Collections.emptyList(), createdProfile.getBody().getConfigs());
     }
 
     private void fetchPage() {
