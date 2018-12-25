@@ -16,9 +16,9 @@
 
 package com.intrafind.sitesearch;
 
-import com.intrafind.sitesearch.service.SimpleAutocompleteClient;
-import com.intrafind.sitesearch.service.SimpleIndexClient;
-import com.intrafind.sitesearch.service.SimpleSearchClient;
+import com.intrafind.sitesearch.controller.SiteController;
+import com.intrafind.sitesearch.dto.FetchedPage;
+import com.intrafind.sitesearch.integration.SiteTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -26,23 +26,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.net.URI;
 import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.Base64;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles(value = "oss")
 public class SimpleClientTest {
     private final static Logger LOG = LoggerFactory.getLogger(SimpleClientTest.class);
     @Autowired
@@ -59,40 +60,27 @@ public class SimpleClientTest {
             .baseUrl("http://sitesearch:" + Application.SERVICE_SECRET + "@localhost:8080")
             .build();
 
-    @Test
-    public void test() throws Exception {
-        final var simpleIndex = new SimpleIndexClient();
-        final var simpleAutocomplete = new SimpleAutocompleteClient();
-        final var simpleSearch = new SimpleSearchClient();
+    private static final UUID SITE_ID = UUID.fromString("b7fde685-33f4-4a79-9ac3-ee3b75b83fa3");
+    private static final String PAGE_ID = "1009a7b98d2d1f4408f729696ce259d46a2242287e66fc2656edf31b41755001";
+    private static final UUID SITE_SECRET = UUID.fromString("56158b15-0d87-49bf-837d-89085a4ec88d");
+    private final HttpClient CLIENT = HttpClient.newHttpClient();
 
-        //    http://www.baeldung.com/spring-5-webclient
+    @Test
+    public void updatePage() throws Exception {
+//    http://www.baeldung.com/spring-5-webclient
 //        WebClient client1 = WebClient.create();
 //        WebClient client2 = WebClient.create("https://sitesearch:" + Application.SERVICE_SECRET + "@logs.sitesearch.cloud");
 
-//        --add-modules java.net.http
-        final var httpClient = HttpClient.newHttpClient();
-        final var credentials = ("sitesearch:" + Application.SERVICE_SECRET).getBytes();
-        final var basicAuthHeader = "Basic " + Base64.getEncoder().encodeToString(credentials);
+        final ResponseEntity<FetchedPage> response = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/pages/" + PAGE_ID + "?siteSecret=" + SITE_SECRET,
+                HttpMethod.PUT, new HttpEntity<>(SiteTest.buildPage()), FetchedPage.class);
 
-        final var httpRequestCreate = HttpRequest.newBuilder()
-                .uri(URI.create("https://elasticsearch.sitesearch.cloud/site-profile/_doc/0-0-0-0-0"))
-                .version(HttpClient.Version.HTTP_2)
-                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .PUT(HttpRequest.BodyPublishers.ofString("{}"))
-//                .PUT(MAPPER.writeValueAsBytes())
-                .build();
-        final var profileCreated = httpClient.send(httpRequestCreate, HttpResponse.BodyHandlers.ofString());
-//        assertEquals(HttpStatus.OK.value(), profileCreated.statusCode());
-
-        final var profileFetch = HttpRequest.newBuilder()
-                .uri(URI.create("https://elasticsearch.sitesearch.cloud/site-profile/_doc/0-0-0-0-0"))
-                .version(HttpClient.Version.HTTP_2)
-                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
-                .GET()
-                .build();
-
-        final HttpResponse<String> httpResponse = httpClient.send(profileFetch, HttpResponse.BodyHandlers.ofString());
-        assertEquals(HttpStatus.OK.value(), httpResponse.statusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(PAGE_ID, response.getBody().getId());
+        assertEquals(SiteTest.buildPage().getUrl(), response.getBody().getUrl());
+        assertEquals("", response.getBody().getThumbnail());
+        assertEquals(SITE_ID, response.getBody().getSiteId());
+        assertEquals(SiteTest.buildPage().getSisLabels(), response.getBody().getSisLabels());
+        assertEquals(SiteTest.buildPage().getTitle(), response.getBody().getTitle());
     }
 }

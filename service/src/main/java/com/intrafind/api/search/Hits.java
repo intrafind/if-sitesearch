@@ -24,18 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 public final class Hits implements Serializable {
-    public static final String KEY_HIT_SCORE = "hit.score";
-    public static final String PREFIX_TEASER = "hit.teaser.";
-    public static final String PREFIX_TERM_FACET = "term-facet.";
-    public static final String PREFIX_SIGNIFICANT_TERMS = "significant-terms.";
-    public static final String PREFIX_DATE_HISTOGRAM = "date-histogram.";
-    public static final String PREFIX_DATE_RANGE = "date-range.";
-    public static final String SUFFIX_FACET_TERMS = ".terms";
-    public static final String SUFFIX_FACET_COUNTS = ".counts";
-    public static final String SUFFIX_FACET_SCORE = ".score";
-    public static final String SUFFIX_FACET_EXPLAIN = ".explain";
-    public static final String PREFIX_GEO_DISTANCE = "geo-distance.";
-    public static final String KEY_TOTAL_HITS = "totalHits";
+    private static final String KEY_TOTAL_HITS = "totalHits";
     private final List<Document> documents = new ArrayList<>();
     private final Document metaData = new Document("meta");
 

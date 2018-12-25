@@ -88,7 +88,7 @@ public class SiteController {
     }
 
     @RequestMapping(path = "{siteId}/profile", method = RequestMethod.PUT)
-    ResponseEntity<SiteProfile> updateSiteProfile(
+    private ResponseEntity<SiteProfile> updateSiteProfile(
             @PathVariable(value = "siteId") UUID siteId,
             @RequestParam(value = "siteSecret") UUID siteSecret,
             @RequestBody SiteProfileUpdate siteProfileUpdate
@@ -103,7 +103,7 @@ public class SiteController {
     }
 
     @RequestMapping(path = "{siteId}/pages", method = RequestMethod.GET)
-    ResponseEntity<FetchedPage> fetchViaUrl(
+    private ResponseEntity<FetchedPage> fetchViaUrl(
             @PathVariable(value = "siteId") UUID siteId,
             @RequestParam(value = "url") String url
     ) {
@@ -114,7 +114,7 @@ public class SiteController {
     }
 
     @RequestMapping(path = "{siteId}/pages", method = RequestMethod.PUT)
-    ResponseEntity<FetchedPage> addPageToSiteIndex(
+    private ResponseEntity<FetchedPage> addPageToSiteIndex(
             @PathVariable(name = "siteId") UUID siteId,
             @RequestParam(name = "siteSecret") UUID siteSecret,
             @RequestBody SitePage page
@@ -127,25 +127,25 @@ public class SiteController {
         return indexed.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @RequestMapping(path = "{siteId}/pages/{pageId}", method = RequestMethod.PUT)
-    ResponseEntity<FetchedPage> updateExistingPageInSiteIndex(
-            @PathVariable(name = "siteId") UUID siteId,
-            @PathVariable("pageId") String pageId,
-            @RequestParam(name = "siteSecret") UUID siteSecret,
-            @RequestBody SitePage page
-    ) {
-        if (pageId.length() != 64) { // just good enough but not sufficient to guarantee a valid, collision-safe GLOBAL pageId
-            return ResponseEntity.badRequest().build();
-        }
-        // TODO use SiteUpdate DTO with NO siteId & NO siteSecret provided
-
-        // TODO make sure that an existing page is actually updated
-        final var indexed = siteService.indexExistingPage(pageId, siteId, siteSecret, page);
-        return indexed.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
+//    @RequestMapping(path = "{siteId}/pages/{pageId}", method = RequestMethod.PUT)
+//    private ResponseEntity<FetchedPage> updateExistingPageInSiteIndex(
+//            @PathVariable(name = "siteId") UUID siteId,
+//            @PathVariable("pageId") String pageId,
+//            @RequestParam(name = "siteSecret") UUID siteSecret,
+//            @RequestBody SitePage page
+//    ) {
+//        if (pageId.length() != 64) { // just good enough but not sufficient to guarantee a valid, collision-safe GLOBAL pageId
+//            return ResponseEntity.badRequest().build();
+//        }
+//        // TODO use SiteUpdate DTO with NO siteId & NO siteSecret provided
+//
+//        // TODO make sure that an existing page is actually updated
+//        final var indexed = siteService.indexExistingPage(pageId, siteId, siteSecret, page);
+//        return indexed.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+//    }
 
     @RequestMapping(path = "{siteId}", method = RequestMethod.GET)
-    ResponseEntity<List<String>> fetchAll(
+    private ResponseEntity<List<String>> fetchAll(
             @PathVariable(value = "siteId") UUID siteId
     ) {
         final var allDocumentsOfTenant = siteService.fetchAllDocuments(siteId);
@@ -153,7 +153,7 @@ public class SiteController {
     }
 
     @RequestMapping(path = "{siteId}/xml", method = RequestMethod.PUT)
-    ResponseEntity<SiteIndexSummary> reimportIndex(
+    private ResponseEntity<SiteIndexSummary> reimportIndex(
             @PathVariable(value = "siteId") UUID siteId,
             @RequestParam(value = "siteSecret") UUID siteSecret,
             @RequestParam(value = "xmlUrl") String xmlUrl,
@@ -164,7 +164,7 @@ public class SiteController {
     }
 
     @RequestMapping(path = "{siteId}/rss", method = RequestMethod.PUT)
-    ResponseEntity<SiteIndexSummary> indexRssFeed(
+    private ResponseEntity<SiteIndexSummary> indexRssFeed(
             @PathVariable(value = "siteId") UUID siteId,
             @RequestParam(value = "siteSecret") UUID siteSecret,
             @RequestParam(value = "feedUrl") String feedUrl,
@@ -174,7 +174,7 @@ public class SiteController {
     }
 
     @RequestMapping(path = "rss", method = RequestMethod.POST)
-    ResponseEntity<SiteIndexSummary> indexNewRssFeed(
+    private ResponseEntity<SiteIndexSummary> indexNewRssFeed(
             @RequestParam(value = "feedUrl") String feedUrl,
             @RequestParam(value = "stripHtmlTags", required = false, defaultValue = "false") Boolean stripHtmlTags
     ) {
@@ -249,7 +249,7 @@ public class SiteController {
     }
 
     @RequestMapping(path = "{siteId}/search", method = RequestMethod.GET)
-    ResponseEntity<Hits> search(
+    private ResponseEntity<Hits> search(
             @CookieValue(value = "override-site", required = false) UUID cookieSite,
             @RequestParam(value = "query", defaultValue = "") String query,
             @PathVariable(value = "siteId") UUID siteId

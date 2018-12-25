@@ -30,7 +30,6 @@
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-undertow:2.0.7.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger2:2.9.2" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger-ui:2.9.2" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-devtools:2.0.7.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.12.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jsoup:jsoup:1.11.3" level="project" />
     <orderEntry type="library" name="Gradle: org.mnode.mstor:mstor:1.0.0" level="project" />
@@ -269,6 +268,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: net.minidev:accessors-smart:1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.ow2.asm:asm:5.0.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.tika:tika-parsers:1.19.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.springframework.boot:spring-boot-devtools:2.0.7.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: edu.ucar:netcdf4:4.5.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: edu.ucar:grib:4.5.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: edu.ucar:cdm:4.5.5" level="project" />
