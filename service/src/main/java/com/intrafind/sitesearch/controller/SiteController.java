@@ -61,7 +61,7 @@ public class SiteController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    ResponseEntity<SiteCreation> createNewSite(@RequestBody(required = false) SiteProfile siteProfileCreation) {
+    private ResponseEntity<SiteCreation> createNewSite(@RequestBody(required = false) SiteProfile siteProfileCreation) {
         final SiteCreation newlyCreatedSite;
         if (siteProfileCreation == null) {
             newlyCreatedSite = siteService.createSite();
@@ -74,7 +74,7 @@ public class SiteController {
     }
 
     @RequestMapping(path = "{siteId}/profile", method = RequestMethod.GET)
-    ResponseEntity<SiteProfile> fetchSiteProfile(
+    private ResponseEntity<SiteProfile> fetchSiteProfile(
             @PathVariable(value = "siteId") UUID siteId,
             @RequestParam(value = "siteSecret") UUID siteSecret
     ) {
@@ -128,7 +128,8 @@ public class SiteController {
     }
 
     /**
-     * Ony for internal use or service-layer use. Should not be exposed externally.
+     * Only for internal use or service-layer use. Should not be exposed externally.
+     * Client-side ID determination bears inconsistency.
      */
     @RequestMapping(path = "{siteId}/pages/{pageId}", method = RequestMethod.PUT)
     private ResponseEntity<FetchedPage> updateExistingPageInSiteIndex(
@@ -204,7 +205,7 @@ public class SiteController {
     }
 
     @RequestMapping(path = "{siteId}/pages", method = RequestMethod.DELETE)
-    ResponseEntity<?> deleteViaUrl(
+    private ResponseEntity<?> deleteViaUrl(
             @PathVariable(value = "siteId") UUID siteId,
             @RequestParam(value = "url") String url,
             @RequestParam(name = "siteSecret") UUID siteSecret
@@ -215,7 +216,7 @@ public class SiteController {
     }
 
     @RequestMapping(path = "{siteId}", method = RequestMethod.DELETE)
-    ResponseEntity<?> clearSiteIndex(
+    private ResponseEntity<?> clearSiteIndex(
             @PathVariable(value = "siteId") UUID siteId,
             @RequestParam(name = "siteSecret") UUID siteSecret
     ) {
@@ -227,7 +228,7 @@ public class SiteController {
     }
 
     @RequestMapping(path = "{siteId}/autocomplete", method = RequestMethod.GET)
-    ResponseEntity<Autocomplete> autocompleteSuggestion(
+    private ResponseEntity<Autocomplete> autocompleteSuggestion(
             @CookieValue(value = "override-site", required = false) UUID cookieSite,
             @RequestParam(value = "query", defaultValue = "") String query,
             @PathVariable(value = "siteId") UUID siteId
