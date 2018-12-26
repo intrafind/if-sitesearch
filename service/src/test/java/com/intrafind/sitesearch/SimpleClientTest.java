@@ -52,7 +52,7 @@ import static org.junit.Assert.assertNull;
 @FixMethodOrder(MethodSorters.JVM)
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(value = "oss")
+@ActiveProfiles("oss")
 public class SimpleClientTest {
     private final static Logger LOG = LoggerFactory.getLogger(SimpleClientTest.class);
     @Autowired

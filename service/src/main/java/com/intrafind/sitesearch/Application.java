@@ -45,9 +45,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -149,54 +146,7 @@ public class Application {
         return expectedSignature.toLowerCase().equals(signature);
     }
 
-//    // for testing GitHub OAuth2 requests only // TODO remove altogether later on
-//    @RequestMapping(path = "/login/test", method = RequestMethod.POST)
-//    ResponseEntity<Object> login(
-//            @RequestParam(value = "code", required = false) String code,
-//            @RequestParam(value = "access_token", required = false) String token,
-//            @RequestParam(value = "client_id", required = false) String id,
-//            @RequestParam(value = "client_secret", required = false) String secret,
-//            @RequestParam(value = "state", required = false) String state,
-//            @RequestParam(value = "redirect_uri", required = false) String redirect_uri,
-//            @RequestBody(required = false) Object o
-//    ) {
-//
-//        LOG.info("code: " + code);
-//        LOG.info("token: " + token);
-//        LOG.info("id: " + id);
-//        LOG.info("secret: " + secret);
-//        LOG.info("state: " + state);
-//        LOG.info("redirect_uri: " + redirect_uri);
-//        LOG.info("o: " + o);
-//        return ResponseEntity
-//                .status(HttpStatus.FORBIDDEN)
-//                .body("Error Message");
-//    }
-//
-//    // for testing GitHub OAuth2 requests only // TODO remove altogether later on
-//    @RequestMapping(path = "/login/test1", method = RequestMethod.GET)
-//    ResponseEntity<Object> login1(
-//            @RequestParam(value = "code", required = false) String code,
-//            @RequestParam(value = "access_token", required = false) String token,
-//            @RequestParam(value = "client_id", required = false) String id,
-//            @RequestParam(value = "client_secret", required = false) String secret,
-//            @RequestParam(value = "state", required = false) String state,
-//            @RequestParam(value = "redirect_uri", required = false) String redirect_uri,
-//            @RequestBody(required = false) Object o
-//    ) {
-//        LOG.info("code: " + code);
-//        LOG.info("token: " + token);
-//        LOG.info("id: " + id);
-//        LOG.info("secret: " + secret);
-//        LOG.info("state: " + state);
-//        LOG.info("redirect_uri: " + redirect_uri);
-//        LOG.info("o: " + o);
-//        return ResponseEntity.ok(o);
-//    }
-
-    public static final List<String> ACTIVE_PROFILE = new ArrayList<>();
     public static void main(final String... args) {
         final ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
-        ACTIVE_PROFILE.addAll(Arrays.asList(context.getEnvironment().getDefaultProfiles()));
     }
 }

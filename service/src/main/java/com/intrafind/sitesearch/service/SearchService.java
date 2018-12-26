@@ -52,9 +52,7 @@ public class SearchService {
         );
 
         final var siteDocuments = new ArrayList<FoundPage>();
-        hits.getDocuments().forEach(document -> {
-            siteDocuments.add(document.toFoundPage());
-        });
+        hits.getDocuments().forEach(document -> siteDocuments.add(document.toFoundPage()));
 
         return new Hits(query, siteDocuments);
     }

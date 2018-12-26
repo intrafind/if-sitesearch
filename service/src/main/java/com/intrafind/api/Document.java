@@ -104,10 +104,11 @@ public final class Document implements Serializable {
         return this;
     }
 
+    private static final boolean IS_OSS = System.getenv("SPRING_PROFILES_ACTIVE") != null && "oss".equals(System.getenv("SPRING_PROFILES_ACTIVE"));
     private static final String HIT_TEASER_PREFIX;
 
-    static {
-        if (System.getenv("DESKTOP_SESSION") != null) {
+    static { // oss profile switch
+        if (IS_OSS) {
             HIT_TEASER_PREFIX = "";
         } else {
             HIT_TEASER_PREFIX = "hit.teaser.";
