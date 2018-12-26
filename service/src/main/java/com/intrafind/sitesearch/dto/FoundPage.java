@@ -41,15 +41,6 @@ public class FoundPage {
         this.thumbnail = thumbnail == null ? "" : thumbnail;
     }
 
-//    public FoundPage(String title, String body, String url, String urlRaw, List<String> sisLabels) {
-//        this.title = title;
-//        this.body = body;
-//        this.url = url;
-//        this.urlRaw = urlRaw;
-//        this.sisLabels = sisLabels;
-//        this.thumbnail = "";
-//    }
-
     public String getThumbnail() {
         return thumbnail;
     }

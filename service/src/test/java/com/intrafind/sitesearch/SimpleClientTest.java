@@ -18,6 +18,7 @@ package com.intrafind.sitesearch;
 
 import com.intrafind.sitesearch.controller.SiteController;
 import com.intrafind.sitesearch.dto.FetchedPage;
+import com.intrafind.sitesearch.dto.FoundPage;
 import com.intrafind.sitesearch.dto.SiteProfile;
 import com.intrafind.sitesearch.integration.SiteTest;
 import org.junit.Test;
@@ -36,6 +37,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.net.http.HttpClient;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -89,6 +91,7 @@ public class SimpleClientTest {
     @Test
     public void crudPage() throws Exception {
         updatePage();
+//        search();
         fetchPage();
         deletePage();
     }
@@ -99,6 +102,18 @@ public class SimpleClientTest {
     public void crudSiteProfile() throws Exception {
         updateSiteProfile();
         fetchSiteProfile();
+    }
+
+    private void search() throws Exception {
+        final var search = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/search?query=.solution..",
+                HttpMethod.GET, HttpEntity.EMPTY, FoundPage.class);
+
+        assertEquals(HttpStatus.OK, search.getStatusCode());
+        assertNotNull(search.getBody());
+        assertEquals(SiteTest.buildPage().getSisLabels(), Arrays.asList("mars", "Venus"));
+        assertEquals(SiteTest.buildPage().getTitle(), search.getBody().getTitle());
+        assertEquals(SiteTest.buildPage().getBody(), search.getBody().getBody());
+        assertEquals(SiteTest.buildPage().getUrl(), search.getBody().getUrl());
     }
 
     private void updateSiteProfile() {

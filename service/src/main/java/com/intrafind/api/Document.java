@@ -27,7 +27,7 @@ import java.util.TreeMap;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class Document implements Serializable {
-    @JsonAlias(value = {"_id", "id"})
+    @JsonAlias(value = {"id", "_id"})
     private final String id;
     @JsonAlias(value = {"fields", "_source"})
     private final Map<String, List<String>> fields = new TreeMap<>();

@@ -16,6 +16,9 @@
 
 package com.intrafind.api.search;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.intrafind.api.Document;
 
 import java.io.Serializable;
@@ -23,9 +26,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public final class Hits implements Serializable {
-    private static final String KEY_TOTAL_HITS = "totalHits";
+    @JsonAlias(value = {"documents", "hits"})
     private final List<Document> documents = new ArrayList<>();
+    private int total;
+    @JsonProperty("max_score")
+    private float maxScore;
+
+    public int getTotal() {
+        return total;
+    }
+
+    private static final String KEY_TOTAL_HITS = "totalHits";
+
+    public float getMaxScore() {
+        return maxScore;
+    }
+
     private final Document metaData = new Document("meta");
 
     private Hits() {
