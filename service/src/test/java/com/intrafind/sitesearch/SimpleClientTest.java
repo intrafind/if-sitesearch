@@ -16,6 +16,7 @@
 
 package com.intrafind.sitesearch;
 
+import com.intrafind.api.Document;
 import com.intrafind.sitesearch.controller.SiteController;
 import com.intrafind.sitesearch.dto.FetchedPage;
 import com.intrafind.sitesearch.dto.FoundPage;
@@ -122,7 +123,7 @@ public class SimpleClientTest {
         assertEquals(1, search.getBody().getResults().size());
         final FoundPage foundPage = search.getBody().getResults().get(0);
         assertEquals(SiteTest.buildPage().getSisLabels(), Arrays.asList("mars", "Venus"));
-        { // works once oss switch is enabled via SPRING_PROFILES_ACTIVE=oss
+        if (Document.IS_OSS) { // works once oss switch is enabled via SPRING_PROFILES_ACTIVE=oss
             assertEquals(SiteTest.buildPage().getTitle(), foundPage.getTitle());
             assertEquals(SiteTest.buildPage().getBody(), foundPage.getBody());
             assertEquals(SiteTest.buildPage().getUrl(), foundPage.getUrl());

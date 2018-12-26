@@ -104,7 +104,7 @@ public final class Document implements Serializable {
         return this;
     }
 
-    private static final boolean IS_OSS = System.getenv("SPRING_PROFILES_ACTIVE") != null && "oss".equals(System.getenv("SPRING_PROFILES_ACTIVE"));
+    public static final boolean IS_OSS = System.getenv("SPRING_PROFILES_ACTIVE") != null && "oss".equals(System.getenv("SPRING_PROFILES_ACTIVE"));
     private static final String HIT_TEASER_PREFIX;
 
     static { // oss profile switch
