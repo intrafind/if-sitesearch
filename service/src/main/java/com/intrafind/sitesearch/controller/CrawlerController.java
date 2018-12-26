@@ -78,7 +78,7 @@ public class CrawlerController {
     private static final Logger LOG = LoggerFactory.getLogger(CrawlerController.class);
     private static final String PROSPECTS_EMAIL_ADDRESS = "Support - Site Search <f518c8ec.intrafind.de@emea.teams.ms>";
     private static final String INVISIBLE_RECAPTCHA_SITE_SECRET = System.getenv("INVISIBLE_RECAPTCHA_SITE_SECRET");
-    private static final String DEV_SKIP_FLAG = System.getenv("DEV_SKIP_FLAG");
+    public static final String DEV_SKIP_FLAG = System.getenv("DEV_SKIP_FLAG");
     private final SiteService siteService;
     private final CrawlerService crawlerService;
 

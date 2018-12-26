@@ -19,10 +19,13 @@ package com.intrafind.sitesearch;
 import com.intrafind.sitesearch.controller.SiteController;
 import com.intrafind.sitesearch.dto.FetchedPage;
 import com.intrafind.sitesearch.dto.FoundPage;
+import com.intrafind.sitesearch.dto.Hits;
 import com.intrafind.sitesearch.dto.SiteProfile;
 import com.intrafind.sitesearch.integration.SiteTest;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +34,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -46,9 +48,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+@FixMethodOrder(MethodSorters.JVM)
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(value = "oss")
+//@ActiveProfiles(value = "oss")
 public class SimpleClientTest {
     private final static Logger LOG = LoggerFactory.getLogger(SimpleClientTest.class);
     @Autowired
@@ -90,9 +93,15 @@ public class SimpleClientTest {
     }
 
     @Test
+    public void crudSiteProfile() throws Exception {
+        updateSiteProfile();
+        fetchSiteProfile();
+    }
+
+    @Test
     public void crudPage() throws Exception {
         updatePage();
-//        search();
+        search();
         fetchPage();
         TimeUnit.MILLISECONDS.sleep(1_000);
         deletePage();
@@ -100,22 +109,20 @@ public class SimpleClientTest {
 
     private static final String EMAIL = "user@examaple.com";
 
-    @Test
-    public void crudSiteProfile() throws Exception {
-        updateSiteProfile();
-        fetchSiteProfile();
-    }
-
     private void search() throws Exception {
-        final var search = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/search?query=.solution..",
-                HttpMethod.GET, HttpEntity.EMPTY, FoundPage.class);
+        final var searchQuery = ",.solution,.";
+        final var search = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/search?query=" + searchQuery,
+                HttpMethod.GET, HttpEntity.EMPTY, Hits.class);
 
         assertEquals(HttpStatus.OK, search.getStatusCode());
         assertNotNull(search.getBody());
+        assertEquals(searchQuery, search.getBody().getQuery());
+        assertEquals(1, search.getBody().getResults().size());
+        final FoundPage foundPage = search.getBody().getResults().get(0);
         assertEquals(SiteTest.buildPage().getSisLabels(), Arrays.asList("mars", "Venus"));
-        assertEquals(SiteTest.buildPage().getTitle(), search.getBody().getTitle());
-        assertEquals(SiteTest.buildPage().getBody(), search.getBody().getBody());
-        assertEquals(SiteTest.buildPage().getUrl(), search.getBody().getUrl());
+        assertEquals(SiteTest.buildPage().getTitle(), foundPage.getTitle());
+        assertEquals(SiteTest.buildPage().getBody(), foundPage.getBody());
+        assertEquals(SiteTest.buildPage().getUrl(), foundPage.getUrl());
     }
 
     private void updateSiteProfile() {

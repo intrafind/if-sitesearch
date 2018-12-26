@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +45,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -190,7 +194,9 @@ public class Application {
 //        return ResponseEntity.ok(o);
 //    }
 
+    public static final List<String> ACTIVE_PROFILE = new ArrayList<>();
     public static void main(final String... args) {
-        SpringApplication.run(Application.class, args);
+        final ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
+        ACTIVE_PROFILE.addAll(Arrays.asList(context.getEnvironment().getDefaultProfiles()));
     }
 }

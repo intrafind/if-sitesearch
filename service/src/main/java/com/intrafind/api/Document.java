@@ -18,6 +18,9 @@ package com.intrafind.api;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.intrafind.sitesearch.controller.CrawlerController;
+import com.intrafind.sitesearch.dto.FoundPage;
+import com.intrafind.sitesearch.service.SiteService;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -100,6 +103,27 @@ public final class Document implements Serializable {
     public Document del(final String key) {
         this.getFields().remove(key);
         return this;
+    }
+
+    private static final String HIT_TEASER_PREFIX;
+
+    static {
+        if (Boolean.valueOf(CrawlerController.DEV_SKIP_FLAG)) {
+            HIT_TEASER_PREFIX = "";
+        } else {
+            HIT_TEASER_PREFIX = "hit.teaser.";
+        }
+    }
+
+    public FoundPage toFoundPage() {
+        return new FoundPage(
+                this.get(HIT_TEASER_PREFIX + Fields.TITLE),
+                this.get(HIT_TEASER_PREFIX + Fields.BODY),
+                this.get(HIT_TEASER_PREFIX + Fields.URL),
+                this.get(Fields.URL),
+                this.getAll(SiteService.PAGE_LABELS),
+                this.get(SiteService.PAGE_THUMBNAIL)
+        );
     }
 
     @Override

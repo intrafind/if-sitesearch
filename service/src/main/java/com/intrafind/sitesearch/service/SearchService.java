@@ -29,7 +29,7 @@ import java.util.UUID;
 @Service
 public class SearchService {
     static final String QUERY_SEPARATOR = ",";
-    private static final String HIT_TEASER_PREFIX = "hit.teaser.";
+//    private static final String HIT_TEASER_PREFIX = "hit.teaser.";
 
     private final Search searchService;
 
@@ -54,15 +54,7 @@ public class SearchService {
 
         final var siteDocuments = new ArrayList<FoundPage>();
         hits.getDocuments().forEach(document -> {
-            final var site = new FoundPage(
-                    document.get(HIT_TEASER_PREFIX + Fields.TITLE),
-                    document.get(HIT_TEASER_PREFIX + Fields.BODY),
-                    document.get(HIT_TEASER_PREFIX + Fields.URL),
-                    document.get(Fields.URL),
-                    document.getAll(SiteService.PAGE_LABELS),
-                    document.get(SiteService.PAGE_THUMBNAIL)
-            );
-            siteDocuments.add(site);
+            siteDocuments.add(document.toFoundPage());
         });
 
         return new Hits(query, siteDocuments);

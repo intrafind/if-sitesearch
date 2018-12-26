@@ -81,10 +81,10 @@ public class SiteService {
      * Field is updated whenever a document is (re-)indexed.
      */
     private static final String PAGE_TIMESTAMP = "timestamp";
-    static final String PAGE_LABELS = "_store.sisLabels";
+    public static final String PAGE_LABELS = "_store.sisLabels";
     static final String PAGE_THUMBNAIL_META_NAME = "thumbnail";
     static final String PAGE_LABELS_META_NAME = "sis-labels";
-    static final String PAGE_THUMBNAIL = "_store.thumbnail";
+    public static final String PAGE_THUMBNAIL = "_store.thumbnail";
     private static final String PAGE_TIMESTAMP_NEW = "_store.timestamp";
 
     @Autowired
