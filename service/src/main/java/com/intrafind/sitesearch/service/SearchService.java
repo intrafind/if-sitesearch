@@ -29,7 +29,6 @@ import java.util.UUID;
 @Service
 public class SearchService {
     static final String QUERY_SEPARATOR = ",";
-//    private static final String HIT_TEASER_PREFIX = "hit.teaser.";
 
     private final Search searchService;
 

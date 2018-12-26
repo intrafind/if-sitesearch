@@ -34,6 +34,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -51,7 +52,7 @@ import static org.junit.Assert.assertNull;
 @FixMethodOrder(MethodSorters.JVM)
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-//@ActiveProfiles(value = "oss")
+@ActiveProfiles(value = "oss")
 public class SimpleClientTest {
     private final static Logger LOG = LoggerFactory.getLogger(SimpleClientTest.class);
     @Autowired
@@ -109,7 +110,7 @@ public class SimpleClientTest {
 
     private static final String EMAIL = "user@examaple.com";
 
-    private void search() throws Exception {
+    private void search() {
         final var searchQuery = ",.solution,.";
         final var search = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/search?query=" + searchQuery,
                 HttpMethod.GET, HttpEntity.EMPTY, Hits.class);
