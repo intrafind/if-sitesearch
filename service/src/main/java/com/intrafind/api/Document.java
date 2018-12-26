@@ -18,7 +18,6 @@ package com.intrafind.api;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.intrafind.sitesearch.controller.CrawlerController;
 import com.intrafind.sitesearch.dto.FoundPage;
 import com.intrafind.sitesearch.service.SiteService;
 
@@ -108,7 +107,7 @@ public final class Document implements Serializable {
     private static final String HIT_TEASER_PREFIX;
 
     static {
-        if (Boolean.valueOf(CrawlerController.DEV_SKIP_FLAG)) {
+        if (System.getenv("DESKTOP_SESSION") != null) {
             HIT_TEASER_PREFIX = "";
         } else {
             HIT_TEASER_PREFIX = "hit.teaser.";
