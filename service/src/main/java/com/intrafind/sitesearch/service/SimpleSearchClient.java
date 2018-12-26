@@ -54,18 +54,18 @@ public class SimpleSearchClient implements Search {
                     .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .POST(HttpRequest.BodyPublishers.ofString("{\"query\": {\"query_string\": {\"query\": \"" + searchQuery + "\"" + "}}}," +
-                            "    \"highlight\" : {" +
-                            "        \"pre_tags\" : [\"<span class='if-teaser-highlight'>\"]," +
-                            "        \"post_tags\" : [\"</span>\"]," +
-                            "        \"number_of_fragments\": 1," +
-                            "        \"fragment_size\": 150," +
-                            "        \"fields\": {" +
-                            "            \"_str.body\" : {}," +
-                            "            \"_str.title\" : {}," +
-                            "            \"_str.url\" : {}" +
-                            "        }" +
-                            "    }," +
-                            "    \"size\": 50"))
+                            "\"highlight\" : {" +
+                            "    \"pre_tags\" : [\"<span class='if-teaser-highlight'>\"]," +
+                            "    \"post_tags\" : [\"</span>\"]," +
+                            "    \"number_of_fragments\": 1," +
+                            "    \"fragment_size\": 150," +
+                            "    \"fields\": {" +
+                            "        \"_str.body\" : {}," +
+                            "        \"_str.title\" : {}," +
+                            "        \"_str.url\" : {}" +
+                            "    }" +
+                            "}," +
+                            "\"size\": 50"))
                     .build();
 
             final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());

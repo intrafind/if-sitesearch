@@ -40,6 +40,7 @@ import java.net.http.HttpClient;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -93,6 +94,7 @@ public class SimpleClientTest {
         updatePage();
 //        search();
         fetchPage();
+        TimeUnit.MILLISECONDS.sleep(1_000);
         deletePage();
     }
 
