@@ -35,6 +35,7 @@
     <orderEntry type="library" name="Gradle: org.mnode.mstor:mstor:1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.oauth-client:google-oauth-client-jetty:1.27.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.apis:google-api-services-gmail:v1-rev20181202-1.27.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.codehaus.groovy:groovy-templates:2.5.5" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-json:2.1.1.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.7" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.7" level="project" />
@@ -110,6 +111,8 @@
     <orderEntry type="library" name="Gradle: biz.aQute.bnd:bndlib:2.2.0" level="project" />
     <orderEntry type="library" name="Gradle: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" name="Gradle: org.mortbay.jetty:jetty:6.1.26" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.codehaus.groovy:groovy-xml:2.5.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.codehaus.groovy:groovy:2.5.4" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.9.7" level="project" />
     <orderEntry type="library" name="Gradle: javax.activation:javax.activation-api:1.2.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-beans:5.1.3.RELEASE" level="project" />
@@ -162,7 +165,6 @@
     <orderEntry type="library" name="Gradle: io.netty:netty-resolver:4.1.31.Final" level="project" />
     <orderEntry type="library" name="Gradle: io.netty:netty-common:4.1.31.Final" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.tika:tika-parsers:1.19.1" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.codehaus.groovy:groovy-templates:2.5.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.jaxb:jaxb-core:2.3.0.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: edu.ucar:netcdf4:4.5.5" level="project" />
@@ -223,8 +225,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.uima:uimaj-core:2.9.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.pdfbox:jbig2-imageio:3.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.jai-imageio:jai-imageio-core:1.4.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.codehaus.groovy:groovy-xml:2.5.4" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.codehaus.groovy:groovy:2.5.4" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.cxf:cxf-rt-frontend-jaxrs:3.2.6" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.yaml:snakeyaml:1.23" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jboss.xnio:xnio-nio:3.3.8.Final" level="project" />
@@ -274,7 +274,6 @@
     <orderEntry type="library" scope="TEST" name="Gradle: net.minidev:accessors-smart:1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.ow2.asm:asm:5.0.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.tika:tika-parsers:1.19.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.codehaus.groovy:groovy-templates:2.5.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.springframework.boot:spring-boot-devtools:2.1.1.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish.jaxb:jaxb-core:2.3.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.1" level="project" />
@@ -336,8 +335,6 @@
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.uima:uimaj-core:2.9.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.pdfbox:jbig2-imageio:3.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.jai-imageio:jai-imageio-core:1.4.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.codehaus.groovy:groovy-xml:2.5.4" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.codehaus.groovy:groovy:2.5.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.cxf:cxf-rt-frontend-jaxrs:3.2.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.yaml:snakeyaml:1.23" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jboss.xnio:xnio-nio:3.3.8.Final" level="project" />
