@@ -14,6 +14,22 @@
  * limitations under the License.
  */
 
+/*
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.sshAgent
@@ -53,20 +69,18 @@ version = "2018.2"
 project {
     description = "Software as a Service"
 
-    vcsRoot(HttpsGithubComIntrafindIfSitesearchRefsHeadsMaster3)
+    vcsRoot(ProdRelease)
     vcsRoot(IfSitesearchRouter)
     vcsRoot(Recrawl_1)
-    vcsRoot(HttpsGithubComLoxalIfSitesearchRefsHeadsMaster1)
-    vcsRoot(HttpsGithubComIntrafindIfSitesearchGitRefsHeadsMaster)
-    vcsRoot(NewSmokeApiHealthChecksIfSitesearch)
-//    vcsRoot(Elk)
-    vcsRoot(HttpsGithubComIntrafindIfSitesearchRefsHeadsMaster21)
+    vcsRoot(LoadTestVcs)
+    vcsRoot(LoadTestVcs)
+    vcsRoot(SmokeApiHealthCheck)
+    vcsRoot(IFinderCore)
 
     buildType(Recrawl)
     buildType(LoadTest)
     buildType(UpdateIFinderCore)
     buildType(DailySnapshotsAndCleanups)
-//    buildType(UpdateElk)
     buildType(BGRelease)
     buildType(Build)
     buildType(SmokeTest)
@@ -174,7 +188,7 @@ object BGRelease : BuildType({
     }
 
     vcs {
-        root(HttpsGithubComIntrafindIfSitesearchRefsHeadsMaster3)
+        root(ProdRelease)
     }
 
     steps {
@@ -281,7 +295,7 @@ object DailySnapshotsAndCleanups : BuildType({
     description = "daily snapshots and cleanups on gce ..."
 
     vcs {
-        root(HttpsGithubComIntrafindIfSitesearchGitRefsHeadsMaster)
+        root(LoadTestVcs)
     }
 
     steps {
@@ -334,7 +348,7 @@ object LoadTest : BuildType({
     detectHangingBuilds = false
 
     vcs {
-        root(HttpsGithubComLoxalIfSitesearchRefsHeadsMaster1)
+        root(LoadTestVcs)
     }
 
     steps {
@@ -443,7 +457,7 @@ object SmokeTest : BuildType({
     description = "Smoke Tests"
 
     vcs {
-        root(NewSmokeApiHealthChecksIfSitesearch)
+        root(SmokeApiHealthCheck)
     }
 
     steps {
@@ -479,27 +493,13 @@ object SmokeTest : BuildType({
     }
 })
 
-//object UpdateElk : BuildType({
-//    name = "Update ELK"
-//
-//    vcs {
-//        root(Elk)
-//    }
-//
-//    steps {
-//        script {
-//            scriptContent = "sh ./ops/start-or-update-elk.sh"
-//        }
-//    }
-//})
-
 object UpdateIFinderCore : BuildType({
     name = "Update iFinder Core"
     description = "Make sure ${'$'}HOME/tmp/${'$'}service_name.tar for both Elasticsearch & Search Service exist"
     paused = true
 
     vcs {
-        root(HttpsGithubComIntrafindIfSitesearchRefsHeadsMaster21)
+        root(IFinderCore)
     }
 
     steps {
@@ -509,25 +509,7 @@ object UpdateIFinderCore : BuildType({
     }
 })
 
-//object Elk : GitVcsRoot({
-//    name = "ELK"
-//    url = "https://github.com/intrafind/if-sitesearch"
-//    authMethod = password {
-//        userName = "loxal"
-//        password = "credentialsJSON:91f52c32-83d5-465b-bd17-262b0a37cd3f"
-//    }
-//})
-
-object HttpsGithubComIntrafindIfSitesearchGitRefsHeadsMaster : GitVcsRoot({
-    name = "https://github.com/intrafind/if-sitesearch.git#refs/heads/master"
-    url = "https://github.com/intrafind/if-sitesearch.git"
-    authMethod = password {
-        userName = "bachka"
-        password = "credentialsJSON:f30f2411-0b3f-42b4-965c-c1fa0f724751"
-    }
-})
-
-object HttpsGithubComIntrafindIfSitesearchRefsHeadsMaster21 : GitVcsRoot({
+object IFinderCore : GitVcsRoot({
     name = "iFinder Core"
     url = "https://github.com/intrafind/if-sitesearch"
     authMethod = password {
@@ -536,8 +518,8 @@ object HttpsGithubComIntrafindIfSitesearchRefsHeadsMaster21 : GitVcsRoot({
     }
 })
 
-object HttpsGithubComIntrafindIfSitesearchRefsHeadsMaster3 : GitVcsRoot({
-    name = "bg-if-sitesearch"
+object ProdRelease : GitVcsRoot({
+    name = "prod-release"
     url = "https://github.com/intrafind/if-sitesearch"
     authMethod = password {
         userName = "loxal"
@@ -545,8 +527,8 @@ object HttpsGithubComIntrafindIfSitesearchRefsHeadsMaster3 : GitVcsRoot({
     }
 })
 
-object HttpsGithubComLoxalIfSitesearchRefsHeadsMaster1 : GitVcsRoot({
-    name = "https://github.com/intrafind/if-sitesearch#refs/heads/master (1)"
+object LoadTestVcs : GitVcsRoot({
+    name = "LoadTestVcs"
     url = "https://github.com/intrafind/if-sitesearch"
     authMethod = password {
         userName = "loxal"
@@ -563,8 +545,8 @@ object IfSitesearchRouter : GitVcsRoot({
     }
 })
 
-object NewSmokeApiHealthChecksIfSitesearch : GitVcsRoot({
-    name = "new-smoke-api-health-checks-if-sitesearch"
+object SmokeApiHealthCheck : GitVcsRoot({
+    name = "SmokeApiHealthCheck"
     url = "https://github.com/intrafind/if-sitesearch"
     authMethod = password {
         userName = "loxal"
