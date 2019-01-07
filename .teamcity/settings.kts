@@ -1,3 +1,19 @@
+/*
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.sshAgent
@@ -43,14 +59,14 @@ project {
     vcsRoot(HttpsGithubComLoxalIfSitesearchRefsHeadsMaster1)
     vcsRoot(HttpsGithubComIntrafindIfSitesearchGitRefsHeadsMaster)
     vcsRoot(NewSmokeApiHealthChecksIfSitesearch)
-    vcsRoot(Elk)
+//    vcsRoot(Elk)
     vcsRoot(HttpsGithubComIntrafindIfSitesearchRefsHeadsMaster21)
 
     buildType(Recrawl)
     buildType(LoadTest)
     buildType(UpdateIFinderCore)
     buildType(DailySnapshotsAndCleanups)
-    buildType(UpdateElk)
+//    buildType(UpdateElk)
     buildType(BGRelease)
     buildType(Build)
     buildType(SmokeTest)
@@ -463,19 +479,19 @@ object SmokeTest : BuildType({
     }
 })
 
-object UpdateElk : BuildType({
-    name = "Update ELK"
-
-    vcs {
-        root(Elk)
-    }
-
-    steps {
-        script {
-            scriptContent = "sh ./ops/start-or-update-elk.sh"
-        }
-    }
-})
+//object UpdateElk : BuildType({
+//    name = "Update ELK"
+//
+//    vcs {
+//        root(Elk)
+//    }
+//
+//    steps {
+//        script {
+//            scriptContent = "sh ./ops/start-or-update-elk.sh"
+//        }
+//    }
+//})
 
 object UpdateIFinderCore : BuildType({
     name = "Update iFinder Core"
@@ -493,14 +509,14 @@ object UpdateIFinderCore : BuildType({
     }
 })
 
-object Elk : GitVcsRoot({
-    name = "ELK"
-    url = "https://github.com/intrafind/if-sitesearch"
-    authMethod = password {
-        userName = "loxal"
-        password = "credentialsJSON:91f52c32-83d5-465b-bd17-262b0a37cd3f"
-    }
-})
+//object Elk : GitVcsRoot({
+//    name = "ELK"
+//    url = "https://github.com/intrafind/if-sitesearch"
+//    authMethod = password {
+//        userName = "loxal"
+//        password = "credentialsJSON:91f52c32-83d5-465b-bd17-262b0a37cd3f"
+//    }
+//})
 
 object HttpsGithubComIntrafindIfSitesearchGitRefsHeadsMaster : GitVcsRoot({
     name = "https://github.com/intrafind/if-sitesearch.git#refs/heads/master"
