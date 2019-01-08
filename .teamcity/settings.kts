@@ -142,6 +142,22 @@
  * limitations under the License.
  */
 
+/*
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.sshAgent
@@ -187,7 +203,7 @@ project {
     vcsRoot(HttpsGithubComLoxalIfSitesearchRefsHeadsMaster1)
     vcsRoot(HttpsGithubComIntrafindIfSitesearchGitRefsHeadsMaster)
     vcsRoot(SmokeApiHealthChecksIfSitesearch)
-    vcsRoot(HttpsGithubComIntrafindIfSitesearchRefsHeadsMaster21)
+    vcsRoot(IFinderCore)
 
     buildType(Recrawl)
     buildType(LoadTest)
@@ -611,7 +627,7 @@ object UpdateIFinderCore : BuildType({
     paused = true
 
     vcs {
-        root(HttpsGithubComIntrafindIfSitesearchRefsHeadsMaster21)
+        root(IFinderCore)
     }
 
     steps {
@@ -630,8 +646,8 @@ object HttpsGithubComIntrafindIfSitesearchGitRefsHeadsMaster : GitVcsRoot({
     }
 })
 
-object HttpsGithubComIntrafindIfSitesearchRefsHeadsMaster21 : GitVcsRoot({
-    name = "iFinder Core"
+object IFinderCore : GitVcsRoot({
+    name = "iFinder-core"
     url = "https://github.com/intrafind/if-sitesearch"
     authMethod = password {
         userName = "loxal"
