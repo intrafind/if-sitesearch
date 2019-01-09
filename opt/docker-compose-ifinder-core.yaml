@@ -11,8 +11,8 @@ services:
       - sitesearch-elasticsearch-quorum
     environment:
       - elasticsearch_hosts=sitesearch-elasticsearch, sitesearch-elasticsearch-1, sitesearch-elasticsearch-quorum
-    volumes:
-      - /srv/sitesearch-search-service:/srv/sitesearch-search-service:rw
+    #    volumes:
+    #      - /srv/sitesearch-search-service:/srv/sitesearch-search-service:rw
     networks:
       - sitesearch
 
@@ -26,8 +26,8 @@ services:
       - sitesearch-elasticsearch-quorum
     environment:
       - elasticsearch_hosts=sitesearch-elasticsearch, sitesearch-elasticsearch-1, sitesearch-elasticsearch-quorum
-    volumes:
-      - /srv/sitesearch-search-service-1:/srv/sitesearch-search-service:rw
+    #    volumes:
+    #      - /srv/sitesearch-search-service-1:/srv/sitesearch-search-service:rw
     networks:
       - sitesearch
 
