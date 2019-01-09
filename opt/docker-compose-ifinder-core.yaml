@@ -42,6 +42,7 @@ services:
       - minimum_master_nodes=2
     volumes:
       - /srv/sitesearch-elasticsearch/data:/home/app_user/data:rw
+      - /srv/intrafind-managed.license:/home/app_user/intrafind.lic
     networks:
       - sitesearch
 
@@ -54,6 +55,7 @@ services:
       - minimum_master_nodes=2
     volumes:
       - /srv/sitesearch-elasticsearch-1/data:/home/app_user/data:rw
+      - /srv/intrafind-managed.license:/home/app_user/intrafind.lic
     networks:
       - sitesearch
 
@@ -67,6 +69,7 @@ services:
       - ELASTICSEARCH_NODE_DATA=false
     volumes:
       - /srv/sitesearch-elasticsearch-quorum/data:/home/app_user/data:rw
+      - /srv/intrafind-managed.license:/home/app_user/intrafind.lic
     networks:
       - sitesearch
 

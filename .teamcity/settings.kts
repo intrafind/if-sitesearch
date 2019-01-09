@@ -190,6 +190,22 @@
  * limitations under the License.
  */
 
+/*
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.sshAgent
@@ -235,11 +251,11 @@ project {
     vcsRoot(HttpsGithubComLoxalIfSitesearchRefsHeadsMaster1)
     vcsRoot(Daily)
     vcsRoot(SmokeApiHealthChecksIfSitesearch)
-    vcsRoot(IFinderCore)
+//    vcsRoot(IFinderCore)
 
     buildType(Recrawl)
     buildType(LoadTest)
-    buildType(UpdateIFinderCore)
+//    buildType(UpdateIFinderCore)
     buildType(DailySnapshotsAndCleanups)
     buildType(BGRelease)
     buildType(Build)
@@ -653,21 +669,21 @@ object SmokeTest : BuildType({
     }
 })
 
-object UpdateIFinderCore : BuildType({
-    name = "Update iFinder Core"
-    description = "Make sure ${'$'}HOME/tmp/${'$'}service_name.tar for both Elasticsearch & Search Service exist"
-    paused = true
-
-    vcs {
-        root(IFinderCore)
-    }
-
-    steps {
-        script {
-            scriptContent = "sh ./bootstrap/update-iFinder-core.sh"
-        }
-    }
-})
+//object UpdateIFinderCore : BuildType({
+//    name = "Update iFinder Core"
+//    description = "Make sure ${'$'}HOME/tmp/${'$'}service_name.tar for both Elasticsearch & Search Service exist"
+//    paused = true
+//
+//    vcs {
+//        root(IFinderCore)
+//    }
+//
+//    steps {
+//        script {
+//            scriptContent = "sh ./bootstrap/update-iFinder-core.sh"
+//        }
+//    }
+//})
 
 object Daily : GitVcsRoot({
     name = "daily"
@@ -678,14 +694,14 @@ object Daily : GitVcsRoot({
     }
 })
 
-object IFinderCore : GitVcsRoot({
-    name = "iFinder-core"
-    url = "https://github.com/intrafind/if-sitesearch"
-    authMethod = password {
-        userName = "loxal"
-        password = "credentialsJSON:91f52c32-83d5-465b-bd17-262b0a37cd3f"
-    }
-})
+//object IFinderCore : GitVcsRoot({
+//    name = "iFinder-core"
+//    url = "https://github.com/intrafind/if-sitesearch"
+//    authMethod = password {
+//        userName = "loxal"
+//        password = "credentialsJSON:91f52c32-83d5-465b-bd17-262b0a37cd3f"
+//    }
+//})
 
 object ProdRelease : GitVcsRoot({
     name = "prod-release"
