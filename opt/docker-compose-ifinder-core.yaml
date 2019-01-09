@@ -11,7 +11,8 @@ services:
       - sitesearch-elasticsearch-quorum
     environment:
       - elasticsearch_hosts=sitesearch-elasticsearch, sitesearch-elasticsearch-1, sitesearch-elasticsearch-quorum
-    #    volumes:
+    volumes:
+      - /srv/intrafind-managed.license:/home/app_user/sitesearch-search-service/intrafind.lic
     #      - /srv/sitesearch-search-service:/srv/sitesearch-search-service:rw
     networks:
       - sitesearch
@@ -26,7 +27,8 @@ services:
       - sitesearch-elasticsearch-quorum
     environment:
       - elasticsearch_hosts=sitesearch-elasticsearch, sitesearch-elasticsearch-1, sitesearch-elasticsearch-quorum
-    #    volumes:
+    volumes:
+      - /srv/intrafind-managed.license:/home/app_user/sitesearch-search-service/intrafind.lic
     #      - /srv/sitesearch-search-service-1:/srv/sitesearch-search-service:rw
     networks:
       - sitesearch
