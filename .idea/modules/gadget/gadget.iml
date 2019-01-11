@@ -31,8 +31,8 @@
     <output-test url="file://$MODULE_DIR$/../../../gadget/out/test/classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../../gadget">
-      <sourceFolder url="file://$MODULE_DIR$/../../../gadget/src/main/kotlin" type="kotlin-source" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../gadget/src/main/resources" type="kotlin-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../gadget/src/main/kotlin" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../gadget/src/main/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../../gadget/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../gadget/build" />
       <excludeFolder url="file://$MODULE_DIR$/../../../gadget/out" />
