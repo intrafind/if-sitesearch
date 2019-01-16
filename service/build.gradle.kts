@@ -34,8 +34,8 @@
 plugins {
     java
     idea
-    id("me.champeau.gradle.jmh") version "0.4.7"
-    id("org.springframework.boot") version "2.1.1.RELEASE"
+    id("me.champeau.gradle.jmh") version "0.4.8"
+    id("org.springframework.boot") version "2.1.2.RELEASE"
     id("io.spring.dependency-management") version "1.0.6.RELEASE"
     id("io.morethan.jmhreport") version "0.9.0"
 }
@@ -50,7 +50,7 @@ repositories {
 }
 
 dependencies {
-    val springBootVersion = "2.1.1.RELEASE"
+    val springBootVersion = "2.1.2.RELEASE"
     val swaggerVersion = "2.9.2"
     val tikaVersion = "1.19.1"
 
@@ -68,7 +68,7 @@ dependencies {
 
     compile("com.rometools:rome:1.12.0")
 
-    compile("com.caucho:hessian:4.0.51")
+    compile("com.caucho:hessian:4.0.59")
 
     compile("org.springframework.boot:spring-boot-starter-webflux:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-undertow:$springBootVersion") {
