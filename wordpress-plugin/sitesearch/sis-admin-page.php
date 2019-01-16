@@ -1,32 +1,29 @@
 <?php
+
 /**
-* Copyright 2018 IntraFind Software AG. All rights reserved.
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License
-* as published by the Free Software Foundation; either version 2
-* of the License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*/
+ * Copyright 2018 IntraFind Software AG. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 require_once 'searchbar.php';
-wp_enqueue_style('if-sis-admin-page-styles', plugin_dir_url(__FILE__) . 'style.css', array(), filemtime(plugin_dir_url(__FILE__) . 'style.css'), false);
-wp_enqueue_script('if-sis-admin-client-js', 'https://api.sitesearch.cloud/external/wordpress-plugin/admin-client.js', array(), null, true);
 
 /**
  * Get site url
  *
  * @return site url
  */
-function sis_getSiteUrl()
+function getSiteUrl()
 {
     if (get_option("if_sis_url_for_crawling")) {
         $if_sis_url_for_crawling = get_option("if_sis_url_for_crawling");
@@ -37,11 +34,11 @@ function sis_getSiteUrl()
 }
 
 // actions
-if (isset($_POST['create-saveSetup'])) {
+if( current_user_can( 'manage_options' ) && isset( $_POST[ 'submit-form' ],  $_POST[ 'create-saveSetup' ] ) && wp_verify_nonce( $_POST[ 'submit-form' ], 'sis-nonce' ) ){
     CreateSiS_Options_WP_DB();
 }
 
-if (isset($_POST['sis-removeSetup'])) {
+if( current_user_can( 'manage_options' ) && isset( $_POST[ 'submit-form' ],  $_POST[ 'sis-removeSetup' ] ) && wp_verify_nonce( $_POST[ 'submit-form' ], 'sis-nonce' ) ){
     deleteSiS_Options_WP_DB();
 }
 
@@ -53,13 +50,10 @@ if (isset($_POST['sis-removeSetup'])) {
 function CreateSiS_Options_WP_DB()
 {
     //get data from fields
-    // $string = sanitize_text_field( $str );
-
-    $if_sis_url_for_crawling = sanitize_text_field( $_POST['sis-url']);
-    $if_sis_siteId = sanitize_text_field( $_POST['sis-siteId']);
-    $if_sis_siteSecret = sanitize_text_field($_POST['sis-siteSecret']);
-    $sis_cssSelector = sanitize_text_field($_POST['sis-cssSelector']);
-
+    $if_sis_url_for_crawling = $_POST['sis-url'];
+    $if_sis_siteId = $_POST['sis-siteId'];
+    $if_sis_siteSecret = $_POST['sis-siteSecret'];
+    $sis_cssSelector = $_POST['sis-cssSelector'];
     if (!get_option("if_sis_url_for_crawling")) {
         update_option("if_sis_url_for_crawling", $if_sis_url_for_crawling);
     } else {
@@ -90,7 +84,7 @@ function deleteSiS_Options_WP_DB()
     delete_option("sis_cssSelector");
 }
 
-function sis_setSafeCssSelector()
+function setSafeCssSelector()
 {
     if (get_option("sis_cssSelector")) {
         $sis_cssSelector = get_option("sis_cssSelector");
@@ -101,10 +95,16 @@ function sis_setSafeCssSelector()
 }
 ?>
 
-<div class="form-wrapper">
+
+<style>
+    .form-wrapper input {
+        width: 500px;
+    }
+</style>
+<div class="form-wrapper" style="width: 500px;">
     <form method="POST">
         <h1>Site Search Setup</h1>
-        Website URL: <input type="url" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"  id="sis-url" name="sis-url" value="<?php echo sis_getSiteUrl(); ?>"
+        Website URL: <input type="text" id="sis-url" name="sis-url" value="<?php echo getSiteUrl(); ?>"
             <?php if (get_option("if_sis_siteId")) echo "readonly"; ?>>
         <br><br>
         Site ID: <input type="text" id="sis-siteId" name="sis-siteId" readonly
@@ -120,14 +120,18 @@ function sis_setSafeCssSelector()
             This CSS selector can be updated anytime, to reflect your theme's specific layout.
             Providing an invalid CSS selector disables the searchbar.
         </p>
-        <input dir="ltr" type="text" pattern="[.#]([\w.-]+)" title="Enter CSS Selectors only" id="sis-cssSelector" name="sis-cssSelector" 
-               value="<?php echo sis_setSafeCssSelector(); ?>" placeholder="#search-2 or .search-2" autocomplete="off" required>
+        <input type="text" id="sis-cssSelector" name="sis-cssSelector"
+               value="<?php echo setSafeCssSelector(); ?>">
         <input type="submit" id="sis-save-setup" name="create-saveSetup" 
                value="Save Site Search Setup"
                style="display: none;">
+        <!--        TODO add "Reset Site Search setup" button-->
         <input type="submit" id="sis-remove-setup" name="sis-removeSetup"
                value="Remove Site Search Setup"
                style="display: none;">
+		<?php
+			wp_nonce_field( 'sis-nonce', 'submit-form' );
+		?>
     </form>
     <br><br>
     <p>Using this Site Search plugin, you accept our
@@ -147,7 +151,7 @@ function sis_setSafeCssSelector()
         <?php if (!get_option("if_sis_siteId")) echo "style='display: none'"; ?>>
     <br><br>
     <p>Search here before your visitors start searching...</p>
-    <div id="searchbar"><?php echo If_Sis_searchbar($form); ?></div>
+    <div id="searchbar"><?php echo If_Sis_searchbar(); ?></div>
     <br><br>
     <div>
         <p
