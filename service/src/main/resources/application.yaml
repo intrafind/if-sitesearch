@@ -19,6 +19,9 @@ server:
   port: 8001
 
 spring:
+  groovy:
+    template:
+      check-template-location: false
   devtools:
     restart:
       enabled: true
