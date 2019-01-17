@@ -4,12 +4,6 @@
 
 #server.error.whitelabel.enabled=false # to fix Swagger issue
 
-#facebook:
-#  client:
-#    clientId: 277335132728142
-#    clientSecret: 1f10244d39f6231e15a1fef8148b02cf
-#
-
 logging:
   level:
     org.springframework.web: INFO
