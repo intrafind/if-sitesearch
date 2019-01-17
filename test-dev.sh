@@ -5,7 +5,8 @@ SPRING_PROFILES_ACTIVE=oss \
 SPRING_CONFIG_NAME="application, local" ./gradlew :service:test \
     --no-scan --parallel \
     --build-cache --continuous --continue \
-    --tests SimpleClientTest.test --info \
+    --tests SimpleClientTest --info \
+    -Dspring.groovy.template.check-template-location=false \
     $1
 
 #--tests *Subscription*.subscribeViaGitHub
