@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,6 @@ import org.springframework.web.filter.CompositeFilter;
 import javax.servlet.Filter;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.List;
 
 @EnableOAuth2Sso
 @EnableWebSecurity
@@ -103,7 +102,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                         "/swagger-ui.html", "/swagger-resources/**", "/v2/api-docs"
                 )
                 .permitAll()
-                .and().logout().logoutSuccessUrl("https://sitesearch.cloud")
+                .and().logout().logoutSuccessUrl("https://" + Application.SIS_DOMAIN)
                 .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
         ;
     }

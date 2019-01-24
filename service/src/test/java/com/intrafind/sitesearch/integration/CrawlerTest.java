@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package com.intrafind.sitesearch.integration;
 
+import com.intrafind.sitesearch.Application;
 import com.intrafind.sitesearch.controller.SiteController;
 import com.intrafind.sitesearch.dto.CrawlStatus;
 import com.intrafind.sitesearch.dto.CrawlerJobResult;
@@ -94,7 +95,7 @@ public class CrawlerTest {
     public void crawlSiteSearchViaHttps() {
         final ResponseEntity<CrawlerJobResult> request = caller
                 .postForEntity(SiteController.ENDPOINT + "/" + CRAWL_SITE_ID + "/crawl?siteSecret=" + CRAWL_SITE_SECRET
-                                + "&url=" + "https://sitesearch.cloud&token=" + UUID.randomUUID()
+                                + "&url=" + "https://" + Application.SIS_DOMAIN + "&token=" + UUID.randomUUID()
                                 + "&email=" + TEST_EMAIL_ADDRESS,
                         RequestEntity.EMPTY, CrawlerJobResult.class);
 
@@ -107,7 +108,7 @@ public class CrawlerTest {
     public void crawlHttps() {
         final ResponseEntity<CrawlerJobResult> request = caller
                 .postForEntity(SiteController.ENDPOINT + "/" + CRAWL_SITE_ID + "/crawl?siteSecret=" + CRAWL_SITE_SECRET
-                                + "&url=https://api.sitesearch.cloud&token=" + UUID.randomUUID()
+                                + "&url=https://api." + Application.SIS_DOMAIN + "&token=" + UUID.randomUUID()
                                 + "&email=" + TEST_EMAIL_ADDRESS,
                         RequestEntity.EMPTY, CrawlerJobResult.class);
 
@@ -115,7 +116,7 @@ public class CrawlerTest {
         assertNotNull(request.getBody());
         assertEquals(API_SITE_PAGE_COUNT, request.getBody().getPageCount());
         assertEquals(API_SITE_PAGE_COUNT, request.getBody().getUrls().size());
-        assertTrue(request.getBody().getUrls().get(0).contains("api.sitesearch.cloud"));
+        assertTrue(request.getBody().getUrls().get(0).contains("api." + Application.SIS_DOMAIN));
     }
 
     @Test
@@ -130,8 +131,8 @@ public class CrawlerTest {
         assertNotNull(request.getBody());
         assertEquals(API_SITE_PAGE_COUNT, request.getBody().getPageCount());
         assertEquals(API_SITE_PAGE_COUNT, request.getBody().getUrls().size());
-        assertTrue(request.getBody().getUrls().contains("https://api.sitesearch.cloud/index.html"));
-        assertTrue(request.getBody().getUrls().contains("https://dev.sitesearch.cloud/"));
+        assertTrue(request.getBody().getUrls().contains("https://api." + Application.SIS_DOMAIN + "/index.html"));
+        assertTrue(request.getBody().getUrls().contains("https://dev." + Application.SIS_DOMAIN + "/"));
 
         assertThumnailInPagePayload(siteId);
     }
@@ -140,7 +141,7 @@ public class CrawlerTest {
     public void crawlSiteWithSitemap() {
         final ResponseEntity<CrawlerJobResult> request = caller
                 .postForEntity(SiteController.ENDPOINT + "/" + CRAWL_SITE_ID + "/crawl?siteSecret=" + CRAWL_SITE_SECRET
-                                + "&url=https://api.sitesearch.cloud&token=" + UUID.randomUUID()
+                                + "&url=https://api." + Application.SIS_DOMAIN + "&token=" + UUID.randomUUID()
                                 + "&email=" + TEST_EMAIL_ADDRESS
                                 + "&sitemapsOnly=true",
                         RequestEntity.EMPTY, CrawlerJobResult.class);
@@ -153,13 +154,13 @@ public class CrawlerTest {
     }
 
     private void assertThumnailInPagePayload(final UUID siteId) {
-        final String pageWithThumbnail = "https://api.sitesearch.cloud/index.html";
+        final String pageWithThumbnail = "https://api." + Application.SIS_DOMAIN + "/index.html";
         final ResponseEntity<FetchedPage> fetchThumbnailPage = caller.exchange(SiteController.ENDPOINT
                         + "/" + siteId + "/pages?url=" + pageWithThumbnail,
                 HttpMethod.GET, HttpEntity.EMPTY, FetchedPage.class);
         assertEquals(HttpStatus.OK, fetchThumbnailPage.getStatusCode());
         assertEquals(pageWithThumbnail, Objects.requireNonNull(fetchThumbnailPage.getBody()).getUrl());
-        assertEquals("https://api.sitesearch.cloud/theme/logo.png", fetchThumbnailPage.getBody().getThumbnail());
+        assertEquals("https://api." + Application.SIS_DOMAIN + "/theme/logo.png", fetchThumbnailPage.getBody().getThumbnail());
         assertEquals(Arrays.asList("Portal", "Start", "homepage"), fetchThumbnailPage.getBody().getSisLabels());
         assertNotEquals(Arrays.asList("Portal", "Start", "Homepage"), fetchThumbnailPage.getBody().getSisLabels());
     }

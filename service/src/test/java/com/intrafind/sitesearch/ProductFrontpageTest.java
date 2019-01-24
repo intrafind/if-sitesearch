@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ public class ProductFrontpageTest {
     @Test
     public void redirectFromWWW() { // fails quite often because of 1&1
         final var response = caller.exchange(
-                "https://www.sitesearch.cloud",
+                "https://www." + Application.SIS_DOMAIN,
                 HttpMethod.GET,
                 HttpEntity.EMPTY,
                 String.class
@@ -50,7 +50,7 @@ public class ProductFrontpageTest {
     @Test
     public void redirectFromUnencryptedWWW() { // fails quite often because of 1&1
         final var response = caller.exchange(
-                "http://www.sitesearch.cloud",
+                "http://www." + Application.SIS_DOMAIN,
                 HttpMethod.GET,
                 HttpEntity.EMPTY,
                 String.class
@@ -61,7 +61,7 @@ public class ProductFrontpageTest {
     @Test
     public void productFrontpageContent() { // fails quite often because of 1&1
         final var response = caller.exchange(
-                "https://sitesearch.cloud",
+                "https://" + Application.SIS_DOMAIN,
                 HttpMethod.GET,
                 HttpEntity.EMPTY,
                 String.class

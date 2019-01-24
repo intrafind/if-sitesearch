@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ import java.util.List;
 @Repository
 public class SimpleIndexClient implements Index {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleIndexClient.class);
-    static final String ELASTICSEARCH_SERVICE = "https://elasticsearch.sitesearch.cloud";
+    static final String ELASTICSEARCH_SERVICE = "https://elasticsearch." + Application.SIS_DOMAIN;
     static final HttpClient CLIENT = HttpClient.newHttpClient();
     private static final byte[] credentials = ("sitesearch:" + Application.SERVICE_SECRET).getBytes();
     static final String BASIC_AUTH_HEADER = "Basic " + Base64.getEncoder().encodeToString(credentials);

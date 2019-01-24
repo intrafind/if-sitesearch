@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,11 +60,11 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SmokeTest {
     private static final Logger LOG = LoggerFactory.getLogger(SmokeTest.class);
-    static final String SEARCH_SERVICE_DOMAIN = "@main.sitesearch.cloud/";
+    public static final String SITES_API = "https://api." + Application.SIS_DOMAIN + "/sites/";
     static final String INVALID_CREDENTIALS = "https://sitesearch:invalid" + System.getenv("SERVICE_SECRET");
     private static final String BASIC_ENCODED_PASSWORD = System.getenv("BASIC_ENCODED_PASSWORD");
     public static final String API_FRONTPAGE_MARKER = "<title>Site Search</title>";
-    public static final String SITES_API = "https://api.sitesearch.cloud/sites/";
+    static final String SEARCH_SERVICE_DOMAIN = "@api." + Application.SIS_DOMAIN + "/";
     private static final UUID BW_BANK_SITE_ID = UUID.fromString("269b0538-120b-44b1-a365-488c2f3fcc15");
     private static final int HEADER_SIZE = 347;
 
@@ -74,7 +74,7 @@ public class SmokeTest {
     @Test
     public void assureCDNavailability() throws Exception {
         final var request = new Request.Builder()
-                .url("https://cdn.sitesearch.cloud/searchbar/2018-01-15/config/sitesearch-roles.json") // lightweight file
+                .url("https://cdn." + Application.SIS_DOMAIN + "/searchbar/2018-01-15/config/sitesearch-roles.json") // lightweight file
                 .build();
         final Response response = HTTP_CLIENT.newCall(request).execute();
         assertEquals(HttpStatus.OK.value(), response.code());
@@ -83,7 +83,7 @@ public class SmokeTest {
     @Test
     public void CDNavailability() throws Exception {
         final var request = new Request.Builder()
-                .url("https://cdn.sitesearch.cloud/searchbar/2018-07-06/config/sitesearch.json")
+                .url("https://cdn." + Application.SIS_DOMAIN + "/searchbar/2018-07-06/config/sitesearch.json")
                 .build();
         final var response = HTTP_CLIENT.newCall(request).execute();
         assertEquals(HttpStatus.OK.value(), response.code());
@@ -101,7 +101,7 @@ public class SmokeTest {
     @Test
     public void redirectFromHttpNakedDomain() { // fails quite often because of 1&1
         final var response = caller.exchange(
-                "http://sitesearch.cloud",
+                "http://" + Application.SIS_DOMAIN,
                 HttpMethod.GET,
                 HttpEntity.EMPTY,
                 String.class
@@ -112,7 +112,7 @@ public class SmokeTest {
     @Test
     public void redirectFromHttpApiDomain() {
         final var response = caller.exchange(
-                "http://api.sitesearch.cloud",
+                "http://api." + Application.SIS_DOMAIN,
                 HttpMethod.GET,
                 HttpEntity.EMPTY,
                 String.class
@@ -141,7 +141,7 @@ public class SmokeTest {
     @Test
     public void apiFrontpageContent() throws Exception {
         final var request = new Request.Builder()
-                .url("https://api.sitesearch.cloud")
+                .url("https://api." + Application.SIS_DOMAIN)
                 .headers(Headers.of(CORS_TRIGGERING_REQUEST_HEADER))
                 .build();
         final var response = HTTP_CLIENT.newCall(request).execute();
@@ -158,7 +158,7 @@ public class SmokeTest {
     @Test
     public void searchDeprecated() throws Exception {
         final var request = new Request.Builder()
-                .url("https://api.sitesearch.cloud/search?query=Knowledge&siteId=" + SearchTest.SEARCH_SITE_ID)
+                .url("https://api." + Application.SIS_DOMAIN + "/search?query=Knowledge&siteId=" + SearchTest.SEARCH_SITE_ID)
                 .headers(Headers.of(CORS_TRIGGERING_REQUEST_HEADER))
                 .build();
         final var response = HTTP_CLIENT.newCall(request).execute();
@@ -223,7 +223,7 @@ public class SmokeTest {
     @Test
     public void autocompleteDeprecated() throws Exception {
         var request = new Request.Builder()
-                .url("https://api.sitesearch.cloud/autocomplete?query=Knowledge&siteId=" + SearchTest.SEARCH_SITE_ID)
+                .url("https://api." + Application.SIS_DOMAIN + "/autocomplete?query=Knowledge&siteId=" + SearchTest.SEARCH_SITE_ID)
                 .headers(Headers.of(CORS_TRIGGERING_REQUEST_HEADER))
                 .build();
         final var response = HTTP_CLIENT.newCall(request).execute();
@@ -265,7 +265,7 @@ public class SmokeTest {
     @Test
     public void logsUp() throws Exception {
         var request = new Request.Builder()
-                .url("https://logs.sitesearch.cloud")
+                .url("https://logs." + Application.SIS_DOMAIN)
                 .build();
         final Response response = HTTP_CLIENT.newCall(request).execute();
         assertEquals(HttpStatus.UNAUTHORIZED.value(), response.code());
@@ -274,7 +274,7 @@ public class SmokeTest {
     @Test
     public void dockerRegistryIsSecure() throws Exception {
         final var request = new Request.Builder()
-                .url("https://docker-registry.sitesearch.cloud")
+                .url("https://docker-registry." + Application.SIS_DOMAIN)
                 .build();
         final var response = HTTP_CLIENT.newCall(request).execute();
         assertEquals(HttpStatus.UNAUTHORIZED.value(), response.code());
@@ -284,7 +284,7 @@ public class SmokeTest {
     public void dockerRegistryIsUp() throws Exception {
         final var request = new Request.Builder()
                 .header(HttpHeaders.AUTHORIZATION, BASIC_ENCODED_PASSWORD)
-                .url("https://docker-registry.sitesearch.cloud")
+                .url("https://docker-registry." + Application.SIS_DOMAIN)
                 .build();
         final var response = HTTP_CLIENT.newCall(request).execute();
         assertEquals(HttpStatus.OK.value(), response.code());
@@ -293,7 +293,7 @@ public class SmokeTest {
     @Test
     public void mavenRepositoryIsSecure() throws Exception {
         final var request = new Request.Builder()
-                .url("https://maven.sitesearch.cloud")
+                .url("https://maven." + Application.SIS_DOMAIN)
                 .build();
         final var response = HTTP_CLIENT.newCall(request).execute();
         assertEquals(HttpStatus.UNAUTHORIZED.value(), response.code());
@@ -303,7 +303,7 @@ public class SmokeTest {
     public void mavenRepositoryIsUp() throws Exception {
         final var request = new Request.Builder()
                 .header(HttpHeaders.AUTHORIZATION, BASIC_ENCODED_PASSWORD)
-                .url("https://maven.sitesearch.cloud")
+                .url("https://maven." + Application.SIS_DOMAIN)
                 .build();
         final var response = HTTP_CLIENT.newCall(request).execute();
         assertEquals(HttpStatus.FORBIDDEN.value(), response.code());

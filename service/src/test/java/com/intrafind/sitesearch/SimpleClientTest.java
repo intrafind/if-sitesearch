@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -79,7 +79,7 @@ public class SimpleClientTest {
     private void updatePage() {
 //    http://www.baeldung.com/spring-5-webclient
 //        WebClient client1 = WebClient.create();
-//        WebClient client2 = WebClient.create("https://sitesearch:" + Application.SERVICE_SECRET + "@logs.sitesearch.cloud");
+//        WebClient client2 = WebClient.create("https://sitesearch:" + Application.SERVICE_SECRET + "@logs."+Application.SIS_DOMAIN);
 
         final var response = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/pages?siteSecret=" + SITE_SECRET,
                 HttpMethod.PUT, new HttpEntity<>(SiteTest.buildPage()), FetchedPage.class);

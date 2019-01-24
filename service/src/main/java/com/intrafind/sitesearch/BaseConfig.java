@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,13 +45,13 @@ public class BaseConfig {
     @Bean
     public Docket hideApi(final ServletContext servletContext) {
         return new Docket(DocumentationType.SWAGGER_2)
-                .host("api.sitesearch.cloud")
+                .host("api." + Application.SIS_DOMAIN)
                 .apiInfo(new ApiInfo(
                         "Site Search API",
                         "A simple website search solution",
                         "v1",
-                        "https://sitesearch.cloud/terms",
-                        new Contact("IntraFind Software AG", "https://sitesearch.cloud", "feedback@sitesearch.cloud"),
+                        "https://" + Application.SIS_DOMAIN + "/terms",
+                        new Contact("IntraFind Software AG", "https://" + Application.SIS_DOMAIN, "feedback@" + Application.SIS_DOMAIN),
                         "Apache License, Version 2.0",
                         "https://github.com/intrafind/if-sitesearch/blob/master/LICENSE",
                         Collections.emptyList()

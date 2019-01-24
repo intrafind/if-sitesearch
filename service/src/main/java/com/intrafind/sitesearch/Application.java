@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,6 +58,7 @@ public class Application {
     private static final String WOO_COMMERCE_CONSUMER_KEY = System.getenv("WOO_COMMERCE_CONSUMER_KEY");
     private static final String WOO_COMMERCE_CONSUMER_SECRET = System.getenv("WOO_COMMERCE_CONSUMER_SECRET");
     private static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";
+    public static final String SIS_DOMAIN = "sitesearch.cloud";
     private static Mac macSha1Algorithm;
 
     static {
@@ -76,7 +77,7 @@ public class Application {
             @RequestParam(value = "affiliate", required = false) String affiliate
     ) {
         final var request = new Request.Builder()
-                .url("https://sitesearch.cloud/wp-json/wc/v1/orders/"
+                .url("https://" + Application.SIS_DOMAIN + "/wp-json/wc/v1/orders/"
                         + subscriptionId
                         + "?consumer_key=" + WOO_COMMERCE_CONSUMER_KEY
                         + "&consumer_secret=" + WOO_COMMERCE_CONSUMER_SECRET

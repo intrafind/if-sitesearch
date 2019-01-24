@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import com.intrafind.api.Fields;
 import com.intrafind.api.index.Index;
 import com.intrafind.api.search.Hits;
 import com.intrafind.api.search.Search;
+import com.intrafind.sitesearch.Application;
 import com.intrafind.sitesearch.BaseConfig;
 import com.intrafind.sitesearch.dto.CrawlStatus;
 import com.intrafind.sitesearch.dto.FetchedPage;
@@ -468,7 +469,7 @@ public class SiteService {
     public boolean clearIndex(UUID siteId, UUID siteSecret) {
         try {
             final Request request = new Request.Builder()
-                    .url("https://api.sitesearch.cloud/sites/" + siteId + "?siteSecret=" + siteSecret)
+                    .url("https://api." + Application.SIS_DOMAIN + "/sites/" + siteId + "?siteSecret=" + siteSecret)
                     .delete()
                     .build();
             final Response response = SiteCrawler.HTTP_CLIENT.newCall(request).execute();

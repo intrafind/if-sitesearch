@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package com.intrafind.sitesearch.integration;
 
+import com.intrafind.sitesearch.Application;
 import com.intrafind.sitesearch.SmokeTest;
 import com.intrafind.sitesearch.controller.PageController;
 import com.intrafind.sitesearch.controller.SiteController;
@@ -68,7 +69,7 @@ public class SiteTest {
     private TestRestTemplate caller;
 
     public static SitePage buildPage() {
-        final var url = "https://api.sitesearch.cloud";
+        final var url = "https://api." + Application.SIS_DOMAIN;
         return new SitePage(
                 "Cloud Solution",
                 "Site Search is IntraFind's on-demand solution for site search.",

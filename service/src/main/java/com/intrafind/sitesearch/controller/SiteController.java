@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package com.intrafind.sitesearch.controller;
 
+import com.intrafind.sitesearch.Application;
 import com.intrafind.sitesearch.dto.Autocomplete;
 import com.intrafind.sitesearch.dto.FetchedPage;
 import com.intrafind.sitesearch.dto.Hits;
@@ -69,7 +70,7 @@ public class SiteController {
             newlyCreatedSite = siteService.createSite(siteProfileCreation.getEmail(), siteProfileCreation.getConfigs());
         }
         return ResponseEntity
-                .created(URI.create("https://api.sitesearch.cloud/sites/" + newlyCreatedSite.getSiteId()))
+                .created(URI.create("https://api." + Application.SIS_DOMAIN + "/sites/" + newlyCreatedSite.getSiteId()))
                 .body(newlyCreatedSite);
     }
 

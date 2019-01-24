@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package com.intrafind.sitesearch.integration;
 
+import com.intrafind.sitesearch.Application;
 import com.intrafind.sitesearch.SmokeTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,7 +62,7 @@ public class StaticContentTest {
 
         assertEquals(HttpStatus.OK, staticContent.getStatusCode());
         if (System.getenv("PWD") != null) { // assume, it runs on Windows and is not a CI server
-            assertTrue(staticContent.getBody().contains("\"baseUrl\": \"https://api.sitesearch.cloud/sites/{{siteId}}/\","));
+            assertTrue(staticContent.getBody().contains("\"baseUrl\": \"https://api." + Application.SIS_DOMAIN + "/sites/{{siteId}}/\","));
         }
         assertTrue(staticContent.getBody().contains("\"endpointSearch\": \"" + "search" + "\","));
     }
