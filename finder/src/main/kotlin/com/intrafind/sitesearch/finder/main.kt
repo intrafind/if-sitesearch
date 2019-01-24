@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,17 @@
 
 package com.intrafind.sitesearch.finder
 
-import org.w3c.dom.*
+import org.w3c.dom.Element
+import org.w3c.dom.HTMLButtonElement
+import org.w3c.dom.HTMLDListElement
+import org.w3c.dom.HTMLDivElement
+import org.w3c.dom.HTMLElement
+import org.w3c.dom.HTMLInputElement
+import org.w3c.dom.HTMLScriptElement
+import org.w3c.dom.HTMLStyleElement
+import org.w3c.dom.OPEN
+import org.w3c.dom.ShadowRootInit
+import org.w3c.dom.ShadowRootMode
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.KeyboardEvent
 import org.w3c.xhr.XMLHttpRequest
@@ -81,7 +91,7 @@ private fun injectPageFinderIntoWebsite() {
 
     if (hiddenBehindFlag.isNullOrBlank()) {
         showPageFinder()
-    } else if (window.location.search.contains(hiddenBehindFlag!!)) {
+    } else if (window.location.search.contains(hiddenBehindFlag)) {
         showPageFinder()
     }
 }
@@ -118,7 +128,7 @@ private fun encapsulateAsComponent() {
             if (parentContainerId.isNullOrBlank()) {
                 pageFinderInit.parentElement
             } else {
-                val parentContainer = document.querySelector(parentContainerId!!)
+                val parentContainer = document.querySelector(parentContainerId)
                 log("Inserted into: ${parentContainer?.outerHTML}")
                 parentContainer ?: pageFinderInit.parentElement
             }
@@ -135,7 +145,8 @@ private fun encapsulateAsComponent() {
 //private val pageFinderContainer = document.createElement("template") as HTMLTemplateElement
 private val pageFinderContainer = document.createElement("div") as HTMLDivElement
 private val findingsContainer = document.createElement("dl") as HTMLDListElement
-private val finderService = "https://api.sitesearch.cloud/sites"
+private val sisDomain = "sitesearch.cloud"
+private val finderService = "https://api.${sisDomain}/sites"
 private val pageFinderInit = document.currentScript as HTMLScriptElement
 private val siteId = pageFinderInit.getAttribute("data-siteId")
 private val finderEndpoint = "search"
@@ -150,7 +161,7 @@ private fun buildPageFinder() {
             if (finderStyle.isNullOrBlank())
                 "width: 500px; font-size: 2em; text-indent: .5em;"
             else
-                finderStyle!!
+                finderStyle
     finder.width = finder.style.width.substringBeforeLast("px").toInt()
 }
 

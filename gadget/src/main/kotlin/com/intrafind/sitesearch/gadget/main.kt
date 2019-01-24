@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,10 +61,11 @@ private fun createSite() {
 
 @JsName("overrideSite")
 fun overrideSite(siteId: String) {
-    document.cookie = "override-site = $siteId; domain = .sitesearch.cloud; path = /"
+    document.cookie = "override-site = $siteId; domain = .${sisDomain}; path = /"
     document.cookie = "sis.websiteUrl = ${url.value}"
 }
 
+private val sisDomain = "sitesearch.cloud"
 private lateinit var captchaToken: String
 private lateinit var termsAccepted: HTMLInputElement
 private lateinit var integrationCode: HTMLTextAreaElement
@@ -139,8 +140,8 @@ private fun enableSearch(waitWhileCrawlerIsRunningMsg: String) {
     triggerButton.textContent = waitWhileCrawlerIsRunningMsg
     triggerButton.disabled = true
     siteSearchSetupUrl.innerHTML = "<strong>Copy this search setup URL to resume evaluation later:</strong> " +
-            "<a href='https://sitesearch.cloud/getting-started?siteId=$siteId&siteSecret=$siteSecret&url=${url.value}'>" +
-            "https://sitesearch.cloud/getting-started?siteId=$siteId&siteSecret=$siteSecret&url=${url.value}" +
+            "<a href='https://${sisDomain}/getting-started?siteId=$siteId&siteSecret=$siteSecret&url=${url.value}'>" +
+            "https://${sisDomain}/getting-started?siteId=$siteId&siteSecret=$siteSecret&url=${url.value}" +
             "</a>"
     (document.getElementById("ifs-sb-searchfield") as HTMLInputElement).placeholder = waitWhileCrawlerIsRunningMsg
     insertSiteIdIntoIntegrationCode()

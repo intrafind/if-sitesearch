@@ -64,7 +64,7 @@ public class SmokeTest {
     static final String INVALID_CREDENTIALS = "https://sitesearch:invalid" + System.getenv("SERVICE_SECRET");
     private static final String BASIC_ENCODED_PASSWORD = System.getenv("BASIC_ENCODED_PASSWORD");
     public static final String API_FRONTPAGE_MARKER = "<title>Site Search</title>";
-    static final String SEARCH_SERVICE_DOMAIN = "@api." + Application.SIS_DOMAIN + "/";
+    static final String SEARCH_SERVICE_DOMAIN = "@main." + Application.SIS_DOMAIN + "/";
     private static final UUID BW_BANK_SITE_ID = UUID.fromString("269b0538-120b-44b1-a365-488c2f3fcc15");
     private static final int HEADER_SIZE = 347;
 
