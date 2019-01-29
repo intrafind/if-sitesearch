@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
-docker image prune -a -f
-ssh ubuntu@main.sitesearch.cloud docker image prune -a -f
+#docker image prune -a -f # remove
+#ssh ubuntu@main.sitesearch.cloud docker image prune -a -f # remove
 
 #cp -r /home/ubuntu/docker-build-data/api-sitesearch/service .
 cd service
@@ -9,9 +9,9 @@ docker build --pull --no-cache --tag docker-registry.sitesearch.cloud/intrafind/
 docker push docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest
 
 ssh ubuntu@main.sitesearch.cloud docker rm -f if-sitesearch
+#    --log-opt gelf-address=udp://logs.sitesearch.cloud:12201 \
 ssh ubuntu@main.sitesearch.cloud docker run -d --name if-sitesearch \
     --log-driver=gelf \
-    --log-opt gelf-address=udp://logs.sitesearch.cloud:12201 \
     --env SIS_API_SERVICE_URL=$SIS_API_SERVICE_URL \
     --env SERVICE_SECRET=$SERVICE_SECRET \
     --env SIS_SERVICE_HOST=$SIS_SERVICE_HOST \
