@@ -4,6 +4,7 @@
 cd service
 docker build --pull --no-cache --tag docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest .
 docker push docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest
+docker build --tag docker-registry.sitesearch.cloud/intrafind/if-sitesearch:dev .
 docker push docker-registry.sitesearch.cloud/intrafind/if-sitesearch:dev
 
 ssh ubuntu@main.sitesearch.cloud docker rm -f if-sitesearch
