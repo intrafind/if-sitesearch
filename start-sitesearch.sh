@@ -1,8 +1,11 @@
 #!/usr/bin/env sh
 
+docker image prune -a -f
+ssh ubuntu@main.sitesearch.cloud docker image prune -a -f
+
 #cp -r /home/ubuntu/docker-build-data/api-sitesearch/service .
 cd service
-docker build --pull --tag docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest .
+docker build --pull --no-cache --tag docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest .
 docker push docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest
 
 ssh ubuntu@main.sitesearch.cloud docker rm -f if-sitesearch
