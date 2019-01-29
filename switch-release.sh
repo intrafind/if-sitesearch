@@ -40,8 +40,6 @@ startComponent() {
     runService $1
 }
 
-#docker push $img_fqn
-
 if isBlueUp; then
     echo "blue is active"
     green="${docker_image_name}-green"
