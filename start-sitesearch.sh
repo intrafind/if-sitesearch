@@ -3,6 +3,7 @@
 #cp -r /home/ubuntu/docker-build-data/api-sitesearch/service .
 cd service
 docker build --pull --tag docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest .
+docker push docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest
 
 docker rm -f if-sitesearch
 docker run -d --name if-sitesearch \
@@ -30,5 +31,3 @@ else
 fi
 
 docker volume prune -f
-
-docker push docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest
