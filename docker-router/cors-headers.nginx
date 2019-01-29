@@ -1,5 +1,5 @@
 # CORS headers
-add_header 'Access-Control-Allow-Methods' 'GET, PUT, POST, OPTIONS';
+add_header access-control-allow-methods 'GET, PUT, POST, OPTIONS';
 add_header access-control-allow-credentials true always;
 add_header access-control-allow-origin $http_origin always;
 proxy_hide_header x-frame-options;
