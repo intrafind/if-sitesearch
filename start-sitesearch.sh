@@ -10,8 +10,8 @@ docker push docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest
 
 ssh ubuntu@main.sitesearch.cloud docker rm -f if-sitesearch
 #    --log-opt gelf-address=udp://logs.sitesearch.cloud:12201 \
+#    --log-driver=gelf \
 ssh ubuntu@main.sitesearch.cloud docker run -d --name if-sitesearch \
-    --log-driver=gelf \
     --env SIS_API_SERVICE_URL=$SIS_API_SERVICE_URL \
     --env SERVICE_SECRET=$SERVICE_SECRET \
     --env SIS_SERVICE_HOST=$SIS_SERVICE_HOST \
