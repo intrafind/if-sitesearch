@@ -36,6 +36,18 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 'Debug' option is available in the context menu for the task.
 */
 
+import jetbrains.buildServer.configs.kotlin.v2018_2.*
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.perfmon
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.sshAgent
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.ScriptBuildStep
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
+import jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions.BuildFailureOnText
+import jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions.failOnText
+import jetbrains.buildServer.configs.kotlin.v2018_2.projectFeatures.dockerRegistry
+import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.schedule
+import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
+
 version = "2018.2"
 
 project {
