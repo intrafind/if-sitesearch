@@ -30,3 +30,5 @@ else
 fi
 
 docker volume prune -f
+
+docker push docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest

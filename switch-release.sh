@@ -40,7 +40,7 @@ startComponent() {
     runService $1
 }
 
-docker push $img_fqn
+#docker push $img_fqn
 
 if isBlueUp; then
     echo "blue is active"
