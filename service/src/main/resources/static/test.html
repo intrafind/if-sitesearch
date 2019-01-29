@@ -16,9 +16,9 @@
 
 <script>
     let request = new XMLHttpRequest();
-    request.open('PUT', "https://dev.sitesearch.cloud/sites/4b2ca728-8b27-4d24-9de3-5af3582d1d35/pages?siteSecret=50d97f4f-767a-49e0-ab84-f53bde6c6fdf");
+    request.open('PUT', "https://dev.sitesearch.cloud/sites/4b2ca728-8b27-4d24-9de3-5af3582d1d35/pages?siteSecret=50d97f4f-767a-49e0-ab84-f53bde6c6fdf", true);
     request.setRequestHeader('Content-Type', 'application/json');
-    request.setRequestHeader('accept', '*/*');
+    // request.setRequestHeader('accept', '*/*');
     request.onload = function () {
         let response = JSON.parse(request.responseText);
         if (request.readyState === 4 && request.status === "200") {
@@ -28,5 +28,5 @@
         }
         console.warn(response);
     };
-    request.send({"url": "https://www.intrafind.de/produkte/updated", "title": "Update Title", "body": "Updated Body"});
+    request.send("{\"url\": \"https://www.intrafind.de/produkte/updated\", \"title\": \"blub\", \"body\": \"blib\"}");
 </script>
