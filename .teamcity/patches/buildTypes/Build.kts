@@ -34,6 +34,7 @@ changeBuildType(RelativeId("Build")) {
     steps {
         update<ScriptBuildStep>(1) {
             scriptContent = "./gradlew clean build --info -x test"
+            dockerRunParameters = ""
         }
     }
 }
