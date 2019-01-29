@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-package _Self.buildTypes
-
 /*
 The settings script is an entry point for defining a TeamCity
 project hierarchy. The script should contain a single call to the
