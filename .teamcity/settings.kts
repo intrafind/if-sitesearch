@@ -1,18 +1,14 @@
-/*
- * Copyright 2019 IntraFind Software AG. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+import jetbrains.buildServer.configs.kotlin.v2018_2.*
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.perfmon
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.sshAgent
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.ScriptBuildStep
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
+import jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions.BuildFailureOnText
+import jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions.failOnText
+import jetbrains.buildServer.configs.kotlin.v2018_2.projectFeatures.dockerRegistry
+import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.schedule
+import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -36,29 +32,17 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 'Debug' option is available in the context menu for the task.
 */
 
-import jetbrains.buildServer.configs.kotlin.v2018_2.*
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.perfmon
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.sshAgent
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.ScriptBuildStep
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
-import jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions.BuildFailureOnText
-import jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions.failOnText
-import jetbrains.buildServer.configs.kotlin.v2018_2.projectFeatures.dockerRegistry
-import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.schedule
-import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
-import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
-
 version = "2018.2"
 
 project {
     description = "Software as a Service"
 
-    vcsRoot(ProdRelease)
     vcsRoot(IfSitesearchRouter)
+    vcsRoot(SmokeApiHealthChecksIfSitesearch)
     vcsRoot(Recrawl_1)
     vcsRoot(HttpsGithubComLoxalIfSitesearchRefsHeadsMaster1)
+    vcsRoot(ProdRelease)
     vcsRoot(Daily)
-    vcsRoot(SmokeApiHealthChecksIfSitesearch)
 
     buildType(Recrawl)
     buildType(LoadTest)
@@ -218,7 +202,7 @@ object Build : BuildType({
         }
         script {
             name = "Build service.jar w/ Docker (using TeamCity Docker plugin)"
-            scriptContent = "./gradlew clean build --info"
+            scriptContent = "./gradlew clean build --info -x test"
             dockerImage = "openjdk:11-jre-slim"
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
         }
@@ -412,9 +396,7 @@ object ReleaseRouter : BuildType({
 
     steps {
         script {
-            scriptContent = """
-                #ssh alexander_orlov@dev "cd ${'$'}PWD; sh ./release-router.sh"
-            """.trimIndent()
+            scriptContent = """#ssh alexander_orlov@dev "cd ${'$'}PWD; sh ./release-router.sh""""
         }
     }
 
@@ -481,15 +463,6 @@ object Daily : GitVcsRoot({
     }
 })
 
-object ProdRelease : GitVcsRoot({
-    name = "prod-release"
-    url = "https://github.com/intrafind/if-sitesearch"
-    authMethod = password {
-        userName = "loxal"
-        password = "credentialsJSON:91f52c32-83d5-465b-bd17-262b0a37cd3f"
-    }
-})
-
 object HttpsGithubComLoxalIfSitesearchRefsHeadsMaster1 : GitVcsRoot({
     name = "load-test"
     url = "https://github.com/intrafind/if-sitesearch"
@@ -508,8 +481,8 @@ object IfSitesearchRouter : GitVcsRoot({
     }
 })
 
-object SmokeApiHealthChecksIfSitesearch : GitVcsRoot({
-    name = "smoke-api-health-check"
+object ProdRelease : GitVcsRoot({
+    name = "prod-release"
     url = "https://github.com/intrafind/if-sitesearch"
     authMethod = password {
         userName = "loxal"
@@ -520,6 +493,15 @@ object SmokeApiHealthChecksIfSitesearch : GitVcsRoot({
 object Recrawl_1 : GitVcsRoot({
     id("Recrawl")
     name = "Recrawl"
+    url = "https://github.com/intrafind/if-sitesearch"
+    authMethod = password {
+        userName = "loxal"
+        password = "credentialsJSON:91f52c32-83d5-465b-bd17-262b0a37cd3f"
+    }
+})
+
+object SmokeApiHealthChecksIfSitesearch : GitVcsRoot({
+    name = "smoke-api-health-check"
     url = "https://github.com/intrafind/if-sitesearch"
     authMethod = password {
         userName = "loxal"
