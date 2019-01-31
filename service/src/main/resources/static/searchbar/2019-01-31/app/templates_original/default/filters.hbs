@@ -1,0 +1,35 @@
+
+{{# if external}}
+<div class="ifs-filter-all-open-close" data-action="toggle-facets">
+    <i class="ifs-icons ifs-icon-expand_more"></i>
+</div>
+{{/if}}
+
+<div id="ifs-filter-wrapper" class="ifs-filter-wrapper">
+    <div id="ifs-filterbar" class="ifs-rl-filter">
+        <button data-action="close-filter" class="btn-closefilter ifs-closefilter">
+            <i class="ifs-icons ifs-icon-clear"></i>
+        </button>
+        <div class="ifs-filter-header">
+            <h4>Filter</h4>
+        </div>
+        <div class="ifs-facets-hook ifs-filter-section">
+            {{# each state.facetstate}}
+                {{#contains ../allowedFilters facetname}}
+                    <div class="ifs-filter-item-container" category={{facetname}}>
+                        <!--init fitler item-->
+                    </div>
+                {{/contains}}
+            {{/each}}
+
+            {{#contains allowedFilters 'daterange'}}
+                {{#if this.showDateRange}}
+                    <div class="ifs-filter-item-container" category="date">
+                        <!--init fitler item-->
+                    </div>
+                {{/if}}
+            {{/contains}}
+
+        </div>
+    </div>
+</div>

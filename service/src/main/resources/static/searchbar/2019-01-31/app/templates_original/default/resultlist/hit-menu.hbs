@@ -1,0 +1,17 @@
+{{#if menuItems}}
+    <div class="ifs-dropdown right">
+        <button type="button" class="ifs-button" data-toggle="if-dropdown" aria-haspopup="true" aria-expanded="true">
+            <i class="ifs-icons ifs-icon-more_vert"></i>
+        </button>
+        <ul class="ifs-dropdown-menu ifs-hit-menu" aria-labelledby="dropdown-preview-more">
+            {{# each this.menuItems}}
+                <li{{#if this.menuSeparator}} class="seperator"{{/if}}>
+                    <a href="javascript:void(0);" data-action="{{this.menuAction}}" data-hittype="{{../menuHitType}}" data-hiturl="{{this.menuUrl}}">
+                        <span data-globalize="{{this.menuText}}"></span>
+                    </a>
+                    <i class="{{this.menuIcon}}"></i>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+{{/if}}

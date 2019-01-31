@@ -1,0 +1,37 @@
+<div class="ifs-media ifs-tpl-exchange" data-favorite="{{favoredString}}" data-index="{{integer}}" data-score="{{score}}">
+
+    <div class="ifs-media-left">
+        <i class="ifs-icons ifs-icon-mail"></i>
+    </div>
+
+    <div class="ifs-media-body">
+        <div>
+            <a target="_blank" href="{{url}}" class="ifs-break-all ifs-visited ifs-demi">{{{title}}}</a>
+
+            {{#if from}}
+            <p class="ifs-media-modified">{{msg "ifs.label.from"}}: {{{from}}}</p>
+            {{/if}}
+            {{#if to}}
+            <p class="ifs-media-modified">{{msg "ifs.label.to"}}: {{{to}}}</p>
+            {{/if}}
+            {{#if cc}}
+            <p class="ifs-media-modified">{{msg "ifs.label.cc"}}: {{{cc}}}</p>
+            {{/if}}
+
+            {{#if text}}
+            <p class="ifs-textbody ifs-break-all">{{{text}}}</p>
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="ifs-media-favorite">
+        <i class="ifs-icons{{#if favoredBool}} ifs-icon-star_rate{{/if}}"></i>
+    </div>
+
+    {{#if hitMenu}}
+        <div class="ifs-media-right">
+            {{{hitMenu}}}
+        </div>
+    {{/if}}
+
+</div>

@@ -1,0 +1,44 @@
+{{#if visible}}
+    {{#if showInfo}}
+        <div class="alert alert-info no-fields-for-source-info" role="alert">{{msg "ifs.no.fields.available" }} for {{currentSource}}</div>
+    {{/if}}
+
+    {{#if fields }}
+        <div id="ifs-fieldbased-search" class="ifs-fb-field open">
+            <form class="form-horizontal" onsubmit="javascript:void(0)">
+
+                {{#each fields }}
+                    {{#ifCond type '===' 'string' }}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{ label }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" data-key="{{ label }}" data-type="string-input" class="form-control">
+                            </div>
+                        </div>
+                    {{/ifCond}}
+
+                    {{#ifCond type '===' 'date' }}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{ label }}</label>
+                            <div class="col-sm-10">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default ifs-btn-"  data-toggle="if-datepicker" aria-haspopup="true" aria-expanded="true">
+                                        <span class="current-date">{{msg "ifs.datechooser" }}</span> <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu bullet pull-left" aria-labelledby="dropdownMenu1">
+                                        <li data-key="{{label}}" data-value="today"><a href="javascript:void(0);">{{msg "ifs.filter.today"}}</a></li>
+                                        <li data-key="{{label}}" data-value="thisweek"><a href="javascript:void(0);">{{msg "ifs.filter.thisweek"}}</a></li>
+                                        <li data-key="{{label}}" data-value="thismonth"><a href="javascript:void(0);">{{msg "ifs.filter.thismonth"}}</a></li>
+                                        <li data-key="{{label}}" data-value="thisyear"><a href="javascript:void(0);">{{msg "ifs.filter.thisyear"}}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    {{/ifCond}}
+
+                {{/each}}
+            </form>
+        </div>
+    {{/if}}
+{{/if}}

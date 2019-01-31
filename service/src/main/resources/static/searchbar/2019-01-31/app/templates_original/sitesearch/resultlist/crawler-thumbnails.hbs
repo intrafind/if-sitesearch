@@ -1,0 +1,52 @@
+<div class="ifs-media ifs-tpl-crawler" data-favorite="{{favoredString}}" data-index="{{integer}}" data-score="{{score}}">
+
+    <style>
+        .ifs-media-left > a {
+            height: 80px;
+            justify-content: center;
+            margin-top: 40px;
+            overflow: hidden;
+            width: 80px;
+        }
+
+        .ifs-media-left > a > img {
+            height: 100%;
+            width: auto !important;
+        }
+
+        @media (max-width: 1024px) {
+            .ifs-media-left > a {
+                height: 60px;
+                margin-top: 48px;
+                width: 60px;
+            }
+        }
+    </style>
+
+    <div class="ifs-media-left">
+        {{#if thumbnail}}
+        <a href="{{urlRaw}}" target="_blank">
+            <img src="{{thumbnail}}">
+        </a>
+        {{/if}}
+    </div>
+
+    <div class="ifs-media-body">
+        <div>
+            <a target="_blank" href="{{urlRaw}}" class="ifs-break-all ifs-visited ifs-demi">{{{title}}}</a>
+
+            {{#if body}}
+                <p class="ifs-textbody ifs-break-all">{{{body}}}</p>
+            {{/if}}
+
+            <a target="_blank" href="{{urlRaw}}" title="{{urlRaw}}" class="ifs-media-deepurl truncate pathname ifs-break-all">{{{url}}}</a>
+        </div>
+    </div>
+
+    {{#if hitMenu}}
+        <div class="ifs-media-right">
+            {{{hitMenu}}}
+        </div>
+    {{/if}}
+
+</div>

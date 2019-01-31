@@ -10,26 +10,26 @@
     <body>
         <!--Searchbar's jQuery v2.2.4 should not override the previous version-->
         <div id="searchbar"></div>
-        <script src="https://dev.sitesearch.cloud/searchbar/2018-07-18/app/js/app.js"></script>
+        <script src="https://cdn.sitesearch.cloud/searchbar/2019-01-31/app/js/app.js"></script>
         <script>
                 IFS.jQuery.noConflict();
                 IFS.jQuery(document).ready(function ($) {
                     IFS.initClient({
                         customConfig: {
                             overwrite: {
-                                "components.searchbar.resultlist.resulttype.all.hitTemplate": "crawler-categories",
+                                "components.searchbar.resultlist.resulttype.all.hitTemplate": "default-sis",
                                 "appLang": "de"
                             }
                         },
                         sbTarget: "#searchbar",
-                        configurl: "https://dev.sitesearch.cloud/searchbar/2018-07-18/config/sitesearch.json",
+                        configurl: "https://cdn.sitesearch.cloud/searchbar/2019-01-31/config/sitesearch.json",
                         sitesearch: true,
                         siteId: "563714f1-96c0-4500-b366-4fc7e734fa1d"
                     });
                 });
 
         </script>
-        <link rel="stylesheet" type="text/css" href="https://dev.sitesearch.cloud/searchbar/2018-07-18/config/migros.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.sitesearch.cloud/searchbar/2019-01-31/config/migros.css">
 
         <script>
             console.warn("Global jQuery Namespace: " + $.fn.jquery);

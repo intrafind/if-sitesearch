@@ -1,0 +1,10 @@
+<ul>
+    {{# each items}}
+        <li role="presentation">
+            <a href="javascript:void(0);" id="check1" data-value="{{connector}}" data-action="switch-tab">
+                <i class="ifs-icons ifs-icon-{{icon}}"></i>
+                <span data-globalize="{{title}}" data-globalize-target="text"></span>
+            </a>
+        </li>
+    {{/each}}
+</ul>

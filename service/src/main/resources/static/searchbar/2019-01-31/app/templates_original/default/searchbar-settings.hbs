@@ -1,0 +1,45 @@
+{{#if settings}}
+    {{#if settingsList.length}}
+        <div class="ifs-dropdown ifs-dropdown-settings right">
+            <div data-comp-id="ifs-sb-settings" class="ifs-button" data-globalize="ifs.btn.settings" data-globalize-target="title">
+                <i class="ifs-icons ifs-icon-settings"></i>
+            </div>
+
+            <ul data-comp-id="ifs-settings-field" class="ifs-dropdown-menu ifs-field-settings" aria-labelledby="dropdownMenu2">
+                <li id="ifs-settingsdialog">
+                    <div class="ifs-settings-header">
+                        <div data-globalize="ifs.btn.settings"></div>
+                        {{#if linkToHelpPage}}
+                            <a href="{{linkToHelpPage}}" target="_blank" class="ifs-settings-help">
+                                <i class="ifs-icons ifs-icon-help"></i>
+                            </a>
+                        {{/if}}
+                        <a href="javascript:void(0);" class="ifs-settings-close" data-globalize="ifs.btn.close" data-globalize-target="title">
+                            <i class="ifs-icons ifs-icon-close"></i>
+                        </a>
+                    </div>
+                    <div class="ifs-settings-content">
+                        {{#each settingsList}}
+                            {{#if options}}
+                                <div class="ifs-settings-section" data-ifs-settings-area="{{area}}">
+                                    <div data-globalize="{{headline}}"></div>
+                                    <div class="ifs-options-wrapper">
+                                        {{#each options}}
+                                            <div class="{{type}}">
+                                                <label>
+                                                    <input type="{{type}}" name="{{name}}" data-ifs-action-id="{{actionId}}" value="{{value}}" {{state}}>
+                                                    <span data-globalize="{{label}}"></span>
+                                                    <div class="ifs-{{type}}-indicator"></div>
+                                                </label>
+                                            </div>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    {{/if}}
+{{/if}}

@@ -1,0 +1,25 @@
+<div class="ifs-media ifs-tpl-bestbet" data-favorite="{{favoredString}}" data-index="{{integer}}" data-score="{{score}}">
+
+    <div class="ifs-media-body">
+        <div>
+            <a target="_blank" href="{{url}}" class="ifs-break-all ifs-visited ifs-demi">{{{title}}}</a>
+            {{#if text}}
+            <p class="ifs-textbody ifs-break-all">{{text}}</p>
+            {{/if}}
+            {{#if text}}
+            <p class="ifs-media-modified ifs-break-all">{{modified}} | {{creator}}</p>
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="ifs-media-favorite">
+        <i class="ifs-icons{{#if favoredBool}} ifs-icon-star_rate{{/if}}"></i>
+    </div>
+
+    {{#if hitMenu}}
+    <div class="ifs-media-right">
+        {{{hitMenu}}}
+    </div>
+    {{/if}}
+
+</div>
