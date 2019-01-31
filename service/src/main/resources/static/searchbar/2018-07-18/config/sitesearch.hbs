@@ -101,3 +101,52 @@
 
     </div>
 </script>
+
+
+<script id="crawler-categories" type="text/x-handlebars-template">
+  <div class="ifs-media ifs-tpl-crawler" data-favorite="{{favoredString}}" data-index="{{integer}}" data-score="{{score}}">
+      {{#if sisLabels}}
+      <style>
+          .sisLabels {
+              margin-top: 12px;
+              padding-top: 6px;
+              border-top: 1px solid #c8c8c8;
+              font-size: 0.9rem;
+              text-align: right;
+          }
+          .sisLabels .sisLabel:after {
+              content: ",";
+          }
+          .sisLabels .sisLabel:last-child:after {
+              content: "";
+          }
+      </style>
+      {{/if}}
+      <div class="ifs-media-body">
+          <div>
+              <a target="_blank" href="{{urlRaw}}" class="ifs-break-all ifs-visited ifs-demi">{{{title}}}</a>
+
+              {{#if body}}
+                  <p class="ifs-textbody ifs-break-all">{{{body}}}</p>
+              {{/if}}
+
+              <a target="_blank" href="{{urlRaw}}" title="{{urlRaw}}" class="ifs-media-deepurl truncate pathname ifs-break-all">{{{url}}}</a>
+
+              {{#if sisLabels}}
+              <div class="sisLabels">
+                  {{#each sisLabels}}
+                  <span class="sisLabel">{{this}}</span>
+                  {{/each}}
+              </div>
+              {{/if}}
+          </div>
+      </div>
+
+      {{#if hitMenu}}
+      <div class="ifs-media-right">
+          {{{hitMenu}}}
+      </div>
+      {{/if}}
+
+  </div>
+</script>
