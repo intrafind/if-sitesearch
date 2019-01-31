@@ -7,22 +7,22 @@
 
 <!--Searchbar's jQuery v2.2.4 should not override the previous version-->
 <div id="ifs-searchbar"></div>
-<script src="https://cdn.sitesearch.cloud/searchbar/2018-07-18/app/js/app.js"></script>
+<script src="https://cdn.sitesearch.cloud/searchbar/2019-01-31/app/js/app.js"></script>
 <script>
     IFS.initClient({
         customConfig: {
             overwrite: {
                 "components.searchbar.typeaheadProps.hint": false,
                 "components.searchbar.resultlist.resulttype.all.hitTemplate": "hit-template",
-                "components.searchbar.templatesUrl": "https://cdn.sitesearch.cloud/searchbar/2018-07-18/config/migros.hbs",
+                "components.searchbar.templatesUrl": "https://cdn.sitesearch.cloud/searchbar/2019-01-31/config/migros.hbs",
                 "appLang": "de"
             }
         },
-        configurl: "https://cdn.sitesearch.cloud/searchbar/2018-07-18/config/sitesearch.json",
+        configurl: "https://cdn.sitesearch.cloud/searchbar/2019-01-31/config/sitesearch.json",
         siteId: "563714f1-96c0-4500-b366-4fc7e734fa1d"
     });
 </script>
-<link rel="stylesheet" type="text/css" href="https://cdn.sitesearch.cloud/searchbar/2018-07-18/config/migros.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.sitesearch.cloud/searchbar/2019-01-31/config/migros.css">
 
 <script>
     console.warn("Global jQuery Namespace: " + $.fn.jquery);

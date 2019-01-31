@@ -1,0 +1,166 @@
+<div id="ifs-dp-wrapper">
+    <div class="ifs-dp-window">
+        <div class="ifs-dp-header">
+            <div class="ifs-dp-close">
+                <button type="button" class="ifs-button" data-action="close-modal">
+                    <i class="ifs-icons ifs-icon-close"></i>
+                </button>
+            </div>
+        </div>
+        <div class="ifs-dp-body">
+            <div class="ifs-dp-contentwrapper ifs-people-preview">
+                <div class="ifs-people-preview-thumb">
+                    <img src="{{thumbnail}}">
+                </div>
+                <div class="ifs-people-preview-data">
+                    <div class="ifs-people-preview-title">{{{title}}}</div>
+                    <div class="ifs-people-additional">
+                        <div>
+                            {{{department}}} {{{deptname}}}
+                        </div>
+                        <div class="ifs-people-phone">
+                            {{#if phone}}
+                            <a href="tel:{{phoneClean}}">
+                                <i class="ifs-icons ifs-icon-phone"></i>
+                                <span>{{phone}}</span>
+                            </a>
+                            {{/if}}
+                            {{#if mobile}}
+                            <a href="tel:{{mobileClean}}">
+                                <i class="ifs-icons ifs-icon-smartphone"></i>
+                                <span>{{mobile}}</span>
+                            </a>
+                            {{/if}}
+                        </div>
+                        <div>
+                            <a target="_blank" href="{{location}}" data-toggle="tooltip" title="{{msg 'ifs.tooltip.people'}}">
+                                <i class="ifs-icons ifs-icon-account_box"></i>
+                            </a>
+                            {{#if email}}
+                            <a href="mailto:{{email}}" data-toggle="tooltip" title="{{msg 'ifs.tooltip.mail'}}">
+                                <i class="ifs-icons ifs-icon-mail"></i>
+                            </a>
+                            {{/if}}
+                            <a href="javascript:void(0);" data-action="hit-forward" data-hiturl="{{location}}" data-toggle="tooltip" title="{{msg 'ifs.tooltip.share'}}">
+                                <i class="ifs-icons ifs-icon-share"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ifs-people-info-wrapper">
+                        <div class="ifs-people-row">
+                            <div class="ifs-people-row-label">
+                                <p data-globalize="ifs.label.contact"></p>
+                            </div>
+                            <div class="ifs-people-row-infos">
+                                <div>
+                                    {{#if email}}
+                                    <p class="ifs-people-row-headline" data-globalize="ifs.label.mail"></p>
+                                    <a href="mailto:{{email}}">{{email}}</a>
+                                    {{/if}}
+                                </div>
+                                <div>
+                                    <p class="ifs-people-row-headline" data-globalize="ifs.label.lync"></p>
+                                    <a href="sip:{{email}}">{{{title}}}</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ifs-people-row">
+                            <div class="ifs-people-row-label">
+                                <p class="ifs-people-row-headline" data-globalize="ifs.label.location"></p>
+                            </div>
+                            <div class="ifs-people-row-infos">
+                                <div>
+                                    {{#if visitaddr}}
+                                    <p class="ifs-people-row-headline" data-globalize="ifs.label.visitoraddress"></p>
+                                    {{#if bldgname}}
+                                    <span data-globalize="ifs.label.building"></span><span>:</span> <span>{{bldgname}}</span><br />
+                                    {{/if}}
+                                    {{#if roomno}}
+                                    <span data-globalize="ifs.label.roomno"></span><span>:</span> <span>{{roomno}}</span>
+                                    {{/if}}
+                                    <p>{{{visitaddr}}}</p>
+                                    {{/if}}
+                                </div>
+                                <div>
+                                    {{#if ou}}
+                                    <p class="ifs-people-row-headline" data-globalize="ifs.label.factory"></p>
+                                    <span>{{{ou}}}</span>
+                                    {{/if}}
+                                    {{#if postcode}}
+                                    <p class="ifs-people-row-headline" data-globalize="ifs.label.hpc"></p>
+                                    <span>{{{postcode}}}</span>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ifs-people-row">
+                            <div class="ifs-people-row-label">
+                                <p data-globalize="ifs.label.information"></p>
+                            </div>
+                            <div class="ifs-people-row-infos">
+                                <div>
+                                    {{#if department}}
+                                    <p class="ifs-people-row-headline" data-globalize="ifs.label.department"></p>
+                                    <span>{{department}}</span>
+                                    {{/if}}
+                                    {{#if username}}
+                                    <p class="ifs-people-row-headline" data-globalize="ifs.label.userid"></p>
+                                    <span>{{username}}</span>
+                                    {{/if}}
+                                </div>
+                                <div>
+                                    {{#if costcenter}}
+                                    <p class="ifs-people-row-headline" data-globalize="ifs.label.costcenter"></p>
+                                    <span>{{costcenter}}</span>
+                                    {{/if}}
+
+                                    {{#if linemgr}}
+                                    <p class="ifs-people-row-headline" data-globalize="ifs.label.linemanager"></p>
+                                    <a href="http://intra-wiw.e.corpintra.net/wiw/person/{{linemgr}}.html" target="_blank">{{linemgr}}</a>
+                                    {{/if}}
+
+                                    {{#if deputy}}
+                                    <p class="ifs-people-row-headline" data-globalize="ifs.label.deputy"></p>
+                                    <a href="http://intra-wiw.e.corpintra.net/wiw/person/{{deputy}}.html" target="_blank">{{deputy}}</a>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+
+                        {{#if skillSet}}
+                        <div class="ifs-people-row">
+                            <div class="ifs-people-row-label">
+                                <p data-globalize="ifs.label.skills"></p>
+                            </div>
+                            <div class="ifs-people-row-infos">
+                                <div>
+                                    {{#if skills}}
+                                    <p class="ifs-people-row-headline" data-globalize="ifs.label.scopeofwork"></p>
+                                    <span>{{skills}}</span>
+                                    {{/if}}
+                                    {{#if projects}}
+                                    <p class="ifs-people-row-headline" data-globalize="ifs.label.projects"></p>
+                                    <span>{{projects}}</span>
+                                    {{/if}}
+                                </div>
+                                <div>
+                                    {{#if experience}}
+                                    <p class="ifs-people-row-headline" data-globalize="ifs.label.experience"></p>
+                                    <p>{{experience}}</p>
+                                    {{/if}}
+                                    {{#if plusskills}}
+                                    <p data-globalize="ifs.label.additionalfunction"></p>
+                                    <p>{{plusskills}}</p>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

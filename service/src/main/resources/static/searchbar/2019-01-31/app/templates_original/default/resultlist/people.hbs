@@ -1,0 +1,54 @@
+<div class="ifs-media ifs-tpl-person" data-favorite="{{favoredString}}" data-index="{{integer}}" data-score="{{score}}">
+
+    <div class="ifs-media-left">
+        {{#if thumbnail}}
+        <img src="{{authenticateIfJWTPresent thumbnail}}">
+        {{else}}
+        <img src="img/shared/person-dummy.png">
+        {{/if}}
+    </div>
+
+    <div class="ifs-media-body">
+        <div>
+            <p class="ifs-media-headline ifs-break-all ifs-demi">{{{title}}}</p>
+
+            <p class="ifs-textbody ifs-break-all">{{{jobtitle}}}</p>
+
+            <div class="ifs-person-resultlist-contact">
+                {{#if phone}}
+                <a href="tel:{{phoneClean}}">
+                    <i class="ifs-icons ifs-icon-phone"></i>
+                    <span>{{phone}}</span>
+                </a>
+                {{/if}}
+                {{#if mobile}}
+                <a href="tel:{{mobileClean}}">
+                    <i class="ifs-icons ifs-icon-smartphone"></i>
+                    <span>{{mobile}}</span>
+                </a>
+                {{/if}}
+                {{#if email}}
+                <a href="mailto:{{email}}">
+                    <i class="ifs-icons ifs-icon-mail"></i>
+                    <span>{{email}}</span>
+                </a>
+                {{/if}}
+            </div>
+
+            {{#if text}}
+                <p>{{{text}}}</p>
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="ifs-media-favorite">
+        <i class="ifs-icons{{#if favoredBool}} ifs-icon-star_rate{{/if}}"></i>
+    </div>
+
+    {{#if hitMenu}}
+    <div class="ifs-media-right">
+        {{{hitMenu}}}
+    </div>
+    {{/if}}
+
+</div>

@@ -1,0 +1,22 @@
+<div class="ifs-dp-imagewrapper">
+    <img id="ifs-dp-image" class="ifs-preview-image" src="">
+</div>
+<div class="ifs-dp-imageaction">
+    <button type="button" class="ifs-button ifs-no-border" data-action="zoom-reset">
+        <i class="ifs-icons ifs-icon-crop_square"></i>
+    </button>
+    {{#unless mobileState}}
+    <button type="button" class="ifs-button ifs-no-border" data-action="zoom-in">
+        <i class="ifs-icons ifs-icon-zoom_in"></i>
+    </button>
+    <button type="button" class="ifs-button ifs-no-border" data-action="zoom-out">
+        <i class="ifs-icons ifs-icon-zoom_out"></i>
+    </button>
+    {{/unless}}
+    <button type="button" class="ifs-button ifs-no-border" data-action="rotate-right">
+        <i class="ifs-icons ifs-icon-rotate_right"></i>
+    </button>
+    <button type="button" class="ifs-button ifs-no-border" data-action="rotate-left">
+        <i class="ifs-icons ifs-icon-rotate_left"></i>
+    </button>
+</div>

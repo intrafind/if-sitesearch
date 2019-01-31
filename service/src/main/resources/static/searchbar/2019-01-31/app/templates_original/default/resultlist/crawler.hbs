@@ -1,0 +1,40 @@
+<div class="ifs-media ifs-tpl-crawler" data-favorite="{{favoredString}}" data-index="{{integer}}" data-score="{{score}}">
+
+    <div class="ifs-media-left">
+        <a href="javascript:void(0);" data-action="preview" {{#if shouldUseCustomPreview}}data-preview-custom="{{customPreviewUrl}}"{{/if}} data-preview-id="{{urlbase64}}" data-hiturl="{{folder}}{{filename}}">
+            <div class="ifs-media-left-preview-hover"></div>
+            <div class="ifs-media-left-preview">
+                <i class="ifs-icons ifs-icon-search"></i>
+            </div>
+            <img src="{{authenticateIfJWTPresent thumbnail}}">
+        </a>
+    </div>
+    <div class="ifs-media-body">
+        <div>
+            {{#if title}}
+                <a target="_blank" href="{{url}}" class="ifs-break-all ifs-visited ifs-demi">{{{title}}}</a>
+            {{else}}
+                <a target="_blank" href="{{url}}" class="ifs-break-all ifs-visited ifs-demi">{{filename}}</a>
+            {{/if}}
+
+            {{#if modified}}<p class="ifs-media-modified ifs-break-all">{{modified}}</p>{{/if}}
+
+            {{#if text}}
+                <p class="ifs-textbody ifs-break-all">{{{text}}}</p>
+            {{/if}}
+
+            <a target="_blank" href="{{url}}" title="{{url}}" class="ifs-media-deepurl truncate pathname ifs-break-all">{{url}}</a>
+        </div>
+    </div>
+
+    <div class="ifs-media-favorite">
+        <i class="ifs-icons{{#if favoredBool}} ifs-icon-star_rate{{/if}}"></i>
+    </div>
+
+    {{#if hitMenu}}
+    <div class="ifs-media-right">
+        {{{hitMenu}}}
+    </div>
+    {{/if}}
+
+</div>

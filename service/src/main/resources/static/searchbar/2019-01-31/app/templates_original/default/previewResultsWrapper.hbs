@@ -1,0 +1,12 @@
+<div class="ifs-preview-results">
+    <div class="ifs-preview-results-wrapper dragscroll">
+    {{#each previewResults}}
+        {{{this}}}
+    {{/each}}
+    </div>
+    <div class="ifs-preview-results-more">
+        <a href="javascript:void(0);" data-action="search-all-preview-results">
+            <label class="ifs-preview-more-results-link">{{msg 'ifs.label.more.hits.for'}} {{msg connectorTitle}}</label>
+        </a>
+    </div>
+</div>

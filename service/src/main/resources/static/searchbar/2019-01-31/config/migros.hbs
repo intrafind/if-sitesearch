@@ -1,0 +1,21 @@
+<script id="hit-template" type="text/x-handlebars-template">
+    <div class="ifs-media ifs-tpl-crawler" data-favorite="{{favoredString}}" data-index="{{integer}}" data-score="{{score}}">
+        <div class="ifs-media-body">
+            <h4 class="ifs-media-heading">
+                {{#if title}}
+                    <a target="_blank" href="{{urlRaw}}" class="ifs-break-all ifs-visited ifs-demi">{{{title}}}</a>
+                {{/if}}
+            </h4>
+            {{#if body}}
+                <p class="ifs-textbody">{{{body}}}</p>
+            {{/if}}
+            <a href="{{urlRaw}}">
+                <p title="{{urlRaw}}">{{{url}}}</p>
+            </a>
+        </div>
+
+        {{#if hitMenu}}
+        {{{hitMenu}}}
+        {{/if}}
+    </div>
+</script>
