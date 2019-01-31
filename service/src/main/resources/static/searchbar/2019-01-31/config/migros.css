@@ -177,3 +177,21 @@ button#ifs-perform-search i.glyphicons {
 .ifs-page-seperator {
     background-color: #92b050!important;
 }
+
+/* Categories */
+.sisLabels {
+    margin-top: 12px;
+    padding-top: 6px;
+    border-top: 1px solid #ccc;
+    font-size: 12px;
+    text-align: right;
+    color: #50585b;
+}
+
+.sisLabels .sisLabel:after {
+    content: ",";
+}
+
+.sisLabels .sisLabel:last-child:after {
+    content: "";
+}
