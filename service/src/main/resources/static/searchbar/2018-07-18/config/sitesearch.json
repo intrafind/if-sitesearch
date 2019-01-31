@@ -10,7 +10,7 @@
   },
   "components": {
     "searchbar": {
-      "templatesUrl": "https://cdn.sitesearch.cloud/searchbar/2018-07-18/config/sitesearch.hbs",
+      "templatesUrl": "https://dev.sitesearch.cloud/searchbar/2018-07-18/config/sitesearch.hbs",
       "indexfields": {
         "template": "app/templates/default/indexfields.hbs"
       },
