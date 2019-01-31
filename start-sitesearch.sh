@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 
-#cp -r /home/ubuntu/docker-build-data/api-sitesearch/service .
 cd service
 docker build --pull --no-cache --tag docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest .
 docker push docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest
