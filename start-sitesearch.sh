@@ -3,8 +3,8 @@
 cd service
 docker build --pull --no-cache --tag docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest .
 docker push docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest
-docker build --tag docker-registry.sitesearch.cloud/intrafind/if-sitesearch:$BUILD_NUMBER .
-docker push docker-registry.sitesearch.cloud/intrafind/if-sitesearch:$BUILD_NUMBER
+#docker build --tag docker-registry.sitesearch.cloud/intrafind/if-sitesearch:$BUILD_NUMBER .
+#docker push docker-registry.sitesearch.cloud/intrafind/if-sitesearch:$BUILD_NUMBER
 
 ssh ubuntu@main.sitesearch.cloud docker rm -f if-sitesearch
 #    --log-opt gelf-address=udp://logs.sitesearch.cloud:12201 \
@@ -22,7 +22,7 @@ ssh ubuntu@main.sitesearch.cloud docker run -d --name if-sitesearch \
     --env SCM_HASH=$SCM_HASH \
     --env SECURITY_OAUTH2_CLIENT_CLIENT_SECRET=$SECURITY_OAUTH2_CLIENT_CLIENT_SECRET \
     --network sitesearch \
-    docker-registry.sitesearch.cloud/intrafind/if-sitesearch:$BUILD_NUMBER
+    docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest
 
 danglingImages=$(docker images -f "dangling=true" -q)
 if [ "$danglingImages" ]; then
