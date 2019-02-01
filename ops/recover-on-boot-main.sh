@@ -1,15 +1,7 @@
 #!/usr/bin/env sh
 
-#sudo mkfs.ext4 -F /dev/disk/by-id/scsi-0HC_Volume_1441441
-#mkdir /mnt/elk
 mount -o discard,defaults /dev/disk/by-id/scsi-0HC_Volume_1441441 /mnt/elk
-
-#sudo mkfs.ext4 -F /dev/disk/by-id/scsi-0HC_Volume_1458716
-#mkdir /mnt/docker-registry
 mount -o discard,defaults /dev/disk/by-id/scsi-0HC_Volume_1458716 /mnt/docker-registry
-
-#sudo mkfs.ext4 -F /dev/disk/by-id/scsi-0HC_Volume_1459052
-#mkdir /mnt/maven
 mount -o discard,defaults /dev/disk/by-id/scsi-0HC_Volume_1459052 /mnt/maven
 
 sysctl -w vm.max_map_count=262144 # required for Elasticsearch
@@ -26,6 +18,7 @@ docker start teamcity-agent-merkur
 docker-compose --file /srv/if-sitesearch/opt/docker-compose-elk.yaml -p main up -d
 
 docker start gitlab
-docker start gitlab-runner
+docker start gitlab-runner1
+docker start gitlab-runner2
 
 docker start main-router
