@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.paymill:paymill-java:5.1.6">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.paymill/paymill-java/5.1.6/a26179b6ece8bfcbc20072582a7941cc6ac8e9b/paymill-java-5.1.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.paymill/paymill-java/5.1.6/9a0586b9aad6eaedccfe835d2eae94fc95b1e741/paymill-java-5.1.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

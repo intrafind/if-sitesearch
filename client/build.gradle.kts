@@ -16,14 +16,14 @@
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 
 plugins {
-    id("kotlin2js") version "1.3.20"
+    id("kotlin2js") version "1.3.21"
 }
 
 repositories {
     jcenter()
 }
 
-val kotlin_version = "1.3.20"
+val kotlin_version = "1.3.21"
 dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version")
     compile("org.jetbrains.kotlin:kotlin-test-js:$kotlin_version")
