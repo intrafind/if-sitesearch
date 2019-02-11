@@ -32,7 +32,7 @@
             console.error(error.apierror, error.message);
         } else {
             console.log("PayFrame successfully loaded");
-            $("#payment-form").show(300);
+            $("#payment-form").show(100);
         }
     };
 
@@ -62,19 +62,18 @@
 </script>
 
 
-<form action="#" id="payment-form" method="POST" style="margin: 20px; padding: 20px">
+<form action="#" id="payment-form" method="POST" style="padding: 20px">
     <input name="amount" type="hidden" value="4211">
     <input name="currency" type="hidden" value="EUR">
     <input name="description" type="hidden" value="Easy Payments Guide!!!">
 
     <div id="credit-card-fields"></div>
 
-    <button class='form-control btn btn-success submit-button' type='submit'>Pay</button>
+    <button style="width: 500px" type="submit">Pay+++++</button>
 </form>
 
 <!--
-    4111111111111111
-
+4111111111111111
 
 curl https://api.paymill.com/v2.1/clients \
         -u 3c0c3f2119d888b28f0ad518b859a5c4: \

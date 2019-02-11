@@ -21,7 +21,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Gradle: com.paymill:paymill-java:5.1.6" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.2.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-security:2.1.2.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: edu.uci.ics:crawler4j:4.4.0" level="project" />
@@ -32,8 +31,9 @@
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-undertow:2.1.2.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger2:2.9.2" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger-ui:2.9.2" level="project" />
-    <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-templates:2.5.5" level="project" />
-    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.12.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-templates:2.5.6" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-devtools:2.1.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.13.1" level="project" />
     <orderEntry type="library" name="Gradle: org.jsoup:jsoup:1.11.3" level="project" />
     <orderEntry type="library" name="Gradle: org.mnode.mstor:mstor:1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.oauth-client:google-oauth-client-jetty:1.27.0" level="project" />
@@ -43,9 +43,6 @@
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.8" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.9.8" level="project" />
-    <orderEntry type="library" name="Gradle: org.glassfish.jersey.core:jersey-client:2.27" level="project" />
-    <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.8.1" level="project" />
-    <orderEntry type="library" name="Gradle: commons-beanutils:commons-beanutils:1.9.2" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger-common:2.9.2" level="project" />
     <orderEntry type="library" name="Gradle: io.swagger:swagger-models:1.5.20" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
@@ -104,7 +101,7 @@
     <orderEntry type="library" name="Gradle: org.mapstruct:mapstruct:1.2.0.Final" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-xml:2.5.5" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy:2.5.5" level="project" />
-    <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.15.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.17.2" level="project" />
     <orderEntry type="library" name="Gradle: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" name="Gradle: commons-net:commons-net:3.0.1" level="project" />
     <orderEntry type="library" name="Gradle: jdom:jdom:1.0" level="project" />
@@ -119,10 +116,6 @@
     <orderEntry type="library" name="Gradle: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" name="Gradle: org.mortbay.jetty:jetty:6.1.26" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.9.8" level="project" />
-    <orderEntry type="library" name="Gradle: org.glassfish.jersey.core:jersey-common:2.27" level="project" />
-    <orderEntry type="library" name="Gradle: javax.ws.rs:javax.ws.rs-api:2.1" level="project" />
-    <orderEntry type="library" name="Gradle: org.glassfish.hk2.external:javax.inject:2.5.0-b42" level="project" />
-    <orderEntry type="library" name="Gradle: commons-collections:commons-collections:3.2.1" level="project" />
     <orderEntry type="library" name="Gradle: javax.activation:javax.activation-api:1.2.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-beans:5.1.4.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-expression:5.1.4.RELEASE" level="project" />
@@ -154,7 +147,6 @@
     <orderEntry type="library" name="Gradle: org.osgi:org.osgi.core:4.2.0" level="project" />
     <orderEntry type="library" name="Gradle: org.mortbay.jetty:jetty-util:6.1.26" level="project" />
     <orderEntry type="library" name="Gradle: org.mortbay.jetty:servlet-api:2.5-20081211" level="project" />
-    <orderEntry type="library" name="Gradle: org.glassfish.hk2:osgi-resource-locator:1.0.1" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-jcl:5.1.4.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.jackson:jackson-core-asl:1.9.13" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.bouncycastle:bcprov-jdk15on:1.56" level="project" />
@@ -259,6 +251,7 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.xmlbeans:xmlbeans:3.0.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.fasterxml.woodstox:woodstox-core:5.1.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.ws.xmlschema:xmlschema-core:2.2.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: javax.ws.rs:javax.ws.rs-api:2.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.mchange:mchange-commons-java:0.2.11" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.codehaus.woodstox:stax2-api:4.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.openjdk.jmh:jmh-core:1.21" level="project" />
@@ -283,7 +276,6 @@
     <orderEntry type="library" scope="TEST" name="Gradle: net.minidev:accessors-smart:1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.ow2.asm:asm:5.0.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.tika:tika-parsers:1.19.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.springframework.boot:spring-boot-devtools:2.1.2.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish.jaxb:jaxb-core:2.3.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: edu.ucar:netcdf4:4.5.5" level="project" />
@@ -368,6 +360,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.xmlbeans:xmlbeans:3.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.fasterxml.woodstox:woodstox-core:5.1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.ws.xmlschema:xmlschema-core:2.2.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: javax.ws.rs:javax.ws.rs-api:2.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.mchange:mchange-commons-java:0.2.11" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.codehaus.woodstox:stax2-api:4.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.openjdk.jmh:jmh-generator-annprocess:1.21" level="project" />
