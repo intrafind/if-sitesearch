@@ -12,6 +12,15 @@ accordingly, and delete the patch script.
 */
 changeProject(DslContext.projectId) {
     features {
+        remove {
+            dockerRegistry {
+                id = "PROJECT_EXT_10"
+                name = "Site Search Docker Registry"
+                url = "https://docker-registry.sitesearch.cloud"
+                userName = "sitesearch"
+                password = "credentialsJSON:bed82269-69df-4b8a-9435-959656fcc281"
+            }
+        }
         add {
             dockerRegistry {
                 id = "PROJECT_EXT_4"
