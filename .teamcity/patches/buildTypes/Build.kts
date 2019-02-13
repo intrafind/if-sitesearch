@@ -38,5 +38,8 @@ changeBuildType(RelativeId("Build")) {
                 chmod -R 755 service/config
             """.trimIndent()
         }
+        update<ScriptBuildStep>(1) {
+            scriptContent = "./gradlew clean build --info -x test"
+        }
     }
 }
