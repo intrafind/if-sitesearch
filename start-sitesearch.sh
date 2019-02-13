@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 cd service
-variant=blue
+variant=green
 docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant .
 docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant
 

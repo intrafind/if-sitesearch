@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-docker_tag=blue
+docker_tag=green
 container_name=if-sitesearch
 docker_image_name=sis-sitesearch
 img_fqn=docker-registry.intrafind.net/intrafind/${docker_image_name}:${docker_tag}
@@ -46,6 +46,7 @@ startComponent() {
 if isBlueUp; then
     echo "blue is active"
     current="${container_name}-green"
+    docker_tag=green
 
     startComponent ${current}
     startComponent ${current}-1
@@ -55,6 +56,7 @@ if isBlueUp; then
 else
     echo "blue is inactive"
     current="${container_name}-blue"
+    docker_tag=blue
 
     startComponent ${current}
     startComponent ${current}-1
