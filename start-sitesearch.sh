@@ -1,8 +1,6 @@
 #!/usr/bin/env sh
 
 cd service
-echo "TEST>>>>>>>>>>>>>>>>>>>"
-whoami
 docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:latest .
 docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
 
