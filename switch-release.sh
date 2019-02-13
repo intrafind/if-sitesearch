@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 docker_tag=latest
-docker_image_name=if-sitesearch
+docker_image_name=sis-sitesearch
 img_fqn=docker-registry.intrafind.net/intrafind/${docker_image_name}:${docker_tag}
 docker_network=sitesearch
 
