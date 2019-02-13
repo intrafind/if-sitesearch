@@ -30,22 +30,6 @@
  * limitations under the License.
  */
 
-/*
- * Copyright 2019 IntraFind Software AG. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 val springBootVersion1 = "2.1.2.RELEASE"
 // Migrate to Kotlin https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/
 plugins {
@@ -55,7 +39,7 @@ plugins {
     id("org.springframework.boot") version "2.1.2.RELEASE"
     id("io.spring.dependency-management") version "1.0.6.RELEASE"
     id("io.morethan.jmhreport") version "0.9.0"
-//    id("com.google.cloud.tools.jib") version "1.0.0"
+    id("com.google.cloud.tools.jib") version "1.0.0"
 }
 
 java {
@@ -82,7 +66,7 @@ dependencies {
 
     compile("com.rometools:rome:1.12.0")
 
-    compile("com.caucho:hessian:4.0.59")
+    compile("com.caucho:hessian:4.0.60")
 
     compile("org.springframework.boot:spring-boot-starter-webflux:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-undertow:$springBootVersion") {
@@ -109,11 +93,11 @@ dependencies {
     compile("com.google.apis:google-api-services-gmail:v1-rev20181202-1.27.0")
 }
 
-//jib {
-//    from.image = "openjdk:12-jdk-alpine"
-//    to.image = "docker-registry.intrafind.net/intrafind/sis-sitesearch:latest"
-//    container.mainClass = "com.intrafind.sitesearch.Application"
-//}
+jib {
+    from.image = "openjdk:12-jdk-alpine"
+    to.image = "docker-registry.intrafind.net/intrafind/sis-sitesearch:latest"
+    container.mainClass = "com.intrafind.sitesearch.Application"
+}
 
 jmh {
     include = listOf("LoadTest")

@@ -2,11 +2,11 @@ version: "2.0"
 
 services:
   consul:
-    image: consul:1.2.0
-    container_name: consul
+    image: consul:1.4.2
+    #    container_name: consul
     restart: always
-    ports:
-      - 8500:8500
+    #    ports:
+    #      - 8500:8500
     networks:
       - sitesearch
 
