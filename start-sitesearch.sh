@@ -1,8 +1,9 @@
 #!/usr/bin/env sh
 
 cd service
-docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:latest .
-docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
+variant=blue
+docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant .
+docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant
 
 ssh ubuntu@main.sitesearch.cloud docker rm -f if-sitesearch
 #    --log-opt gelf-address=udp://logs.sitesearch.cloud:12201 \
@@ -20,7 +21,7 @@ ssh ubuntu@main.sitesearch.cloud docker run -d --name if-sitesearch \
     --env SCM_HASH=$SCM_HASH \
     --env SECURITY_OAUTH2_CLIENT_CLIENT_SECRET=$SECURITY_OAUTH2_CLIENT_CLIENT_SECRET \
     --network sitesearch \
-    docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
+    docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant
 
 danglingImages=$(docker images -f "dangling=true" -q)
 if [ "$danglingImages" ]; then

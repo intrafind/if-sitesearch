@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-docker_tag=latest
+docker_tag=blue
 container_name=if-sitesearch
 docker_image_name=sis-sitesearch
 img_fqn=docker-registry.intrafind.net/intrafind/${docker_image_name}:${docker_tag}
@@ -45,19 +45,19 @@ startComponent() {
 
 if isBlueUp; then
     echo "blue is active"
-    green="${container_name}-green"
+    current="${container_name}-green"
 
-    startComponent ${green}
-    startComponent ${green}-1
+    startComponent ${current}
+    startComponent ${current}-1
     sleep 21
     ssh ubuntu@main.sitesearch.cloud docker exec router switch.sh green
 
 else
     echo "blue is inactive"
-    blue="${container_name}-blue"
+    current="${container_name}-blue"
 
-    startComponent ${blue}
-    startComponent ${blue}-1
+    startComponent ${current}
+    startComponent ${current}-1
     sleep 21
     ssh ubuntu@main.sitesearch.cloud docker exec router switch.sh blue
 fi
