@@ -104,7 +104,7 @@ public class SimpleClientTest {
     public void crudPage() throws Exception {
         updatePage();
 //        suggest();
-        TimeUnit.MILLISECONDS.sleep(1_000);
+        TimeUnit.MILLISECONDS.sleep(2_000);
         search();
         fetchPage();
         TimeUnit.MILLISECONDS.sleep(1_000);
