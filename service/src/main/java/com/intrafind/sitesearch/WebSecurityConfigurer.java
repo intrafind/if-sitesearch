@@ -56,14 +56,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         this.oauth2ClientContext = oauth2ClientContext;
     }
 
-//    @Bean
-//    public FilterRegistrationBean oauth2ClientFilterRegistration(final OAuth2ClientContextFilter filter) {
-//        final var registration = new FilterRegistrationBean<>();
-//        registration.setFilter(filter);
-//        registration.setOrder(SecurityProperties.DEFAULT_FILTER_ORDER);
-//        return registration;
-//    }
-
     @Bean
     @ConfigurationProperties("github")
     public ClientResources github() {
