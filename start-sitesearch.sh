@@ -32,7 +32,7 @@ ssh ubuntu@main.sitesearch.cloud docker run --rm -d --name if-sitesearch \
     --env SCM_HASH=$SCM_HASH \
     --env SECURITY_OAUTH2_CLIENT_CLIENT_SECRET=$SECURITY_OAUTH2_CLIENT_CLIENT_SECRET \
     --network sitesearch \
-    docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant
+    docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
 
 danglingImages=$(docker images -f "dangling=true" -q)
 if [ "$danglingImages" ]; then
