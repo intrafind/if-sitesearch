@@ -4,6 +4,7 @@ cd service
 export variant=green
 docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant .
 docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant
+docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
 
 isBlueUp() {
     if [ -f "./blue-green-deployment.lock" ]; then
@@ -18,7 +19,7 @@ isBlueUp() {
 ssh ubuntu@main.sitesearch.cloud docker rm -f if-sitesearch
 #    --log-opt gelf-address=udp://logs.sitesearch.cloud:12201 \
 #    --log-driver=gelf \
-ssh ubuntu@main.sitesearch.cloud docker run -d --name if-sitesearch \
+ssh ubuntu@main.sitesearch.cloud docker run --rm -d --name if-sitesearch \
     --env SIS_API_SERVICE_URL=$SIS_API_SERVICE_URL \
     --env SERVICE_SECRET=$SERVICE_SECRET \
     --env SIS_SERVICE_HOST=$SIS_SERVICE_HOST \
@@ -41,3 +42,4 @@ else
 fi
 
 docker volume prune -f
+docker image prune -f
