@@ -1,9 +1,19 @@
 #!/usr/bin/env sh
 
 cd service
-variant=green
+export variant=green
 docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant .
 docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant
+
+isBlueUp() {
+    if [ -f "./blue-green-deployment.lock" ]; then
+        rm ./blue-green-deployment.lock
+        export variant=blue
+    else
+        touch ./blue-green-deployment.lock
+        export variant=green
+    fi
+}
 
 ssh ubuntu@main.sitesearch.cloud docker rm -f if-sitesearch
 #    --log-opt gelf-address=udp://logs.sitesearch.cloud:12201 \
