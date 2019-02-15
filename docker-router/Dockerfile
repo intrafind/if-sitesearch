@@ -19,6 +19,7 @@ RUN echo 'sitesearch:$apr1$yiWHOvCy$YVz/vNHOKrH9LJGEglMOg.' > /etc/nginx/.htpass
 
 ENV BLUE_NAME blue
 ENV GREEN_NAME green
+# TODO are below ENV required at all?
 ENV CONSUL_URL consul:8500
 ENV constraint:node master
 

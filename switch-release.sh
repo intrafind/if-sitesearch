@@ -3,10 +3,7 @@
 export docker_tag=green
 container_name=if-sitesearch
 docker_image_name=sis-sitesearch
-img_fqn=docker-registry.intrafind.net/intrafind/${docker_image_name}:${docker_tag}
 docker_network=sitesearch
-
-ssh ubuntu@main.sitesearch.cloud docker rm -f ${img_fqn}
 
 isBlueUp() {
     if [ -f "./blue-green-deployment.lock" ]; then
