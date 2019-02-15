@@ -1,18 +1,14 @@
-/*
- * Copyright 2019 IntraFind Software AG. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+import jetbrains.buildServer.configs.kotlin.v2018_2.*
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.perfmon
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.sshAgent
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.ScriptBuildStep
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
+import jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions.BuildFailureOnText
+import jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions.failOnText
+import jetbrains.buildServer.configs.kotlin.v2018_2.projectFeatures.dockerRegistry
+import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.schedule
+import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -68,13 +64,6 @@ project {
             param("title", "Test Report Tab")
             param("type", "BuildReportTab")
         }
-        dockerRegistry {
-            id = "PROJECT_EXT_10"
-            name = "Site Search Docker Registry"
-            url = "https://docker-registry.sitesearch.cloud"
-            userName = "sitesearch"
-            password = "credentialsJSON:bed82269-69df-4b8a-9435-959656fcc281"
-        }
         feature {
             id = "PROJECT_EXT_11"
             type = "IssueTracker"
@@ -96,6 +85,13 @@ project {
             param("revisionRuleRevision", "latest.lastSuccessful")
             param("title", "Report Tab Title")
             param("type", "ProjectReportTab")
+        }
+        dockerRegistry {
+            id = "PROJECT_EXT_4"
+            name = "Docker Registry - IntraFind.NET"
+            url = "https://docker-registry.intrafind.net"
+            userName = "sitesearch"
+            password = "credentialsJSON:bed82269-69df-4b8a-9435-959656fcc281"
         }
         feature {
             id = "PROJECT_EXT_5"
@@ -199,7 +195,6 @@ object Build : BuildType({
         script {
             name = "Enable e-mail delivery"
             scriptContent = """
-                whoami
                 cp -r /root/docker-build-data/api-sitesearch/service/config service/
                 chmod -R 755 service/config
             """.trimIndent()
@@ -324,7 +319,7 @@ object LoadTest : BuildType({
     steps {
         script {
             scriptContent = "sh load-test.sh"
-            dockerImage = "openjdk:11-jre"
+            dockerImage = "openjdk:12-jdk-alpine"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
         }
@@ -427,8 +422,8 @@ object SmokeTest : BuildType({
 
     steps {
         script {
-            scriptContent = "sh ./ops/smoke-test.sh"
-            dockerImage = "openjdk:11-jre"
+            scriptContent = "sh ./ci/smoke-test.sh"
+            dockerImage = "openjdk:12-jdk-alpine"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
         }
