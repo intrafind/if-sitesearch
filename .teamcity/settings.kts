@@ -14,18 +14,6 @@
  * limitations under the License.
  */
 
-import jetbrains.buildServer.configs.kotlin.v2018_2.*
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.perfmon
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.sshAgent
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.ScriptBuildStep
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
-import jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions.BuildFailureOnText
-import jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions.failOnText
-import jetbrains.buildServer.configs.kotlin.v2018_2.projectFeatures.dockerRegistry
-import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.schedule
-import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
-import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
-
 /*
 The settings script is an entry point for defining a TeamCity
 project hierarchy. The script should contain a single call to the
@@ -336,7 +324,7 @@ object LoadTest : BuildType({
     steps {
         script {
             scriptContent = "sh load-test.sh"
-            dockerImage = "openjdk:12-jdk-alpine"
+            dockerImage = "openjdk:11-jre"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
         }
@@ -439,8 +427,8 @@ object SmokeTest : BuildType({
 
     steps {
         script {
-            scriptContent = "sh ./ci/smoke-test.sh"
-            dockerImage = "openjdk:12-jdk-alpine"
+            scriptContent = "sh ./ops/smoke-test.sh"
+            dockerImage = "openjdk:11-jre"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
         }
