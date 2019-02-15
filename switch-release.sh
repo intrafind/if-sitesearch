@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-export docker_tag="green"
+docker_tag="green"
 container_name=if-sitesearch
 docker_image_name=sis-sitesearch
 img_fqn=docker-registry.intrafind.net/intrafind/${docker_image_name}:${docker_tag}
@@ -35,7 +35,7 @@ runService() {
         --env SECURITY_OAUTH2_CLIENT_CLIENT_SECRET=$SECURITY_OAUTH2_CLIENT_CLIENT_SECRET \
         --restart unless-stopped \
         --network $docker_network \
-        ${img_fqn}
+        docker-registry.intrafind.net/intrafind/${docker_image_name}:${docker_tag}
 }
 
 startComponent() {
@@ -56,7 +56,7 @@ if isBlueUp; then
 else
     echo "blue is inactive"
     current="${container_name}-blue"
-    export docker_tag="blue"
+    docker_tag="blue"
 
     startComponent ${current}
     startComponent ${current}-1
