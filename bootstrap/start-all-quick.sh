@@ -20,7 +20,7 @@ docker restart if-sitesearch-green-1
 docker restart if-sitesearch-blue
 docker restart if-sitesearch-blue-1
 
-docker restart consul
+#docker restart consul # TODO really required?
 
 #docker restart if-tagging-service # replaced by Kubernetes
 
@@ -29,7 +29,7 @@ docker restart router
 
 sudo sysctl -w vm.max_map_count=262144 # required for Elasticsearch
 #docker-compose --file opt/docker-compose-elk.yaml -p sitesearch up -d # moved to Hetzner main
-docker-compose --file opt/docker-compose-bg.yaml -p tmp up -d
+#docker-compose --file ops/docker-compose-bg.yaml -p tmp up -d # TODO really required?
 
 docker exec router nginx -s reload
 sleep 30
