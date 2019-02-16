@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-export docker_tag=green
+export docker_tag=latest
 container_name=if-sitesearch
 docker_image_name=sis-sitesearch
 docker_network=sitesearch
@@ -37,14 +37,15 @@ runService() {
 
 startComponent() {
     ssh ubuntu@main.sitesearch.cloud docker rm -f $1
-    ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch:$docker_tag
+#    ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch:$docker_tag
+    ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
     runService $1
 }
 
 if isBlueUp; then
     echo "blue is active"
     current="${container_name}-green"
-    export docker_tag=green
+#    export docker_tag=green
 
     startComponent ${current}
     startComponent ${current}-1
@@ -54,7 +55,7 @@ if isBlueUp; then
 else
     echo "blue is inactive"
     current="${container_name}-blue"
-    export docker_tag=blue
+#    export docker_tag=blue
 
     startComponent ${current}
     startComponent ${current}-1
