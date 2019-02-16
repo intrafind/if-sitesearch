@@ -2,12 +2,6 @@
 
 cd service
 export variant=green
-docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant .
-ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch
-docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant
-docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:latest .
-ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
-docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
 
 isBlueUp() {
     if [ -f "./blue-green-deployment.lock" ]; then
@@ -18,6 +12,15 @@ isBlueUp() {
         export variant=green
     fi
 }
+
+isBlueUp
+
+docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant .
+ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch
+docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant
+docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:latest .
+#ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
+docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
 
 ssh ubuntu@main.sitesearch.cloud docker rm -f if-sitesearch
 #    --log-opt gelf-address=udp://logs.sitesearch.cloud:12201 \
