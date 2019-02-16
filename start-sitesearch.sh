@@ -1,19 +1,19 @@
 #!/usr/bin/env sh
 
 cd service
-export variant=green
+#export variant=green
 
-isBlueUp() {
-    if [ -f "./blue-green-deployment.lock" ]; then
-        rm ./blue-green-deployment.lock
-        export variant=blue
-    else
-        touch ./blue-green-deployment.lock
-        variant=green
-    fi
-}
-
-isBlueUp
+#isBlueUp() {
+#    if [ -f "./blue-green-deployment.lock" ]; then
+#        rm ./blue-green-deployment.lock
+#        export variant=blue
+#    else
+#        touch ./blue-green-deployment.lock
+#        variant=green
+#    fi
+#}
+#
+#isBlueUp
 
 ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch
 #ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant
@@ -50,4 +50,4 @@ fi
 docker volume prune -f
 #ssh ubuntu@main.sitesearch.cloud docker volume prune -f
 docker image prune -f
-#ssh ubuntu@main.sitesearch.cloud docker image prune -f
+ssh ubuntu@main.sitesearch.cloud docker image prune -f
