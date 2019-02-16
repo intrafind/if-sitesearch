@@ -9,15 +9,15 @@ isBlueUp() {
         export variant=blue
     else
         touch ./blue-green-deployment.lock
-        export variant=green
+        variant=green
     fi
 }
 
 isBlueUp
 
-docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant .
 ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch
-ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant
+#ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant
+docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant .
 docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant
 docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:latest .
 docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
@@ -48,4 +48,6 @@ else
 fi
 
 docker volume prune -f
+#ssh ubuntu@main.sitesearch.cloud docker volume prune -f
 docker image prune -f
+#ssh ubuntu@main.sitesearch.cloud docker image prune -f

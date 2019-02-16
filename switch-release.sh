@@ -37,7 +37,7 @@ runService() {
 
 startComponent() {
     ssh ubuntu@main.sitesearch.cloud docker rm -f $1
-#    ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch:$docker_tag
+    ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch:$docker_tag
     runService $1
 }
 
