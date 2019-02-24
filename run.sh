@@ -5,6 +5,7 @@
 #    SPRING_PROFILES_ACTIVE=oss \
     SPRING_CONFIG_NAME="application, local" \
         ./gradlew bootRun --continue --continuous --no-scan --parallel --build-cache $1
+#        --refresh-dependencies --rerun-tasks --no-build-cache $1
 } || {
     hangingJavaProcessToStop=`jps | grep Application | awk '{print $1}'`
     echo "hangingJavaProcessToStop: $hangingJavaProcessToStop"
@@ -13,3 +14,4 @@
 }
 
 #touch service/build/resources/main/application.yaml # to trigger Spring Boot reload
+#./gradlew :service:compileJava :service:processResources # to trigger reload
