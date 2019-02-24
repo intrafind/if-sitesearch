@@ -27,7 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -148,6 +147,6 @@ public class Application {
     }
 
     public static void main(final String... args) {
-        final ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
+        SpringApplication.run(Application.class, args);
     }
 }
