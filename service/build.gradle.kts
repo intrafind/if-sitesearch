@@ -20,17 +20,14 @@ plugins {
     idea
     id("me.champeau.gradle.jmh") version "0.4.8"
     id("org.springframework.boot") version "2.1.3.RELEASE"
-    id("io.spring.dependency-management") version "1.0.6.RELEASE"
+    id("io.spring.dependency-management") version "1.0.7.RELEASE"
     id("io.morethan.jmhreport") version "0.9.0"
     id("com.google.cloud.tools.jib") version "1.0.0"
 }
 
 idea {
     module {
-        inheritOutputDirs = false
-//        outputDir = File("service/build/classes/java/main")
-//        resourceDirs = setOf(File("service/build/flubbssdsd"))
-//        testOutputDir = compileTestJava.destinationDir
+        inheritOutputDirs = true
     }
 }
 
@@ -73,8 +70,6 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
 
     compile("org.codehaus.groovy:groovy-templates:2.5.6")
-//    testRuntimeOnly("org.springframework.boot:spring-boot-devtools:$springBootVersion")
-//    compile("org.springframework.boot:spring-boot-devtools:$springBootVersion")
     runtimeClasspath("org.springframework.boot:spring-boot-devtools:$springBootVersion")
 
     compile("com.squareup.okhttp3:okhttp:3.13.1")
@@ -98,6 +93,6 @@ jmh {
     fork = 1
     iterations = 5
     resultFormat = "JSON"
-    threads = 30
+    threads = 40
     failOnError = true
 }

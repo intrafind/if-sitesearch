@@ -5,9 +5,7 @@
       <configuration />
     </facet>
   </component>
-  <component name="NewModuleRootManager">
-    <output url="file://$MODULE_DIR$/../../../service/out/production/classes" />
-    <output-test url="file://$MODULE_DIR$/../../../service/out/test/classes" />
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../../service">
       <sourceFolder url="file://$MODULE_DIR$/../../../service/src/main/java" isTestSource="false" />
