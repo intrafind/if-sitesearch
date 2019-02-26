@@ -19,7 +19,9 @@ gcloud auth activate-service-account --key-file=/srv/minion/compute-engine-admin
 gcloud config set project woven-alpha-150909
 
 # still manually to trigger here ... needs some tests
-sudo certbot \
+certbot \
+    -d *.intrafind.net \
+    -d *.analyzelaw.com \
     -d *.sitesearch.cloud \
     --manual \
     --preferred-challenges dns certonly \
