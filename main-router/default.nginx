@@ -141,6 +141,7 @@ http {
         }
     }
 
+
     server {
         listen 443 ssl http2;
         listen [::]:443 ssl http2;
@@ -194,6 +195,18 @@ http {
             #            proxy_cache maven_cache;
             client_max_body_size 3G;
             root /srv/maven-repository;
+        }
+    }
+
+    server {
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
+        server_name ocr-converter.analyzelaw.com;
+
+        include /etc/nginx/snippets/ssl.conf;
+
+        location / {
+            proxy_pass http://ocr.analyzelaw.com:7241/;
         }
     }
 
