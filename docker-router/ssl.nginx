@@ -1,7 +1,7 @@
 # SSL Certificate
-ssl_certificate /etc/letsencrypt/live/sitesearch.cloud-0001/fullchain.pem;
-ssl_certificate_key /etc/letsencrypt/live/sitesearch.cloud-0001/privkey.pem;
-ssl_trusted_certificate /etc/letsencrypt/live/sitesearch.cloud-0001/fullchain.pem;
+ssl_certificate /etc/letsencrypt/live/intrafind.net/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/intrafind.net/privkey.pem;
+ssl_trusted_certificate /etc/letsencrypt/live/intrafind.net/fullchain.pem;
 
 ssl_session_timeout 1d;
 ssl_session_cache shared:SSL:5m;
