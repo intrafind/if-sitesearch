@@ -36,6 +36,7 @@ import org.springframework.http.HttpStatus;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -57,7 +58,7 @@ public class LoadTest {
             .followRedirects(false)
             .followSslRedirects(false)
             .build();
-    public static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
     static final Random PSEUDO_ENTROPY = new Random();
     static final Map<String, Integer> SEARCH_QUERIES = new HashMap<>();
     static final Map<String, Integer> AUTOCOMPLETE_QUERIES = new HashMap<>();
@@ -132,7 +133,7 @@ public class LoadTest {
         if (queryHits == 0) {
             assertNotNull(response.body());
         } else {
-            final Hits result = MAPPER.readValue(response.body().charStream(), Hits.class);
+            final Hits result = MAPPER.readValue(Objects.requireNonNull(response.body()).charStream(), Hits.class);
             assertTrue(queryHits < result.getResults().size());
             assertEquals(randomQuery, result.getQuery());
         }
@@ -153,7 +154,7 @@ public class LoadTest {
                 .build();
         final var response = CALLER.newCall(request).execute();
         assertEquals(HttpStatus.OK.value(), response.code());
-        final var result = MAPPER.readValue(response.body().charStream(), Autocomplete.class);
+        final var result = MAPPER.readValue(Objects.requireNonNull(response.body()).charStream(), Autocomplete.class);
         assertTrue(queryHits + " - " + result.getResults().size(), queryHits <= result.getResults().size());
         response.close();
     }
