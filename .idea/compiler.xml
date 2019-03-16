@@ -12,6 +12,10 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="client" target="11" />
+      <module name="dashboard" target="11" />
+      <module name="finder" target="11" />
+      <module name="gadget" target="11" />
       <module name="service" target="11" />
     </bytecodeTargetLevel>
   </component>

@@ -3,7 +3,7 @@ language: java
 sudo: false # use container based builds which are faster
 
 jdk:
-- openjdk11
+  - openjdk12
 
 branches:
   only:
