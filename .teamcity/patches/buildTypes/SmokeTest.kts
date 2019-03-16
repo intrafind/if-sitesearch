@@ -22,7 +22,7 @@ changeBuildType(RelativeId("SmokeTest")) {
     steps {
         update<ScriptBuildStep>(0) {
             scriptContent = "sh ./ops/smoke-test.sh"
-            dockerImage = "openjdk:11-jre"
+            dockerImage = "openjdk:12-jdk"
         }
     }
 }
