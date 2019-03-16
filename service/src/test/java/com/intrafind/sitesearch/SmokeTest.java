@@ -172,7 +172,7 @@ public class SmokeTest {
         assertEquals(HttpStatus.OK.value(), response.code());
         assertNull(response.headers().get("x-frame-options"));
         assertNull(response.headers().get("X-Frame-Options"));
-        assureCorsHeaders(response.headers(), 395);
+        assureCorsHeaders(response.headers(), 397);
     }
 
     @Test
