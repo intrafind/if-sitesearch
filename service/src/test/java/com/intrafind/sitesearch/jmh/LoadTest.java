@@ -25,7 +25,6 @@ import com.intrafind.sitesearch.dto.Autocomplete;
 import com.intrafind.sitesearch.dto.Hits;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
@@ -87,30 +86,12 @@ public class LoadTest {
         AUTOCOMPLETE_DATA.put(LOAD_SITE_ID, AUTOCOMPLETE_QUERIES); // https://www.migrosbank.ch/de, https://blog.migrosbank.ch/de
     }
 
-//    public static void main(String... args) throws Exception {
-//        final var options = new OptionsBuilder()
-//                .warmupIterations(1)
-//                .measurementIterations(5)
-////                .include(".*")
-////                .include(LoadIndex2Users.class.getSimpleName())
-//                .include(LoadTest.class.getSimpleName())
-//                .forks(1)
-//                .threads(10)
-//                .mode(Mode.Throughput)
-//                .resultFormat(ResultFormatType.JSON)
-//                .result("build/jmh-result.json")
-//                .shouldFailOnError(true)
-//                .build();
-//
-//        new Runner(options).run();
-//    }
-
     @Benchmark
     public void staticFiles() throws IOException {
-        final Request request = new Request.Builder()
+        final var request = new Request.Builder()
                 .url(LOAD_TARGET)
                 .build();
-        final Response response = CALLER.newCall(request).execute();
+        final var response = CALLER.newCall(request).execute();
         assertEquals(HttpStatus.OK.value(), response.code());
         assertNotNull(response.body());
         response.close();
@@ -125,10 +106,10 @@ public class LoadTest {
         final String randomQuery = (String) randomSite.keySet().toArray()[randomQueryIndex];
         final int queryHits = randomSite.get(randomQuery);
 
-        final Request request = new Request.Builder()
+        final var request = new Request.Builder()
                 .url(LOAD_TARGET + SiteController.ENDPOINT + "/" + randomSiteId + SearchController.ENDPOINT + "?query=" + randomQuery)
                 .build();
-        final Response response = CALLER.newCall(request).execute();
+        final var response = CALLER.newCall(request).execute();
         assertEquals(HttpStatus.OK.value(), response.code());
         if (queryHits == 0) {
             assertNotNull(response.body());
