@@ -75,36 +75,48 @@
 <!--
 4111111111111111
 
+# Create client
 curl https://api.paymill.com/v2.1/clients \
         -u 3c0c3f2119d888b28f0ad518b859a5c4: \
         -d "email=sis-client@example.com" \
         -d "description=SiS Test Client"
 
+# Create means of payment
 curl https://api.paymill.com/v2.1/payments \
         -u 3c0c3f2119d888b28f0ad518b859a5c4: \
-        -d "token=tok_bc4dad500ce004067bd043af293c" \
-        -d "client=client_6ca121616b24a290a2b0"
+        -d "token=tok_91a02b6499563bbe234ac7f7e714" \
+        -d "client=client_bd71c54e23a85beca98d"
 
+# Authorize payment 
 curl https://api.paymill.com/v2.1/preauthorizations \
         -u 3c0c3f2119d888b28f0ad518b859a5c4: \
-        -d "payment=pay_f62ba7737ba07ae9f3277d9d" \
-        -d "amount=4200" \
+        -d "payment=pay_2ed6ef6822e5bac6bfa24b98" \
+        -d "amount=4400" \
         -d "currency=EUR"
 
+# Complete transaction
 curl https://api.paymill.com/v2.1/transactions \
         -u 3c0c3f2119d888b28f0ad518b859a5c4: \
         -d "amount=4200" \
         -d "currency=EUR" \
-        -d "payment=pay_f62ba7737ba07ae9f3277d9d" \
+        -d "payment=pay_2ed6ef6822e5bac6bfa24b98" \
         -d "description=Test Transaction"
 
+# Complete payment?
 curl https://api.paymill.com/v2.1/transactions \
         -u 3c0c3f2119d888b28f0ad518b859a5c4: \
-        -d "amount=4200" \
+        -d "amount=4000" \
         -d "currency=EUR" \
-        -d "client=client_6ca121616b24a290a2b0" \
-        -d "payment=pay_ffa0b8392e8cff8c4e8f99eb" \
-        -d "description=Test Transaction 123"
+        -d "client=client_bd71c54e23a85beca98d" \
+        -d "payment=pay_f307f6a8ba9b1dab8e5ee377" \
+        -d "description=Test Transaction 999"
+
+
+# Create subscription to a subsription plan (password needed? but can be skipped)
+curl https://api.paymill.com/v2.1/subscriptions \
+  -u "3c0c3f2119d888b28f0ad518b859a5c4" \
+  -d "offer=offer_28deea882d3450d03a32" \
+  -d "payment=pay_2ed6ef6822e5bac6bfa24b98"
 
 -->
 
