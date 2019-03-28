@@ -22,7 +22,6 @@
       <GradleProjectSettings>
         <option name="distributionType" value="WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/payment" />
-        <option name="gradleHome" value="/usr/local/Cellar/gradle/3.0/libexec" />
         <option name="resolveModulePerSourceSet" value="false" />
         <option name="useAutoImport" value="true" />
       </GradleProjectSettings>
