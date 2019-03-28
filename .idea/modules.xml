@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/client/client.iml" filepath="$PROJECT_DIR$/.idea/modules/client/client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dashboard/dashboard.iml" filepath="$PROJECT_DIR$/.idea/modules/dashboard/dashboard.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/finder/finder.iml" filepath="$PROJECT_DIR$/.idea/modules/finder/finder.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gadget/gadget.iml" filepath="$PROJECT_DIR$/.idea/modules/gadget/gadget.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/if-sitesearch.iml" filepath="$PROJECT_DIR$/.idea/modules/if-sitesearch.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/payment.iml" filepath="$PROJECT_DIR$/.idea/modules/payment.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service/service.iml" filepath="$PROJECT_DIR$/.idea/modules/service/service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/client/client.iml" filepath="$PROJECT_DIR$/.idea/modules/client/client.iml" group="if-sitesearch/client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dashboard/dashboard.iml" filepath="$PROJECT_DIR$/.idea/modules/dashboard/dashboard.iml" group="if-sitesearch/dashboard" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/finder/finder.iml" filepath="$PROJECT_DIR$/.idea/modules/finder/finder.iml" group="if-sitesearch/finder" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gadget/gadget.iml" filepath="$PROJECT_DIR$/.idea/modules/gadget/gadget.iml" group="if-sitesearch/gadget" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/if-sitesearch.iml" filepath="$PROJECT_DIR$/.idea/modules/if-sitesearch.iml" group="if-sitesearch" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/payment.iml" filepath="$PROJECT_DIR$/.idea/modules/payment.iml" group="if-sitesearch/payment" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service/service.iml" filepath="$PROJECT_DIR$/.idea/modules/service/service.iml" group="if-sitesearch/service" />
     </modules>
   </component>
 </project>
