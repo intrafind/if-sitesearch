@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 
-./gradlew :gadget:build :dashboard:build --parallel --continuous --build-cache $1
+./gradlew :payment:build --parallel --continuous --build-cache $1
+#./gradlew :gadget:build :dashboard:build --parallel --continuous --build-cache $1

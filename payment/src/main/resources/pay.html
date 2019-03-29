@@ -20,56 +20,16 @@
 <meta charset="utf-8"/>
 <title>Pay | Site Search</title>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://bridge.paymill.com/"></script>
+<script src="https://bridge.paymill.com"></script>
 
-
-<script>
-    const PAYMILL_PUBLIC_KEY = "97857955705f5b46ae9532d455169b26";
-
-    var payFrameCallback = function (error) {
-        if (error) {
-            console.error(error.apierror, error.message);
-        } else {
-            console.log("PayFrame successfully loaded");
-            $("#payment-form").show(100);
-        }
-    };
-
-
-    const submit = function (event) {
-        paymill.createTokenViaFrame({
-            amount_int: 4312,
-            currency: 'EUR'
-        }, function (error, result) {
-            if (error) {
-                console.error(error.apierror, error.message);
-            } else {
-                console.warn("token: " + result.token);
-            }
-        });
-
-        return false;
-    };
-
-
-    setTimeout(function () {
-        paymill.embedFrame("credit-card-fields", {
-            lang: "en"
-        }, payFrameCallback);
-        $("#payment-form").submit(submit);
-    }, 0);
-</script>
-
-
-<form action="#" id="payment-form" method="POST" style="padding: 20px">
+<form id="payment-form">
     <input name="amount" type="hidden" value="4211">
     <input name="currency" type="hidden" value="EUR">
     <input name="description" type="hidden" value="Easy Payments Guide!!!">
 
     <div id="credit-card-fields"></div>
 
-    <button style="width: 500px" type="submit">Pay</button>
+    <button style="width: 400px" type="submit">Pay</button>
 </form>
 
 <!--
@@ -121,3 +81,35 @@ curl https://api.paymill.com/v2.1/subscriptions \
 -->
 
 
+<script>
+    const PAYMILL_PUBLIC_KEY = "97857955705f5b46ae9532d455169b26";
+
+    const submitPayment = function () {
+        paymill.createTokenViaFrame({
+            amount_int: 4312,
+            currency: 'EUR'
+        }, function (error, result) {
+            if (error) {
+                console.error(error.apierror, error.message);
+            } else {
+                console.warn("token: " + result.token);
+            }
+        });
+
+        return false;
+    };
+
+    const payFrameCallback = function (error) {
+        if (error) {
+            console.error(error.apierror, error.message);
+        }
+    };
+
+    paymill.embedFrame("credit-card-fields", {
+        lang: "en"
+    }, payFrameCallback);
+    document.getElementById("payment-form").onsubmit = function () {
+        event.preventDefault();
+        submitPayment()
+    }
+</script>
