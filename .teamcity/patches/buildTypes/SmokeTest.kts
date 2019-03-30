@@ -11,6 +11,11 @@ To apply the patch, change the buildType with id = 'SmokeTest'
 accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("SmokeTest")) {
+    check(paused == false) {
+        "Unexpected paused: '$paused'"
+    }
+    paused = true
+
     expectSteps {
         script {
             scriptContent = "sh ./ci/smoke-test.sh"
