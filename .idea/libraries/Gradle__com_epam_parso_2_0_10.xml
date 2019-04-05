@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.epam:parso:2.0.10">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.epam/parso/2.0.10/a8558b361b4d3e59891345f9c9017da3110d7e6b/parso-2.0.10.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.epam/parso/2.0.10/210715862b2255eda270647401ac383f6d51b5cd/parso-2.0.10-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

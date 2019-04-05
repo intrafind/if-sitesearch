@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.poi:poi-scratchpad:4.0.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.poi/poi-scratchpad/4.0.1/89b1ce1b932338204ffa3fab225b65b5d33dab5d/poi-scratchpad-4.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.poi/poi-scratchpad/4.0.1/d9ab68605a6584dcab458e604cc94786f8cb8bd9/poi-scratchpad-4.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

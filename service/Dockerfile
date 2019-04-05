@@ -1,4 +1,4 @@
-FROM openjdk:12-jdk AS service
+FROM openjdk:13-alpine AS service
 
 MAINTAINER IntraFind Software AG <alexander.orlov@intrafind.de>
 
