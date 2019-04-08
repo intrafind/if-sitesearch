@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 # Should be executed on the host with `~/BuildAgent` directory
 
-version=2018.2.3-linux
+version=2018.2.4-linux
 service_name=teamcity-server
 network=main
 
