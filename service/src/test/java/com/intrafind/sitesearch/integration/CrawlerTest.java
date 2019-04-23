@@ -167,7 +167,7 @@ public class CrawlerTest {
 
     @Test
     public void considerNoindexWhileCrawlingTwoSiteConfig() {
-        final var siteId = UUID.fromString("563714f1-96c0-4500-b366-4fc7e734fa1d");
+        final var siteId = UUID.fromString("f771eb6b-80d6-4e9f-a660-22c9972a8e06");
         final var siteToCrawl = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(siteId, Instant.now(), -1))));
         final ResponseEntity<SitesCrawlStatus> request = caller
                 .postForEntity(SiteController.ENDPOINT + "/crawl?serviceSecret=" + SiteTest.ADMIN_SITE_SECRET
