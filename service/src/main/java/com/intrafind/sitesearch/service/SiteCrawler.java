@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -119,7 +119,7 @@ public class SiteCrawler extends WebCrawler {
             indexPage(pdfAsPage);
             countPage(href);
         } catch (final IOException | TikaException | SAXException e) {
-            LOG.warn("indexPdf_ERROR - url: " + href + " - e: " + e.getMessage());
+            LOG.warn("indexPdf_WARN - url: " + href + " - e: " + e.getMessage());
         }
     }
 
