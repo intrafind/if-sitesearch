@@ -156,7 +156,7 @@ Or what should be the first thing, I need to do, to **get started** with Site Se
     [Site Search' API specification](https://api.sitesearch.cloud/swagger-ui.html).
 
 * Can I *customize* the layout and/or design of the search bar?   
-    * Yes, you can *fully customize the appearance of the search bar* using HBS templates.
+    * Yes, you can *fully customize the appearance of the search bar* [using HBS templates](https://api.sitesearch.cloud/searchbar/Site%20Search%20Searchbar%205.2_tech_V1_ENG.pdf).
     * Alternative you can customize the search bar overriding its CSS classes which is appropriate for minor customizations only.
 
 * Can I *customize* the highligthed words within the search snippet previews?
@@ -183,8 +183,8 @@ Or what should be the first thing, I need to do, to **get started** with Site Se
             </div> 
 
 * I want to change the *tooltips* provided by the search bar. Does the search bar support **i18n / l10n**?
-    * Yes, you need to download the [search bar](https://github.com/intrafind/if-sitesearch/tree/master/service/src/main/resources/static/searchbar/2018-05-15), adjust the translations inside `searchbar/data/language/` and replace 
-    `https://api.sitesearch.cloud` inside the [configuration folder](https://github.com/intrafind/if-sitesearch/tree/master/service/src/main/resources/static/searchbar/2018-05-15/config) with your new location. 
+    * Yes, you need to download the [search bar](https://github.com/intrafind/if-sitesearch/tree/master/service/src/main/resources/static/searchbar/2019-01-31.zip), adjust the translations inside `searchbar/data/language/` and replace 
+    `https://api.sitesearch.cloud` inside the [configuration folder](https://github.com/intrafind/if-sitesearch/tree/master/service/src/main/resources/static/searchbar/2019-01-31/config) with your new location. 
     
 * How can I override search bar's *default language selection mechanism*?
     * The below example specifies German as search bar's user interface language. 
