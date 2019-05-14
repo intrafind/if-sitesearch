@@ -2,13 +2,13 @@
 
 docker_network=sitesearch
 docker_redirect_image=router
-docker_tag=dev
+docker_tag=latest
 
 docker network create $docker_network
 cd docker-router
 sudo rm -rf letsencrypt
+#scp -r root@main-if:/root/certs/* .
 sudo cp -r /etc/letsencrypt .
-sudo docker build --no-cache --pull --tag docker-registry.sitesearch.cloud/intrafind/${docker_redirect_image}:${docker_tag} .
+sudo docker build --no-cache --pull --tag docker-registry.intrafind.net/intrafind/${docker_redirect_image}:${docker_tag} .
 sudo rm -rf letsencrypt
-docker push docker-registry.sitesearch.cloud/intrafind/${docker_redirect_image}:${docker_tag}
-
+docker push docker-registry.intrafind.net/intrafind/${docker_redirect_image}:${docker_tag}
