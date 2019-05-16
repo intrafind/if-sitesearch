@@ -52,7 +52,7 @@ plugins {
     idea
     id("me.champeau.gradle.jmh") version "0.4.8"
     id("io.morethan.jmhreport") version "0.9.0"
-    id("org.springframework.boot") version "2.1.4.RELEASE"
+    id("org.springframework.boot") version "2.1.5.RELEASE"
     id("io.spring.dependency-management") version "1.0.7.RELEASE"
     id("com.google.cloud.tools.jib") version "1.0.0"
 }
@@ -73,7 +73,7 @@ repositories {
 }
 
 dependencies {
-    val springBootVersion = "2.1.4.RELEASE"
+    val springBootVersion = "2.1.5.RELEASE"
     val swaggerVersion = "2.9.2"
     val tikaVersion = "1.20"
 
