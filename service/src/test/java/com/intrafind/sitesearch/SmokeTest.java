@@ -313,7 +313,7 @@ public class SmokeTest {
     @Test
     public void mavenRepositoryIsSecure() throws Exception {
         final var request = new Request.Builder()
-                .url("https://maven." + Application.SIS_DOMAIN)
+                .url("https://maven." + Application.IF_NET_DOMAIN)
                 .build();
         final var response = HTTP_CLIENT.newCall(request).execute();
         assertEquals(HttpStatus.UNAUTHORIZED.value(), response.code());
@@ -323,7 +323,7 @@ public class SmokeTest {
     public void mavenRepositoryIsUp() throws Exception {
         final var request = new Request.Builder()
                 .header(HttpHeaders.AUTHORIZATION, BASIC_ENCODED_PASSWORD)
-                .url("https://maven." + Application.SIS_DOMAIN)
+                .url("https://maven." + Application.IF_NET_DOMAIN)
                 .build();
         final var response = HTTP_CLIENT.newCall(request).execute();
         assertEquals(HttpStatus.FORBIDDEN.value(), response.code());
