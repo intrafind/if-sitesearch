@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.sun.xml.bind.external:rngom:2.3.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.xml.bind.external/rngom/2.3.1/dccab1a2270e75d43fdbd00db8d6765431256817/rngom-2.3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.xml.bind.external/rngom/2.3.1/f27b8d8cf98c2def4964bb1cdd0160def011182a/rngom-2.3.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

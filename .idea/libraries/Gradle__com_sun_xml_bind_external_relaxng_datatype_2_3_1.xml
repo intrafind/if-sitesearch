@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.sun.xml.bind.external:relaxng-datatype:2.3.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.xml.bind.external/relaxng-datatype/2.3.1/8985233fe83fd66dd42bf5ec1969f7c1f70d95d2/relaxng-datatype-2.3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.xml.bind.external/relaxng-datatype/2.3.1/d56e68c0f49c82ada6204c7ca0a7f2b0814424af/relaxng-datatype-2.3.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

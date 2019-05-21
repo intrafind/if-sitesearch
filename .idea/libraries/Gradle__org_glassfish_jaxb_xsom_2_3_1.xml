@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.glassfish.jaxb:xsom:2.3.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/xsom/2.3.1/d7ea000a77aeb7e1513d1e5815484328893a01b3/xsom-2.3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/xsom/2.3.1/c1c6898ac511d4230ebfc4c9dc0c84453d93b9ba/xsom-2.3.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

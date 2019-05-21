@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.glassfish.jaxb:codemodel:2.3.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/codemodel/2.3.1/fad2060d447f292b9068d86bef3fabcdd682ce08/codemodel-2.3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/codemodel/2.3.1/dcbc3bf1ee906f01271d383075636d832ae39ab3/codemodel-2.3.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

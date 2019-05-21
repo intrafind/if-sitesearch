@@ -33,7 +33,7 @@
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger2:2.9.2" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger-ui:2.9.2" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-templates:3.0.0-beta-1" level="project" />
-    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.14.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.14.2" level="project" />
     <orderEntry type="library" name="Gradle: org.jsoup:jsoup:1.12.1" level="project" />
     <orderEntry type="library" name="Gradle: org.mnode.mstor:mstor:1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.oauth-client:google-oauth-client-jetty:1.28.0" level="project" />
@@ -86,7 +86,7 @@
     <orderEntry type="library" name="Gradle: com.google.http-client:google-http-client-jackson2:1.23.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.http-client:google-http-client:1.28.0" level="project" />
     <orderEntry type="library" name="Gradle: io.opencensus:opencensus-contrib-http-util:0.18.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.guava:guava:26.0-android" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: com.google.guava:guava:26.0-android" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpclient:4.5.8" level="project" />
     <orderEntry type="library" name="Gradle: com.sleepycat:je:5.0.84" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: commons-io:commons-io:2.5" level="project" />
@@ -123,13 +123,13 @@
     <orderEntry type="library" name="Gradle: org.springframework:spring-core:5.1.7.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: commons-codec:commons-codec:1.11" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.jackson:jackson-mapper-asl:1.9.13" level="project" />
-    <orderEntry type="library" name="Gradle: org.bouncycastle:bcpkix-jdk15on:1.60" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.bouncycastle:bcpkix-jdk15on:1.60" level="project" />
     <orderEntry type="library" name="Gradle: javax.annotation:javax.annotation-api:1.3.2" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
-    <orderEntry type="library" name="Gradle: org.checkerframework:checker-compat-qual:2.5.2" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.errorprone:error_prone_annotations:2.1.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.checkerframework:checker-compat-qual:2.5.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: com.google.errorprone:error_prone_annotations:2.1.3" level="project" />
     <orderEntry type="library" name="Gradle: com.google.j2objc:j2objc-annotations:1.1" level="project" />
-    <orderEntry type="library" name="Gradle: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpcore:4.4.11" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.apache.tika:tika-core:1.16" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.apache.james:apache-mime4j-dom:0.8.1" level="project" />
@@ -151,7 +151,7 @@
     <orderEntry type="library" name="Gradle: com.google.guava:guava-jdk5:17.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-jcl:5.1.7.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.jackson:jackson-core-asl:1.9.13" level="project" />
-    <orderEntry type="library" name="Gradle: org.bouncycastle:bcprov-jdk15on:1.60" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.bouncycastle:bcprov-jdk15on:1.60" level="project" />
     <orderEntry type="library" name="Gradle: io.netty:netty-codec-http2:4.1.36.Final" level="project" />
     <orderEntry type="library" name="Gradle: io.netty:netty-handler-proxy:4.1.36.Final" level="project" />
     <orderEntry type="library" name="Gradle: io.netty:netty-codec-http:4.1.36.Final" level="project" />
@@ -170,41 +170,49 @@
     <orderEntry type="library" name="Gradle: io.netty:netty-common:4.1.36.Final" level="project" />
     <orderEntry type="library" name="Gradle: io.opencensus:opencensus-api:0.18.0" level="project" />
     <orderEntry type="library" name="Gradle: io.grpc:grpc-context:1.14.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.tika:tika-parsers:1.20" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.tika:tika-parsers:1.21" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.springframework.boot:spring-boot-devtools:2.1.5.RELEASE" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.cxf:cxf-rt-rs-client:3.3.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.cxf:cxf-rt-frontend-jaxrs:3.3.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.cxf:cxf-rt-transports-http:3.3.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.cxf:cxf-rt-security:3.3.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.cxf:cxf-core:3.3.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.jaxb:jaxb-xjc:2.3.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: edu.ucar:netcdf4:4.5.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: edu.ucar:grib:4.5.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: edu.ucar:cdm:4.5.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.tallison:jmatio:1.5" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.epam:parso:2.0.10" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.epam:parso:2.0.11" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: edu.ucar:httpservices:4.5.5" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.uima:uimaj-core:3.0.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: net.sf.ehcache:ehcache-core:2.6.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.quartz-scheduler:quartz:2.3.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.zaxxer:HikariCP-java7:2.4.13" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.guava:guava:27.1-jre" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.httpcomponents:httpmime:4.5.8" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: commons-io:commons-io:2.6" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.healthmarketscience.jackcess:jackcess:2.1.12" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.uima:uimafit-core:2.4.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.tika:tika-core:1.20" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.activation:javax.activation:1.2.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.tika:tika-core:1.21" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.activation:jakarta.activation:1.2.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: xerces:xercesImpl:2.12.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.commons:commons-lang3:3.8.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.gagravarr:vorbis-java-tika:0.8" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.james:apache-mime4j-dom:0.8.2" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.james:apache-mime4j-core:0.8.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.james:apache-mime4j-dom:0.8.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.james:apache-mime4j-core:0.8.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.poi:poi-ooxml:4.0.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.commons:commons-compress:1.18" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.tukaani:xz:1.8" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.brotli:dec:0.1.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.poi:poi-scratchpad:4.0.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.poi:poi:4.0.1" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.pdfbox:pdfbox:2.0.13" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.pdfbox:pdfbox-tools:2.0.13" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.pdfbox:pdfbox:2.0.15" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.pdfbox:pdfbox-tools:2.0.15" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.pdfbox:jempbox:1.8.16" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.bouncycastle:bcmail-jdk15on:1.60" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.healthmarketscience.jackcess:jackcess-encrypt:2.1.4" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.ow2.asm:asm:7.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.bouncycastle:bcmail-jdk15on:1.61" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.bouncycastle:bcpkix-jdk15on:1.61" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.bouncycastle:bcprov-jdk15on:1.61" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.healthmarketscience.jackcess:jackcess:3.0.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.healthmarketscience.jackcess:jackcess-encrypt:3.0.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.ow2.asm:asm:7.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.googlecode.mp4parser:isoparser:1.1.22" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.drewnoakes:metadata-extractor:2.11.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: de.l3s.boilerpipe:boilerpipe:1.1.0" level="project" />
@@ -212,14 +220,14 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.googlecode.juniversalchardet:juniversalchardet:1.0.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.codelibs:jhighlight:1.0.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.pff:java-libpst:0.8.1" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.junrar:junrar:2.0.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.cxf:cxf-rt-rs-client:3.2.7" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.junrar:junrar:4.0.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.commons:commons-exec:1.3" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.opennlp:opennlp-tools:1.9.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.opennlp:opennlp-tools:1.9.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.openjson:openjson:1.0.10" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.code.gson:gson:2.8.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: net.java.dev.jna:jna:4.5.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.protobuf:protobuf-java:3.7.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.commons:commons-csv:1.6" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.sis.storage:sis-netcdf:0.8" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.sis.storage:sis-storage:0.8" level="project" />
@@ -233,34 +241,44 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.jai-imageio:jai-imageio-core:1.4.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.yaml:snakeyaml:1.23" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jboss.xnio:xnio-nio:3.3.8.Final" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.guava:failureaccess:1.0.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.checkerframework:checker-qual:2.5.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.errorprone:error_prone_annotations:2.2.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.codehaus.mojo:animal-sniffer-annotations:1.17" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.jaxb:txw2:2.3.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.istack:istack-commons-runtime:3.0.7" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jvnet.staxex:stax-ex:1.8" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.xml.fastinfoset:FastInfoset:1.2.15" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.pdfbox:fontbox:2.0.13" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: xml-apis:xml-apis:1.4.01" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.pdfbox:fontbox:2.0.15" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.commons:commons-collections4:4.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.commons:commons-math3:3.6.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.poi:poi-ooxml-schemas:4.0.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.virtuald:curvesapi:1.05" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.adobe.xmp:xmpcore:5.1.3" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.cxf:cxf-rt-frontend-jaxrs:3.2.7" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.cxf:cxf-rt-transports-http:3.2.7" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.cxf:cxf-core:3.2.7" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: edu.ucar:udunits:4.5.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: net.jcip:jcip-annotations:1.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.protobuf:protobuf-java:2.5.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.itadaki:bzip2:0.9.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: joda-time:joda-time:2.10.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.beust:jcommander:1.35" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: javax.measure:unit-api:1.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.bitbucket.mstrobel:procyon-compilertools:0.5.32" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.bitbucket.mstrobel:procyon-core:0.5.32" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.xmlbeans:xmlbeans:3.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.fasterxml.woodstox:woodstox-core:5.0.3" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.ws.xmlschema:xmlschema-core:2.2.3" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: javax.ws.rs:javax.ws.rs-api:2.1.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.ws.xmlschema:xmlschema-core:2.2.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: jakarta.xml.bind:jakarta.xml.bind-api:2.3.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: jakarta.ws.rs:jakarta.ws.rs-api:2.1.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.mchange:mchange-commons-java:0.2.15" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.codehaus.woodstox:stax2-api:3.1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.jaxb:xsom:2.3.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.jaxb:codemodel:2.3.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.xml.bind.external:rngom:2.3.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.xml.dtd-parser:dtd-parser:1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.istack:istack-commons-tools:3.0.7" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.xml.bind.external:relaxng-datatype:2.3.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: jakarta.activation:jakarta.activation-api:1.2.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.ant:ant:1.10.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.ant:ant-launcher:1.10.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.openjdk.jmh:jmh-core:1.21" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.springframework.boot:spring-boot-starter-test:2.1.5.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.springframework.boot:spring-boot-test-autoconfigure:2.1.5.RELEASE" level="project" />
@@ -282,40 +300,48 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: net.minidev:accessors-smart:1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.ow2.asm:asm:5.0.4" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.tika:tika-parsers:1.20" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.tika:tika-parsers:1.21" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.cxf:cxf-rt-rs-client:3.3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.cxf:cxf-rt-frontend-jaxrs:3.3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.cxf:cxf-rt-transports-http:3.3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.cxf:cxf-rt-security:3.3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.cxf:cxf-core:3.3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish.jaxb:jaxb-xjc:2.3.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: edu.ucar:netcdf4:4.5.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: edu.ucar:grib:4.5.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: edu.ucar:cdm:4.5.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.tallison:jmatio:1.5" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.epam:parso:2.0.10" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.epam:parso:2.0.11" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: edu.ucar:httpservices:4.5.5" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.uima:uimaj-core:3.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: net.sf.ehcache:ehcache-core:2.6.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.quartz-scheduler:quartz:2.3.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.zaxxer:HikariCP-java7:2.4.13" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.guava:guava:27.1-jre" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.httpcomponents:httpmime:4.5.8" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: commons-io:commons-io:2.6" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.healthmarketscience.jackcess:jackcess:2.1.12" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.uima:uimafit-core:2.4.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.tika:tika-core:1.20" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.sun.activation:javax.activation:1.2.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.tika:tika-core:1.21" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.sun.activation:jakarta.activation:1.2.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: xerces:xercesImpl:2.12.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.commons:commons-lang3:3.8.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.gagravarr:vorbis-java-tika:0.8" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.james:apache-mime4j-dom:0.8.2" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.james:apache-mime4j-core:0.8.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.james:apache-mime4j-dom:0.8.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.james:apache-mime4j-core:0.8.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.poi:poi-ooxml:4.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.commons:commons-compress:1.18" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.tukaani:xz:1.8" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.brotli:dec:0.1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.poi:poi-scratchpad:4.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.poi:poi:4.0.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.pdfbox:pdfbox:2.0.13" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.pdfbox:pdfbox-tools:2.0.13" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.pdfbox:pdfbox:2.0.15" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.pdfbox:pdfbox-tools:2.0.15" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.pdfbox:jempbox:1.8.16" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.bouncycastle:bcmail-jdk15on:1.60" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.healthmarketscience.jackcess:jackcess-encrypt:2.1.4" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.ow2.asm:asm:7.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.bouncycastle:bcmail-jdk15on:1.61" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.bouncycastle:bcpkix-jdk15on:1.61" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.bouncycastle:bcprov-jdk15on:1.61" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.healthmarketscience.jackcess:jackcess:3.0.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.healthmarketscience.jackcess:jackcess-encrypt:3.0.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.ow2.asm:asm:7.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.googlecode.mp4parser:isoparser:1.1.22" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.drewnoakes:metadata-extractor:2.11.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: de.l3s.boilerpipe:boilerpipe:1.1.0" level="project" />
@@ -323,14 +349,14 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.googlecode.juniversalchardet:juniversalchardet:1.0.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.codelibs:jhighlight:1.0.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.pff:java-libpst:0.8.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.github.junrar:junrar:2.0.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.cxf:cxf-rt-rs-client:3.2.7" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.github.junrar:junrar:4.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.commons:commons-exec:1.3" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.opennlp:opennlp-tools:1.9.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.opennlp:opennlp-tools:1.9.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.openjson:openjson:1.0.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.code.gson:gson:2.8.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: net.java.dev.jna:jna:4.5.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.protobuf:protobuf-java:3.7.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.commons:commons-csv:1.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.sis.storage:sis-netcdf:0.8" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.sis.storage:sis-storage:0.8" level="project" />
@@ -345,33 +371,43 @@
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.commons:commons-math3:3.6.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.yaml:snakeyaml:1.23" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jboss.xnio:xnio-nio:3.3.8.Final" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.guava:failureaccess:1.0.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.checkerframework:checker-qual:2.5.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.errorprone:error_prone_annotations:2.2.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.codehaus.mojo:animal-sniffer-annotations:1.17" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish.jaxb:txw2:2.3.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.sun.istack:istack-commons-runtime:3.0.7" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jvnet.staxex:stax-ex:1.8" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.sun.xml.fastinfoset:FastInfoset:1.2.15" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.pdfbox:fontbox:2.0.13" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: xml-apis:xml-apis:1.4.01" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.pdfbox:fontbox:2.0.15" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.commons:commons-collections4:4.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.poi:poi-ooxml-schemas:4.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.virtuald:curvesapi:1.05" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.adobe.xmp:xmpcore:5.1.3" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.cxf:cxf-rt-frontend-jaxrs:3.2.7" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.cxf:cxf-rt-transports-http:3.2.7" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.cxf:cxf-core:3.2.7" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: edu.ucar:udunits:4.5.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: net.jcip:jcip-annotations:1.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.protobuf:protobuf-java:2.5.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.itadaki:bzip2:0.9.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: joda-time:joda-time:2.10.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.beust:jcommander:1.35" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: javax.measure:unit-api:1.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.bitbucket.mstrobel:procyon-compilertools:0.5.32" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.bitbucket.mstrobel:procyon-core:0.5.32" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.xmlbeans:xmlbeans:3.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.fasterxml.woodstox:woodstox-core:5.0.3" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.ws.xmlschema:xmlschema-core:2.2.3" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: javax.ws.rs:javax.ws.rs-api:2.1.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.ws.xmlschema:xmlschema-core:2.2.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jakarta.xml.bind:jakarta.xml.bind-api:2.3.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jakarta.ws.rs:jakarta.ws.rs-api:2.1.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.mchange:mchange-commons-java:0.2.15" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.codehaus.woodstox:stax2-api:3.1.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish.jaxb:xsom:2.3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish.jaxb:codemodel:2.3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.sun.xml.bind.external:rngom:2.3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.sun.xml.dtd-parser:dtd-parser:1.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.sun.istack:istack-commons-tools:3.0.7" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.sun.xml.bind.external:relaxng-datatype:2.3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jakarta.activation:jakarta.activation-api:1.2.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.ant:ant:1.10.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.ant:ant-launcher:1.10.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.openjdk.jmh:jmh-generator-annprocess:1.21" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.openjdk.jmh:jmh-generator-bytecode:1.21" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.openjdk.jmh:jmh-generator-asm:1.21" level="project" />

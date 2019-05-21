@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.tika:tika-parsers:1.21">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parsers/1.21/aa9a02883e567c7d550f68ada85024fa37525ef5/tika-parsers-1.21.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parsers/1.21/ddaa91bfc1059f4ece77bb72eda79ab6dec9c139/tika-parsers-1.21-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
