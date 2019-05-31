@@ -58,7 +58,8 @@ public class Application {
     private static final String WOO_COMMERCE_CONSUMER_SECRET = System.getenv("WOO_COMMERCE_CONSUMER_SECRET");
     private static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";
     public static final String SIS_DOMAIN = "sitesearch.cloud";
-    public static final String IF_NET_DOMAIN = "intrafind.net";
+    public static final String OSS_SIS_DOMAIN = "loxal.net";
+    static final String IF_NET_DOMAIN = "intrafind.net";
     private static Mac macSha1Algorithm;
 
     static {
