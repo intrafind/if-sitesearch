@@ -124,8 +124,9 @@ public class SiteService {
         doc.set(Fields.TENANT, siteId);
         doc.set(PAGE_LABELS, page.getSisLabels() == null ? Collections.emptyList() : page.getSisLabels()); // TODO implement tests, expose via API for both indexing & search
         doc.set(PAGE_THUMBNAIL, page.getThumbnail() == null ? "" : page.getThumbnail());
-        doc.set(PAGE_TIMESTAMP, Instant.now());
-        doc.set(PAGE_TIMESTAMP_NEW, Instant.now());
+        final var now = Instant.now();
+        doc.set(PAGE_TIMESTAMP, now);
+        doc.set(PAGE_TIMESTAMP_NEW, now);
         indexService.index(doc);
 
         LOG.info("siteId: " + siteId + " - bodySize: " + page.getBody().length() + " - titleSize: " + page.getTitle().length() + " - URL: " + page.getUrl());

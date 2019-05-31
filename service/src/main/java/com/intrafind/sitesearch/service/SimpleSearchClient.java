@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ public class SimpleSearchClient implements Search {
             LOG.debug("searchQuery: {} - status: {} - body: {}", searchQuery, response.statusCode(), response.body());
             return MAPPER.readValue(MAPPER.writeValueAsString(MAPPER.readValue(response.body(), Map.class).get("hits")), Hits.class);
         } catch (IOException | InterruptedException e) {
-            LOG.warn("documents: {} - exception: {}", e.getMessage());
+            LOG.warn("searchQuery: {} - exception: {}", searchQuery, e.getMessage());
         }
 
         return null;

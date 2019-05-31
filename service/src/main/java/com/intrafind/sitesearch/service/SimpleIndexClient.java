@@ -71,7 +71,7 @@ public class SimpleIndexClient implements Index {
             final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
             LOG.debug("documents: {} - status: {} - body: {}", documents, response.statusCode(), response.body());
         } catch (IOException | InterruptedException e) {
-            LOG.warn("documents: {} - exception: {}", e.getMessage());
+            LOG.warn("documents: {} - exception: {}", documents, e.getMessage());
         }
     }
 
@@ -97,7 +97,7 @@ public class SimpleIndexClient implements Index {
             final var doc = MAPPER.readValue(response.body(), Document.class);
             return Collections.singletonList(doc);
         } catch (IOException | InterruptedException e) {
-            LOG.warn("documents: {} - exception: {}", e.getMessage());
+            LOG.warn("documents: {} - exception: {}", documents, e.getMessage());
         }
 
         return Collections.emptyList();
@@ -121,7 +121,7 @@ public class SimpleIndexClient implements Index {
             final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
             LOG.debug("documents: {} - status: {} - body: {}", documents, response.statusCode(), response.body());
         } catch (IOException | InterruptedException e) {
-            LOG.warn("documents: {} - exception: {}", e.getMessage());
+            LOG.warn("documents: {} - exception: {}", documents, e.getMessage());
         }
     }
 
