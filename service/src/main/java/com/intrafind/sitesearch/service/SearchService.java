@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,8 +40,8 @@ public class SearchService {
     public Hits search(final String query, final UUID siteId) {
         final var hits = searchService.search(
                 query, Search.FILTER_QUERY, Fields.TENANT + ":" + siteId,
-//  TODO optimize by not retrieving all fields              Search.RETURN_FIELDS, Fields.BODY + QUERY_SEPARATOR + Fields.TITLE + QUERY_SEPARATOR + Fields.URL + QUERY_SEPARATOR + Fields.TENANT + QUERY_SEPARATOR + QUERY_SEPARATOR +SiteService.PAGE_THUMBNAIL,
-
+//  TODO optimize by not retrieving all fields
+//                Search.RETURN_FIELDS, Fields.BODY + QUERY_SEPARATOR + Fields.TITLE + QUERY_SEPARATOR + Fields.URL + QUERY_SEPARATOR + Fields.TENANT + QUERY_SEPARATOR + QUERY_SEPARATOR +SiteService.PAGE_THUMBNAIL,
                 Search.RETURN_TEASER_FIELDS, Fields.BODY + QUERY_SEPARATOR + Fields.TITLE + QUERY_SEPARATOR + Fields.URL,
                 Search.RETURN_TEASER_COUNT, 1,
                 Search.RETURN_TEASER_SIZE, 150,
