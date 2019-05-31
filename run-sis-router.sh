@@ -4,7 +4,6 @@ docker_network=sitesearch
 docker_redirect_image=router
 docker_tag=latest
 
-docker pull docker-registry.intrafind.net/intrafind/${docker_redirect_image}:${docker_tag}
 docker rm -f $docker_redirect_image
 docker run -d --name $docker_redirect_image \
     -p 80:80 \
