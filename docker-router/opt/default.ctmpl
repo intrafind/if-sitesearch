@@ -48,7 +48,7 @@ http {
   server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
-    server_name api.sitesearch.cloud;
+    server_name api.sitesearch.cloud cdn.sitesearch.cloud; # Google CDN: 35.227.226.37
 
     include /etc/nginx/snippets/ssl.conf;
 
