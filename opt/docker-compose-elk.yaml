@@ -4,7 +4,7 @@ services:
     image: docker.elastic.co/kibana/kibana:6.4.3
     container_name: ops-kibana
     depends_on:
-      - elk-elasticsearch
+      - ops-elasticsearch
       - ops-elasticsearch-yang
       - ops-logstash
     environment:
