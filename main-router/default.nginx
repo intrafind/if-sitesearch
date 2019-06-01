@@ -91,7 +91,7 @@ http {
         auth_basic_user_file /etc/nginx/.htpasswd;
 
         location / {
-            proxy_pass http://elk-elasticsearch:9200;
+            proxy_pass http://ops-elasticsearch:9200;
         }
     }
 

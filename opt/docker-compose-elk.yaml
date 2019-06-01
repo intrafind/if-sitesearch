@@ -11,26 +11,44 @@ services:
       - xpack.security.enabled=false
       - xpack.monitoring.report_stats=false
       - xpack.monitoring.collection.enabled=true
-      - ELASTICSEARCH_URL=http://elk-elasticsearch:9200
+      - ELASTICSEARCH_URL=http://ops-elasticsearch:9200
     networks:
       - main
 
-  elk-elasticsearch:
+  ops-elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.4.3
-    container_name: elk-elasticsearch
+    container_name: ops-elasticsearch
     environment:
       #      - "discovery.type=single-node"
       - xpack.security.enabled=false
       - bootstrap.memory_lock=true
       - node.name=elk-elasticsearch
-      - discovery.zen.ping.unicast.hosts=elk-elasticsearch,ops-elasticsearch-yang
+      - discovery.zen.ping.unicast.hosts=ops-elasticsearch,ops-elasticsearch-yang
       - "ES_JAVA_OPTS=-Xms3g -Xmx3g"
     ulimits:
       memlock:
         soft: -1
         hard: -1
     volumes:
-      - /mnt/elk/elk-elasticsearch/data:/usr/share/elasticsearch/data:rw
+      - /mnt/elk/ops-elasticsearch/data:/usr/share/elasticsearch/data:rw
+    networks:
+      - main
+
+  ops-elasticsearch-ying:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.3
+    container_name: ops-elasticsearch-ying
+    environment:
+      - xpack.security.enabled=false
+      - bootstrap.memory_lock=true
+      - node.name=ops-elasticsearch-ying
+      - discovery.zen.ping.unicast.hosts=ops-elasticsearch,ops-elasticsearch-yang,ops-elasticsearch-ying
+      - "ES_JAVA_OPTS=-Xms3g -Xmx3g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - /mnt/elk/ops-elasticsearch-ying/data:/usr/share/elasticsearch/data:rw
     networks:
       - main
 
@@ -41,7 +59,7 @@ services:
       - xpack.security.enabled=false
       - bootstrap.memory_lock=true
       - node.name=ops-elasticsearch-yang
-      - discovery.zen.ping.unicast.hosts=elk-elasticsearch,ops-elasticsearch-yang
+      - discovery.zen.ping.unicast.hosts=ops-elasticsearch,ops-elasticsearch-yang
       - "ES_JAVA_OPTS=-Xms3g -Xmx3g"
     ulimits:
       memlock:
