@@ -5,7 +5,7 @@ docker network create $network
 sudo sysctl -w vm.max_map_count=262144 # required for Elasticsearch
 
 sudo chown -R 1000:1000 /mnt/elk/ops-logstash
-sudo chown -R 1000:1000 /mnt/elk/elk-elasticsearch
+sudo chown -R 1000:1000 /mnt/elk/ops-elasticsearch
 sudo chown -R 1000:1000 /mnt/elk/ops-elasticsearch-ying
 sudo chown -R 1000:1000 /mnt/elk/ops-elasticsearch-yang
 
