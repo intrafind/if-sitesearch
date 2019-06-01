@@ -6,7 +6,6 @@ services:
     depends_on:
       - elk-elasticsearch
       - ops-elasticsearch-yang
-      - ops-elasticsearch-ying
       - ops-logstash
     environment:
       - xpack.security.enabled=false
