@@ -22,7 +22,7 @@ services:
       #      - "discovery.type=single-node"
       - xpack.security.enabled=false
       - bootstrap.memory_lock=true
-      - node.name=elk-elasticsearch
+      - node.name=ops-elasticsearch
       - discovery.zen.ping.unicast.hosts=ops-elasticsearch,ops-elasticsearch-yang
       - "ES_JAVA_OPTS=-Xms3g -Xmx3g"
     ulimits:
