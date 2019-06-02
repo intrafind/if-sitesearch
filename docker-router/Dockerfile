@@ -17,6 +17,7 @@ COPY ssl.nginx /etc/nginx/snippets/ssl.conf
 COPY cors-headers.nginx /etc/nginx/snippets/cors-headers.conf
 COPY routes.nginx /etc/nginx/conf.d/default.conf
 RUN echo 'sitesearch:$apr1$yiWHOvCy$YVz/vNHOKrH9LJGEglMOg.' > /etc/nginx/.htpasswd
+RUN echo 'minion:$apr1$yiWHOvCy$YVz/vNHOKrH9LJGEglMOg.' >> /etc/nginx/.htpasswd
 
 ENV BLUE_NAME blue
 ENV GREEN_NAME green
