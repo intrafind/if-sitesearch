@@ -67,7 +67,9 @@ public class SimpleSearchClient implements Search {
     }
 
     private String buildSearchQuery(final String searchQuery) {
-        return "{\"query\": {\"query_string\": {\"query\": \"" + searchQuery + "\"" + "}}," +
+        return "{\"query\": {\"query_string\": {" +
+                "\"fields\": [\"_str.body\",\"_str.title\", \"_str.url\"]," +
+                "\"query\": \"" + searchQuery + "\"" + "}}," +
                 "\"highlight\" : {" +
                 "    \"pre_tags\" : [\"<span class='if-teaser-highlight'>\"]," +
                 "    \"post_tags\" : [\"</span>\"]," +

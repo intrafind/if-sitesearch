@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,13 +30,14 @@ import java.util.Objects;
 public final class Hits implements Serializable {
     @JsonAlias(value = {"documents", "hits"})
     private final List<Document> documents = new ArrayList<>();
-    private int total;
+    //    @JsonProperty("hits.total.value")
+//    private int total;
     @JsonProperty("max_score")
     private float maxScore;
 
-    public int getTotal() {
-        return total;
-    }
+//    public int getTotal() {
+//        return total;
+//    }
 
     private static final String KEY_TOTAL_HITS = "totalHits";
 

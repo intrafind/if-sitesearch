@@ -47,9 +47,9 @@ import java.util.List;
 @Repository
 public class SimpleIndexClient implements Index {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleIndexClient.class);
+    private static final byte[] credentials = ("sitesearch:" + Application.SERVICE_SECRET).getBytes();
     static final String ELASTICSEARCH_SERVICE = "https://es." + Application.OSS_SIS_DOMAIN;
     static final HttpClient CLIENT = HttpClient.newHttpClient();
-    private static final byte[] credentials = ("sitesearch:" + Application.SERVICE_SECRET).getBytes();
     static final String BASIC_AUTH_HEADER = "Basic " + Base64.getEncoder().encodeToString(credentials);
     static final ObjectMapper MAPPER = new ObjectMapper();
 
