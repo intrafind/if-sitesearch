@@ -30,14 +30,8 @@ import java.util.Objects;
 public final class Hits implements Serializable {
     @JsonAlias(value = {"documents", "hits"})
     private final List<Document> documents = new ArrayList<>();
-    //    @JsonProperty("hits.total.value")
-//    private int total;
     @JsonProperty("max_score")
     private float maxScore;
-
-//    public int getTotal() {
-//        return total;
-//    }
 
     private static final String KEY_TOTAL_HITS = "totalHits";
 

@@ -40,8 +40,7 @@ public class SearchService {
     public Hits search(final String query, final UUID siteId) {
         final var hits = searchService.search(
                 query, Search.FILTER_QUERY, Fields.TENANT + ":" + siteId,
-//  TODO optimize by not retrieving all fields
-//                Search.RETURN_FIELDS, Fields.BODY + QUERY_SEPARATOR + Fields.TITLE + QUERY_SEPARATOR + Fields.URL + QUERY_SEPARATOR + Fields.TENANT + QUERY_SEPARATOR + QUERY_SEPARATOR +SiteService.PAGE_THUMBNAIL,
+                Search.RETURN_FIELDS, Fields.BODY + QUERY_SEPARATOR + Fields.TITLE + QUERY_SEPARATOR + Fields.URL + QUERY_SEPARATOR + Fields.TENANT + QUERY_SEPARATOR + QUERY_SEPARATOR + SiteService.PAGE_THUMBNAIL,
                 Search.RETURN_TEASER_FIELDS, Fields.BODY + QUERY_SEPARATOR + Fields.TITLE + QUERY_SEPARATOR + Fields.URL,
                 Search.RETURN_TEASER_COUNT, 1,
                 Search.RETURN_TEASER_SIZE, 150,
