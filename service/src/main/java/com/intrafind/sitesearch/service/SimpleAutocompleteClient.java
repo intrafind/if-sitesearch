@@ -39,30 +39,8 @@ public class SimpleAutocompleteClient implements AutocompleteClient {
         this.search = search;
     }
 
-//    @Override
-//    public Hits search(String searchQuery, Object... parameters) {
-//        LOG.warn("SimpleAutocompleteService");
-//        return IFAutocompleteService.SEARCH_AUTOCOMPLETE_CLIENT.search(searchQuery, parameters);
-//    }
-
     @Override
     public Hits search(String searchQuery, Object... parameters) {
         return search.search(searchQuery, parameters);
-//        try {
-//            final var call = HttpRequest.newBuilder()
-//                    .uri(URI.create(ELASTICSEARCH_SERVICE + "/site-page/_search"))
-//                    .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
-//                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                    .POST(HttpRequest.BodyPublishers.ofString(buildSearchQuery(searchQuery)))
-//                    .build();
-//
-//            final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
-//            LOG.debug("searchQuery: {} - status: {} - body: {}", searchQuery, response.statusCode(), response.body());
-//            return MAPPER.readValue(MAPPER.writeValueAsString(MAPPER.readValue(response.body(), Map.class).get("hits")), Hits.class);
-//        } catch (IOException | InterruptedException e) {
-//            LOG.warn("documents: {} - exception: {}", e.getMessage());
-//        }
-//
-//        return null;
     }
 }

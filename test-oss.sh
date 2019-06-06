@@ -5,7 +5,8 @@ SPRING_PROFILES_ACTIVE=oss \
 SPRING_CONFIG_NAME="application, local" ./gradlew clean :service:test \
     --no-scan --parallel \
     --build-cache --continuous --continue \
-    --tests SimpleClientTest --info \
+    --info \
+#    --tests SimpleClientTest \
     $1
 
 #--tests *Subscription*.subscribeViaGitHub

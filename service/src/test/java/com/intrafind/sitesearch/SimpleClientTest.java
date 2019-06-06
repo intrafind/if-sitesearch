@@ -103,7 +103,7 @@ public class SimpleClientTest {
     public void crudPage() throws Exception {
         updatePage();
 //        suggest();
-        TimeUnit.MILLISECONDS.sleep(2_000);
+        TimeUnit.MILLISECONDS.sleep(1_000);
         search();
         fetchPage();
         TimeUnit.MILLISECONDS.sleep(1_000);
@@ -113,7 +113,7 @@ public class SimpleClientTest {
     private static final String EMAIL = "user@examaple.com";
 
     private void search() {
-        final var searchQuery = ",.solution,.";
+        final var searchQuery = ",.soLution,.";
         final var search = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/search?query=" + searchQuery,
                 HttpMethod.GET, HttpEntity.EMPTY, Hits.class);
 
