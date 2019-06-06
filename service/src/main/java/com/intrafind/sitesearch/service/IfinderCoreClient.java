@@ -64,8 +64,7 @@ public enum IfinderCoreClient {
         Authenticator.setDefault(new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-//                return getAuthentication(getRequestingURL());
-                return null;
+                return getAuthentication(getRequestingURL());
             }
         });
     }
