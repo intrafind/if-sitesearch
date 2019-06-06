@@ -32,6 +32,10 @@ changeBuildType(RelativeId("Build")) {
     }
     steps {
         update<ScriptBuildStep>(1) {
+            scriptContent = """
+                ./gradlew clean build --info
+                ./gradlew clean build --info
+            """.trimIndent()
             dockerImage = "openjdk:12-jdk"
         }
     }
