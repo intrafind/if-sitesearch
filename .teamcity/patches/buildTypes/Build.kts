@@ -32,6 +32,10 @@ changeBuildType(RelativeId("Build")) {
     }
     steps {
         update<ScriptBuildStep>(1) {
+            scriptContent = """
+                ./gradlew clean build --info
+                #SPRING_PROFILES_ACTIVE=oss ./gradlew clean build --info
+            """.trimIndent()
             dockerImage = "openjdk:12-jdk"
         }
     }
