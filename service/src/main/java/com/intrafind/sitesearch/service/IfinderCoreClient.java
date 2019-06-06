@@ -40,7 +40,7 @@ public enum IfinderCoreClient {
         HESSIAN_PROXY_FACTORY.setHessian2Reply(true);
         HESSIAN_PROXY_FACTORY.setHessian2Request(true);
 
-        initUrlAuthentication();
+        initUrlAuthentication(); // TODO disable basic auth for search service
     }
 
     /**
