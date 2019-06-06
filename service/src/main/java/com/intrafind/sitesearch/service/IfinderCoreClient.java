@@ -40,7 +40,7 @@ public enum IfinderCoreClient {
         HESSIAN_PROXY_FACTORY.setHessian2Reply(true);
         HESSIAN_PROXY_FACTORY.setHessian2Request(true);
 
-//        initUrlAuthentication(); // TODO disable?
+        initUrlAuthentication();
     }
 
     /**
@@ -64,7 +64,8 @@ public enum IfinderCoreClient {
         Authenticator.setDefault(new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return getAuthentication(getRequestingURL());
+//                return getAuthentication(getRequestingURL());
+                return null;
             }
         });
     }
