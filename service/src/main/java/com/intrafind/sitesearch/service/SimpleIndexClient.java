@@ -105,7 +105,7 @@ public class SimpleIndexClient implements Index {
 
     @Override
     public void delete(String... documents) {
-        if (documents == null || documents.length > 1)
+        if (documents == null || documents.length != 1)
             throw new IllegalArgumentException(Arrays.toString(documents));
 
         final var docId = documents[0];
