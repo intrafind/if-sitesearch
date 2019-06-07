@@ -51,6 +51,17 @@ public class CrawlerService {
     private static final Random RANDOM_VERSION = new Random();
     public static final String SITE_SEARCH_USER_AGENT = Application.SIS_DOMAIN;
 
+    private CrawlController controller;
+
+    private void useSitemapsOnly(CrawlConfig config, CrawlController controller, String url) {
+        config.setMaxOutgoingLinksToFollow(0);
+        config.setMaxDepthOfCrawling(0);
+        final var seedUrls = extractSeedUrls(url);
+        for (final var pageUrl : seedUrls) {
+            controller.addSeed(pageUrl.toString());
+        }
+    }
+
     public CrawlerJobResult recrawl(UUID siteId, UUID siteSecret, SiteProfile siteProfile) {
         final var urls = new ArrayList<String>();
         for (final var siteConfig : siteProfile.getConfigs()) {
@@ -60,18 +71,7 @@ public class CrawlerService {
             config.setUserAgentString(SITE_SEARCH_USER_AGENT);
             config.setPolitenessDelay(200); // to avoid being blocked by crawled websites
 
-            final var pageFetcher = new PageFetcher(config);
-            final var robotstxtConfig = new RobotstxtConfig();
-            final var robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
-            robotstxtConfig.setEnabled(false); // crawler-commons' robots.txt rules interpretation is used later on instead
-
-            final CrawlController controller;
-            try {
-                controller = new CrawlController(config, pageFetcher, robotstxtServer);
-            } catch (final Exception e) {
-                LOG.error("CRAWLER_INITIALIZATION_FAILURE: " + e.getMessage());
-                throw new RuntimeException(e.getMessage());
-            }
+            setupController(config);
 
             if (siteConfig.isSitemapsOnly()) {
                 useSitemapsOnly(config, controller, siteConfig.getUrl().toString());
@@ -98,15 +98,6 @@ public class CrawlerService {
         return new CrawlerJobResult(urls.size(), urls);
     }
 
-    private void useSitemapsOnly(CrawlConfig config, CrawlController controller, String url) {
-        config.setMaxOutgoingLinksToFollow(0);
-        config.setMaxDepthOfCrawling(0);
-        final var seedUrls = extractSeedUrls(url);
-        for (final var pageUrl : seedUrls) {
-            controller.addSeed(pageUrl.toString());
-        }
-    }
-
     public CrawlerJobResult crawl(String url, UUID siteId, UUID siteSecret, boolean isThrottled,
                                   boolean sitemapsOnly, String pageBodyCssSelector, boolean allowUrlWithQuery) {
         final var config = new CrawlConfig();
@@ -123,18 +114,7 @@ public class CrawlerService {
             config.setPolitenessDelay(200); // to avoid being blocked by crawled websites
         }
 
-        final var pageFetcher = new PageFetcher(config);
-        final var robotstxtConfig = new RobotstxtConfig();
-        final var robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
-        robotstxtConfig.setEnabled(false); // crawler-commons' robots.txt rules interpretation is used later on instead
-
-        final CrawlController controller;
-        try {
-            controller = new CrawlController(config, pageFetcher, robotstxtServer);
-        } catch (final Exception e) {
-            LOG.error("CRAWLER_INITIALIZATION_FAILURE: " + e.getMessage());
-            throw new RuntimeException(e.getMessage());
-        }
+        setupController(config);
 
         if (sitemapsOnly) {
             useSitemapsOnly(config, controller, url);
@@ -154,6 +134,20 @@ public class CrawlerService {
         SiteCrawler.PAGE_COUNT.remove(siteId);
 
         return new CrawlerJobResult(pageCount, urls);
+    }
+
+    private void setupController(final CrawlConfig config) {
+        final var pageFetcher = new PageFetcher(config);
+        final var robotstxtConfig = new RobotstxtConfig();
+        final var robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
+        robotstxtConfig.setEnabled(false); // crawler-commons' robots.txt rules interpretation is used later on instead
+
+        try {
+            this.controller = new CrawlController(config, pageFetcher, robotstxtServer);
+        } catch (final Exception e) {
+            LOG.error("CRAWLER_INITIALIZATION_FAILURE: " + e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     private List<URL> extractSeedUrls(final String url) {
