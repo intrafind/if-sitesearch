@@ -66,6 +66,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.UUID;
@@ -304,7 +305,7 @@ public class CrawlerController {
                     .post(okhttp3.RequestBody.create(JSON_MEDIA_TYPE, ""))
                     .build();
             final var response = SiteCrawler.HTTP_CLIENT.newCall(request).execute();
-            final var captchaVerification = MAPPER.readValue(response.body().charStream(), CaptchaVerification.class);
+            final var captchaVerification = MAPPER.readValue(Objects.requireNonNull(response.body()).charStream(), CaptchaVerification.class);
 
             // temporarily allow pseudo-abuse-protection, using a fixed token
             if (captchaVerification.getSuccess() || "true".equals(DEV_SKIP_FLAG) || "1a46b7c0-8684-11e8-8f10-d74554b855dc".equals(captchaToken)) {

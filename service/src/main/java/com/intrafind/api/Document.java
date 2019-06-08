@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -128,7 +129,7 @@ public final class Document implements Serializable {
 
     @Override
     public int hashCode() {
-        return this.getId().hashCode();
+        return Objects.requireNonNull(this.getId()).hashCode();
     }
 
     @Override

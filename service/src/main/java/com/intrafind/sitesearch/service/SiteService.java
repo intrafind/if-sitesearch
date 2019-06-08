@@ -410,7 +410,7 @@ public class SiteService {
                 final String body;
                 if (stripHtmlTags) {
                     body = entry.getDescription().getValue()
-                            .replaceAll("\\<[^>]*>", "");
+                            .replaceAll("<[^>]*>", "");
                 } else {
                     body = entry.getDescription().getValue();
                 }
