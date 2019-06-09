@@ -77,7 +77,7 @@ public class SiteService {
     public static final UUID ADMIN_SITE_SECRET = UUID.fromString(System.getenv("ADMIN_SITE_SECRET"));
 
     static final String SITE_CONFIGURATION_DOCUMENT_PREFIX = "site-configuration-";
-    private static final String CRAWL_STATUS_SINGLETON_DOCUMENT = "crawl-status";
+    static final String CRAWL_STATUS_SINGLETON_DOCUMENT = "crawl-status";
     /**
      * Field is updated whenever a document is (re-)indexed.
      */
@@ -531,7 +531,7 @@ public class SiteService {
     }
 
     public Optional<IndexCleanupResult> removeOldSiteIndexPages(final UUID siteId) {
-        final Instant obsoletePageThreshold = Instant.now().minus(4, ChronoUnit.HALF_DAYS);
+        final var obsoletePageThreshold = Instant.now().minus(4, ChronoUnit.HALF_DAYS);
         final Hits documents = searchService.search(
                 Fields.TENANT + ":" + siteId.toString(),
                 Search.RETURN_FIELDS, Fields.TENANT + SearchService.QUERY_SEPARATOR + Fields.URL + SearchService.QUERY_SEPARATOR + PAGE_TIMESTAMP,
@@ -544,7 +544,7 @@ public class SiteService {
             final Map<String, String> pagesToDelete = documents.getDocuments().stream()
                     .filter(document -> Instant.parse(Objects.requireNonNull(document.get(PAGE_TIMESTAMP))).isBefore(obsoletePageThreshold)) // TODO pre-filter it in the service call to search-service
                     .collect(Collectors.toMap(Document::getId, value -> value.get(Fields.URL)));
-            final int numberOfPagesToDelete = pagesToDelete.entrySet().size();
+            final var numberOfPagesToDelete = pagesToDelete.entrySet().size();
             deleteWithoutFurtherChecks(pagesToDelete.keySet().toArray(new String[0])); // TODO finish THIS!!!!!!
             return Optional.of(new IndexCleanupResult(numberOfPagesToDelete, new ArrayList<>(pagesToDelete.values())));
         }

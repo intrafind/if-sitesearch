@@ -47,7 +47,7 @@ public class SimpleSearchClient implements Search {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleSearchClient.class);
 
     @Override
-    public Hits search(String searchQuery, Object... parameters) {
+    public Hits search(String searchQuery, Object... parameters) { // TODO consider TENANT
         try {
             final var call = HttpRequest.newBuilder()
                     .uri(URI.create(ELASTICSEARCH_SERVICE + "/site-page/_search"))

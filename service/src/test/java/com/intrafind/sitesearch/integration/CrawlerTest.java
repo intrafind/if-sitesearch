@@ -120,10 +120,11 @@ public class CrawlerTest {
     }
 
     @Test
-    public void recrawlMultiSiteConfig() {
+    public void recrawlMultiSiteConfig() throws Exception {
         final var siteId = UUID.fromString("a9ede989-9d94-41d1-8571-a008318b01db");
+        final var siteSecret = UUID.fromString("fbdc4e70-0141-4127-b95b-f9fd2d5e1b93");
         final ResponseEntity<CrawlerJobResult> request = caller
-                .postForEntity(SiteController.ENDPOINT + "/" + siteId + "/recrawl?siteSecret=fbdc4e70-0141-4127-b95b-f9fd2d5e1b93"
+                .postForEntity(SiteController.ENDPOINT + "/" + siteId + "/recrawl?siteSecret=" + siteSecret
                                 + "&clearIndex=false",
                         RequestEntity.EMPTY, CrawlerJobResult.class);
 
@@ -138,7 +139,7 @@ public class CrawlerTest {
     }
 
     @Test
-    public void crawlSiteWithSitemap() {
+    public void crawlSiteWithSitemap() throws Exception {
         final ResponseEntity<CrawlerJobResult> request = caller
                 .postForEntity(SiteController.ENDPOINT + "/" + CRAWL_SITE_ID + "/crawl?siteSecret=" + CRAWL_SITE_SECRET
                                 + "&url=https://api." + Application.SIS_DOMAIN + "&token=" + UUID.randomUUID()

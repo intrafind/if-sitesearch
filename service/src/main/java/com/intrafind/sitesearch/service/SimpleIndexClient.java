@@ -77,7 +77,8 @@ public class SimpleIndexClient implements Index {
 
     @Override
     public List<Document> fetch(String[] options, String... documents) {
-        if (documents == null || documents.length > 1)
+        if (documents == null || documents.length == 0) return Collections.emptyList();
+        if (documents.length > 1)
             throw new IllegalArgumentException(Arrays.toString(documents));
 
         final var docId = documents[0];
@@ -105,8 +106,9 @@ public class SimpleIndexClient implements Index {
 
     @Override
     public void delete(String... documents) {
-        if (documents == null || documents.length != 1)
-            throw new IllegalArgumentException(Arrays.toString(documents));
+        if (documents == null || documents.length == 0) return;
+        if (documents.length > 1)
+            throw new IllegalArgumentException(Arrays.toString(documents) + " - multiple documents cannot be deleted in batch.");
 
         final var docId = documents[0];
         final String indexType = getIndexType(docId);
@@ -129,6 +131,8 @@ public class SimpleIndexClient implements Index {
         final String indexType;
         if (document.contains(SiteService.SITE_CONFIGURATION_DOCUMENT_PREFIX)) {
             indexType = "site-profile";
+        } else if (document.equals(SiteService.CRAWL_STATUS_SINGLETON_DOCUMENT)) {
+            indexType = "svc-singletons";
         } else {
             indexType = "site-page";
         }
