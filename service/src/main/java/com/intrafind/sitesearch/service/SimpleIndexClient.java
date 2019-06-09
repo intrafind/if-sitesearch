@@ -107,8 +107,8 @@ public class SimpleIndexClient implements Index {
     @Override
     public void delete(String... documents) {
         if (documents == null || documents.length == 0) return;
-        if (documents.length > 1)
-            throw new IllegalArgumentException(Arrays.toString(documents) + " - multiple documents cannot be deleted in batch.");
+//        if (documents.length > 1)
+//            throw new IllegalArgumentException(Arrays.toString(documents) + " - multiple documents cannot be deleted in batch.");
 
         final var docId = documents[0];
         final String indexType = getIndexType(docId);
@@ -117,7 +117,13 @@ public class SimpleIndexClient implements Index {
                 .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_delete_by_query"))
                 .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .POST(HttpRequest.BodyPublishers.ofString("{\"query\": {\"terms\": {\"_id\": [\"" + docId + "\"]}}}"))
+//                .POST(HttpRequest.BodyPublishers.ofString("{\"query\": {\"terms\": {\"_id\": [\"" + docId + "\"]}}}"))
+                .POST(HttpRequest.BodyPublishers.ofString("{\"query\": {\"terms\": {\"_id\":" +
+                        Arrays.toString(documents)
+                                .replace(", ", "\",\"")
+                                .replace("[", "[\"")
+                                .replace("]", "\"]")
+                        + "}}}"))
                 .build();
         try {
             final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
