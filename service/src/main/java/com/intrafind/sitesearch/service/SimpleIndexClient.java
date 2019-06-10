@@ -20,6 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intrafind.api.Document;
 import com.intrafind.api.index.Index;
 import com.intrafind.sitesearch.Application;
+import com.intrafind.sitesearch.dto.CrawlStatus;
+import com.intrafind.sitesearch.dto.SitesCrawlStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
@@ -34,10 +36,15 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Should serve as a persistence client that works on a different index than the search client.
@@ -52,6 +59,7 @@ public class SimpleIndexClient implements Index {
     static final HttpClient CLIENT = HttpClient.newHttpClient();
     static final String BASIC_AUTH_HEADER = "Basic " + Base64.getEncoder().encodeToString(credentials);
     static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final String SVC_SINGLETONS = "svc-singletons";
 
     @Override
     public void index(Document... documents) {
@@ -60,6 +68,29 @@ public class SimpleIndexClient implements Index {
 
         final var docId = documents[0].getId();
         final var indexType = getIndexType(docId);
+
+        if (indexType.equals(SVC_SINGLETONS)) {
+            final List<CrawlStatus> crawlStatus = new ArrayList<>();
+            final var sitesCrawlStatus = new SitesCrawlStatus(new HashSet<>(crawlStatus));
+            documents[0].getFields().forEach((siteId, status) ->
+                    sitesCrawlStatus.getSites().add(new CrawlStatus(UUID.fromString(
+                            siteId), Instant.parse(status.get(0)), Long.parseLong(status.get(1))
+                    )));
+
+            try {
+                final var call = HttpRequest.newBuilder()
+                        .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_doc/" + docId))
+                        .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .PUT(HttpRequest.BodyPublishers.ofString(MAPPER.writeValueAsString(sitesCrawlStatus)))
+                        .build();
+                final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
+                LOG.debug("documents: {} - status: {} - body: {}", documents, response.statusCode(), response.body());
+            } catch (IOException | InterruptedException e) {
+                LOG.warn("documents: {} - exception: {}", documents, e.getMessage());
+            }
+            return;
+        }
 
         try {
             final var call = HttpRequest.newBuilder()
@@ -84,6 +115,29 @@ public class SimpleIndexClient implements Index {
         final var docId = documents[0];
         final var indexType = getIndexType(docId);
 
+        if (indexType.equals(SVC_SINGLETONS)) {
+            final var call = HttpRequest.newBuilder()
+                    .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_doc/" + docId))
+                    .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .GET()
+                    .build();
+            try {
+                final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
+                LOG.debug("documents: {} - status: {} - body: {}", documents, response.statusCode(), response.body());
+                if (HttpStatus.OK.value() != response.statusCode())
+                    return Collections.emptyList();
+                final var sitesCrawlStatus = MAPPER.readValue(MAPPER.writeValueAsString(MAPPER.readValue(response.body(), Map.class).get("_source")), SitesCrawlStatus.class);
+                final var crawledSites = new Document(SVC_SINGLETONS);
+                sitesCrawlStatus.getSites().forEach(crawlStatus ->
+                        crawledSites.add(crawlStatus.getSiteId().toString(), crawlStatus.getCrawled(), crawlStatus.getPageCount()));
+                return Collections.singletonList(crawledSites);
+            } catch (IOException | InterruptedException e) {
+                LOG.warn("documents: {} - exception: {}", documents, e.getMessage());
+            }
+            return Collections.emptyList();
+        }
+
         final var call = HttpRequest.newBuilder()
                 .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_doc/" + docId))
                 .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
@@ -107,17 +161,14 @@ public class SimpleIndexClient implements Index {
     @Override
     public void delete(String... documents) {
         if (documents == null || documents.length == 0) return;
-//        if (documents.length > 1)
-//            throw new IllegalArgumentException(Arrays.toString(documents) + " - multiple documents cannot be deleted in batch.");
 
         final var docId = documents[0];
-        final String indexType = getIndexType(docId);
+        final var indexType = getIndexType(docId);
 
         final var call = HttpRequest.newBuilder()
                 .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_delete_by_query"))
                 .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                .POST(HttpRequest.BodyPublishers.ofString("{\"query\": {\"terms\": {\"_id\": [\"" + docId + "\"]}}}"))
                 .POST(HttpRequest.BodyPublishers.ofString("{\"query\": {\"terms\": {\"_id\":" +
                         Arrays.toString(documents)
                                 .replace(", ", "\",\"")
@@ -135,10 +186,10 @@ public class SimpleIndexClient implements Index {
 
     private String getIndexType(String document) {
         final String indexType;
-        if (document.contains(SiteService.SITE_CONFIGURATION_DOCUMENT_PREFIX)) {
+        if (document.startsWith(SiteService.SITE_CONFIGURATION_DOCUMENT_PREFIX)) {
             indexType = "site-profile";
         } else if (document.equals(SiteService.CRAWL_STATUS_SINGLETON_DOCUMENT)) {
-            indexType = "svc-singletons";
+            indexType = SVC_SINGLETONS;
         } else {
             indexType = "site-page";
         }
