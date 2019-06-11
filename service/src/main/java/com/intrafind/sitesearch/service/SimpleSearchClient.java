@@ -31,6 +31,7 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Map;
+import java.util.UUID;
 
 import static com.intrafind.sitesearch.service.SimpleIndexClient.BASIC_AUTH_HEADER;
 import static com.intrafind.sitesearch.service.SimpleIndexClient.CLIENT;
@@ -47,16 +48,29 @@ public class SimpleSearchClient implements Search {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleSearchClient.class);
 
     @Override
-    public Hits search(String searchQuery, Object... parameters) { // TODO consider TENANT
-        final int pageSize = Integer.parseInt(parameters[3].toString());
-        if (pageSize != 10_000)
-            throw new IllegalArgumentException("pageSize should be 50 or 10_000 to get all pages or just the search results");
+    public Hits search(String searchQuery, Object... parameters) {
+        int pageSize = 50;
+        for (int idx = 0; idx < parameters.length; idx++) {
+            if (parameters[idx].equals("_hits.list.size")) {
+                pageSize = Integer.parseInt(parameters[++idx].toString());
+            }
+        }
+        UUID siteId = null;
+        for (Object parameter : parameters) {
+            if (parameter.toString().startsWith("_raw.tenant")) {
+                siteId = UUID.fromString(parameters[1].toString().substring(12));
+            }
+        }
+
+//        final int pageSize = Integer.parseInt(parameters[3].toString());
+//        if (pageSize != 10_000)
+//            throw new IllegalArgumentException("pageSize should be 50 or 10_000 to get all pages or just the search results");
         try {
             final var call = HttpRequest.newBuilder()
                     .uri(URI.create(ELASTICSEARCH_SERVICE + "/site-page/_search"))
                     .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .POST(HttpRequest.BodyPublishers.ofString(buildSearchQuery(searchQuery, pageSize)))
+                    .POST(HttpRequest.BodyPublishers.ofString(buildSearchQuery(searchQuery, siteId, pageSize)))
                     .build();
 
             final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
@@ -69,10 +83,11 @@ public class SimpleSearchClient implements Search {
         return null;
     }
 
-    private String buildSearchQuery(final String searchQuery, final int pageSize) {
-        return "{\"query\": {\"query_string\": {" +
+    private String buildSearchQuery(final String searchQuery, final UUID siteId, final int pageSize) {
+        return "{\"query\":{\"bool\":{\"must\":{\"query_string\": {" +
                 "\"fields\": [\"_str.body\",\"_str.title\", \"_str.url\"]," +
-                "\"query\": \"" + searchQuery + "\"" + "}}," +
+                "\"query\": \"" + searchQuery + "\"}}," +
+                "\"filter\":{\"match\":{\"_raw.tenant\":\"" + siteId + "\"}}}}," +    // TODO check if siteId/TENANT is considered
                 "\"highlight\" : {" +
                 "    \"pre_tags\" : [\"<span class='if-teaser-highlight'>\"]," +
                 "    \"post_tags\" : [\"</span>\"]," +
