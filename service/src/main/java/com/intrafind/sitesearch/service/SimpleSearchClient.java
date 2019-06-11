@@ -48,12 +48,15 @@ public class SimpleSearchClient implements Search {
 
     @Override
     public Hits search(String searchQuery, Object... parameters) { // TODO consider TENANT
+        final int pageSize = Integer.parseInt(parameters[3].toString());
+        if (pageSize != 10_000)
+            throw new IllegalArgumentException("pageSize should be 50 or 10_000 to get all pages or just the search results");
         try {
             final var call = HttpRequest.newBuilder()
                     .uri(URI.create(ELASTICSEARCH_SERVICE + "/site-page/_search"))
                     .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .POST(HttpRequest.BodyPublishers.ofString(buildSearchQuery(searchQuery)))
+                    .POST(HttpRequest.BodyPublishers.ofString(buildSearchQuery(searchQuery, pageSize)))
                     .build();
 
             final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
@@ -66,7 +69,7 @@ public class SimpleSearchClient implements Search {
         return null;
     }
 
-    private String buildSearchQuery(final String searchQuery) {
+    private String buildSearchQuery(final String searchQuery, final int pageSize) {
         return "{\"query\": {\"query_string\": {" +
                 "\"fields\": [\"_str.body\",\"_str.title\", \"_str.url\"]," +
                 "\"query\": \"" + searchQuery + "\"" + "}}," +
@@ -81,6 +84,6 @@ public class SimpleSearchClient implements Search {
                 "        \"_str.url\" : {}" +
                 "    }" +
                 "}," +
-                "\"size\": 50}";
+                "\"size\": " + pageSize + "}";
     }
 }

@@ -498,9 +498,11 @@ public class SiteTest {
         enIndexDocuments.add("en/79f4cd25-39d1-42ad-8b2a-9247aabd7d13.xml");
 
         // create index without clearance
-        final var siteIndexSummary = indexCrawlerPage(enIndexDocuments.get(0),
+        final var siteIndexSummary = indexCrawlerPage(
+                enIndexDocuments.get(0),
                 newSite.getSiteId(),
-                newSite.getSiteSecret(), false
+                newSite.getSiteSecret(),
+                false
         );
 
         validateUpdatedSites(siteIndexSummary);
@@ -512,9 +514,11 @@ public class SiteTest {
         assertEquals(siteIndexSummary.getDocuments().size(), pageIds.size());
 
         // update index without clearance
-        final var siteIndexSummaryAfterUpdate = indexCrawlerPage(enIndexDocuments.get(1),
+        final var siteIndexSummaryAfterUpdate = indexCrawlerPage(
+                enIndexDocuments.get(1),
                 newSite.getSiteId(),
-                newSite.getSiteSecret(), false
+                newSite.getSiteSecret(),
+                false
         );
         validateUpdatedSites(siteIndexSummaryAfterUpdate);
         TimeUnit.MILLISECONDS.sleep(13_000);
