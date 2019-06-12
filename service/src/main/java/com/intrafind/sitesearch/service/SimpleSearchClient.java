@@ -49,22 +49,24 @@ public class SimpleSearchClient implements Search {
 
     @Override
     public Hits search(String searchQuery, Object... parameters) {
-        int pageSize = 50;
-        for (int idx = 0; idx < parameters.length; idx++) {
-            if (parameters[idx].equals("_hits.list.size")) {
-                pageSize = Integer.parseInt(parameters[++idx].toString());
-            }
-        }
-        UUID siteId = null;
-        for (Object parameter : parameters) {
-            if (parameter.toString().startsWith("_raw.tenant")) {
-                siteId = UUID.fromString(parameters[1].toString().substring(12));
-            }
+        final int pageSize;
+        if (parameters[3].toString().equals("10000")) {
+            pageSize = 10_000;
+        } else if (parameters[5].toString().equals("10")) {
+            pageSize = 10;
+        } else {
+            pageSize = 50;
         }
 
-//        final int pageSize = Integer.parseInt(parameters[3].toString());
-//        if (pageSize != 10_000)
-//            throw new IllegalArgumentException("pageSize should be 50 or 10_000 to get all pages or just the search results");
+        final UUID siteId;
+        if (searchQuery.startsWith("_raw.tenant")) {
+            siteId = UUID.fromString(searchQuery.substring(12));
+        } else if (parameters[1].toString().startsWith("_raw.tenant")) {
+            siteId = UUID.fromString(parameters[1].toString().substring(12));
+        } else {
+            siteId = UUID.fromString(parameters[1].toString().substring(12));
+        }
+
         try {
             final var call = HttpRequest.newBuilder()
                     .uri(URI.create(ELASTICSEARCH_SERVICE + "/site-page/_search"))
@@ -97,8 +99,7 @@ public class SimpleSearchClient implements Search {
                 "        \"_str.body\" : {}," +
                 "        \"_str.title\" : {}," +
                 "        \"_str.url\" : {}" +
-                "    }" +
-                "}," +
-                "\"size\": " + pageSize + "}";
+                "    }}," +
+                "\"size\":" + pageSize + "}";
     }
 }
