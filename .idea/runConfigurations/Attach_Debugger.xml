@@ -11,6 +11,8 @@
       <option name="DEBUG_PORT" value="5005" />
       <option name="LOCAL" value="false" />
     </RunnerSettings>
-    <method v="2" />
+    <method v="2">
+      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_Trigger Recompilation" />
+    </method>
   </configuration>
 </component>

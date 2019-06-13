@@ -18,7 +18,6 @@ package com.intrafind.api.search;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.intrafind.api.Document;
 
 import java.io.Serializable;
@@ -30,14 +29,14 @@ import java.util.Objects;
 public final class Hits implements Serializable {
     @JsonAlias(value = {"documents", "hits"})
     private final List<Document> documents = new ArrayList<>();
-    @JsonProperty("max_score")
-    private float maxScore;
+//    @JsonProperty("max_score")
+//    private float maxScore;
 
     private static final String KEY_TOTAL_HITS = "totalHits";
 
-    public float getMaxScore() {
-        return maxScore;
-    }
+//    public float getMaxScore() {
+//        return maxScore;
+//    }
 
     private final Document metaData = new Document("meta");
 

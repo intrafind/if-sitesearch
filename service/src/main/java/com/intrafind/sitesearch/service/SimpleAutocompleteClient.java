@@ -44,7 +44,7 @@ public class SimpleAutocompleteClient implements AutocompleteClient {
 //        https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-as-you-type.html
         final var hits = search.search(searchQuery, parameters);
         hits.getDocuments().forEach(document -> {
-            hits.getMetaData().add("autocomplete.terms", document.get("_str.url"));
+            hits.getMetaData().add("autocomplete.terms", document.get("_str.body"));
         });
         return hits;
     }

@@ -77,12 +77,22 @@ public class SimpleSearchClient implements Search {
 
             final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
             LOG.debug("searchQuery: {} - status: {} - body: {}", searchQuery, response.statusCode(), response.body());
-            return MAPPER.readValue(MAPPER.writeValueAsString(MAPPER.readValue(response.body(), Map.class).get("hits")), Hits.class);
+            final Hits hits = MAPPER.readValue(MAPPER.writeValueAsString(MAPPER.readValue(response.body(), Map.class).get("hits")), Hits.class);
+            toHighlighted(hits);
+            return hits;
         } catch (IOException | InterruptedException e) {
             LOG.warn("searchQuery: {} - exception: {}", searchQuery, e.getMessage());
         }
 
         return null;
+    }
+
+    private void toHighlighted(Hits hits) {
+        hits.getDocuments().forEach(document -> {  // TODO give this block a name, i.e. toHighlighted()
+            document.set("hit.teaser._str.title", document.getHighlight().get("_str.title") == null ? document.getFields().get("_str.title") : document.getHighlight().get("_str.title"));
+            document.set("hit.teaser._str.body", document.getHighlight().get("_str.body") == null ? document.getFields().get("_str.body") : document.getHighlight().get("_str.body"));
+            document.set("hit.teaser._str.url", document.getHighlight().get("_str.url") == null ? document.getFields().get("_str.url") : document.getHighlight().get("_str.url"));
+        });
     }
 
     private String buildSearchQuery(final String searchQuery, final UUID siteId, final int pageSize) {
@@ -91,7 +101,7 @@ public class SimpleSearchClient implements Search {
                 "\"query\": \"" + searchQuery + "\"}}," +
                 "\"filter\":{\"match\":{\"_raw.tenant\":\"" + siteId + "\"}}}}," +    // TODO check if siteId/TENANT is considered
                 "\"highlight\" : {" +
-                "    \"pre_tags\" : [\"<span class='if-teaser-highlight'>\"]," +
+                "    \"pre_tags\" : [\"<span class=\\\"if-teaser-highlight\\\">\"]," +
                 "    \"post_tags\" : [\"</span>\"]," +
                 "    \"number_of_fragments\": 1," +
                 "    \"fragment_size\": 150," +
