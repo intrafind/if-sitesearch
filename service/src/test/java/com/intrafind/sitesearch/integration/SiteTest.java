@@ -271,10 +271,12 @@ public class SiteTest {
         assertEquals(newPage.getUrl(), fetchViaUrl.getBody().getUrl());
 
         // delete using a valid siteSecret
-        final var deletion = caller.exchange(SiteController.ENDPOINT + "/" + newSite.getSiteId() + "/pages?siteSecret=" + newSite.getSiteSecret() + "&url=" + newPage.getUrl(), HttpMethod.DELETE, HttpEntity.EMPTY, ResponseEntity.class);
+        final var deletion = caller.exchange(SiteController.ENDPOINT + "/" + newSite.getSiteId() + "/pages?siteSecret=" + newSite.getSiteSecret() + "&url=" + newPage.getUrl(),
+                HttpMethod.DELETE, HttpEntity.EMPTY, ResponseEntity.class);
         assertEquals(HttpStatus.NO_CONTENT, deletion.getStatusCode());
         assertNull(deletion.getBody());
 
+        TimeUnit.MILLISECONDS.sleep(2_000);
         // fetch via URL an already deleted page
         final var fetchViaUrlForNonExistingPage = caller.exchange(SiteController.ENDPOINT
                         + "/" + newSite.getSiteId() + "/pages?url=" + newPage.getUrl(),

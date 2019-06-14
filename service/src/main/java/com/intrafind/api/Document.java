@@ -35,15 +35,6 @@ public final class Document implements Serializable {
     @JsonAlias(value = {"fields", "_source"})
     private final Map<String, List<String>> fields = new TreeMap<>();
 
-    static { // oss profile switch
-//        if (IS_OSS) {
-//            HIT_TEASER_PREFIX = "";
-////            URL_HIT_TEASER_PREFIX = "teaser.";
-//        } else {
-        HIT_TEASER_PREFIX = "hit.teaser.";
-//            URL_HIT_TEASER_PREFIX = HIT_TEASER_PREFIX;
-//        }
-    }
     protected Document() {
         this.id = null;
     }
@@ -117,8 +108,7 @@ public final class Document implements Serializable {
     }
 
     public static final boolean IS_OSS = System.getenv("SPRING_PROFILES_ACTIVE") != null && "oss".equals(System.getenv("SPRING_PROFILES_ACTIVE"));
-    private static final String HIT_TEASER_PREFIX;
-//    private static final String URL_HIT_TEASER_PREFIX;
+    private static final String HIT_TEASER_PREFIX = "hit.teaser.";
 
     public Map<String, List<String>> getHighlight() {
         return highlight;
@@ -129,7 +119,6 @@ public final class Document implements Serializable {
                 this.get(HIT_TEASER_PREFIX + Fields.TITLE),
                 this.get(HIT_TEASER_PREFIX + Fields.BODY),
                 this.get(HIT_TEASER_PREFIX + Fields.URL),
-//                this.get(URL_HIT_TEASER_PREFIX + Fields.URL),
                 this.get(Fields.URL),
                 this.getAll(SiteService.PAGE_LABELS),
                 this.get(SiteService.PAGE_THUMBNAIL)
