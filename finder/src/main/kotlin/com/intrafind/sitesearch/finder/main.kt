@@ -54,7 +54,7 @@ private fun selfTest() {
 
 private fun validateServiceCall(apiEndpoint: String) {
     val xhr = XMLHttpRequest()
-    xhr.open("GET", "$finderService/$siteId/$apiEndpoint?query=ifinder")
+    xhr.open("GET", "$finderService/$siteId/$apiEndpoint?query=sites")
     xhr.onload = {
         val dt = document.createElement("dt") as HTMLElement
         debugView.appendChild(dt)

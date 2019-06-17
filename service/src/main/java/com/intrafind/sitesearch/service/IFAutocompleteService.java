@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,10 +23,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class IFAutocompleteService implements AutocompleteClient {
-    static final Search SEARCH_AUTOCOMPLETE_CLIENT = IfinderCoreClient.newHessianClient(Search.class, Application.IFINDER_CORE + "/autocomplete");
+    private static final Search SEARCH_AUTOCOMPLETE_CLIENT = IfinderCoreClient.newHessianClient(Search.class, Application.IFINDER_CORE + "/autocomplete");
 
     @Override
     public Hits search(String searchQuery, Object... parameters) {
+        if (searchQuery == null || searchQuery.isEmpty()) return new Hits(0);
         return SEARCH_AUTOCOMPLETE_CLIENT.search(searchQuery, parameters);
     }
 }
