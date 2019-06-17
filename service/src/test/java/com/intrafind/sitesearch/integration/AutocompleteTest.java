@@ -81,9 +81,9 @@ public class AutocompleteTest {
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertNotNull(actual.getBody());
         assertTrue(1 <= actual.getBody().getResults().size());
-        actual.getBody().getResults().forEach(term -> {
-            assertTrue(term.toLowerCase().contains("ifinder"));
-        });
+        actual.getBody().getResults().forEach(term ->
+                assertTrue(term.toLowerCase().contains("ifinder"))
+        );
     }
 
     @Test
@@ -123,7 +123,15 @@ public class AutocompleteTest {
     }
 
     @Test
-    public void withoutInvalidSiteId() {
+    public void withoutQuery() {
+        final var actual = caller.getForEntity("/sites/" + SearchTest.SEARCH_SITE_ID + "/autocomplete?query=", Autocomplete.class);
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(0, actual.getBody().getResults().size());
+    }
+
+    @Test
+    public void withInvalidSiteId() {
         final var actual = caller.getForEntity("/sites/invalid-siteId/autocomplete?query=not_found", Autocomplete.class);
 
         assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());

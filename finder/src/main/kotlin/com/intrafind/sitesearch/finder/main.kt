@@ -145,8 +145,9 @@ private fun encapsulateAsComponent() {
 //private val pageFinderContainer = document.createElement("template") as HTMLTemplateElement
 private val pageFinderContainer = document.createElement("div") as HTMLDivElement
 private val findingsContainer = document.createElement("dl") as HTMLDListElement
-private val sisDomain = "sitesearch.cloud"
-private val finderService = "https://api.${sisDomain}/sites"
+//private val sisDomain = "sitesearch.cloud"
+//private val finderService = "https://api.${sisDomain}/sites"
+private val finderService = "${window.location.origin}/sites"
 private val pageFinderInit = document.currentScript as HTMLScriptElement
 private val siteId = pageFinderInit.getAttribute("data-siteId")
 private val finderEndpoint = "search"
@@ -155,6 +156,7 @@ private val finder = document.createElement("input") as HTMLInputElement
 private fun buildPageFinder() {
     val finderStyle = pageFinderInit.getAttribute("data-search-style")
     finder.type = "search"
+    finder.spellcheck = true
     finder.title = "Finder"
     finder.placeholder = "{if-lab} Page Finder"
     finder.style.cssText =
@@ -172,7 +174,7 @@ private fun log(msg: Any?) {
     }
 }
 
-fun main(args: Array<String>) {
+private fun main() {
     init()
     document.addEventListener("DOMContentLoaded", {
         log("DOMContentLoaded")
