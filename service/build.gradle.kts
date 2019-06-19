@@ -46,13 +46,29 @@
  * limitations under the License.
  */
 
+/*
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 // Migrate to Kotlin https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/
 plugins {
     java
     idea
     id("me.champeau.gradle.jmh") version "0.4.8"
     id("io.morethan.jmhreport") version "0.9.0"
-    id("org.springframework.boot") version "2.1.5.RELEASE"
+    id("org.springframework.boot") version "2.1.6.RELEASE"
     id("io.spring.dependency-management") version "1.0.7.RELEASE"
     id("com.google.cloud.tools.jib") version "1.3.0"
 }
@@ -73,13 +89,14 @@ repositories {
 }
 
 dependencies {
-    val springBootVersion = "2.1.5.RELEASE"
+    val springBootVersion = "2.1.6.RELEASE"
     val swaggerVersion = "2.9.2"
     val tikaVersion = "1.21"
 
     runtimeOnly("org.apache.tika:tika-parsers:$tikaVersion")
     compile("org.apache.tika:tika:$tikaVersion")
-    compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:$springBootVersion")
+//    compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:$springBootVersion")
+    compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.5.RELEASE")
     compile("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
 
     compile("edu.uci.ics:crawler4j:4.4.0")
@@ -87,7 +104,7 @@ dependencies {
 
     compile("com.rometools:rome:1.12.0")
 
-    compile("com.caucho:hessian:4.0.60")
+    compile("com.caucho:hessian:4.0.62")
 
     compile("org.springframework.boot:spring-boot-starter-webflux:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-undertow:$springBootVersion") {
