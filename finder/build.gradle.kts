@@ -27,6 +27,8 @@ dependencies {
 }
 
 tasks {
+    val artifactPath = "../service/src/main/resources/static/app"
+
     "compileKotlin2Js"(Kotlin2JsCompile::class) {
         kotlinOptions {
             metaInfo = true
@@ -44,7 +46,6 @@ tasks {
 
         doLast {
             val serviceBuildPath = "../service/build/resources/main/static/app"
-            val artifactPath = "../service/src/main/resources/static/app"
             project.file("$artifactPath/${project.name}").delete()
             project.file("$serviceBuildPath/${project.name}").delete()
 
@@ -59,12 +60,14 @@ tasks {
                 into("$artifactPath/${project.name}/resources")
                 into("$serviceBuildPath/${project.name}/resources") // TODO create rather a symlink to above directory?
             }
+        }
+    }
 
-            configurations["compile"].files.forEach { file ->
-                copy {
-                    from(zipTree(file.absolutePath))
-                    into("$artifactPath/runtime")
-                }
+    task("includeKotlinJsRuntime") {
+        configurations["compile"].files.forEach { file ->
+            copy {
+                from(zipTree(file.absolutePath))
+                into("$artifactPath/runtime")
             }
         }
     }
