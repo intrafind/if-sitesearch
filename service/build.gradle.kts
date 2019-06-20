@@ -52,10 +52,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_12
 }
 
-repositories {
-    jcenter()
-}
-
 dependencies {
     val springBootVersion = "2.1.6.RELEASE"
     val swaggerVersion = "2.9.2"

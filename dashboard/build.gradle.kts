@@ -21,10 +21,6 @@ plugins {
     id("kotlin2js") version "1.3.40"
 }
 
-repositories {
-    jcenter()
-}
-
 dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version")
     compile("org.jetbrains.kotlin:kotlin-test-js:$kotlin_version")
