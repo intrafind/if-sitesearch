@@ -45,34 +45,31 @@ tasks {
             sourceMapEmbedSources = "always"
             typedArrays = false
         }
-    }
 
-    val unpackKotlinJsStdlib by registering {
-        group = "build"
         doLast {
             val serviceBuildPath = "../service/build/resources/main/static/app"
             val artifactPath = "../service/src/main/resources/static/app"
-            project.file("$artifactPath/$project.name").delete()
-            project.file("$serviceBuildPath/$project.name").delete()
+            project.file("$artifactPath/${project.name}").delete()
+            project.file("$serviceBuildPath/${project.name}").delete()
 
             copy {
                 from(compileKotlin2Js.get().destinationDir)
-                into("$artifactPath/$project.name")
+                into("$artifactPath/${project.name}")
             }
 
             copy {
                 from(compileKotlin2Js.get().destinationDir)
-                into("$serviceBuildPath/$project.name") // TODO create rather a symlink to above directory?
+                into("$serviceBuildPath/${project.name}") // TODO create rather a symlink to above directory?
             }
 
             copy {
-                from(sourceSets.main.get().output.resourcesDir)
-                into("$artifactPath/$project.name/resources")
+                from(sourceSets.main.get().resources)
+                into("$artifactPath/${project.name}/resources")
             }
 
             copy {
-                from(sourceSets.main.get().output.resourcesDir)
-                into("$serviceBuildPath/$project.name/resources") // TODO create rather a symlink to above directory?
+                from(sourceSets.main.get().resources)
+                into("$serviceBuildPath/${project.name}/resources") // TODO create rather a symlink to above directory?
             }
 
             configurations["compile"].files.forEach { file ->
