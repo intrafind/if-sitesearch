@@ -16,9 +16,9 @@
 
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 
-val kotlin_version = "1.3.31"
+val kotlin_version = "1.3.40"
 plugins {
-    id("kotlin2js") version "1.3.31"
+    id("kotlin2js") version "1.3.40"
 }
 
 repositories {
