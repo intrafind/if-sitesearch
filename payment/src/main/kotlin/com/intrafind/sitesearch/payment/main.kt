@@ -19,7 +19,7 @@ package com.intrafind.sitesearch.payment
 import kotlin.browser.document
 import kotlin.browser.window
 
-fun init() {
+private fun init() {
     log("init")
 }
 
@@ -31,7 +31,7 @@ private fun log(msg: Any?) {
     }
 }
 
-fun main(args: Array<String>) {
+private fun main() {
     init()
     document.addEventListener("DOMContentLoaded", {
         log("DOMContentLoaded")

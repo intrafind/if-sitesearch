@@ -41,17 +41,3 @@ subprojects {
         jcenter()
     }
 }
-
-//subprojects.forEach {
-//    //    val kotlinVersion = "1.3.40"
-//    it.buildscript {
-//        //        val kotlin_version = kotlinVersion
-////        ext {
-////            val kotlin_version = kotlinVersion
-////        }
-////
-//        repositories {
-//            jcenter()
-//        }
-//    }
-//}
