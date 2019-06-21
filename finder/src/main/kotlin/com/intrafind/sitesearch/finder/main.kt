@@ -158,7 +158,7 @@ private fun buildPageFinder() {
     finder.type = "search"
     finder.spellcheck = true
     finder.title = "Finder"
-    finder.placeholder = "Search"
+    finder.placeholder = "Search..."
     finder.style.cssText =
             if (finderStyle.isNullOrBlank())
                 "width: 500px; font-size: 2em; text-indent: .5em;"

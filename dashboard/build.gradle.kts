@@ -16,17 +16,19 @@
 
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 
-val kotlin_version = "1.3.40"
+val kotlinVersion = "1.3.40"
 plugins {
     id("kotlin2js") version "1.3.40"
 }
 
 dependencies {
-    compile("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version")
-    compile("org.jetbrains.kotlin:kotlin-test-js:$kotlin_version")
+    compile("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion")
+    compile("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
 }
 
 tasks {
+    val artifactPath = "../service/src/main/resources/static/app"
+
     "compileKotlin2Js"(Kotlin2JsCompile::class) {
         kotlinOptions {
             metaInfo = true
@@ -44,7 +46,6 @@ tasks {
 
         doLast {
             val serviceBuildPath = "../service/build/resources/main/static/app"
-            val artifactPath = "../service/src/main/resources/static/app"
             project.file("$artifactPath/${project.name}").delete()
             project.file("$serviceBuildPath/${project.name}").delete()
 
@@ -59,12 +60,14 @@ tasks {
                 into("$artifactPath/${project.name}/resources")
                 into("$serviceBuildPath/${project.name}/resources") // TODO create rather a symlink to above directory?
             }
+        }
+    }
 
-            configurations["compile"].files.forEach { file ->
-                copy {
-                    from(zipTree(file.absolutePath))
-                    into("$artifactPath/runtime")
-                }
+    task("includeKotlinJsRuntime") {
+        configurations["compile"].files.forEach { file ->
+            copy {
+                from(zipTree(file.absolutePath))
+                into("$artifactPath/runtime")
             }
         }
     }
