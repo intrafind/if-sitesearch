@@ -45,20 +45,20 @@ tasks {
         }
 
         doLast {
-            val serviceBuildPath = "../service/build/resources/main/static/app"
+            //            val serviceBuildPath = "../service/build/resources/main/static/app"
             project.file("$artifactPath/${project.name}").delete()
-            project.file("$serviceBuildPath/${project.name}").delete()
+//            project.file("$serviceBuildPath/${project.name}").delete()
 
             copy {
                 from(compileKotlin2Js.get().destinationDir)
                 into("$artifactPath/${project.name}")
-                into("$serviceBuildPath/${project.name}")
+//                into("$serviceBuildPath/${project.name}")
             }
 
             copy {
                 from(sourceSets.main.get().resources)
                 into("$artifactPath/${project.name}/resources")
-                into("$serviceBuildPath/${project.name}/resources")
+//                into("$serviceBuildPath/${project.name}/resources")
             }
         }
     }
