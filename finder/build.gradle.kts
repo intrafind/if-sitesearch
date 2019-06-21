@@ -52,13 +52,13 @@ tasks {
             copy {
                 from(compileKotlin2Js.get().destinationDir)
                 into("$artifactPath/${project.name}")
-                into("$serviceBuildPath/${project.name}") // TODO create rather a symlink to above directory?
+                into("$serviceBuildPath/${project.name}")
             }
 
             copy {
                 from(sourceSets.main.get().resources)
                 into("$artifactPath/${project.name}/resources")
-                into("$serviceBuildPath/${project.name}/resources") // TODO create rather a symlink to above directory?
+                into("$serviceBuildPath/${project.name}/resources")
             }
         }
     }
