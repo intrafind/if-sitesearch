@@ -45,25 +45,22 @@ tasks {
         }
 
         doLast {
-            //            val serviceBuildPath = "../service/build/resources/main/static/app"
             project.file("$artifactPath/${project.name}").delete()
-//            project.file("$serviceBuildPath/${project.name}").delete()
 
             copy {
                 from(compileKotlin2Js.get().destinationDir)
                 into("$artifactPath/${project.name}")
-//                into("$serviceBuildPath/${project.name}")
             }
 
             copy {
                 from(sourceSets.main.get().resources)
                 into("$artifactPath/${project.name}/resources")
-//                into("$serviceBuildPath/${project.name}/resources")
             }
         }
     }
 
     task("includeKotlinJsRuntime") {
+        // TODO try to execute it centrally, across the entire project
         configurations["compile"].files.forEach { file ->
             copy {
                 from(zipTree(file.absolutePath))
