@@ -16,32 +16,27 @@
 
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 
-val kotlinVersion = "1.3.40"
 plugins {
     id("kotlin2js") version "1.3.40"
 }
 
 dependencies {
+    val kotlinVersion = "1.3.40"
+
     compile("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion")
     compile("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
 }
 
 tasks {
-    val artifactPath = "../service/src/main/resources/static/app"
+    val artifactPath = "${project(":service").projectDir}/src/main/resources/static/app"
 
     "compileKotlin2Js"(Kotlin2JsCompile::class) {
         kotlinOptions {
-            metaInfo = true
-            outputFile = "${buildDir}/classes/kotlin/main/${project.name}.js"
             sourceMap = true
             moduleKind = "umd"
-            main = "call"
-            suppressWarnings = false
-            target = "v5"
             noStdlib = true
             friendModulesDisabled = false
             sourceMapEmbedSources = "always"
-            typedArrays = false
         }
 
         doLast {
