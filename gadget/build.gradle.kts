@@ -35,8 +35,6 @@ tasks {
             sourceMap = true
             moduleKind = "umd"
             noStdlib = true
-            friendModulesDisabled = false
-            sourceMapEmbedSources = "always"
         }
 
         doLast {
@@ -50,16 +48,6 @@ tasks {
             copy {
                 from(sourceSets.main.get().resources)
                 into("$artifactPath/${project.name}/resources")
-            }
-        }
-    }
-
-    task("includeKotlinJsRuntime") {
-        // TODO try to execute it centrally, across the entire project
-        configurations["compile"].files.forEach { file ->
-            copy {
-                from(zipTree(file.absolutePath))
-                into("$artifactPath/runtime")
             }
         }
     }

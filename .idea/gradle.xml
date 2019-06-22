@@ -8,7 +8,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/client" />
             <option value="$PROJECT_DIR$/dashboard" />
             <option value="$PROJECT_DIR$/finder" />
             <option value="$PROJECT_DIR$/gadget" />
