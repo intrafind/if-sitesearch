@@ -22,7 +22,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Gradle: org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-security:2.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: edu.uci.ics:crawler4j:4.4.0" level="project" />
     <orderEntry type="library" name="Gradle: com.github.crawler-commons:crawler-commons:1.0" level="project" />
