@@ -22,7 +22,6 @@ import com.intrafind.sitesearch.dto.CrawlStatus;
 import com.intrafind.sitesearch.dto.CrawlerJobResult;
 import com.intrafind.sitesearch.dto.FetchedPage;
 import com.intrafind.sitesearch.dto.SitesCrawlStatus;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -120,7 +119,6 @@ public class CrawlerTest {
         assertTrue(request.getBody().getUrls().get(0).contains("api." + Application.SIS_DOMAIN));
     }
 
-    @Ignore("re-enable it")
     @Test
     public void recrawlMultiSiteConfig() throws Exception {
         final var siteId = UUID.fromString("a9ede989-9d94-41d1-8571-a008318b01db");
