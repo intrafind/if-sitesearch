@@ -30,13 +30,10 @@
  * limitations under the License.
  */
 
-subprojects.forEach {
-    if ("service" !== it.name) {
-        println("my-debug: ${it.name}")
-    }
-}
-
 subprojects {
+    if ("service" !== name) {
+        println("module: ${name}")
+    }
     repositories {
         jcenter()
     }
