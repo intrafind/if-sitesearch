@@ -15,9 +15,14 @@
  */
 
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
 plugins {
     id("kotlin2js") version "1.3.40"
+}
+
+apply {
+    plugin("kotlin-dce-js")
 }
 
 dependencies {
@@ -28,27 +33,25 @@ dependencies {
 }
 
 tasks {
-    val artifactPath = "${project(":service").projectDir}/src/main/resources/static/app"
+    val artifactPath = "${project(":service").projectDir}/src/main/resources/static/app" // the only module specific property
+    project.file("$artifactPath/${project.name}").delete()
 
     "compileKotlin2Js"(Kotlin2JsCompile::class) {
         kotlinOptions {
+            outputFile = "$artifactPath/${project.name}/${project.name}.js"
             sourceMap = true
             moduleKind = "umd"
             noStdlib = true
         }
-
-        doLast {
-            project.file("$artifactPath/${project.name}").delete()
-
-            copy {
-                from(compileKotlin2Js.get().destinationDir)
-                into("$artifactPath/${project.name}")
-            }
-
-            copy {
-                from(sourceSets.main.get().resources)
-                into("$artifactPath/${project.name}/resources")
-            }
+        copy {
+            from(sourceSets.main.get().resources)
+            into("$artifactPath/${project.name}/resources")
         }
+    }
+
+    "runDceKotlinJs"(KotlinJsDce::class) {
+        keep("main.loop")
+        dceOptions.devMode = false
+        dceOptions.outputDirectory = "$artifactPath/${project.name}/min"
     }
 }

@@ -6,7 +6,7 @@
         <testOutputPath>$MODULE_DIR$/../../../finder/build/classes/kotlin/test/finder_test.js</testOutputPath>
         <compilerSettings />
         <compilerArguments>
-          <option name="outputFile" value="$MODULE_DIR$/../../../finder/build/classes/kotlin/main/finder.js" />
+          <option name="outputFile" value="$MODULE_DIR$/../../../service/src/main/resources/static/app/finder/finder.js" />
           <option name="noStdlib" value="true" />
           <option name="sourceMap" value="true" />
           <option name="metaInfo" value="true" />
