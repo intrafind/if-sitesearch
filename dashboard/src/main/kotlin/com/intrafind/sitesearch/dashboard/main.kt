@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,6 +43,7 @@ private val serviceUrl: String = window.location.origin
 
 private lateinit var updateSiteProfile: HTMLButtonElement
 private lateinit var pageBodyCssSelector: HTMLInputElement
+private lateinit var allowUrlWithQuery: HTMLInputElement
 private lateinit var sitemapsOnly: HTMLInputElement
 private lateinit var url: HTMLInputElement
 private lateinit var pageCountContainer: HTMLDivElement
@@ -55,6 +56,7 @@ private lateinit var profile: SiteProfile
 private fun init() {
     updateSiteProfile = document.getElementById("updateSiteProfile") as HTMLButtonElement
     pageBodyCssSelector = document.getElementById("pageBodyCssSelector") as HTMLInputElement
+    allowUrlWithQuery = document.getElementById("allowUrlWithQuery") as HTMLInputElement
     sitemapsOnly = document.getElementById("sitemapsOnly") as HTMLInputElement
     url = document.getElementById("url") as HTMLInputElement
     pageCountContainer = document.getElementById("pageCountContainer") as HTMLDivElement
@@ -74,8 +76,6 @@ private fun applyQueryParameters() {
 
     siteIdElement.textContent = siteId
     siteSecretElement.textContent = siteSecret
-
-    console.warn(window.location.search)
 }
 
 fun updateSiteProfile() {
@@ -84,6 +84,7 @@ fun updateSiteProfile() {
     val siteProfileConfigs = listOf(SiteProfileConfig(
             url = url.value,
             sitemapsOnly = sitemapsOnly.checked,
+//            allowUrlWithQuery = allowUrlWithQuery.checked, // TODO enable this and test it
             pageBodyCssSelector = pageBodyCssSelector.value
     ))
     val siteProfile = SiteProfile(id = siteId, secret = siteSecret, email = profile.email, configs = siteProfileConfigs)
@@ -139,7 +140,18 @@ private fun fetchProfile() {
 private fun showConfiguration() {
     url.value = profile.configs.asDynamic()[0].url
     sitemapsOnly.checked = profile.configs.asDynamic()[0].sitemapsOnly
+    allowUrlWithQuery.checked = profile.configs.asDynamic()[0].allowUrlWithQuery
     pageBodyCssSelector.value = profile.configs.asDynamic()[0].pageBodyCssSelector
+
+    for (config in profile.configs.asDynamic()) {
+        console.warn(config)
+        console.warn(config.url)
+        console.warn(config.sitemapsOnly)
+        console.warn(config.pageBodyCssSelector)
+        console.warn(config.allowUrlWithQuery)
+    }
+
+    console.warn(document.getElementById("profileConfig"))
 
     if (profile.configs.asDynamic().length > 1) {
         updateSiteProfile.disabled = true // TODO remove this precaution, once multi-configuration updates are supported in the UI
@@ -152,6 +164,6 @@ class SiteSearch {
     }
 }
 
-data class SiteProfileConfig(val url: String = "", val pageBodyCssSelector: String? = "body", val sitemapsOnly: Boolean = false)
+data class SiteProfileConfig(val url: String = "", val pageBodyCssSelector: String = "body", val sitemapsOnly: Boolean = false, val allowUrlWithQuery: Boolean = false)
 
 data class SiteProfile(val id: String = "", val secret: String = "", val configs: List<SiteProfileConfig> = emptyList(), val email: String = "")

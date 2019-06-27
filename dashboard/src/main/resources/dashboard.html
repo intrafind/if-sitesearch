@@ -1,6 +1,5 @@
-<!DOCTYPE html>
 <!--
-  ~ Copyright 2018 IntraFind Software AG. All rights reserved.
+  ~ Copyright 2019 IntraFind Software AG. All rights reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,6 +13,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -31,7 +32,15 @@
 
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Open+Sans:100italic,200italic,300italic,400italic,500italic,600italic,700italic,800italic,900italic,100,200,300,400,500,600,700,800,900">
-    <link rel="stylesheet" href="artifact/css/fontawesome-all.min.css">
+    <!--    <link rel="stylesheet" href="artifact/css/fontawesome-all.min.css">-->
+    <link as="style" crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css"
+          rel="preload">
+    <link as="font"
+          crossorigin="anonymous"
+          href="https://use.fontawesome.com/releases/v5.9.0/css/all.css"
+          rel="stylesheet"
+          type="text/css">
+    <link href="artifact/css/main.css" rel="stylesheet">
     <link rel="stylesheet" href="artifact/css/main.css">
     <script src="/app/runtime/kotlin.js"></script>
     <script src="/app/dashboard/dashboard.js"></script>
@@ -66,7 +75,7 @@
             </div>
         </div>
         <h2>Configuration</h2>
-        <div class="sis-config-container">
+        <div class="sis-config-container" id="profileConfig">
             <div>
                 <label><i class="fa fa-globe"></i> Website URL</label>
                 <input type="text" title="Website URL, to be crawled" id="url"/>
@@ -76,6 +85,13 @@
                 <div class="sis-config-checkbox-container">
                     <input type="checkbox" id="sitemapsOnly" class="sis-checkbox" checked>
                     <label for="sitemapsOnly">&nbsp;</label>
+                </div>
+            </div>
+            <div>
+                <label><i class="fas fa-filter"></i>Allow URL With Query</label>
+                <div class="sis-config-checkbox-container">
+                    <input class="sis-checkbox" id="allowUrlWithQuery" type="checkbox">
+                    <label for="allowUrlWithQuery">&nbsp;</label>
                 </div>
             </div>
             <div>
