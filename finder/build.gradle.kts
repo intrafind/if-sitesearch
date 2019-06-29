@@ -33,13 +33,14 @@ dependencies {
 }
 
 tasks {
-    val artifactPath = "${project(":service").projectDir}/src/main/resources/static/app" // the only module specific property
+    val artifactPath = "${project(":service").buildDir}/resources/main/static/app" // the only module specific property
     project.file("$artifactPath/${project.name}").delete()
 
     "compileKotlin2Js"(Kotlin2JsCompile::class) {
         kotlinOptions {
             outputFile = "$artifactPath/${project.name}/${project.name}.js"
             sourceMap = true
+            sourceMapEmbedSources = "always"
             moduleKind = "umd"
             noStdlib = true
         }
