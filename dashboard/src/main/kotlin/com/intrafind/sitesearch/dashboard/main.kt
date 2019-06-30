@@ -81,6 +81,7 @@ private fun applyQueryParameters() {
 fun updateSiteProfile() {
     val req = XMLHttpRequest()
     req.open("PUT", "$serviceUrl/sites/$siteId/profile?siteSecret=$siteSecret")
+    profile.configs.clear()
     for (profileConfig in profileConfigs.querySelectorAll("li").asList()) {
         profileConfig as HTMLLIElement
         val url = (profileConfig.querySelector("input[name=url]") as HTMLInputElement).value
