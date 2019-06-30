@@ -54,6 +54,7 @@ private lateinit var siteIdElement: HTMLDivElement
 private lateinit var siteSecretElement: HTMLDivElement
 private lateinit var recrawl: HTMLButtonElement
 private lateinit var profile: SiteProfile
+private lateinit var addSiteConfig: HTMLDivElement
 
 private fun init() {
     updateSiteProfile = document.getElementById("updateSiteProfile") as HTMLButtonElement
@@ -64,6 +65,11 @@ private fun init() {
     recrawl = document.getElementById("recrawl") as HTMLButtonElement
     profileConfigs = document.getElementById("profileConfigs") as HTMLOListElement
     configTemplate = (document.getElementById("profileConfig") as HTMLTemplateElement).content
+    addSiteConfig = document.getElementById("addSiteConfig") as HTMLDivElement
+    addSiteConfig.addEventListener("click", {
+        profile.configs.add(SiteProfileConfig(url = "https://example.com"))
+        showConfiguration()
+    })
 
     applyQueryParameters()
 }
@@ -169,13 +175,17 @@ private fun appendConfig(config: SiteProfileConfig) {
     (profileConfig.querySelector("input[name=allowUrlWithQuery]") as HTMLInputElement).checked = config.allowUrlWithQuery
     (profileConfig.querySelector("div[name=remove]") as HTMLDivElement)
             .addEventListener("click", {
-                val isLastConfig = profile.configs.size < 2
-                if (!isLastConfig) {
-                    profile.configs.remove(config)
-                    profileConfig.remove()
-                }
+                removeConfig(config, profileConfig)
             })
     profileConfigs.appendChild(profileConfig)
+}
+
+private fun removeConfig(config: SiteProfileConfig, profileConfig: HTMLLIElement) {
+    val isLastConfig = profile.configs.size < 2
+    if (!isLastConfig) {
+        profile.configs.remove(config)
+        profileConfig.remove()
+    }
 }
 
 class SiteSearch {
