@@ -32,7 +32,7 @@ import kotlin.browser.document
 import kotlin.browser.window
 import kotlin.dom.clear
 
-private suspend fun main(args: Array<String>) {
+private fun main() {
     window.addEventListener("DOMContentLoaded", {
         init()
     })
@@ -62,6 +62,7 @@ private fun init() {
     siteIdElement = document.getElementById("siteId") as HTMLDivElement
     siteSecretElement = document.getElementById("siteSecret") as HTMLDivElement
     recrawl = document.getElementById("recrawl") as HTMLButtonElement
+    profileConfigs = document.getElementById("profileConfigs") as HTMLOListElement
     configTemplate = (document.getElementById("profileConfig") as HTMLTemplateElement).content
 
     applyQueryParameters()
@@ -78,9 +79,8 @@ private fun applyQueryParameters() {
 }
 
 fun updateSiteProfile() {
-    val xhr = XMLHttpRequest()
-    xhr.open("PUT", "$serviceUrl/sites/$siteId/profile?siteSecret=$siteSecret")
-    val siteProfileConfigs: MutableList<SiteProfileConfig> = mutableListOf()
+    val req = XMLHttpRequest()
+    req.open("PUT", "$serviceUrl/sites/$siteId/profile?siteSecret=$siteSecret")
     for (profileConfig in profileConfigs.querySelectorAll("li").asList()) {
         profileConfig as HTMLLIElement
         val url = (profileConfig.querySelector("input[name=url]") as HTMLInputElement).value
@@ -88,19 +88,17 @@ fun updateSiteProfile() {
         val sitemapsOnly = (profileConfig.querySelector("input[name=sitemapsOnly]") as HTMLInputElement).checked
         val allowUrlWithQuery = (profileConfig.querySelector("input[name=allowUrlWithQuery]") as HTMLInputElement).checked
 
-        siteProfileConfigs.add(SiteProfileConfig(
+        profile.configs.add(SiteProfileConfig(
                 url = url,
                 pageBodyCssSelector = pageBodyCssSelector,
                 sitemapsOnly = sitemapsOnly,
                 allowUrlWithQuery = allowUrlWithQuery
         ))
     }
-
-    val siteProfile = SiteProfile(id = siteId, secret = siteSecret, email = profile.email, configs = siteProfileConfigs)
-    xhr.setRequestHeader("content-type", "application/json")
-    xhr.send(JSON.stringify(siteProfile))
-    xhr.onload = {
-        profile = JSON.parse(xhr.responseText)
+    req.setRequestHeader("content-type", "application/json")
+    req.send(JSON.stringify(profile))
+    req.onload = {
+        profile = JSON.parse(req.responseText)
         fetchProfile()
     }
 }
@@ -110,15 +108,15 @@ fun recrawl() {
     recrawl.disabled = true
     recrawl.textContent = "Crawling... please give us a minute or two."
 
-    val xhr = XMLHttpRequest()
-    xhr.open("POST", "$serviceUrl/sites/$siteId/recrawl?siteSecret=$siteSecret&clearIndex=false")
-    xhr.send()
+    val req = XMLHttpRequest()
+    req.open("POST", "$serviceUrl/sites/$siteId/recrawl?siteSecret=$siteSecret&clearIndex=false")
+    req.send()
 
-    xhr.onload = {
-        console.warn(xhr.responseText)
-        if (xhr.status.equals(200)) {
+    req.onload = {
+        console.warn(req.responseText)
+        if (req.status.equals(200)) {
             document.dispatchEvent(Event(crawlerFinishedEvent))
-            val pageCount = JSON.parse<dynamic>(xhr.responseText).pageCount as Int
+            val pageCount = JSON.parse<dynamic>(req.responseText).pageCount as Int
             showPageCount(pageCount)
         } else {
             console.error("FAILED")
@@ -132,11 +130,22 @@ private fun showPageCount(pagesRecrawled: Int) {
 }
 
 private fun fetchProfile() {
-    val xhr = XMLHttpRequest()
-    xhr.open("GET", "$serviceUrl/sites/$siteId/profile?siteSecret=$siteSecret")
-    xhr.send()
-    xhr.onload = {
-        profile = JSON.parse(xhr.responseText)
+    val req = XMLHttpRequest()
+    req.open("GET", "$serviceUrl/sites/$siteId/profile?siteSecret=$siteSecret")
+    req.send()
+    req.onload = {
+        val siteProfile = JSON.parse<SiteProfile>(req.responseText)
+        profile = siteProfile
+        val configs = siteProfile.configs.asDynamic()
+        profile.configs = mutableListOf()
+        for (config in configs) {
+            profile.configs.add(SiteProfileConfig(
+                    allowUrlWithQuery = config.allowUrlWithQuery,
+                    pageBodyCssSelector = config.pageBodyCssSelector,
+                    sitemapsOnly = config.sitemapsOnly,
+                    url = config.url
+            ))
+        }
         showConfiguration()
     }
 }
@@ -145,17 +154,27 @@ private lateinit var profileConfigs: HTMLOListElement
 private lateinit var configTemplate: DocumentFragment
 
 private fun showConfiguration() {
-    profileConfigs = document.getElementById("profileConfigs") as HTMLOListElement
     profileConfigs.clear()
-
-    for (config in profile.configs.asDynamic()) {
-        val profileConfig = configTemplate.firstElementChild?.cloneNode(true) as HTMLLIElement
-        (profileConfig.querySelector("input[name=url]") as HTMLInputElement).value = config.url
-        (profileConfig.querySelector("input[name=pageBodyCssSelector]") as HTMLInputElement).value = config.pageBodyCssSelector
-        (profileConfig.querySelector("input[name=sitemapsOnly]") as HTMLInputElement).checked = config.sitemapsOnly
-        (profileConfig.querySelector("input[name=allowUrlWithQuery]") as HTMLInputElement).checked = config.allowUrlWithQuery
-        profileConfigs.appendChild(profileConfig)
+    for (config in profile.configs) {
+        appendConfig(config)
     }
+}
+
+private fun appendConfig(config: SiteProfileConfig) {
+    val profileConfig = configTemplate.firstElementChild?.cloneNode(true) as HTMLLIElement
+    (profileConfig.querySelector("input[name=url]") as HTMLInputElement).value = config.url
+    (profileConfig.querySelector("input[name=pageBodyCssSelector]") as HTMLInputElement).value = config.pageBodyCssSelector
+    (profileConfig.querySelector("input[name=sitemapsOnly]") as HTMLInputElement).checked = config.sitemapsOnly
+    (profileConfig.querySelector("input[name=allowUrlWithQuery]") as HTMLInputElement).checked = config.allowUrlWithQuery
+    (profileConfig.querySelector("div[name=remove]") as HTMLDivElement)
+            .addEventListener("click", {
+                val isLastConfig = profile.configs.size < 2
+                if (!isLastConfig) {
+                    profile.configs.remove(config)
+                    profileConfig.remove()
+                }
+            })
+    profileConfigs.appendChild(profileConfig)
 }
 
 class SiteSearch {
@@ -166,4 +185,4 @@ class SiteSearch {
 
 data class SiteProfileConfig(val url: String = "", val pageBodyCssSelector: String = "body", val sitemapsOnly: Boolean = false, val allowUrlWithQuery: Boolean = false)
 
-data class SiteProfile(val id: String = "", val secret: String = "", val configs: MutableList<SiteProfileConfig> = mutableListOf(), val email: String = "")
+data class SiteProfile(val id: String = "", val secret: String = "", var configs: MutableList<SiteProfileConfig> = mutableListOf(), val email: String = "")
