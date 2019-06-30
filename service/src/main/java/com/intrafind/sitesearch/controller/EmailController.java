@@ -81,7 +81,7 @@ public class EmailController {
         try {
             final var request = new Request.Builder()
                     .url("https://www.google.com/recaptcha/api/siteverify?secret=" + System.getenv("INVISIBLE_RECAPTCHA_SITE_SECRET") + "&response=" + payload)
-                    .post(okhttp3.RequestBody.create(JSON_MEDIA_TYPE, ""))
+                    .post(okhttp3.RequestBody.create("", JSON_MEDIA_TYPE))
                     .build();
             final var response = SiteCrawler.HTTP_CLIENT.newCall(request).execute();
             final var captchaVerification = CrawlerController.MAPPER.readValue(Objects.requireNonNull(response.body()).bytes(), CaptchaVerification.class);

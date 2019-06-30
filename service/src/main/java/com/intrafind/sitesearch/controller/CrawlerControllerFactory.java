@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.Objects;
 import java.util.UUID;
 
 public class CrawlerControllerFactory<T extends WebCrawler> implements CrawlController.WebCrawlerFactory {
@@ -58,7 +59,7 @@ public class CrawlerControllerFactory<T extends WebCrawler> implements CrawlCont
             final var robotsResponse = SiteCrawler.HTTP_CLIENT.newCall(request).execute();
             if (HttpStatus.OK.value() == robotsResponse.code()) {
                 if (robotsResponse.body() != null) {
-                    robotsTxtContent = robotsResponse.body().bytes();
+                    robotsTxtContent = Objects.requireNonNull(robotsResponse.body()).bytes();
                 }
             }
             robotsResponse.close();

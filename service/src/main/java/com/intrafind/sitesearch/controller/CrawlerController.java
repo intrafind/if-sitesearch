@@ -302,7 +302,7 @@ public class CrawlerController {
         try {
             final var request = new Request.Builder()
                     .url("https://www.google.com/recaptcha/api/siteverify?secret=" + INVISIBLE_RECAPTCHA_SITE_SECRET + "&response=" + captchaToken)
-                    .post(okhttp3.RequestBody.create(JSON_MEDIA_TYPE, ""))
+                    .post(okhttp3.RequestBody.create("", JSON_MEDIA_TYPE))
                     .build();
             final var response = SiteCrawler.HTTP_CLIENT.newCall(request).execute();
             final var captchaVerification = MAPPER.readValue(Objects.requireNonNull(response.body()).charStream(), CaptchaVerification.class);
