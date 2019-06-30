@@ -32,7 +32,6 @@
 
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Open+Sans:100italic,200italic,300italic,400italic,500italic,600italic,700italic,800italic,900italic,100,200,300,400,500,600,700,800,900">
-    <!--    <link rel="stylesheet" href="artifact/css/fontawesome-all.min.css">-->
     <link as="style" crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css"
           rel="preload">
     <link as="font"
@@ -55,8 +54,11 @@
         </h1>
         <nav>
             <ul>
-                <li><a href="https://sitesearch.cloud/pricing/"  target="_blank" title="Upgrade your plan and leverage even more advanced search features.">Upgrade your plan</a></li>
-                <li><a href="https://api.sitesearch.cloud/app/dashboard/resources/login.html" title="Logout">Logout</a></li>
+                <li><a href="https://sitesearch.cloud/pricing/" target="_blank"
+                       title="Upgrade your plan and leverage even more advanced search features.">Upgrade your plan</a>
+                </li>
+                <li><a href="https://api.sitesearch.cloud/app/dashboard/resources/login.html" title="Logout">Logout</a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -75,36 +77,46 @@
             </div>
         </div>
         <h2>Configuration</h2>
-        <div class="sis-config-container" id="profileConfig">
-            <div>
-                <label><i class="fa fa-globe"></i> Website URL</label>
-                <input type="text" title="Website URL, to be crawled" id="url"/>
-            </div>
-            <div>
-                <label><i class="fas fa-sitemap"></i>Use Sitemaps Only</label>
-                <div class="sis-config-checkbox-container">
-                    <input type="checkbox" id="sitemapsOnly" class="sis-checkbox" checked>
-                    <label for="sitemapsOnly">&nbsp;</label>
-                </div>
-            </div>
-            <div>
-                <label><i class="fas fa-filter"></i>Allow URL With Query</label>
-                <div class="sis-config-checkbox-container">
-                    <input class="sis-checkbox" id="allowUrlWithQuery" type="checkbox">
-                    <label for="allowUrlWithQuery">&nbsp;</label>
-                </div>
-            </div>
-            <div>
-                <label><i class="fas fa-cut"></i>Content Extraction CSS Selector</label>
-                <input type="text" title="CSS Selector" id="pageBodyCssSelector">
-            </div>
-            <div>
-                <label>&nbsp;</label>
-                <button id="updateSiteProfile" title="Update Site Profile"
+        <ol id="profileConfigs">
+            <template id="profileConfig">
+                <li style="border-bottom: 1px dashed #999;">
+                    <div class="sis-config-container">
+                        <div>
+                            <label><i class="fa fa-globe"></i> Website URL</label>
+                            <input name="url" title="Website URL, to be crawled" type="text"/>
+                        </div>
+                        <div>
+                            <label><i class="fas fa-sitemap"></i>Use Sitemaps Only</label>
+                            <div class="sis-config-checkbox-container">
+                                <!--                            <input type="checkbox" name="sitemapsOnly" class="sis-checkbox">-->
+                                <input name="sitemapsOnly" type="checkbox">
+                                <label>&nbsp;</label>
+                            </div>
+                        </div>
+                        <div>
+                            <label><i class="fas fa-filter"></i>Allow URL With Query</label>
+                            <div class="sis-config-checkbox-container">
+                                <!--                            <input class="sis-checkbox" name="allowUrlWithQuery" type="checkbox">-->
+                                <input name="allowUrlWithQuery" type="checkbox">
+                                <label>&nbsp;</label>
+                            </div>
+                        </div>
+                        <div>
+                            <label><i class="fas fa-cut"></i>Content Extraction CSS Selector</label>
+                            <input name="pageBodyCssSelector" title="CSS Selector" type="text">
+                        </div>
+                    </div>
+                </li>
+            </template>
+        </ol>
+        <div>
+            <label>&nbsp;</label>
+            <button id="updateSiteProfile" title="Update Site Profile"
                     onclick="dashboard.com.intrafind.sitesearch.dashboard.updateSiteProfile();"
-                >Update Site Profile</button>
-            </div>
+            >Update Site Profile
+            </button>
         </div>
+
         <div class="sis-spacer"></div>
         <button id="recrawl" title="Extract content from website"
                 onclick="dashboard.com.intrafind.sitesearch.dashboard.recrawl();"

@@ -17,14 +17,20 @@
 package com.intrafind.sitesearch.dashboard
 
 import com.intrafind.sitesearch.dashboard.SiteSearch.Companion.crawlerFinishedEvent
+import org.w3c.dom.DocumentFragment
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLInputElement
+import org.w3c.dom.HTMLLIElement
+import org.w3c.dom.HTMLOListElement
 import org.w3c.dom.HTMLParagraphElement
+import org.w3c.dom.HTMLTemplateElement
+import org.w3c.dom.asList
 import org.w3c.dom.events.Event
 import org.w3c.xhr.XMLHttpRequest
 import kotlin.browser.document
 import kotlin.browser.window
+import kotlin.dom.clear
 
 private suspend fun main(args: Array<String>) {
     window.addEventListener("DOMContentLoaded", {
@@ -42,10 +48,6 @@ private var siteSecret: String = ""
 private val serviceUrl: String = window.location.origin
 
 private lateinit var updateSiteProfile: HTMLButtonElement
-private lateinit var pageBodyCssSelector: HTMLInputElement
-private lateinit var allowUrlWithQuery: HTMLInputElement
-private lateinit var sitemapsOnly: HTMLInputElement
-private lateinit var url: HTMLInputElement
 private lateinit var pageCountContainer: HTMLDivElement
 private lateinit var pageCount: HTMLParagraphElement
 private lateinit var siteIdElement: HTMLDivElement
@@ -55,15 +57,12 @@ private lateinit var profile: SiteProfile
 
 private fun init() {
     updateSiteProfile = document.getElementById("updateSiteProfile") as HTMLButtonElement
-    pageBodyCssSelector = document.getElementById("pageBodyCssSelector") as HTMLInputElement
-    allowUrlWithQuery = document.getElementById("allowUrlWithQuery") as HTMLInputElement
-    sitemapsOnly = document.getElementById("sitemapsOnly") as HTMLInputElement
-    url = document.getElementById("url") as HTMLInputElement
     pageCountContainer = document.getElementById("pageCountContainer") as HTMLDivElement
     pageCount = document.getElementById("pageCount") as HTMLParagraphElement
     siteIdElement = document.getElementById("siteId") as HTMLDivElement
     siteSecretElement = document.getElementById("siteSecret") as HTMLDivElement
     recrawl = document.getElementById("recrawl") as HTMLButtonElement
+    configTemplate = (document.getElementById("profileConfig") as HTMLTemplateElement).content
 
     applyQueryParameters()
 }
@@ -81,20 +80,28 @@ private fun applyQueryParameters() {
 fun updateSiteProfile() {
     val xhr = XMLHttpRequest()
     xhr.open("PUT", "$serviceUrl/sites/$siteId/profile?siteSecret=$siteSecret")
-    val siteProfileConfigs = listOf(SiteProfileConfig(
-            url = url.value,
-            sitemapsOnly = sitemapsOnly.checked,
-//            allowUrlWithQuery = allowUrlWithQuery.checked, // TODO enable this and test it
-            pageBodyCssSelector = pageBodyCssSelector.value
-    ))
+    val siteProfileConfigs: MutableList<SiteProfileConfig> = mutableListOf()
+    for (profileConfig in profileConfigs.querySelectorAll("li").asList()) {
+        profileConfig as HTMLLIElement
+        val url = (profileConfig.querySelector("input[name=url]") as HTMLInputElement).value
+        val pageBodyCssSelector = (profileConfig.querySelector("input[name=pageBodyCssSelector]") as HTMLInputElement).value
+        val sitemapsOnly = (profileConfig.querySelector("input[name=sitemapsOnly]") as HTMLInputElement).checked
+        val allowUrlWithQuery = (profileConfig.querySelector("input[name=allowUrlWithQuery]") as HTMLInputElement).checked
+
+        siteProfileConfigs.add(SiteProfileConfig(
+                url = url,
+                pageBodyCssSelector = pageBodyCssSelector,
+                sitemapsOnly = sitemapsOnly,
+                allowUrlWithQuery = allowUrlWithQuery
+        ))
+    }
+
     val siteProfile = SiteProfile(id = siteId, secret = siteSecret, email = profile.email, configs = siteProfileConfigs)
-    console.warn(siteProfile)
-    console.warn(siteProfileConfigs)
     xhr.setRequestHeader("content-type", "application/json")
     xhr.send(JSON.stringify(siteProfile))
     xhr.onload = {
         profile = JSON.parse(xhr.responseText)
-        showConfiguration()
+        fetchProfile()
     }
 }
 
@@ -133,28 +140,23 @@ private fun fetchProfile() {
     xhr.onload = {
         profile = JSON.parse(xhr.responseText)
         showConfiguration()
-        ""
     }
 }
 
+private lateinit var profileConfigs: HTMLOListElement
+private lateinit var configTemplate: DocumentFragment
+
 private fun showConfiguration() {
-    url.value = profile.configs.asDynamic()[0].url
-    sitemapsOnly.checked = profile.configs.asDynamic()[0].sitemapsOnly
-    allowUrlWithQuery.checked = profile.configs.asDynamic()[0].allowUrlWithQuery
-    pageBodyCssSelector.value = profile.configs.asDynamic()[0].pageBodyCssSelector
+    profileConfigs = document.getElementById("profileConfigs") as HTMLOListElement
+    profileConfigs.clear()
 
     for (config in profile.configs.asDynamic()) {
-        console.warn(config)
-        console.warn(config.url)
-        console.warn(config.sitemapsOnly)
-        console.warn(config.pageBodyCssSelector)
-        console.warn(config.allowUrlWithQuery)
-    }
-
-    console.warn(document.getElementById("profileConfig"))
-
-    if (profile.configs.asDynamic().length > 1) {
-        updateSiteProfile.disabled = true // TODO remove this precaution, once multi-configuration updates are supported in the UI
+        val profileConfig = configTemplate.firstElementChild?.cloneNode(true) as HTMLLIElement
+        (profileConfig.querySelector("input[name=url]") as HTMLInputElement).value = config.url
+        (profileConfig.querySelector("input[name=pageBodyCssSelector]") as HTMLInputElement).value = config.pageBodyCssSelector
+        (profileConfig.querySelector("input[name=sitemapsOnly]") as HTMLInputElement).checked = config.sitemapsOnly
+        (profileConfig.querySelector("input[name=allowUrlWithQuery]") as HTMLInputElement).checked = config.allowUrlWithQuery
+        profileConfigs.appendChild(profileConfig)
     }
 }
 
@@ -166,4 +168,4 @@ class SiteSearch {
 
 data class SiteProfileConfig(val url: String = "", val pageBodyCssSelector: String = "body", val sitemapsOnly: Boolean = false, val allowUrlWithQuery: Boolean = false)
 
-data class SiteProfile(val id: String = "", val secret: String = "", val configs: List<SiteProfileConfig> = emptyList(), val email: String = "")
+data class SiteProfile(val id: String = "", val secret: String = "", val configs: MutableList<SiteProfileConfig> = mutableListOf(), val email: String = "")
