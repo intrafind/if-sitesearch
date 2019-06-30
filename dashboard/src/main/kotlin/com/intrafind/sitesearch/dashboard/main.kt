@@ -110,8 +110,6 @@ fun recrawl() {
     recrawl.disabled = true
     recrawl.textContent = "Crawling... please give us a minute or two."
 
-//    val profileConfig: SiteProfileConfig = profile.configs.asDynamic()[0]
-//    console.warn(profileConfig)
     val xhr = XMLHttpRequest()
     xhr.open("POST", "$serviceUrl/sites/$siteId/recrawl?siteSecret=$siteSecret&clearIndex=false")
     xhr.send()

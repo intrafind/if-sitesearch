@@ -208,7 +208,7 @@ public class SiteCrawler extends WebCrawler {
         try {
             final var request = new Request.Builder()
                     .url(SIS_API_SERVICE_URL + "/sites/" + siteId + "/pages?siteSecret=" + siteSecret) // TODO move this to a config property to switch between production and override with local
-                    .put(RequestBody.create(JSON_MEDIA_TYPE, MAPPER.writeValueAsBytes(sitePage)))
+                    .put(RequestBody.create(MAPPER.writeValueAsBytes(sitePage), JSON_MEDIA_TYPE))
                     .build();
             // TODO replace with WebClient from http://www.baeldung.com/spring-5-webclient | http://www.baeldung.com/spring-webflux
             HTTP_CLIENT.newCall(request).enqueue(new Callback() {
