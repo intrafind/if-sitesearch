@@ -61,15 +61,19 @@ tasks {
     task("includeKotlinJsRuntime") {
         println(this.name)
         val servicePath = "${project(":service").projectDir}/src/main/resources/static/app"
-        val artifactPath = "${project(":service").buildDir}/resources/main/static/app" // the only module specific property
-        project(":gadget").configurations["compile"].files.forEach { file ->
-            copy {
-                from(zipTree(file.absolutePath))
-                into("$artifactPath/runtime")
+//        val artifactPath = "${project(":service").buildDir}/resources/main/static/app" // the only module specific property
+        doFirst {
+            configurations["compile"].files.forEach { file ->
+                println("Deploy Kotlin JS Runtime")
+                copy {
+                    println("UnZIP JAR: ${file.absolutePath}")
+                    from(zipTree(file.absolutePath))
+                    into("$artifactPath/runtime")
+                }
             }
         }
         doLast {
-            println("===================================================")
+            println("Deploy JS App artifacts")
             copy {
                 from(artifactPath)
                 into(servicePath)
