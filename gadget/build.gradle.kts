@@ -57,4 +57,23 @@ tasks {
         dceOptions.devMode = false
         dceOptions.outputDirectory = "$artifactPath/${project.name}/min"
     }
+
+    task("includeKotlinJsRuntime") {
+        println(this.name)
+        val servicePath = "${project(":service").projectDir}/src/main/resources/static/app"
+        val artifactPath = "${project(":service").buildDir}/resources/main/static/app" // the only module specific property
+        project(":gadget").configurations["compile"].files.forEach { file ->
+            copy {
+                from(zipTree(file.absolutePath))
+                into("$artifactPath/runtime")
+            }
+        }
+        doLast {
+            println("===================================================")
+            copy {
+                from(artifactPath)
+                into(servicePath)
+            }
+        }
+    }
 }
