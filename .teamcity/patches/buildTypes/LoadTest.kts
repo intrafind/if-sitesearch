@@ -21,7 +21,7 @@ changeBuildType(RelativeId("LoadTest")) {
     }
     steps {
         update<ScriptBuildStep>(0) {
-            dockerImage = "openjdk:13-alpine"
+            dockerImage = "openjdk:12-alpine"
         }
     }
 }
