@@ -36,7 +36,8 @@ changeBuildType(RelativeId("Build")) {
                 ./gradlew clean build --info
                 #SPRING_PROFILES_ACTIVE=oss ./gradlew clean build --info
             """.trimIndent()
-            dockerImage = "openjdk:12-jdk"
+            dockerImage = "openjdk:13-alpine"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
 }
