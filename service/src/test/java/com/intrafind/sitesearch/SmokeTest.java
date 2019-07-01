@@ -337,7 +337,7 @@ public class SmokeTest {
         var request = new Request.Builder()
                 .url(SITES_API + LoadIndex2Users.SEARCH_SITE_ID + "/pages?siteSecret=" + LoadIndex2Users.SEARCH_SITE_SECRET)
                 .headers(Headers.of(CORS_TRIGGERING_REQUEST_HEADER))
-                .put(RequestBody.create(SiteCrawler.JSON_MEDIA_TYPE, MAPPER.writeValueAsBytes(pageToUpdate)))
+                .put(RequestBody.create(MAPPER.writeValueAsBytes(pageToUpdate), SiteCrawler.JSON_MEDIA_TYPE))
                 .build();
         final var response = HTTP_CLIENT.newCall(request).execute();
 

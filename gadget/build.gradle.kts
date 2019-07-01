@@ -61,7 +61,6 @@ tasks {
     task("includeKotlinJsRuntime") {
         println(this.name)
         val servicePath = "${project(":service").projectDir}/src/main/resources/static/app"
-//        val artifactPath = "${project(":service").buildDir}/resources/main/static/app" // the only module specific property
         doFirst {
             configurations["compile"].files.forEach { file ->
                 println("Deploy Kotlin JS Runtime")
