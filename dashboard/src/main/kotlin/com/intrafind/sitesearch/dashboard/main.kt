@@ -43,25 +43,24 @@ private fun main() {
     })
 }
 
-private var siteId: String = ""
-private var siteSecret: String = ""
+private lateinit var siteId: String
+private lateinit var siteSecret: String
 private val serviceUrl: String = window.location.origin
 
 private lateinit var updateSiteProfile: HTMLButtonElement
 private lateinit var pageCountContainer: HTMLDivElement
 private lateinit var pageCount: HTMLParagraphElement
-private lateinit var siteIdElement: HTMLDivElement
-private lateinit var siteSecretElement: HTMLDivElement
+private val siteIdElement: HTMLDivElement = document.getElementById("siteId") as HTMLDivElement
+private val siteSecretElement: HTMLDivElement = document.getElementById("siteSecret") as HTMLDivElement
 private lateinit var recrawl: HTMLButtonElement
 private lateinit var profile: SiteProfile
 private lateinit var addSiteConfig: HTMLDivElement
+private val email: HTMLInputElement = document.getElementById("email") as HTMLInputElement
 
 private fun init() {
     updateSiteProfile = document.getElementById("updateSiteProfile") as HTMLButtonElement
     pageCountContainer = document.getElementById("pageCountContainer") as HTMLDivElement
     pageCount = document.getElementById("pageCount") as HTMLParagraphElement
-    siteIdElement = document.getElementById("siteId") as HTMLDivElement
-    siteSecretElement = document.getElementById("siteSecret") as HTMLDivElement
     recrawl = document.getElementById("recrawl") as HTMLButtonElement
     profileConfigs = document.getElementById("profileConfigs") as HTMLOListElement
     configTemplate = (document.getElementById("profileConfig") as HTMLTemplateElement).content
@@ -75,9 +74,10 @@ private fun init() {
 }
 
 private fun applyQueryParameters() {
-    siteId = window.location.search.substring(window.location.search.indexOf("siteId=") + 7, 44)
+    val siteIdIndex = window.location.search.indexOf("siteId=") + 7
+    siteId = window.location.search.substring(siteIdIndex, siteIdIndex + 36)
     val siteSecretIndex = window.location.search.indexOf("siteSecret=") + 11
-    siteSecret = window.location.search.substring(siteSecretIndex, siteSecretIndex + 44)
+    siteSecret = window.location.search.substring(siteSecretIndex, siteSecretIndex + 36)
     fetchProfile()
 
     siteIdElement.textContent = siteId
@@ -95,6 +95,8 @@ fun updateSiteProfile() {
         val sitemapsOnly = (profileConfig.querySelector("input[name=sitemapsOnly]") as HTMLInputElement).checked
         val allowUrlWithQuery = (profileConfig.querySelector("input[name=allowUrlWithQuery]") as HTMLInputElement).checked
 
+        profile.email = email.value
+//        profile.secret = siteSecretElement.textContent!!
         profile.configs.add(SiteProfileConfig(
                 url = url,
                 pageBodyCssSelector = pageBodyCssSelector,
@@ -105,8 +107,20 @@ fun updateSiteProfile() {
     req.setRequestHeader("content-type", "application/json")
     req.send(JSON.stringify(profile))
     req.onload = {
-        profile = JSON.parse(req.responseText)
         fetchProfile()
+    }
+}
+
+fun regenerateSiteSecret() {
+    val req = XMLHttpRequest()
+    req.open("GET", "https://api.muctool.de/entropy")
+    req.send()
+    req.onload = {
+        val newlyGeneratedSiteSecret: String = JSON.parse<dynamic>(req.responseText).uuid
+        profile.secret = newlyGeneratedSiteSecret
+        updateSiteProfile()
+        window.location.search = window.location.search.replace(siteSecret, newlyGeneratedSiteSecret)
+        ""
     }
 }
 
@@ -141,11 +155,10 @@ private fun fetchProfile() {
     req.open("GET", "$serviceUrl/sites/$siteId/profile?siteSecret=$siteSecret")
     req.send()
     req.onload = {
-        val siteProfile = JSON.parse<SiteProfile>(req.responseText)
-        profile = siteProfile
-        val configs = siteProfile.configs.asDynamic()
+        profile = JSON.parse(req.responseText)
+        val configs = profile.configs.asDynamic()
         profile.configs = mutableListOf()
-        for (config in configs) {
+        for (config: SiteProfileConfig in configs) {
             profile.configs.add(SiteProfileConfig(
                     allowUrlWithQuery = config.allowUrlWithQuery,
                     pageBodyCssSelector = config.pageBodyCssSelector,
@@ -161,8 +174,10 @@ private lateinit var profileConfigs: HTMLOListElement
 private lateinit var configTemplate: DocumentFragment
 
 private fun showConfiguration() {
+    email.value = profile.email
+
     profileConfigs.clear()
-    for (config in profile.configs) {
+    for (config: SiteProfileConfig in profile.configs) {
         appendConfig(config)
     }
 }
@@ -196,4 +211,4 @@ class SiteSearch {
 
 data class SiteProfileConfig(val url: String = "", val pageBodyCssSelector: String = "body", val sitemapsOnly: Boolean = false, val allowUrlWithQuery: Boolean = false)
 
-data class SiteProfile(val id: String = "", val secret: String = "", var configs: MutableList<SiteProfileConfig> = mutableListOf(), val email: String = "")
+data class SiteProfile(val id: String = "", var secret: String = "", var configs: MutableList<SiteProfileConfig> = mutableListOf(), var email: String = "")

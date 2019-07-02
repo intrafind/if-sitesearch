@@ -42,7 +42,6 @@
     <link href="artifact/css/main.css" rel="stylesheet">
     <link rel="stylesheet" href="artifact/css/main.css">
     <script src="/app/runtime/kotlin.js"></script>
-    <script src="/app/dashboard/dashboard.js"></script>
 </head>
 <body>
 <header>
@@ -74,6 +73,13 @@
             <div>
                 <label><i class="fas fa-user-secret"></i>Site Secret</label>
                 <div id="siteSecret"></div>
+                <button class="fas fa-sync"
+                        onclick="dashboard.com.intrafind.sitesearch.dashboard.regenerateSiteSecret()"
+                        title="Re-generate site secret, to reassure security"></button>
+            </div>
+            <div>
+                <label><i class="fas fa-envelope"></i>E-mail</label>
+                <input id="email" style="width: 100%;" type="email">
             </div>
         </div>
         <h2>Site Profile Configuration</h2>
@@ -139,5 +145,6 @@
         Copyright 2018. All rights reserved.
     </div>
 </footer>
+<script src="/app/dashboard/dashboard.js"></script>
 </body>
 </html>
