@@ -65,12 +65,13 @@ private fun init() {
     profileConfigs = document.getElementById("profileConfigs") as HTMLOListElement
     configTemplate = (document.getElementById("profileConfig") as HTMLTemplateElement).content
     addSiteConfig = document.getElementById("addSiteConfig") as HTMLDivElement
-    addSiteConfig.addEventListener("click", {
-        profile.configs.add(SiteProfileConfig(url = "https://example.com"))
-        showConfiguration()
-    })
 
     applyQueryParameters()
+}
+
+fun addSiteProfileConfig() {
+    profile.configs.add(SiteProfileConfig(url = "https://example.com/to-change-to-your-site"))
+    showConfiguration()
 }
 
 private fun applyQueryParameters() {
@@ -96,7 +97,6 @@ fun updateSiteProfile() {
         val allowUrlWithQuery = (profileConfig.querySelector("input[name=allowUrlWithQuery]") as HTMLInputElement).checked
 
         profile.email = email.value
-//        profile.secret = siteSecretElement.textContent!!
         profile.configs.add(SiteProfileConfig(
                 url = url,
                 pageBodyCssSelector = pageBodyCssSelector,
@@ -134,7 +134,6 @@ fun recrawl() {
     req.send()
 
     req.onload = {
-        console.warn(req.responseText)
         if (req.status.equals(200)) {
             document.dispatchEvent(Event(crawlerFinishedEvent))
             val pageCount = JSON.parse<dynamic>(req.responseText).pageCount as Int
