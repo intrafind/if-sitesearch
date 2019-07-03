@@ -33,14 +33,12 @@ changeBuildType(RelativeId("Build")) {
     steps {
         update<ScriptBuildStep>(1) {
             scriptContent = """
-                ./gradlew daemon --stop
-                rm -rf service/build
-                ./gradlew :dashboard:clean :dashboard:build --no-build-cache
                 ./gradlew clean includeKotlinJsRuntime build --info --no-build-cache -x test
                 #SPRING_PROFILES_ACTIVE=oss ./gradlew clean build --info
             """.trimIndent()
             dockerImage = "openjdk:13-alpine"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+            dockerRunParameters = ""
         }
     }
 }
