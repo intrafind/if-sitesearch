@@ -33,8 +33,9 @@ changeBuildType(RelativeId("Build")) {
     steps {
         update<ScriptBuildStep>(1) {
             scriptContent = """
-                ./js-app-build.sh
+                ./gradlew daemon --stop
                 rm -rf service/build
+                sh ./js-app-build.sh
                 ./gradlew clean includeKotlinJsRuntime build --info --no-build-cache
                 #SPRING_PROFILES_ACTIVE=oss ./gradlew clean build --info
             """.trimIndent()
