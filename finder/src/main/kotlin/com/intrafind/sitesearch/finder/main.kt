@@ -202,19 +202,19 @@ private fun main() {
 }
 
 private fun autocomplete() {
-    val xhr = XMLHttpRequest()
-    xhr.open("GET", "$finderService/$siteId/$autocompleteEndpoint?query=${finder.value}")
-    xhr.onload = {
+    val req = XMLHttpRequest()
+    req.open("GET", "$finderService/$siteId/$autocompleteEndpoint?query=${finder.value}")
+    req.onload = {
         findingsContainer.clear()
-        if (xhr.status.equals(200)) {
-            val suggestions = JSON.parse<dynamic>(xhr.responseText)
+        if (req.status.equals(200)) {
+            val suggestions = JSON.parse<dynamic>(req.responseText)
             for (suggestion: String in suggestions.results) {
                 val suggestionEntry = document.createElement("dd") as HTMLElement
                 suggestionEntry.style.borderBottom = "1px dotted #000"
                 suggestionEntry.style.marginLeft = "0"
                 suggestionEntry.style.padding = "0.2em"
                 suggestionEntry.style.fontSize = "1.5em"
-                suggestionEntry.innerText = suggestion
+                suggestionEntry.innerHTML = "$suggestion&hellip;"
                 suggestionEntry.onclick = {
                     log(suggestionEntry.innerText)
                     finder.value = suggestionEntry.innerText
@@ -227,10 +227,10 @@ private fun autocomplete() {
             }
         }
     }
-    xhr.onerror = {
-        log("Error: ${xhr.response}")
+    req.onerror = {
+        log("Error: ${req.response}")
     }
-    xhr.send()
+    req.send()
 }
 
 private fun search() {
