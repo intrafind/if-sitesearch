@@ -1,31 +1,13 @@
 #!/usr/bin/env sh
 
 cd service
-#export variant=green
-
-#isBlueUp() {
-#    if [ -f "./blue-green-deployment.lock" ]; then
-#        rm ./blue-green-deployment.lock
-#        export variant=blue
-#    else
-#        touch ./blue-green-deployment.lock
-#        variant=green
-#    fi
-#}
-#
-#isBlueUp
 
 ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch
-#ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant
-#docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant .
-#docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:$variant
 docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:latest .
 docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
 
 ssh ubuntu@main.sitesearch.cloud docker rm -f if-sitesearch
-#    --log-opt gelf-address=udp://logs.sitesearch.cloud:12201 \
-#    --log-driver=gelf \
-ssh ubuntu@main.sitesearch.cloud docker run --rm -d --name if-sitesearch \
+ssh ubuntu@main.sitesearch.cloud docker run --user 1000 --rm -d --name if-sitesearch \
     --env SIS_API_SERVICE_URL=$SIS_API_SERVICE_URL \
     --env SERVICE_SECRET=$SERVICE_SECRET \
     --env SIS_SERVICE_HOST=$SIS_SERVICE_HOST \
