@@ -38,7 +38,8 @@ private data class Finding(
         val title: String = "",
         val body: String = "",
         val url: String = "",
-        val urlRaw: String = ""
+        val urlRaw: String = "",
+        val sisLabels: List<String> = listOf()
 )
 
 private data class Findings(val query: String, val results: Array<Finding> = arrayOf())
@@ -239,21 +240,26 @@ private fun search() {
         selfTest()
         return
     }
-    val xhr = XMLHttpRequest()
-    xhr.open("GET", "$finderService/$siteId/$finderEndpoint?query=${finder.value}")
-    xhr.onload = {
+    val req = XMLHttpRequest()
+    req.open("GET", "$finderService/$siteId/$finderEndpoint?query=${finder.value}")
+    req.onload = {
         findingsContainer.clear()
-        if (xhr.status.equals(200)) {
-            val findings = JSON.parse<Findings>(xhr.responseText)
+        if (req.status.equals(200)) {
+            val findings = JSON.parse<Findings>(req.responseText)
             findings.results.forEach { finding ->
                 val dtTitle = document.createElement("dt") as HTMLElement
                 dtTitle.innerHTML = finding.title
-                dtTitle.setAttribute("style", "margin-bottom: .5em; font-style: italic;")
+                dtTitle.setAttribute("style", "margin-bottom: .5em; padding-top: 1rem; font-style: italic; border-top: 1px dashed #ccc;")
                 findingsContainer.appendChild(dtTitle)
                 val ddBody = document.createElement("dd") as HTMLElement
                 ddBody.innerHTML = finding.body
                 ddBody.setAttribute("style", "margin-bottom: .5em")
                 findingsContainer.appendChild(ddBody)
+                val ddLabels = document.createElement("dd") as HTMLElement
+                ddLabels.innerHTML = if (finding.sisLabels.asDynamic().length === 0) "" else "\uD83C\uDFF7️"
+                ddLabels.innerHTML += finding.sisLabels
+                ddLabels.setAttribute("style", "margin-bottom: .5em; float: right;")
+                findingsContainer.appendChild(ddLabels)
                 val ddUrl = document.createElement("dd") as HTMLElement
                 ddUrl.innerHTML = "<a style=\"text-decoration:none\" href=\"${finding.urlRaw}\">${finding.url}</a>"
                 ddUrl.setAttribute("style", "margin-bottom: 1em;")
@@ -271,10 +277,10 @@ private fun search() {
             findingsContainer.style.display = "block"
         }
     }
-    xhr.onerror = {
-        log("Error: ${xhr.response}")
+    req.onerror = {
+        log("Error: ${req.response}")
     }
-    xhr.send()
+    req.send()
 }
 
 private fun resetInheritedStyleProperties(dirtyElement: HTMLElement) { // very expensive operation!!!
