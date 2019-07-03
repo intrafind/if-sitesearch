@@ -60,14 +60,6 @@ public class SimpleAutocompleteClient implements AutocompleteClient {
 //        hits.getDocuments().forEach(document ->
 //                hits.getMetaData().add("autocomplete.terms", document.get("_str.body").substring(0, 21)));
 //        return hits;
-        final int pageSize;
-        if (parameters[3].toString().equals("10000")) {
-            pageSize = 10_000;
-        } else if (parameters[5].toString().equals("10")) {
-            pageSize = 10;
-        } else {
-            pageSize = 50;
-        }
 
         final UUID siteId;
         if (searchQuery.startsWith("_raw.tenant")) {
@@ -83,7 +75,7 @@ public class SimpleAutocompleteClient implements AutocompleteClient {
                     .uri(URI.create(ELASTICSEARCH_SERVICE + "/site-page/_search"))
                     .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .POST(HttpRequest.BodyPublishers.ofString(buildSearchQuery(searchQuery, siteId, pageSize)))
+                    .POST(HttpRequest.BodyPublishers.ofString(buildSearchQuery(searchQuery, siteId)))
                     .build();
 
             final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
@@ -110,9 +102,10 @@ public class SimpleAutocompleteClient implements AutocompleteClient {
         });
     }
 
-    private String buildSearchQuery(final String searchQuery, final UUID siteId, final int pageSize) {
-        return "{\"query\":{\"bool\":{\"must\":{\"query_string\": {" +
-                "\"fields\": [\"_str.body\",\"_str.title\", \"_str.url\"]," +
+    private String buildSearchQuery(final String searchQuery, final UUID siteId) {
+        return "{\"query\":{\"bool\":{\"must\":{\"multi_match\":{" +
+                "\"fields\": [\"_str.body\",\"_str.body._2gram\",\"_str.body._3gram\",\"_str.title\",\"_str.title._2gram\",\"_str.title._3gram\",\"_str.url\",\"_str.url._2gram\",\"_str.url._3gram\"]," +
+                "\"type\":\"bool_prefix\"," +
                 "\"query\": \"" + searchQuery + "\"}}," +
                 "\"filter\":{\"match\":{\"_raw.tenant\":\"" + siteId + "\"}}}}," +    // TODO check if siteId/TENANT is considered
                 "\"highlight\" : {" +
@@ -125,6 +118,6 @@ public class SimpleAutocompleteClient implements AutocompleteClient {
                 "        \"_str.title\" : {}," +
                 "        \"_str.url\" : {}" +
                 "    }}," +
-                "\"size\":" + pageSize + "}";
+                "\"size\":5}";
     }
 }
