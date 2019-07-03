@@ -41,12 +41,12 @@ changeBuildType(RelativeId("Build")) {
     steps {
         update<ScriptBuildStep>(1) {
             scriptContent = """
-                ./gradlew clean includeKotlinJsRuntime build --info --no-build-cache -x test
-                #SPRING_PROFILES_ACTIVE=oss ./gradlew clean build --info
+                SPRING_PROFILES_ACTIVE=oss ./gradlew clean build --info
+                ./gradlew clean includeKotlinJsRuntime build --info
             """.trimIndent()
             dockerImage = "openjdk:13-alpine"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
-            dockerRunParameters = ""
+            dockerPull = true
         }
     }
 }
