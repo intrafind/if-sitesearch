@@ -2,9 +2,9 @@ FROM openjdk:13-alpine AS service
 
 MAINTAINER IntraFind Software AG <alexander.orlov@intrafind.de>
 
-RUN groupadd -g 1000 user && \
-    useradd --system -u 1000 -g user user
-USER user
+RUN groupadd -g 1000 svc && \
+    useradd --system -u 1000 -g svc svc
+USER svc
 
 WORKDIR /srv
 COPY config config

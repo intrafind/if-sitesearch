@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2018 IntraFind Software AG. All rights reserved.
+  ~ Copyright 2019 IntraFind Software AG. All rights reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@
 
     <script src="tippy.all.min.js"></script>
     <script src="/app/runtime/kotlin.js"></script>
-    <script src="/app/gadget/gadget.js"></script>
     <script>
         var verifyCallback = gadget.com.intrafind.sitesearch.gadget.verifyCallback;
     </script>
@@ -65,6 +64,7 @@
                 <em>This is the only mandatory information we need!</em>
                 Up to 500 pages of a website are crawled in this <strong>evaluation mode</strong>.
             </div>
+            <div id="notificationCenter" style="color: #999; position: absolute; top: 0; left: 10rem;"></div>
         </div>
     </div>
 
@@ -266,4 +266,5 @@
     ga('send', 'pageview');
 </script>
 </body>
+<script src="/app/gadget/gadget.js"></script>
 </html>
