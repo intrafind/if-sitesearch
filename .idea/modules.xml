@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/dashboard/dashboard.iml" filepath="$PROJECT_DIR$/.idea/modules/dashboard/dashboard.iml" group="if-sitesearch/dashboard" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/finder/finder.iml" filepath="$PROJECT_DIR$/.idea/modules/finder/finder.iml" group="if-sitesearch/finder" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gadget/gadget.iml" filepath="$PROJECT_DIR$/.idea/modules/gadget/gadget.iml" group="if-sitesearch/gadget" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/if-sitesearch.iml" filepath="$PROJECT_DIR$/.idea/modules/if-sitesearch.iml" group="if-sitesearch" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/payment.iml" filepath="$PROJECT_DIR$/.idea/modules/payment.iml" group="if-sitesearch/payment" />

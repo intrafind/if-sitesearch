@@ -119,7 +119,7 @@ private fun init() {
 
     applyAnalytics()
     enableProactiveValidation()
-//    validateDomain()  // fix api.muctool.de first
+    validateDomain()  // fix api.muctool.de first
 
     document.addEventListener("sis.triggerFirstUsageOwnershipEvent", {
         enableSearch(waitWhileCrawlerIsRunningMsg)
@@ -210,11 +210,11 @@ private fun enableProactiveValidation() {
         if (!(url.value.startsWith("http") || url.value.startsWith("https"))) {
             url.value = "https://${url.value}"
         }
-        // validateDomain() // fix api.muctool.de first
+        validateDomain() // fix api.muctool.de first
     })
 
     url.addEventListener("change", {
-        // validateDomain() // fix api.muctool.de first
+        validateDomain() // fix api.muctool.de first
     })
 
     // do not set keypress listeners on both `cssSelector` & `url` until Shadow DOM is not used instead of `document.createElement("html")`
