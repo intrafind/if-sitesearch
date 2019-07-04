@@ -69,7 +69,8 @@ private fun init() {
     applyQueryParameters()
 }
 
-fun addSiteProfileConfig() {
+@JsName("addSiteProfileConfig")
+private fun addSiteProfileConfig() {
     profile.configs.add(SiteProfileConfig(url = "https://example.com/to-change-to-your-site"))
     showConfiguration()
 }
@@ -85,7 +86,8 @@ private fun applyQueryParameters() {
     siteSecretElement.textContent = siteSecret
 }
 
-fun updateSiteProfile() {
+@JsName("updateSiteProfile")
+private fun updateSiteProfile() {
     val req = XMLHttpRequest()
     req.open("PUT", "$serviceUrl/sites/$siteId/profile?siteSecret=$siteSecret")
     profile.configs.clear()
@@ -111,7 +113,8 @@ fun updateSiteProfile() {
     }
 }
 
-fun regenerateSiteSecret() {
+@JsName("regenerateSiteSecret")
+private fun regenerateSiteSecret() {
     val req = XMLHttpRequest()
     req.open("GET", "https://api.muctool.de/entropy")
     req.send()
@@ -125,7 +128,9 @@ fun regenerateSiteSecret() {
 }
 
 external fun encodeURIComponent(str: String): String
-fun recrawl() {
+
+@JsName("recrawl")
+private fun recrawl() {
     recrawl.disabled = true
     recrawl.textContent = "Crawling... please give us a minute or two."
 
