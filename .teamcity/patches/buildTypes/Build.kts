@@ -11,6 +11,14 @@ To apply the patch, change the buildType with id = 'Build'
 accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("Build")) {
+    vcs {
+
+        check(cleanCheckout == false) {
+            "Unexpected option value: cleanCheckout = $cleanCheckout"
+        }
+        cleanCheckout = true
+    }
+
     expectSteps {
         script {
             name = "Enable e-mail delivery"
@@ -33,14 +41,12 @@ changeBuildType(RelativeId("Build")) {
     steps {
         update<ScriptBuildStep>(1) {
             scriptContent = """
-                ./gradlew daemon --stop
-                rm -rf service/build
-                ./gradlew :dashboard:clean :dashboard:build --no-build-cache
-                ./gradlew clean includeKotlinJsRuntime build --info --no-build-cache -x test
                 #SPRING_PROFILES_ACTIVE=oss ./gradlew clean build --info
+                ./gradlew clean includeKotlinJsRuntime build --info
             """.trimIndent()
             dockerImage = "openjdk:13-alpine"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+            dockerPull = true
         }
     }
 }
