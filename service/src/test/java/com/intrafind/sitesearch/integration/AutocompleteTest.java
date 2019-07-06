@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.intrafind.api.Document.IS_OSS;
@@ -66,23 +67,27 @@ public class AutocompleteTest {
     public void complexPositiveDeprecated() {
         final var actual = caller.getForEntity(AutocompleteController.ENDPOINT + "?query=ifinder&siteId=" + SearchTest.SEARCH_SITE_ID, Autocomplete.class);
 
-        assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertNotNull(actual.getBody());
-        assertTrue(1 <= actual.getBody().getResults().size());
-        actual.getBody().getResults().forEach(term -> {
-            assertTrue(term.toLowerCase().contains("ifinder"));
-        });
+        searchAsYouTypeAssertions(actual);
     }
 
     @Test
     public void complexPositive() {
         final var actual = caller.getForEntity("/sites/" + SearchTest.SEARCH_SITE_ID + "/autocomplete?query=ifinder", Autocomplete.class);
 
+        searchAsYouTypeAssertions(actual);
+    }
+
+    private void searchAsYouTypeAssertions(ResponseEntity<Autocomplete> actual) {
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertNotNull(actual.getBody());
         assertTrue(1 <= actual.getBody().getResults().size());
+        final String searchAsYouTypeKeyword;
+        if (IS_OSS)
+            searchAsYouTypeKeyword = "knowledge";
+        else
+            searchAsYouTypeKeyword = "ifinder";
         actual.getBody().getResults().forEach(term ->
-                assertTrue(term.toLowerCase().contains("ifinder"))
+                assertTrue(term.toLowerCase().contains(searchAsYouTypeKeyword))
         );
     }
 
