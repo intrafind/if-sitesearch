@@ -31,6 +31,8 @@ import com.intrafind.sitesearch.service.SiteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -247,7 +249,10 @@ public class SiteController {
             final var stop = Instant.now();
             final var searchDuration = stop.minusMillis(start.toEpochMilli());
             LOG.info("siteId: " + siteId + " - query-fragment: " + query + " - autocompletes: " + autocomplete.getResults().size() + " - autocompleteDurationInMs: " + searchDuration.toEpochMilli());
-            return ResponseEntity.ok(autocomplete);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
+                    .body(autocomplete);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -266,10 +271,13 @@ public class SiteController {
             siteId = cookieSite;
         }
 
-        final var searchResult = searchService.search(query, siteId);
+        final var findings = searchService.search(query, siteId);
         final var stop = Instant.now();
         final var searchDuration = stop.minusMillis(start.toEpochMilli());
-        LOG.info("siteId: " + siteId + " - query: " + query + " - results: " + searchResult.getResults().size() + " - searchDurationInMs: " + searchDuration.toEpochMilli());
-        return ResponseEntity.ok(searchResult);
+        LOG.info("siteId: " + siteId + " - query: " + query + " - results: " + findings.getResults().size() + " - searchDurationInMs: " + searchDuration.toEpochMilli());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
+                .body(findings);
     }
 }

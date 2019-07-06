@@ -276,7 +276,7 @@ public class SiteTest {
         assertEquals(HttpStatus.NO_CONTENT, deletion.getStatusCode());
         assertNull(deletion.getBody());
 
-        TimeUnit.MILLISECONDS.sleep(3_000);
+        TimeUnit.SECONDS.sleep(30);
         // fetch via URL an already deleted page
         final var fetchViaUrlForNonExistingPage = caller.exchange(SiteController.ENDPOINT
                         + "/" + newSite.getSiteId() + "/pages?url=" + newPage.getUrl(),

@@ -88,7 +88,7 @@ public class SimpleSearchClient implements Search {
     }
 
     private void toHighlighted(Hits hits) {
-        hits.getDocuments().forEach(document -> {  // TODO give this block a name, i.e. toHighlighted()
+        hits.getDocuments().forEach(document -> {
             document.set("hit.teaser._str.title", document.getHighlight().get("_str.title") == null ? document.getFields().get("_str.title") : document.getHighlight().get("_str.title"));
             document.set("hit.teaser._str.body", document.getHighlight().get("_str.body") == null ? document.getFields().get("_str.body") : document.getHighlight().get("_str.body"));
             document.set("hit.teaser._str.url", document.getHighlight().get("_str.url") == null ? document.getFields().get("_str.url") : document.getHighlight().get("_str.url"));
@@ -100,15 +100,15 @@ public class SimpleSearchClient implements Search {
                 "\"fields\": [\"_str.body\",\"_str.title\", \"_str.url\"]," +
                 "\"query\": \"" + searchQuery + "\"}}," +
                 "\"filter\":{\"match\":{\"_raw.tenant\":\"" + siteId + "\"}}}}," +    // TODO check if siteId/TENANT is considered
-                "\"highlight\" : {" +
-                "    \"pre_tags\" : [\"<span class=\\\"if-teaser-highlight\\\">\"]," +
-                "    \"post_tags\" : [\"</span>\"]," +
-                "    \"number_of_fragments\": 1," +
-                "    \"fragment_size\": 150," +
-                "    \"fields\": {" +
-                "        \"_str.body\" : {}," +
-                "        \"_str.title\" : {}," +
-                "        \"_str.url\" : {}" +
+                "\"highlight\":{" +
+                "    \"pre_tags\":[\"<span class=\\\"if-teaser-highlight\\\">\"]," +
+                "    \"post_tags\":[\"</span>\"]," +
+                "    \"number_of_fragments\":1," +
+                "    \"fragment_size\":150," +
+                "    \"fields\":{" +
+                "        \"_str.body\":{}," +
+                "        \"_str.title\":{}," +
+                "        \"_str.url\":{}" +
                 "    }}," +
                 "\"size\":" + pageSize + "}";
     }

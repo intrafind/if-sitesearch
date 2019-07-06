@@ -17,7 +17,6 @@
 package com.intrafind.sitesearch.service;
 
 import com.intrafind.api.search.Hits;
-import com.intrafind.api.search.Search;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
@@ -47,28 +46,12 @@ import static com.intrafind.sitesearch.service.SimpleIndexClient.MAPPER;
 public class SimpleAutocompleteClient implements AutocompleteClient {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleAutocompleteClient.class);
 
-    private final Search search;
-
-    public SimpleAutocompleteClient(Search search) {
-        this.search = search;
-    }
-
+    /**
+     * https://www.elastic.co/guide/en/elasticsearch/reference/7.2/search-as-you-type.html
+     */
     @Override
-    public Hits search(String searchQuery, Object... parameters) {
-//        https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-as-you-type.html
-//        final var hits = search.search(searchQuery, parameters);
-//        hits.getDocuments().forEach(document ->
-//                hits.getMetaData().add("autocomplete.terms", document.get("_str.body").substring(0, 21)));
-//        return hits;
-
-        final UUID siteId;
-        if (searchQuery.startsWith("_raw.tenant")) {
-            siteId = UUID.fromString(searchQuery.substring(12));
-        } else if (parameters[1].toString().startsWith("_raw.tenant")) {
-            siteId = UUID.fromString(parameters[1].toString().substring(12));
-        } else {
-            siteId = UUID.fromString(parameters[1].toString().substring(12));
-        }
+    public Hits search(final String searchQuery, final Object... parameters) {
+        final var siteId = UUID.fromString(parameters[1].toString().substring(12));
 
         try {
             final var call = HttpRequest.newBuilder()
@@ -81,10 +64,9 @@ public class SimpleAutocompleteClient implements AutocompleteClient {
             final var response = CLIENT.send(call, HttpResponse.BodyHandlers.ofString());
             LOG.debug("searchQuery: {} - status: {} - body: {}", searchQuery, response.statusCode(), response.body());
             final Hits hits = MAPPER.readValue(MAPPER.writeValueAsString(MAPPER.readValue(response.body(), Map.class).get("hits")), Hits.class);
-            toHighlighted(hits);
 
             hits.getDocuments().forEach(document ->
-                    hits.getMetaData().add("autocomplete.terms", document.get("_str.body").substring(0, 21)));
+                    hits.getMetaData().add("autocomplete.terms", document.getHighlight().get("_str.body").get(0)));
 
             return hits;
         } catch (IOException | InterruptedException e) {
@@ -94,29 +76,19 @@ public class SimpleAutocompleteClient implements AutocompleteClient {
         return null;
     }
 
-    private void toHighlighted(Hits hits) {
-        hits.getDocuments().forEach(document -> {  // TODO give this block a name, i.e. toHighlighted()
-            document.set("hit.teaser._str.title", document.getHighlight().get("_str.title") == null ? document.getFields().get("_str.title") : document.getHighlight().get("_str.title"));
-            document.set("hit.teaser._str.body", document.getHighlight().get("_str.body") == null ? document.getFields().get("_str.body") : document.getHighlight().get("_str.body"));
-            document.set("hit.teaser._str.url", document.getHighlight().get("_str.url") == null ? document.getFields().get("_str.url") : document.getHighlight().get("_str.url"));
-        });
-    }
-
     private String buildSearchQuery(final String searchQuery, final UUID siteId) {
         return "{\"query\":{\"bool\":{\"must\":{\"multi_match\":{" +
-                "\"fields\": [\"_str.body\",\"_str.body._2gram\",\"_str.body._3gram\",\"_str.title\",\"_str.title._2gram\",\"_str.title._3gram\",\"_str.url\",\"_str.url._2gram\",\"_str.url._3gram\"]," +
+                "\"fields\":[\"_str.body\",\"_str.body._2gram\",\"_str.body._3gram\"]," +
                 "\"type\":\"bool_prefix\"," +
-                "\"query\": \"" + searchQuery + "\"}}," +
+                "\"query\":\"" + searchQuery + "\"}}," +
                 "\"filter\":{\"match\":{\"_raw.tenant\":\"" + siteId + "\"}}}}," +    // TODO check if siteId/TENANT is considered
-                "\"highlight\" : {" +
-                "    \"pre_tags\" : [\"<span class=\\\"if-teaser-highlight\\\">\"]," +
-                "    \"post_tags\" : [\"</span>\"]," +
-                "    \"number_of_fragments\": 1," +
-                "    \"fragment_size\": 150," +
-                "    \"fields\": {" +
-                "        \"_str.body\" : {}," +
-                "        \"_str.title\" : {}," +
-                "        \"_str.url\" : {}" +
+                "\"highlight\":{" +
+                "    \"pre_tags\":[\"<span class=\\\"if-teaser-highlight\\\">\"]," +
+                "    \"post_tags\":[\"</span>\"]," +
+                "    \"number_of_fragments\":1," +
+                "    \"fragment_size\":50," +
+                "    \"fields\":{" +
+                "        \"_str.body\":{}" +
                 "    }}," +
                 "\"size\":5}";
     }
