@@ -235,7 +235,7 @@ public class SiteTest {
         final var updatedBodyContent = "Updated via Hash(siteId, URL)";
         newPage.setBody(updatedBodyContent);
 
-        TimeUnit.MILLISECONDS.sleep(8_000);
+        TimeUnit.SECONDS.sleep(8);
 
         // update
         final var updatedSite = caller.exchange(SiteController.ENDPOINT
@@ -276,7 +276,7 @@ public class SiteTest {
         assertEquals(HttpStatus.NO_CONTENT, deletion.getStatusCode());
         assertNull(deletion.getBody());
 
-        TimeUnit.SECONDS.sleep(30);
+        TimeUnit.SECONDS.sleep(25);
         // fetch via URL an already deleted page
         final var fetchViaUrlForNonExistingPage = caller.exchange(SiteController.ENDPOINT
                         + "/" + newSite.getSiteId() + "/pages?url=" + newPage.getUrl(),
@@ -290,7 +290,7 @@ public class SiteTest {
         final var ying = createNewPage(newSiteYing.getSiteId(), newSiteYing.getSiteSecret());
         final var newSiteYang = createNewSite(null);
         final var yang = createNewPage(newSiteYang.getSiteId(), newSiteYang.getSiteSecret());
-        TimeUnit.MILLISECONDS.sleep(8_000);
+        TimeUnit.SECONDS.sleep(8);
 
         final var actualYing = caller.exchange(SiteController.ENDPOINT + "/"
                 + newSiteYing.getSiteId() + "/pages/" + ying.getId() + "?siteSecret=" + newSiteYing.getSiteSecret(), HttpMethod.PUT, new HttpEntity<>(ying), FetchedPage.class);
@@ -321,7 +321,7 @@ public class SiteTest {
         final var createdSite = createNewSite(null);
         final var createdPage = createNewPage(createdSite.getSiteId(), createdSite.getSiteSecret());
 
-        TimeUnit.MILLISECONDS.sleep(8_000);
+        TimeUnit.SECONDS.sleep(8);
 
         final var pageChecksum = 923522;
         final var updateWithSiteIdOnly = caller.exchange(SiteController.ENDPOINT + "/" + createdSite.getSiteId()
@@ -368,14 +368,14 @@ public class SiteTest {
                 HttpMethod.POST, HttpEntity.EMPTY, SiteIndexSummary.class);
         final var creation = validateTenantSummary(exchange, 25);
 
-        TimeUnit.MILLISECONDS.sleep(13_000);
+        TimeUnit.SECONDS.sleep(13);
         validateUpdatedSites(creation);
 
         final var clearSite = caller.exchange(SiteController.ENDPOINT + "/" + creation.getSiteId() + "?siteSecret=" + creation.getSiteSecret(),
                 HttpMethod.DELETE, HttpEntity.EMPTY, Object.class);
         assertNull(clearSite.getBody());
         assertEquals(HttpStatus.OK, clearSite.getStatusCode());
-        TimeUnit.MILLISECONDS.sleep(18_000);
+        TimeUnit.SECONDS.sleep(18);
         assureClearedSite(creation);
     }
 
@@ -405,7 +405,7 @@ public class SiteTest {
         final var initialIndexCreation = caller.exchange(
                 SiteController.ENDPOINT + "/rss?feedUrl=http://intrafind.de/share/enterprise-search-blog.xml&stripHtmlTags=true",
                 HttpMethod.POST, HttpEntity.EMPTY, SiteIndexSummary.class);
-        TimeUnit.MILLISECONDS.sleep(8_000);
+        TimeUnit.SECONDS.sleep(8);
         final var siteIndexSummaryCreation = validateTenantSummary(initialIndexCreation, 25);
 
         final var siteIdFromCreation = siteIndexSummaryCreation.getSiteId();
@@ -420,7 +420,7 @@ public class SiteTest {
         final var initialIndexCreation = caller.exchange(
                 SiteController.ENDPOINT + "/rss?feedUrl=https://raw.githubusercontent.com/intrafind/if-sitesearch/master/service/src/test/resources/steem-blockchain-rss-feed-init.xml",
                 HttpMethod.POST, HttpEntity.EMPTY, SiteIndexSummary.class);
-        TimeUnit.MILLISECONDS.sleep(8_000);
+        TimeUnit.SECONDS.sleep(8);
         final var siteIndexSummaryCreation = validateTenantSummary(initialIndexCreation, 10);
 
         final var siteIdFromCreation = siteIndexSummaryCreation.getSiteId();
@@ -508,7 +508,7 @@ public class SiteTest {
         );
 
         validateUpdatedSites(siteIndexSummary);
-        TimeUnit.MILLISECONDS.sleep(13_000);
+        TimeUnit.SECONDS.sleep(13);
 
         final var allPages = caller.exchange(SiteController.ENDPOINT + "/" + newSite.getSiteId(),
                 HttpMethod.GET, HttpEntity.EMPTY, List.class);
@@ -523,7 +523,7 @@ public class SiteTest {
                 false
         );
         validateUpdatedSites(siteIndexSummaryAfterUpdate);
-        TimeUnit.MILLISECONDS.sleep(13_000);
+        TimeUnit.SECONDS.sleep(13);
 
         final var allPagesAfterUpdate = caller.exchange(SiteController.ENDPOINT + "/" + newSite.getSiteId(),
                 HttpMethod.GET, HttpEntity.EMPTY, List.class);
@@ -536,7 +536,7 @@ public class SiteTest {
                 newSite.getSiteSecret(), true
         );
         validateUpdatedSites(siteIndexSummaryAfterClearance);
-        TimeUnit.MILLISECONDS.sleep(13_000);
+        TimeUnit.SECONDS.sleep(13);
 
         final var allPagesAfterClearance = caller.exchange(SiteController.ENDPOINT + "/" + newSite.getSiteId(),
                 HttpMethod.GET, HttpEntity.EMPTY, List.class);
