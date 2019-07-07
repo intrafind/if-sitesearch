@@ -1,6 +1,10 @@
-FROM openjdk:13-oracle AS service
+#FROM openjdk:13-oracle AS service
+FROM ubuntu:19.10 AS service
 
 MAINTAINER IntraFind Software AG <alexander.orlov@intrafind.de>
+
+RUN apt-get update && \
+    apt-get install -y openjdk-13-jre-headless
 
 RUN groupadd -g 1000 svc && \
     useradd --system -u 1000 -g svc svc
