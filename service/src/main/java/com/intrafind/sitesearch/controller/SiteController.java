@@ -31,7 +31,6 @@ import com.intrafind.sitesearch.service.SiteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -251,7 +250,7 @@ public class SiteController {
             LOG.info("siteId: " + siteId + " - query-fragment: " + query + " - autocompletes: " + autocomplete.getResults().size() + " - autocompleteDurationInMs: " + searchDuration.toEpochMilli());
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
+//                    .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
                     .body(autocomplete);
         } else {
             return ResponseEntity.notFound().build();
@@ -277,7 +276,7 @@ public class SiteController {
         LOG.info("siteId: " + siteId + " - query: " + query + " - results: " + findings.getResults().size() + " - searchDurationInMs: " + searchDuration.toEpochMilli());
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
+//                .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
                 .body(findings);
     }
 }
