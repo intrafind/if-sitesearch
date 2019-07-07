@@ -10,7 +10,7 @@ RUN groupadd -g 1200 svc && \
     useradd --create-home --system -u 1200 -g svc svc
 USER svc
 
-#WORKDIR /srv
+WORKDIR $HOME
 COPY config config
 COPY build/libs/*.jar .
 ENV SPRING_CONFIG_NAME application, prod
