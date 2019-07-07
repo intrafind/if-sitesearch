@@ -81,13 +81,8 @@ public class AutocompleteTest {
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertNotNull(actual.getBody());
         assertTrue(1 <= actual.getBody().getResults().size());
-        final String searchAsYouTypeKeyword;
-        if (IS_OSS)
-            searchAsYouTypeKeyword = "knowledge";
-        else
-            searchAsYouTypeKeyword = "ifinder";
         actual.getBody().getResults().forEach(term ->
-                assertTrue(term.toLowerCase().contains(searchAsYouTypeKeyword))
+                assertTrue(term.toLowerCase().contains("ifinder"))
         );
     }
 
