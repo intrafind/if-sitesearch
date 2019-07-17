@@ -31,5 +31,5 @@ assemble:
   script:
     - mkdir -p service/config/gmail-api && touch service/config/gmail-api/StoredCredential
     - cd service
-    - docker build --tag docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest .
-#  - docker push docker-registry.sitesearch.cloud/intrafind/if-sitesearch:latest
+    - docker build --tag docker-registry.intrafind.net/intrafind/sis-sitesearch:latest .
+#  - docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
