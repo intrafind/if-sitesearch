@@ -35,7 +35,7 @@
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-undertow:2.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger2:2.9.2" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger-ui:2.9.2" level="project" />
-    <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-templates:3.0.0-beta-1" level="project" />
+    <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-templates:3.0.0-beta-2" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:4.0.1" level="project" />
     <orderEntry type="library" name="Gradle: org.jsoup:jsoup:1.12.1" level="project" />
     <orderEntry type="library" name="Gradle: org.mnode.mstor:mstor:1.0.0" level="project" />
