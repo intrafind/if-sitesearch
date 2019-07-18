@@ -86,7 +86,7 @@ public class SimpleAutocompleteClient implements AutocompleteClient {
                 "    \"pre_tags\":[\"<span class=\\\"if-teaser-highlight\\\">\"]," +
                 "    \"post_tags\":[\"</span>\"]," +
                 "    \"number_of_fragments\":1," +
-                "    \"fragment_size\":50," +
+                "    \"fragment_size\":30," +
                 "    \"fields\":{" +
                 "        \"_str.body\":{}" +
                 "    }}," +

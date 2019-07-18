@@ -46,6 +46,7 @@ import static com.intrafind.sitesearch.service.SimpleIndexClient.MAPPER;
 @Repository
 public class SimpleSearchClient implements Search {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleSearchClient.class);
+    private static final String FUZZY_DIRECTIVE = "~";
 
     @Override
     public Hits search(String searchQuery, Object... parameters) {
@@ -98,7 +99,7 @@ public class SimpleSearchClient implements Search {
     private String buildSearchQuery(final String searchQuery, final UUID siteId, final int pageSize) {
         return "{\"query\":{\"bool\":{\"must\":{\"query_string\": {" +
                 "\"fields\": [\"_str.body\",\"_str.title\", \"_str.url\"]," +
-                "\"query\": \"" + searchQuery + "\"}}," +
+                "\"query\": \"" + searchQuery + FUZZY_DIRECTIVE + "\"}}," +
                 "\"filter\":{\"match\":{\"_raw.tenant\":\"" + siteId + "\"}}}}," +    // TODO check if siteId/TENANT is considered
                 "\"highlight\":{" +
                 "    \"pre_tags\":[\"<span class=\\\"if-teaser-highlight\\\">\"]," +
