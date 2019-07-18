@@ -113,7 +113,8 @@ public class SimpleClientTest {
     private static final String EMAIL = "user@examaple.com";
 
     private void search() {
-        final var searchQuery = ",.on-dEmand,.";
+//        final var searchQuery = ",.on-dEmand,.";
+        final var searchQuery = "ondEmand";
         final var search = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/search?query=" + searchQuery,
                 HttpMethod.GET, HttpEntity.EMPTY, Hits.class);
 
