@@ -78,7 +78,7 @@ public class SimpleClientTest {
     private void updatePage() {
 //    http://www.baeldung.com/spring-5-webclient
 //        WebClient client1 = WebClient.create();
-//        WebClient client2 = WebClient.create("https://sitesearch:" + Application.SERVICE_SECRET + "@logs."+Application.SIS_DOMAIN);
+//        WebClient client2 = WebClient.create("https://sitesearch:" + Application.SERVICE_SECRET + "@logs."+Application.SIS_SERVICE_HOST);
 
         final var response = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/pages?siteSecret=" + SITE_SECRET,
                 HttpMethod.PUT, new HttpEntity<>(SiteTest.buildPage()), FetchedPage.class);

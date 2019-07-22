@@ -39,7 +39,7 @@ public class ProductFrontpageTest {
     @Test
     public void redirectFromWWW() { // fails quite often because of 1&1
         final var response = caller.exchange(
-                "https://www." + Application.SIS_DOMAIN,
+                "https://www.sitesearch.cloud",
                 HttpMethod.GET,
                 HttpEntity.EMPTY,
                 String.class
@@ -50,7 +50,7 @@ public class ProductFrontpageTest {
     @Test
     public void redirectFromUnencryptedWWW() { // fails quite often because of 1&1
         final var response = caller.exchange(
-                "http://www." + Application.SIS_DOMAIN,
+                "http://www.sitesearch.cloud",
                 HttpMethod.GET,
                 HttpEntity.EMPTY,
                 String.class
@@ -61,7 +61,7 @@ public class ProductFrontpageTest {
     @Test
     public void productFrontpageContent() { // fails quite often because of 1&1
         final var response = caller.exchange(
-                "https://" + Application.SIS_DOMAIN,
+                "https://sitesearch.cloud",
                 HttpMethod.GET,
                 HttpEntity.EMPTY,
                 String.class

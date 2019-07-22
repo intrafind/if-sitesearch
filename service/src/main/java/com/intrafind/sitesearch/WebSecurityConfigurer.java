@@ -92,7 +92,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                         "/swagger-ui.html", "/swagger-resources/**", "/v2/api-docs"
                 )
                 .permitAll()
-                .and().logout().logoutSuccessUrl("https://" + Application.SIS_DOMAIN)
+                .and().logout().logoutSuccessUrl("https://" + Application.SIS_SERVICE_HOST)
                 .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
         ;
     }

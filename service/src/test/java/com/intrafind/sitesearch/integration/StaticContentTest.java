@@ -62,7 +62,7 @@ public class StaticContentTest {
 
         assertEquals(HttpStatus.OK, staticContent.getStatusCode());
         if (System.getenv("PWD") != null) { // assume, it runs on Windows and is not a CI server
-            assertTrue(staticContent.getBody().contains("\"baseUrl\": \"https://api." + Application.SIS_DOMAIN + "/sites/{{siteId}}/\","));
+            assertTrue(staticContent.getBody().contains("\"baseUrl\": \"https://" + Application.SIS_SERVICE_HOST + "/sites/{{siteId}}/\","));
         }
         assertTrue(staticContent.getBody().contains("\"endpointSearch\": \"" + "search" + "\","));
     }

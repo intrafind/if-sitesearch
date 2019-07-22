@@ -70,7 +70,7 @@ public class SiteController {
             newlyCreatedSite = siteService.createSite(siteProfileCreation.getEmail(), siteProfileCreation.getConfigs());
         }
         return ResponseEntity
-                .created(URI.create("https://api." + Application.SIS_DOMAIN + "/sites/" + newlyCreatedSite.getSiteId()))
+                .created(URI.create("https://" + Application.SIS_SERVICE_HOST + "/sites/" + newlyCreatedSite.getSiteId()))
                 .body(newlyCreatedSite);
     }
 

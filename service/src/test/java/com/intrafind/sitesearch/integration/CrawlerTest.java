@@ -95,7 +95,7 @@ public class CrawlerTest {
     public void crawlSiteSearchViaHttps() {
         final ResponseEntity<CrawlerJobResult> request = caller
                 .postForEntity(SiteController.ENDPOINT + "/" + CRAWL_SITE_ID + "/crawl?siteSecret=" + CRAWL_SITE_SECRET
-                                + "&url=" + "https://" + Application.SIS_DOMAIN + "&token=" + UUID.randomUUID()
+                                + "&url=https://sitesearch.cloud&token=" + UUID.randomUUID()
                                 + "&email=" + TEST_EMAIL_ADDRESS,
                         RequestEntity.EMPTY, CrawlerJobResult.class);
 
@@ -108,7 +108,7 @@ public class CrawlerTest {
     public void crawlHttps() {
         final ResponseEntity<CrawlerJobResult> request = caller
                 .postForEntity(SiteController.ENDPOINT + "/" + CRAWL_SITE_ID + "/crawl?siteSecret=" + CRAWL_SITE_SECRET
-                                + "&url=https://api." + Application.SIS_DOMAIN + "&token=" + UUID.randomUUID()
+                                + "&url=https://" + Application.SIS_SERVICE_HOST + "&token=" + UUID.randomUUID()
                                 + "&email=" + TEST_EMAIL_ADDRESS,
                         RequestEntity.EMPTY, CrawlerJobResult.class);
 
@@ -116,7 +116,7 @@ public class CrawlerTest {
         assertNotNull(request.getBody());
         assertEquals(API_SITE_PAGE_COUNT, request.getBody().getPageCount());
         assertEquals(API_SITE_PAGE_COUNT, request.getBody().getUrls().size());
-        assertTrue(request.getBody().getUrls().get(0).contains("api." + Application.SIS_DOMAIN));
+        assertTrue(request.getBody().getUrls().get(0).contains(Application.SIS_SERVICE_HOST));
     }
 
     @Test
@@ -132,8 +132,8 @@ public class CrawlerTest {
         assertNotNull(request.getBody());
         assertEquals(API_SITE_PAGE_COUNT, request.getBody().getPageCount());
         assertEquals(API_SITE_PAGE_COUNT, request.getBody().getUrls().size());
-        assertTrue(request.getBody().getUrls().contains("https://api." + Application.SIS_DOMAIN + "/index.html"));
-        assertTrue(request.getBody().getUrls().contains("https://dev." + Application.SIS_DOMAIN + "/"));
+        assertTrue(request.getBody().getUrls().contains("https://api.sitesearch.cloud/index.html"));
+        assertTrue(request.getBody().getUrls().contains("https://dev.sitesearch.cloud/"));
 
         assertThumnailInPagePayload(siteId);
     }
@@ -142,7 +142,7 @@ public class CrawlerTest {
     public void crawlSiteWithSitemap() throws Exception {
         final ResponseEntity<CrawlerJobResult> request = caller
                 .postForEntity(SiteController.ENDPOINT + "/" + CRAWL_SITE_ID + "/crawl?siteSecret=" + CRAWL_SITE_SECRET
-                                + "&url=https://api." + Application.SIS_DOMAIN + "&token=" + UUID.randomUUID()
+                                + "&url=https://" + Application.SIS_SERVICE_HOST + "&token=" + UUID.randomUUID()
                                 + "&email=" + TEST_EMAIL_ADDRESS
                                 + "&sitemapsOnly=true",
                         RequestEntity.EMPTY, CrawlerJobResult.class);
@@ -155,13 +155,13 @@ public class CrawlerTest {
     }
 
     private void assertThumnailInPagePayload(final UUID siteId) {
-        final String pageWithThumbnail = "https://api." + Application.SIS_DOMAIN + "/index.html";
+        final String pageWithThumbnail = "https://" + Application.SIS_SERVICE_HOST + "/index.html";
         final ResponseEntity<FetchedPage> fetchThumbnailPage = caller.exchange(SiteController.ENDPOINT
                         + "/" + siteId + "/pages?url=" + pageWithThumbnail,
                 HttpMethod.GET, HttpEntity.EMPTY, FetchedPage.class);
         assertEquals(HttpStatus.OK, fetchThumbnailPage.getStatusCode());
         assertEquals(pageWithThumbnail, Objects.requireNonNull(fetchThumbnailPage.getBody()).getUrl());
-        assertEquals("https://api." + Application.SIS_DOMAIN + "/theme/logo.png", fetchThumbnailPage.getBody().getThumbnail());
+        assertEquals(Application.SIS_API_SERVICE_URL + "/theme/logo.png", fetchThumbnailPage.getBody().getThumbnail());
         assertEquals(Arrays.asList("Portal", "Start", "homepage"), fetchThumbnailPage.getBody().getSisLabels());
         assertNotEquals(Arrays.asList("Portal", "Start", "Homepage"), fetchThumbnailPage.getBody().getSisLabels());
     }

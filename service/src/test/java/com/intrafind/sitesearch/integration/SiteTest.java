@@ -69,11 +69,11 @@ public class SiteTest {
     private TestRestTemplate caller;
 
     public static SitePage buildPage() {
-        final var url = "https://api." + Application.SIS_DOMAIN;
+        final var url = Application.SIS_API_SERVICE_URL;
         return new SitePage(
                 "Cloud Solution",
                 "Site Search is IntraFind's on-demand solution for site search.",
-                url,
+                url.toString(),
                 Arrays.asList("mars", "Venus")
         );
     }

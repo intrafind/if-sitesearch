@@ -18,14 +18,13 @@ package com.intrafind.sitesearch.service;
 
 import com.intrafind.api.Document;
 import com.intrafind.api.index.Index;
-import com.intrafind.sitesearch.Application;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public class IFIndexService implements Index {
-    private static final Index INDEX_SERVICE = IfinderCoreClient.newHessianClient(Index.class, Application.IFINDER_CORE + "/index");
+    private static final Index INDEX_SERVICE = IfinderCoreClient.newHessianClient(Index.class, IFSearchService.IFINDER_CORE + "/index");
 
     @Override
     public void index(Document... documents) {

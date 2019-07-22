@@ -53,11 +53,11 @@ import java.util.UUID;
 public class Application {
     private static final Logger LOG = LoggerFactory.getLogger(Application.class);
     public static final String SERVICE_SECRET = System.getenv("SERVICE_SECRET");
-    public static final URI IFINDER_CORE = URI.create("https://sitesearch:" + SERVICE_SECRET + "@" + System.getenv("SIS_SERVICE_HOST") + "/hessian");
     private static final String WOO_COMMERCE_CONSUMER_KEY = System.getenv("WOO_COMMERCE_CONSUMER_KEY");
     private static final String WOO_COMMERCE_CONSUMER_SECRET = System.getenv("WOO_COMMERCE_CONSUMER_SECRET");
     private static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";
-    public static final String SIS_DOMAIN = "sitesearch.cloud";
+    public static final String SIS_SERVICE_HOST = System.getenv("SIS_SERVICE_HOST");
+    public static final URI SIS_API_SERVICE_URL = URI.create("https://" + SIS_SERVICE_HOST);
     public static final String OSS_SIS_DOMAIN = "loxal.net";
     static final String IF_NET_DOMAIN = "intrafind.net";
     private static Mac macSha1Algorithm;
@@ -78,7 +78,7 @@ public class Application {
             @RequestParam(value = "affiliate", required = false) String affiliate
     ) {
         final var request = new Request.Builder()
-                .url("https://" + Application.SIS_DOMAIN + "/wp-json/wc/v1/orders/"
+                .url("https://sitesearch.cloud/wp-json/wc/v1/orders/"
                         + subscriptionId
                         + "?consumer_key=" + WOO_COMMERCE_CONSUMER_KEY
                         + "&consumer_secret=" + WOO_COMMERCE_CONSUMER_SECRET

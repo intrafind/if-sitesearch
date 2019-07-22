@@ -53,6 +53,8 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 
+import static com.intrafind.sitesearch.Application.SIS_API_SERVICE_URL;
+
 public class SiteCrawler extends WebCrawler {
 
     public static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json");
@@ -65,7 +67,6 @@ public class SiteCrawler extends WebCrawler {
             .followSslRedirects(false)
             .build();
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    private static final String SIS_API_SERVICE_URL = System.getenv("SIS_API_SERVICE_URL");
 
     private final UUID siteId;
     private final UUID siteSecret;
