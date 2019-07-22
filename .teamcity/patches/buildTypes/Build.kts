@@ -38,7 +38,7 @@ changeBuildType(RelativeId("Build")) {
         script {
             name = "Build service.jar w/ Docker (using TeamCity Docker plugin)"
             scriptContent = "./gradlew clean build --info"
-            dockerImage = "openjdk:11-jre-slim"
+            dockerImage = "openjdk:13-alpine"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerPull = true
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
