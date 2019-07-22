@@ -32,7 +32,7 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 'Debug' option is available in the context menu for the task.
 */
 
-version = "2018.2"
+version = "2019.1"
 
 project {
     description = "Software as a Service"
@@ -46,11 +46,9 @@ project {
 
     buildType(Recrawl)
     buildType(LoadTest)
-    buildType(DailySnapshotsAndCleanups)
     buildType(BGRelease)
     buildType(Build)
     buildType(SmokeTest)
-    buildType(ReleaseRouter)
 
     params {
         param("env.TF_VAR_docker_password", "%env.SERVICE_SECRET%")
@@ -189,6 +187,8 @@ object Build : BuildType({
 
     vcs {
         root(DslContext.settingsRoot)
+
+        cleanCheckout = true
     }
 
     steps {
@@ -201,8 +201,13 @@ object Build : BuildType({
         }
         script {
             name = "Build service.jar w/ Docker (using TeamCity Docker plugin)"
-            scriptContent = "./gradlew clean build --info"
-            dockerImage = "openjdk:11-jre-slim"
+            scriptContent = """
+                #SPRING_PROFILES_ACTIVE=oss ./gradlew clean build --info
+                ./gradlew clean includeKotlinJsRuntime build --info
+            """.trimIndent()
+            dockerImage = "openjdk:13-alpine"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+            dockerPull = true
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
         }
         script {
@@ -255,57 +260,6 @@ object Build : BuildType({
     }
 })
 
-object DailySnapshotsAndCleanups : BuildType({
-    name = "Daily Snapshots and Cleanups"
-    description = "daily snapshots and cleanups on gce ..."
-
-    vcs {
-        root(Daily)
-    }
-
-    steps {
-        script {
-            scriptContent = "sh ./ops/snapshot-disk-and-cleanup.sh"
-        }
-    }
-
-    triggers {
-        schedule {
-            schedulingPolicy = daily {
-                hour = 3
-            }
-            branchFilter = ""
-            triggerBuild = always()
-            withPendingChangesOnly = false
-            enableQueueOptimization = false
-        }
-    }
-
-    failureConditions {
-        errorMessage = true
-        failOnText {
-            conditionType = BuildFailureOnText.ConditionType.CONTAINS
-            pattern = "Bad substitution"
-            reverse = false
-        }
-        failOnText {
-            conditionType = BuildFailureOnText.ConditionType.CONTAINS
-            pattern = "not found"
-            reverse = false
-        }
-        failOnText {
-            conditionType = BuildFailureOnText.ConditionType.CONTAINS
-            pattern = "invalid option"
-            reverse = false
-        }
-        failOnText {
-            conditionType = BuildFailureOnText.ConditionType.CONTAINS
-            pattern = "ERROR"
-            reverse = false
-        }
-    }
-})
-
 object LoadTest : BuildType({
     name = "Throughput & Load Test"
 
@@ -319,7 +273,7 @@ object LoadTest : BuildType({
     steps {
         script {
             scriptContent = "sh load-test.sh"
-            dockerImage = "openjdk:12-jdk-alpine"
+            dockerImage = "openjdk:13-alpine"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
         }
@@ -386,32 +340,6 @@ object Recrawl : BuildType({
     }
 })
 
-object ReleaseRouter : BuildType({
-    name = "Router Release"
-
-    vcs {
-        root(IfSitesearchRouter)
-    }
-
-    steps {
-        script {
-            scriptContent = """#ssh alexander_orlov@dev "cd ${'$'}PWD; sh ./release-router.sh""""
-        }
-    }
-
-    triggers {
-        vcs {
-            triggerRules = "+:**/frontpage"
-            branchFilter = ""
-        }
-    }
-
-    failureConditions {
-        executionTimeoutMin = 5
-        errorMessage = true
-    }
-})
-
 object SmokeTest : BuildType({
     name = "API Health & Availability"
     description = "Smoke Tests"
@@ -422,8 +350,8 @@ object SmokeTest : BuildType({
 
     steps {
         script {
-            scriptContent = "sh ./ci/smoke-test.sh"
-            dockerImage = "openjdk:12-jdk-alpine"
+            scriptContent = "sh ./ops/smoke-test.sh"
+            dockerImage = "openjdk:13-alpine"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
         }
