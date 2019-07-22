@@ -12,10 +12,13 @@ accordingly, and delete the patch script.
 changeProject(DslContext.projectId) {
     params {
         add {
+            param("env.seckey", "secvalue")
+        }
+        add {
             param("secretKey", "secretValue")
         }
         add {
-            param("env.seckey", "secvalue")
+            param("my_SECRET", "my_SECRET_VALUE")
         }
     }
 }
