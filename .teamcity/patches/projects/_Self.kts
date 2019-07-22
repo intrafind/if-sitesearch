@@ -17,8 +17,5 @@ changeProject(DslContext.projectId) {
         add {
             param("env.seckey", "secvalue")
         }
-        add {
-            param("env.my_PASSWORD", "my_PASSWORDvalue")
-        }
     }
 }
