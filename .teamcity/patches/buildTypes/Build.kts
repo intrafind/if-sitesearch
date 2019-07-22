@@ -46,6 +46,7 @@ changeBuildType(RelativeId("Build")) {
             """.trimIndent()
             dockerImage = "openjdk:13-alpine"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+            dockerPull = true
         }
     }
 }
