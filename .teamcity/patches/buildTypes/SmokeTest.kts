@@ -29,7 +29,7 @@ accordingly, and delete the patch script.
 changeBuildType(RelativeId("SmokeTest")) {
     expectSteps {
         script {
-            scriptContent = "sh ./ci/smoke-test.sh"
+            scriptContent = "sh ./ops/smoke-test.sh"
             dockerImage = "openjdk:13-alpine"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
