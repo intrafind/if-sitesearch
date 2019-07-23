@@ -18,12 +18,11 @@ package com.intrafind.sitesearch.service;
 
 import com.intrafind.api.search.Hits;
 import com.intrafind.api.search.Search;
-import com.intrafind.sitesearch.Application;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class IFAutocompleteService implements AutocompleteClient {
-    private static final Search SEARCH_AUTOCOMPLETE_CLIENT = IfinderCoreClient.newHessianClient(Search.class, Application.IFINDER_CORE + "/autocomplete");
+    private static final Search SEARCH_AUTOCOMPLETE_CLIENT = IfinderCoreClient.newHessianClient(Search.class, IfinderCoreClient.IFINDER_CORE + "/autocomplete");
 
     @Override
     public Hits search(String searchQuery, Object... parameters) {

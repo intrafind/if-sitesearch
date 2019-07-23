@@ -17,12 +17,14 @@
 package com.intrafind.sitesearch.service;
 
 import com.caucho.hessian.client.HessianProxyFactory;
+import com.intrafind.sitesearch.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.Authenticator;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
+import java.net.URI;
 import java.net.URL;
 
 /**
@@ -31,6 +33,7 @@ import java.net.URL;
 public enum IfinderCoreClient {
     ;
     private static final Logger LOG = LoggerFactory.getLogger(IfinderCoreClient.class);
+    public static final URI IFINDER_CORE = URI.create("https://sitesearch:" + Application.SERVICE_SECRET + "@main.sitesearch.cloud/hessian");
     private static final HessianProxyFactory HESSIAN_PROXY_FACTORY;
 
     static {

@@ -41,7 +41,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
-import java.net.URI;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
@@ -53,7 +52,6 @@ import java.util.UUID;
 public class Application {
     private static final Logger LOG = LoggerFactory.getLogger(Application.class);
     public static final String SERVICE_SECRET = System.getenv("SERVICE_SECRET");
-    public static final URI IFINDER_CORE = URI.create("https://sitesearch:" + SERVICE_SECRET + "@" + System.getenv("SIS_SERVICE_HOST") + "/hessian");
     private static final String WOO_COMMERCE_CONSUMER_KEY = System.getenv("WOO_COMMERCE_CONSUMER_KEY");
     private static final String WOO_COMMERCE_CONSUMER_SECRET = System.getenv("WOO_COMMERCE_CONSUMER_SECRET");
     private static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";
