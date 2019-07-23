@@ -65,7 +65,7 @@ public class SiteCrawler extends WebCrawler {
             .followSslRedirects(false)
             .build();
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    private static final String SIS_API_SERVICE_URL = System.getenv("SIS_API_SERVICE_URL");
+    public static final URI SIS_API_SERVICE_URL = URI.create(System.getenv("SIS_API_SERVICE_URL"));
 
     private final UUID siteId;
     private final UUID siteSecret;
