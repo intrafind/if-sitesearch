@@ -61,7 +61,7 @@ public class SimpleIndexClient implements Index {
     private static final String SVC_SINGLETONS = "svc-singletons";
 
     @Override
-    public void index(Document... documents) {
+    public void index(final Document... documents) {
         if (documents == null || documents.length > 1)
             throw new IllegalArgumentException(Arrays.toString(documents));
 
@@ -73,8 +73,8 @@ public class SimpleIndexClient implements Index {
 //            final var sitesCrawlStatus = new SitesCrawlStatus(new HashSet<>(crawlStatus));
             final var sitesCrawlStatus = new SitesCrawlStatus(new HashSet<>(Collections.emptyList()));
             documents[0].getFields().forEach((siteId, status) ->
-                    sitesCrawlStatus.getSites().add(new CrawlStatus(UUID.fromString(
-                            siteId), Instant.parse(status.get(0)), Long.parseLong(status.get(1))
+                    sitesCrawlStatus.getSites().add(new CrawlStatus(UUID.fromString(siteId),
+                            Instant.parse(status.get(0)), Long.parseLong(status.get(1))
                     )));
 
             try {
@@ -166,7 +166,7 @@ public class SimpleIndexClient implements Index {
         final var indexType = getIndexType(docId);
 
         final var call = HttpRequest.newBuilder()
-                .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_delete_by_query?refresh"))
+                .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_delete_by_query?refresh=wait_for"))
                 .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .POST(HttpRequest.BodyPublishers.ofString("{\"query\": {\"terms\": {\"_id\":" +
