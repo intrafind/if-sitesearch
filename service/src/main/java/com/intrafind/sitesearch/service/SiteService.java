@@ -78,6 +78,8 @@ public class SiteService {
 
     static final String SITE_CONFIGURATION_DOCUMENT_PREFIX = "site-configuration-";
     static final String CRAWL_STATUS_SINGLETON_DOCUMENT = "crawl-status";
+    static final int MAX_TOTAL_QUERY_PAGE_SIZE = 10_000;
+
     /**
      * Field is updated whenever a document is (re-)indexed.
      */
@@ -193,7 +195,7 @@ public class SiteService {
         final var documentWithSiteSecret = searchService.search(
                 Fields.TENANT + ":" + siteId.toString(),
                 Search.RETURN_FIELDS, Fields.TENANT,
-                Search.HITS_LIST_SIZE, 10_000
+                Search.HITS_LIST_SIZE, MAX_TOTAL_QUERY_PAGE_SIZE
         );
 
         if (documentWithSiteSecret.getDocuments().isEmpty()) {
@@ -381,7 +383,7 @@ public class SiteService {
         LOG.info("URL-received: " + feedUrl);
         final AtomicInteger successfullyIndexed = new AtomicInteger(0);
         final List<String> documents = new ArrayList<>();
-        List<String> failedToIndex = new ArrayList<>();
+        final List<String> failedToIndex = new ArrayList<>();
 
         try {
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -535,7 +537,7 @@ public class SiteService {
         final Hits documents = searchService.search(
                 Fields.TENANT + ":" + siteId.toString(),
                 Search.RETURN_FIELDS, Fields.TENANT + SearchService.QUERY_SEPARATOR + Fields.URL + SearchService.QUERY_SEPARATOR + PAGE_TIMESTAMP,
-                Search.HITS_LIST_SIZE, 10_000
+                Search.HITS_LIST_SIZE, MAX_TOTAL_QUERY_PAGE_SIZE
         );
 
         if (documents.getDocuments().isEmpty()) {

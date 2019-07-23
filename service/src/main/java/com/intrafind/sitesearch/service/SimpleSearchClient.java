@@ -49,14 +49,16 @@ public class SimpleSearchClient implements Search {
     private static final String FUZZY_DIRECTIVE = "~";
 
     @Override
-    public Hits search(String searchQuery, Object... parameters) {
+    public Hits search(String searchQuery, final Object... parameters) {
         final int pageSize;
         if (parameters[3].toString().equals("10000")) {
-            pageSize = 10_000;
+            pageSize = SiteService.MAX_TOTAL_QUERY_PAGE_SIZE;
         } else if (parameters[5].toString().equals("10")) {
             pageSize = 10;
+            throw new AssertionError("Supposed to be the autocomplete case which has been moved to autocomplete client"); // TODO remove this case once prooven to work
         } else {
             pageSize = 50;
+            searchQuery += FUZZY_DIRECTIVE; // fetch all pages
         }
 
         final UUID siteId;
@@ -99,7 +101,7 @@ public class SimpleSearchClient implements Search {
     private String buildSearchQuery(final String searchQuery, final UUID siteId, final int pageSize) {
         return "{\"query\":{\"bool\":{\"must\":{\"query_string\": {" +
                 "\"fields\": [\"_str.body\",\"_str.title\", \"_str.url\"]," +
-                "\"query\": \"" + searchQuery + FUZZY_DIRECTIVE + "\"}}," +
+                "\"query\": \"" + searchQuery + "\"}}," +
                 "\"filter\":{\"match\":{\"_raw.tenant\":\"" + siteId + "\"}}}}," +    // TODO check if siteId/TENANT is considered
                 "\"highlight\":{" +
                 "    \"pre_tags\":[\"<span class=\\\"if-teaser-highlight\\\">\"]," +

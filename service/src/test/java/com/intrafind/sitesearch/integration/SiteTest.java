@@ -513,7 +513,7 @@ public class SiteTest {
         final var allPages = caller.exchange(SiteController.ENDPOINT + "/" + newSite.getSiteId(),
                 HttpMethod.GET, HttpEntity.EMPTY, List.class);
         final var pageIds = allPages.getBody();
-        assertEquals(siteIndexSummary.getDocuments().size(), pageIds.size());
+        assertEquals(siteIndexSummary.getDocuments().size(), Objects.requireNonNull(pageIds).size());
 
         // update index without clearance
         final var siteIndexSummaryAfterUpdate = indexCrawlerPage(

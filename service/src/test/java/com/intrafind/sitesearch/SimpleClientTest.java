@@ -113,7 +113,6 @@ public class SimpleClientTest {
     private static final String EMAIL = "user@examaple.com";
 
     private void search() {
-//        final var searchQuery = ",.on-dEmand,.";
         final var searchQuery = "ondEmand";
         final var search = caller.exchange(SiteController.ENDPOINT + "/" + SITE_ID + "/search?query=" + searchQuery,
                 HttpMethod.GET, HttpEntity.EMPTY, Hits.class);
@@ -124,9 +123,9 @@ public class SimpleClientTest {
         assertEquals(1, search.getBody().getResults().size());
         final var foundPage = search.getBody().getResults().get(0);
         assertEquals(SiteTest.buildPage().getSisLabels(), Arrays.asList("mars", "Venus"));
-        if (Document.IS_OSS) { // works once oss switch is enabled via SPRING_PROFILES_ACTIVE=oss
+        if (Document.IS_OSS) { 
             assertEquals(SiteTest.buildPage().getTitle(), foundPage.getTitle());
-            assertEquals("Site Search is IntraFind's <span class=\"if-teaser-highlight\">on</span>-<span class=\"if-teaser-highlight\">demand</span> solution for site search.", foundPage.getBody());
+            assertEquals("Site Search is IntraFind's on-<span class=\"if-teaser-highlight\">demand</span> solution for site search.", foundPage.getBody());
             assertEquals(SiteTest.buildPage().getUrl(), foundPage.getUrl());
         }
     }

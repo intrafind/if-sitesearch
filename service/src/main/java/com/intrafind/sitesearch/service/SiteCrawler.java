@@ -58,7 +58,6 @@ public class SiteCrawler extends WebCrawler {
     public static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json");
     private final static Logger LOG = LoggerFactory.getLogger(SiteCrawler.class);
     private static final Pattern BLACKLIST = Pattern.compile(".*(\\.(css|js|gif|jpg|jpeg|png|mp3|mp4|zip|gz|xml|svg))$");
-    //    private static final Pattern WHITELIST= Pattern.compile(".*(\\.(html|htm|txt|pdf))$");
     static final Map<UUID, AtomicInteger> PAGE_COUNT = new HashMap<>();
     public static final OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()
             .followRedirects(false)

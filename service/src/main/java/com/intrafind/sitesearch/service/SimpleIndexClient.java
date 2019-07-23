@@ -37,7 +37,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
@@ -70,8 +69,9 @@ public class SimpleIndexClient implements Index {
         final var indexType = getIndexType(docId);
 
         if (indexType.equals(SVC_SINGLETONS)) {
-            final List<CrawlStatus> crawlStatus = new ArrayList<>();
-            final var sitesCrawlStatus = new SitesCrawlStatus(new HashSet<>(crawlStatus));
+//            final List<CrawlStatus> crawlStatus = new ArrayList<>();
+//            final var sitesCrawlStatus = new SitesCrawlStatus(new HashSet<>(crawlStatus));
+            final var sitesCrawlStatus = new SitesCrawlStatus(new HashSet<>(Collections.emptyList()));
             documents[0].getFields().forEach((siteId, status) ->
                     sitesCrawlStatus.getSites().add(new CrawlStatus(UUID.fromString(
                             siteId), Instant.parse(status.get(0)), Long.parseLong(status.get(1))
