@@ -166,7 +166,7 @@ public class SimpleIndexClient implements Index {
         final var indexType = getIndexType(docId);
 
         final var call = HttpRequest.newBuilder()
-                .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_delete_by_query?refresh=false"))
+                .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_delete_by_query?refresh=true"))
                 .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .POST(HttpRequest.BodyPublishers.ofString("{\"query\": {\"terms\": {\"_id\":" +
