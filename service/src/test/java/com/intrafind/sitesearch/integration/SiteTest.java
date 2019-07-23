@@ -540,8 +540,8 @@ public class SiteTest {
 
         final var allPagesAfterClearance = caller.exchange(SiteController.ENDPOINT + "/" + newSite.getSiteId(),
                 HttpMethod.GET, HttpEntity.EMPTY, List.class);
-        @SuppressWarnings("unchecked") final var allPageIdsAfterClearance = allPagesAfterClearance.getBody();
-        assertEquals(siteIndexSummaryAfterClearance.getDocuments().size(), allPageIdsAfterClearance.size());
+        final var allPageIdsAfterClearance = allPagesAfterClearance.getBody();
+        assertEquals(siteIndexSummaryAfterClearance.getDocuments().size(), Objects.requireNonNull(allPageIdsAfterClearance).size());
     }
 
     private SiteIndexSummary indexCrawlerPage(String indexedDocumentsPage, UUID siteId, UUID siteSecret, Boolean clearIndex) {
@@ -551,7 +551,7 @@ public class SiteTest {
                 HttpMethod.PUT, HttpEntity.EMPTY, SiteIndexSummary.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertTrue(response.getBody().getFailed().isEmpty());
+        assertTrue(Objects.requireNonNull(response.getBody()).getFailed().isEmpty());
         assertFalse(response.getBody().getDocuments().isEmpty());
         assertTrue(response.getBody().getSuccessCount() > 0);
 
