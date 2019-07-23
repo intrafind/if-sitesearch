@@ -60,7 +60,7 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SmokeTest {
     private static final Logger LOG = LoggerFactory.getLogger(SmokeTest.class);
-    public static final String SITES_API = SiteCrawler.SIS_API_SERVICE_URL + "/sites/";
+    public static final String SITES_API = "https://api." + Application.SIS_DOMAIN + "/sites/";
     static final String INVALID_CREDENTIALS = "https://sitesearch:invalid" + System.getenv("SERVICE_SECRET");
     public static final String API_FRONTPAGE_MARKER = "<title>Site Search</title>";
     static final String SEARCH_SERVICE_DOMAIN = "@main." + Application.SIS_DOMAIN + "/";
