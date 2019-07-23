@@ -29,6 +29,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
+import com.intrafind.sitesearch.Application;
 import com.intrafind.sitesearch.dto.CaptchaVerification;
 import com.intrafind.sitesearch.dto.CrawlStatus;
 import com.intrafind.sitesearch.dto.CrawlerJobResult;
@@ -111,8 +112,8 @@ public class CrawlerController {
         final var session = Session.getDefaultInstance(props, null);
 
         final var email = new MimeMessage(session);
-        email.setFrom(new InternetAddress("team@sitesearch.cloud"));
-        email.setReplyTo(new InternetAddress[]{new InternetAddress("feedback@sitesearch.cloud")});
+        email.setFrom(new InternetAddress("team@" + Application.SIS_DOMAIN));
+        email.setReplyTo(new InternetAddress[]{new InternetAddress("feedback@" + Application.SIS_DOMAIN)});
         email.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(to));
         email.addRecipient(javax.mail.Message.RecipientType.BCC, new InternetAddress(PROSPECTS_EMAIL_ADDRESS));
         email.setSubject(subject);
@@ -174,10 +175,10 @@ public class CrawlerController {
                                 "</dd><dt>Site ID:</dt><dd>" + siteId +
                                 "</dd><dt>Site Secret:</dt><dd>" + siteSecret +
                                 "</dd></dl>" +
-                                "<a href='" + "https://sitesearch.cloud/getting-started/?siteId=" + siteId + "&siteSecret=" + siteSecret + "&url=" + url + "'>Try Site Search as it would look like on your site, using this evaluation link.</a>" +
+                                "<a href='" + "https://" + Application.SIS_DOMAIN + "/getting-started/?siteId=" + siteId + "&siteSecret=" + siteSecret + "&url=" + url + "'>Try Site Search as it would look like on your site, using this evaluation link.</a>" +
                                 "<br/>Please do not hesitate to ask us any questions you should encounter during your 14-day evaluation period!" +
-                                "<br/>After the 14-day trial period, you can just continue using Site Search by <a href='https://sitesearch.cloud/pricing'>subscribing to one of our offerings</a>." +
-                                "<br/><br/>Using the credentials above, you agree with our <a href='https://sitesearch.cloud/terms'>Terms & Conditions</a>." +
+                                "<br/>After the 14-day trial period, you can just continue using Site Search by <a href='https://" + Application.SIS_DOMAIN + "/pricing'>subscribing to one of our offerings</a>." +
+                                "<br/><br/>Using the credentials above, you agree with our <a href='https://" + Application.SIS_DOMAIN + "/terms'>Terms & Conditions</a>." +
                                 "<br/><br/>Cheers," +
                                 "<br/>Site Search Team"
                 )

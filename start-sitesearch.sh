@@ -8,6 +8,7 @@ docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
 
 ssh ubuntu@main.sitesearch.cloud docker rm -f if-sitesearch
 ssh ubuntu@main.sitesearch.cloud docker run --rm -d --name if-sitesearch \
+    --env SIS_API_SERVICE_URL=$SIS_API_SERVICE_URL \
     --env SERVICE_SECRET=$SERVICE_SECRET \
     --env SIS_SERVICE_HOST=$SIS_SERVICE_HOST \
     --env WOO_COMMERCE_CONSUMER_KEY="$WOO_COMMERCE_CONSUMER_KEY" \

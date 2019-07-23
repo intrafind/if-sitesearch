@@ -18,16 +18,12 @@ package com.intrafind.sitesearch.service;
 
 import com.intrafind.api.search.Hits;
 import com.intrafind.api.search.Search;
+import com.intrafind.sitesearch.Application;
 import org.springframework.stereotype.Repository;
-
-import java.net.URI;
-
-import static com.intrafind.sitesearch.Application.SERVICE_SECRET;
 
 @Repository
 public class IFSearchService implements Search {
-    static final URI IFINDER_CORE = URI.create("https://sitesearch:" + SERVICE_SECRET + "@main.sitesearch.cloud/hessian");
-    private static final Search SEARCH_SERVICE_CLIENT = IfinderCoreClient.newHessianClient(Search.class, IFINDER_CORE + "/search");
+    private static final Search SEARCH_SERVICE_CLIENT = IfinderCoreClient.newHessianClient(Search.class, Application.IFINDER_CORE + "/search");
 
     @Override
     public Hits search(String searchQuery, Object... parameters) {

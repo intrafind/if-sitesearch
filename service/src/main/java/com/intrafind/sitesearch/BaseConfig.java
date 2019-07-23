@@ -45,13 +45,13 @@ public class BaseConfig {
     @Bean
     public Docket hideApi(final ServletContext servletContext) {
         return new Docket(DocumentationType.SWAGGER_2)
-                .host(Application.SIS_SERVICE_HOST)
+                .host("api." + Application.SIS_DOMAIN)
                 .apiInfo(new ApiInfo(
                         "Site Search API",
                         "A simple website search solution",
                         "v1",
-                        "https://" + Application.SIS_SERVICE_HOST + "/terms",
-                        new Contact("IntraFind Software AG", "https://" + Application.SIS_SERVICE_HOST, "feedback@sitesearch.cloud"),
+                        "https://" + Application.SIS_DOMAIN + "/terms",
+                        new Contact("IntraFind Software AG", "https://" + Application.SIS_DOMAIN, "feedback@" + Application.SIS_DOMAIN),
                         "Apache License, Version 2.0",
                         "https://github.com/intrafind/if-sitesearch/blob/master/LICENSE",
                         Collections.emptyList()

@@ -49,7 +49,7 @@ public class CrawlerService {
     private static final Logger LOG = LoggerFactory.getLogger(CrawlerService.class);
     private static final String CRAWLER_STORAGE = "data/crawler";
     private static final Random RANDOM_VERSION = new Random();
-    public static final String SITE_SEARCH_USER_AGENT = Application.SIS_SERVICE_HOST;
+    public static final String SITE_SEARCH_USER_AGENT = Application.SIS_DOMAIN;
 
     private CrawlController controller;
 

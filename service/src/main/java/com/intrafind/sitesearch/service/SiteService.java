@@ -470,7 +470,7 @@ public class SiteService {
     public boolean clearIndex(UUID siteId, UUID siteSecret) {
         try {
             final Request request = new Request.Builder()
-                    .url(Application.SIS_API_SERVICE_URL + "/sites/" + siteId + "?siteSecret=" + siteSecret)
+                    .url("https://api." + Application.SIS_DOMAIN + "/sites/" + siteId + "?siteSecret=" + siteSecret)
                     .delete()
                     .build();
             final Response response = SiteCrawler.HTTP_CLIENT.newCall(request).execute();

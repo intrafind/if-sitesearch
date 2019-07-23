@@ -19,6 +19,7 @@ runService() {
     ssh ubuntu@main.sitesearch.cloud docker run -d --name $1 \
         --log-driver=gelf \
         --log-opt gelf-address=udp://logs.sitesearch.cloud:12201 \
+        --env SIS_API_SERVICE_URL=$SIS_API_SERVICE_URL \
         --env SERVICE_SECRET=$SERVICE_SECRET \
         --env SIS_SERVICE_HOST=$SIS_SERVICE_HOST \
         --env WOO_COMMERCE_CONSUMER_KEY="$WOO_COMMERCE_CONSUMER_KEY" \
@@ -36,6 +37,7 @@ runService() {
 
 startComponent() {
     ssh ubuntu@main.sitesearch.cloud docker rm -f $1
+#    ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch:$docker_tag
     ssh ubuntu@main.sitesearch.cloud docker rmi -f docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
     runService $1
 }
@@ -43,6 +45,7 @@ startComponent() {
 if isBlueUp; then
     echo "blue is active"
     current="${container_name}-green"
+#    export docker_tag=green
 
     startComponent ${current}
     startComponent ${current}-1
@@ -52,6 +55,7 @@ if isBlueUp; then
 else
     echo "blue is inactive"
     current="${container_name}-blue"
+#    export docker_tag=blue
 
     startComponent ${current}
     startComponent ${current}-1

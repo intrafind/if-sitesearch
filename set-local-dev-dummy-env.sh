@@ -2,7 +2,8 @@
 
 # Execute this to set all required environment variables, in order to launch service.
 
-export SIS_SERVICE_HOST=localhost:8001
+export SIS_API_SERVICE_URL=http://localhost:8001 # for local development only, should point to the actual API endpoint in production
+export SIS_SERVICE_HOST=main.sitesearch.cloud
 export ADMIN_SITE_SECRET=82ba4106-397b-11e8-9155-0a0027000009
 export RECAPTCHA_SITE_SECRET=82ba4106-397b-11e8-9155-0a0027000009 # deprecated, remove later on, also from CI
 export INVISIBLE_RECAPTCHA_SITE_SECRET=82ba4106-397b-11e8-9155-0a0027000009
