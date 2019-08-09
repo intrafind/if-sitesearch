@@ -19,6 +19,7 @@ ssh ubuntu@main.sitesearch.cloud docker run --rm -d --name if-sitesearch \
     --env BUILD_NUMBER=$BUILD_NUMBER \
     --env SCM_HASH=$SCM_HASH \
     --env SECURITY_OAUTH2_CLIENT_CLIENT_SECRET=$SECURITY_OAUTH2_CLIENT_CLIENT_SECRET \
+    --restart unless-stopped \
     --network sitesearch \
     docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
 
