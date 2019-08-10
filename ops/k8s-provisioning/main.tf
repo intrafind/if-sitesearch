@@ -37,7 +37,7 @@ resource "null_resource" "update-migration" {
   }
   provisioner "remote-exec" {
     inline = [
-      //      "helm install /srv/asset/app --name ${terraform.workspace} --namespace ${terraform.workspace} --set app.TENANT=${terraform.workspace},app.HETZNER_API_TOKEN=${var.hetzner_cloud_muctool},app.tenant=${terraform.workspace},app.password=${var.password} --set-string app.volumeHandle=3052845",
+      //      "helm install /srv/asset/app --name ${terraform.workspace} --namespace ${terraform.workspace} --set app.TENANT=${terraform.workspace},app.HETZNER_API_TOKEN=${var.hetzner_cloud_intrafind},app.tenant=${terraform.workspace},app.password=${var.password} --set-string app.volumeHandle=3052845",
       "kubectl get svc,node,pvc,deployment,pods,pvc,pv,namespace -A",
     ]
   }
@@ -47,7 +47,7 @@ variable "password" {
   type = string
 }
 
-variable "hetzner_cloud_muctool" {
+variable "hetzner_cloud_intrafind" {
   type = string
 }
 
@@ -83,7 +83,7 @@ output "k8s_node" {
 }
 
 provider "hcloud" {
-  token = var.hetzner_cloud_muctool
+  token = var.hetzner_cloud_intrafind
 }
 
 variable "nodeCount" {
@@ -108,7 +108,7 @@ resource "hcloud_server" "node" {
   ]
 
   provisioner "local-exec" {
-    command = "cat << EOF >> ~/.bash_ssh_connections\nalias muc-${terraform.workspace}-node-${count.index}='ssh -o StrictHostKeyChecking=no root@${self.ipv4_address}'\n"
+    command = "cat << EOF >> ~/.bash_ssh_connections\nalias if-${terraform.workspace}-node-${count.index}='ssh -o StrictHostKeyChecking=no root@${self.ipv4_address}'\n"
   }
 
   provisioner "remote-exec" {
@@ -148,7 +148,7 @@ resource "hcloud_server" "master" {
   ]
 
   provisioner "local-exec" {
-    command = "cat << EOF >> ~/.bash_ssh_connections\nalias muc-${terraform.workspace}='ssh -o StrictHostKeyChecking=no root@${self.ipv4_address}'\n"
+    command = "cat << EOF >> ~/.bash_ssh_connections\nalias if-${terraform.workspace}='ssh -o StrictHostKeyChecking=no root@${self.ipv4_address}'\n"
   }
 
   provisioner "file" {
@@ -196,11 +196,11 @@ resource "hcloud_server" "master" {
 resource "hcloud_rdns" "node" {
   server_id  = hcloud_server.node[0].id
   ip_address = hcloud_server.node[0].ipv4_address
-  dns_ptr    = "${hcloud_server.node[0].name}.muctool.de"
+  dns_ptr    = "${hcloud_server.node[0].name}.intrafind.net"
 }
 
 resource "hcloud_rdns" "master" {
   server_id  = hcloud_server.master[0].id
   ip_address = hcloud_server.master[0].ipv4_address
-  dns_ptr    = "${hcloud_server.master[0].name}.muctool.de"
+  dns_ptr    = "${hcloud_server.master[0].name}.intrafind.net"
 }
