@@ -1,3 +1,9 @@
+terraform {
+  backend "gcs" {
+    bucket = "intrafind-ops"
+    prefix = "terraform"
+  }
+}
 resource "hcloud_network" "cluster" {
   name     = "k8s-${terraform.workspace}"
   ip_range = "10.0.0.0/8"
