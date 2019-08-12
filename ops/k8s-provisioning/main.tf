@@ -19,17 +19,20 @@ resource "hcloud_network_subnet" "tenant" {
   network_zone = "eu-central"
   ip_range     = "10.0.1.0/24"
 }
-//resource "hcloud_server_network" "node" {
-//  network_id = hcloud_network.cluster.id
-//  server_id  = hcloud_server.node[0].id
-//  ip         = "10.0.1.20"
-//}
-//resource "hcloud_server_network" "master" {
-//  network_id = hcloud_network.cluster.id
-//  server_id  = hcloud_server.master[0].id
-//  ip         = "10.0.1.10"
-//}
-
+resource "hcloud_server_network" "node" {
+  network_id = hcloud_network.cluster.id
+  server_id  = hcloud_server.node[0].id
+  ip         = "10.0.1.20"
+}
+resource "hcloud_server_network" "master" {
+  network_id = hcloud_network.cluster.id
+  server_id  = hcloud_server.master[0].id
+  ip         = "10.0.1.10"
+}
+variable "docker_registry_k8s_secret" {
+  type    = string
+  default = ""
+}
 resource "null_resource" "update-migration" {
   depends_on = [
     hcloud_server.node
@@ -43,7 +46,7 @@ resource "null_resource" "update-migration" {
   }
   provisioner "remote-exec" {
     inline = [
-      //      "helm install /srv/asset/app --name ${terraform.workspace} --namespace ${terraform.workspace} --set app.TENANT=${terraform.workspace},app.HETZNER_API_TOKEN=${var.hetzner_cloud_intrafind},app.tenant=${terraform.workspace},app.password=${var.password} --set-string app.volumeHandle=3052845",
+      //            "helm install /srv/asset/app --name ${terraform.workspace} --namespace ${terraform.workspace} --set app.TENANT=${terraform.workspace},app.HETZNER_API_TOKEN=${var.hetzner_cloud_intrafind},app.tenant=${terraform.workspace},app.password=${var.password},app.dockerRegistrySecret=${var.docker_registry_k8s_secret} --set-string app.volumeHandle=${var.volumeHandle}",
       "kubectl get svc,node,pvc,deployment,pods,pvc,pv,namespace -A",
     ]
   }
@@ -125,15 +128,13 @@ resource "hcloud_server" "node" {
 
     inline = [
       "echo 'root:${local.password}' | chpasswd",
-      "apt-get update && sleep 1 && apt-get install -y curl software-properties-common",
+      "apt-get update && sleep 0 && apt-get install -y curl software-properties-common",
       "curl -s https://download.docker.com/linux/debian/gpg | apt-key add -",
       "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -",
       "add-apt-repository \"deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main\"",
       "add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable\"",
       "apt-get update && apt-get install rsync docker-ce kubeadm sshpass busybox -y",
       "sed -i -e 's/%sudo	ALL=(ALL:ALL) ALL/%sudo	ALL=(ALL:ALL) NOPASSWD:ALL/g' /etc/sudoers",
-      //      "iptables -A INPUT -p tcp --match multiport -s 0/0 -d ${self.ipv4_address} --dports 22,80,179,443,2080,2379,4789,5473,6443,8080,9200,9602,9603,6040:55923 -m state --state NEW,ESTABLISHED -j ACCEPT",
-      //      "iptables -A OUTPUT -p tcp -s ${self.ipv4_address} -d 0/0 --match multiport --sports 22,80,179,443,2080,2379,4789,5473,6443,8080,9200,9602,9603,6040:55923 -m state --state ESTABLISHED -j ACCEPT",
       "containerd config default > /etc/containerd/config.toml && systemctl restart containerd",
       "sshpass -p ${local.password} scp -o StrictHostKeyChecking=no root@${hcloud_server.master[0].ipv4_address}:/srv/kubeadm_join /tmp && eval $(cat /tmp/kubeadm_join)",
     ]
@@ -173,7 +174,7 @@ resource "hcloud_server" "master" {
     }
 
     inline = [
-      "apt-get update && sleep 1 && apt-get install -y curl software-properties-common",
+      "apt-get update && sleep 0 && apt-get install curl software-properties-common -y",
       "curl -s https://download.docker.com/linux/debian/gpg | apt-key add -",
       "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -",
       "add-apt-repository \"deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main\"",
@@ -192,8 +193,6 @@ resource "hcloud_server" "master" {
       //      "kubectl apply -f https://raw.githubusercontent.com/hetznercloud/csi-driver/master/deploy/kubernetes/hcloud-csi.yml",
       "kubectl apply -f /srv/asset/init-helm-rbac-config.yaml",
       "curl -L https://git.io/get_helm.sh | bash && helm init --upgrade",
-      //      "iptables -A INPUT -p tcp --match multiport -s 0/0 -d ${self.ipv4_address} --dports 22,80,179,443,2080,2379,4789,5473,6443,8080,9200,9602,9603,6040:55923 -m state --state NEW,ESTABLISHED -j ACCEPT",
-      //      "iptables -A OUTPUT -p tcp -s ${self.ipv4_address} -d 0/0 --match multiport --sports 22,80,179,443,2080,2379,4789,5473,6443,8080,9200,9602,9603,6040:55923 -m state --state ESTABLISHED -j ACCEPT",
       "kubectl get svc,node,pvc,deployment,pods,pvc,pv,namespace,serviceaccount,clusterrolebinding -A",
     ]
   }
