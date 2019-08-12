@@ -114,6 +114,7 @@ resource "hcloud_server" "node" {
   server_type = "cx21-ceph"
   ssh_keys = [
     "alex",
+    "minion",
   ]
 
   provisioner "local-exec" {
@@ -128,13 +129,13 @@ resource "hcloud_server" "node" {
 
     inline = [
       "echo 'root:${local.password}' | chpasswd",
-      "apt-get update && sleep 0 && apt-get install -y curl software-properties-common",
+      "apt-get update && sleep 2 && apt-get install -y curl software-properties-common",
       "curl -s https://download.docker.com/linux/debian/gpg | apt-key add -",
       "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -",
-      "add-apt-repository \"deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main\"",
+      "add-apt-repository 'deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main'",
       "add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable\"",
       "apt-get update && apt-get install rsync docker-ce kubeadm sshpass busybox -y",
-      "sed -i -e 's/%sudo	ALL=(ALL:ALL) ALL/%sudo	ALL=(ALL:ALL) NOPASSWD:ALL/g' /etc/sudoers",
+      //      "sed -i -e 's/%sudo	ALL=(ALL:ALL) ALL/%sudo	ALL=(ALL:ALL) NOPASSWD:ALL/g' /etc/sudoers",
       "containerd config default > /etc/containerd/config.toml && systemctl restart containerd",
       "sshpass -p ${local.password} scp -o StrictHostKeyChecking=no root@${hcloud_server.master[0].ipv4_address}:/srv/kubeadm_join /tmp && eval $(cat /tmp/kubeadm_join)",
     ]
@@ -152,6 +153,7 @@ resource "hcloud_server" "master" {
   server_type = "cx21-ceph"
   ssh_keys = [
     "alex",
+    "minion",
   ]
 
   provisioner "local-exec" {
@@ -174,16 +176,16 @@ resource "hcloud_server" "master" {
     }
 
     inline = [
-      "apt-get update && sleep 0 && apt-get install curl software-properties-common -y",
+      "echo 'root:${local.password}' | chpasswd",
+      "apt-get update && sleep 1 && apt-get install curl software-properties-common -y",
       "curl -s https://download.docker.com/linux/debian/gpg | apt-key add -",
       "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -",
-      "add-apt-repository \"deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main\"",
+      "add-apt-repository 'deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main'",
       "add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable\"",
       "apt-get update && apt-get install rsync docker-ce kubeadm -y",
-      "sed -i -e 's/%sudo	ALL=(ALL:ALL) ALL/%sudo	ALL=(ALL:ALL) NOPASSWD:ALL/g' /etc/sudoers",
-      "adduser --disabled-password --gecos '' minion && usermod -aG sudo minion && usermod --unlock minion",
-      "echo 'minion:${local.password}' | chpasswd",
-      "echo 'root:${local.password}' | chpasswd",
+      //      "sed -i -e 's/%sudo	ALL=(ALL:ALL) ALL/%sudo	ALL=(ALL:ALL) NOPASSWD:ALL/g' /etc/sudoers",
+      //      "adduser --disabled-password --gecos '' minion && usermod -aG sudo minion && usermod --unlock minion",
+      //      "echo 'minion:${local.password}' | chpasswd",
       "containerd config default > /etc/containerd/config.toml && systemctl restart containerd",
       "kubeadm init --cri-socket /run/containerd/containerd.sock",
       "mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && chown $(id -u):$(id -g) $HOME/.kube/config",
@@ -193,7 +195,7 @@ resource "hcloud_server" "master" {
       //      "kubectl apply -f https://raw.githubusercontent.com/hetznercloud/csi-driver/master/deploy/kubernetes/hcloud-csi.yml",
       "kubectl apply -f /srv/asset/init-helm-rbac-config.yaml",
       "curl -L https://git.io/get_helm.sh | bash && helm init --upgrade",
-      "kubectl get svc,node,pvc,deployment,pods,pvc,pv,namespace,serviceaccount,clusterrolebinding -A",
+      //      "kubectl get svc,node,pvc,deployment,pods,pvc,pv,namespace,serviceaccount,clusterrolebinding -A",
     ]
   }
 }
