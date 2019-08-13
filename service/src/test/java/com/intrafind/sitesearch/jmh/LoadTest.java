@@ -67,7 +67,8 @@ public class LoadTest {
     private static final UUID LOAD_SITE_ID = UUID.fromString("563714f1-96c0-4500-b366-4fc7e734fa1d");
 
     static {
-        LOAD_TARGET = "https://api.sitesearch.cloud";
+        LOAD_TARGET = System.getenv("SIS_API_SERVICE_URL");
+        //        LOAD_TARGET = "https://api.sitesearch.cloud";
 
         SEARCH_QUERIES.put("hypothek", 40);
         SEARCH_QUERIES.put("swiss", 30);
