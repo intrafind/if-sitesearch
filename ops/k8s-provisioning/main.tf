@@ -19,16 +19,16 @@ resource "hcloud_network_subnet" "tenant" {
   network_zone = "eu-central"
   ip_range     = "10.0.1.0/24"
 }
-resource "hcloud_server_network" "node" {
-  network_id = hcloud_network.cluster.id
-  server_id  = hcloud_server.node[0].id
-  ip         = "10.0.1.20"
-}
-resource "hcloud_server_network" "master" {
-  network_id = hcloud_network.cluster.id
-  server_id  = hcloud_server.master[0].id
-  ip         = "10.0.1.10"
-}
+//resource "hcloud_server_network" "node" {
+//  network_id = hcloud_network.cluster.id
+//  server_id  = hcloud_server.node[0].id
+//  ip         = "10.0.1.20"
+//}
+//resource "hcloud_server_network" "master" {
+//  network_id = hcloud_network.cluster.id
+//  server_id  = hcloud_server.master[0].id
+//  ip         = "10.0.1.10"
+//}
 variable "docker_registry_k8s_secret" {
   type    = string
   default = ""
