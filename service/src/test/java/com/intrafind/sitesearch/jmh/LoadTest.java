@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -67,7 +68,7 @@ public class LoadTest {
     private static final UUID LOAD_SITE_ID = UUID.fromString("563714f1-96c0-4500-b366-4fc7e734fa1d");
 
     static {
-        LOAD_TARGET = System.getenv("SIS_API_SERVICE_URL");
+        LOAD_TARGET = URI.create(System.getenv("SIS_API_SERVICE_URL")).toString();
         //        LOAD_TARGET = "https://api.sitesearch.cloud";
 
         SEARCH_QUERIES.put("hypothek", 40);
