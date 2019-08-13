@@ -126,11 +126,27 @@
  * limitations under the License.
  */
 
+/*
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 // Migrate to Kotlin https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/
 plugins {
     java
     idea
-    id("me.champeau.gradle.jmh") version "0.5.0-rc-1"
+    id("me.champeau.gradle.jmh") version "0.5.0-rc-2"
     id("io.morethan.jmhreport") version "0.9.0"
     id("org.springframework.boot") version "2.1.7.RELEASE"
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
@@ -177,15 +193,15 @@ dependencies {
     testCompile("org.openjdk.jmh:jmh-core:1.21")
     testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
 
-    compile("org.codehaus.groovy:groovy-templates:3.0.0-beta-2")
+    compile("org.codehaus.groovy:groovy-templates:3.0.0-beta-3")
     runtimeClasspath("org.springframework.boot:spring-boot-devtools:$springBootVersion")
 
-    compile("com.squareup.okhttp3:okhttp:4.0.1")
+    compile("com.squareup.okhttp3:okhttp:4.1.0")
     compile("org.jsoup:jsoup:1.12.1")
 
     compile("org.mnode.mstor:mstor:1.0.0")
     compile("com.google.oauth-client:google-oauth-client-jetty:1.30.1")
-    compile("com.google.apis:google-api-services-gmail:v1-rev104-1.25.0")
+    compile("com.google.apis:google-api-services-gmail:v1-rev20190602-1.30.1")
 }
 
 jib {
