@@ -11,6 +11,14 @@ To apply the patch, change the buildType with id = 'LoadTest'
 accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("LoadTest")) {
+    vcs {
+
+        check(cleanCheckout == false) {
+            "Unexpected option value: cleanCheckout = $cleanCheckout"
+        }
+        cleanCheckout = true
+    }
+
     expectSteps {
         script {
             scriptContent = "sh load-test.sh"
