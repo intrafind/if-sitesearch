@@ -46,8 +46,9 @@ resource "null_resource" "update-migration" {
   }
   provisioner "remote-exec" {
     inline = [
-      //            "helm install /srv/asset/app --name ${terraform.workspace} --namespace ${terraform.workspace} --set app.TENANT=${terraform.workspace},app.HETZNER_API_TOKEN=${var.hetzner_cloud_intrafind},app.tenant=${terraform.workspace},app.password=${var.password},app.dockerRegistrySecret=${var.docker_registry_k8s_secret} --set-string app.volumeHandle=${var.volumeHandle}",
-      "kubectl get svc,node,pvc,deployment,pods,pvc,pv,namespace -A",
+      "kubectl create secret docker-registry docker-registry --docker-server=docker-registry.intrafind.net --docker-username=sitesearch --docker-password=${var.password}",
+      "helm install /srv/asset/sis-sitesearch --name ${terraform.workspace} --namespace ${terraform.workspace} --set app.TENANT=${terraform.workspace},app.HETZNER_API_TOKEN=${var.hetzner_cloud_intrafind},app.tenant=${terraform.workspace},app.password=${var.password},app.dockerRegistrySecret=${var.docker_registry_k8s_secret},app.EXTERNAL_IP=${hcloud_server.master[0].ipv4_address} --set-string app.volumeHandle=3052845",
+      "kubectl get svc,node,pvc,deployment,pods,pvc,pv,namespace,job -A",
     ]
   }
 }
@@ -61,7 +62,7 @@ variable "hetzner_cloud_intrafind" {
 }
 
 locals {
-  dcLocation    = "nbg1"
+  //  dcLocation    = "nbg1"
   dc            = "nbg1-dc3"
   updateTrigger = timestamp()
   password      = var.password == "" ? uuid() : var.password
@@ -104,11 +105,11 @@ variable "masterCount" {
   default = 1
 }
 resource "hcloud_server" "node" {
-  location = local.dcLocation
+  //  location = local.dcLocation
   labels = {
     password = local.password
   }
-  name        = "${terraform.workspace}-node-${count.index}"
+  name        = "sis-${terraform.workspace}-node-${count.index}"
   count       = var.nodeCount
   image       = "debian-10"
   server_type = "cx21-ceph"
@@ -118,7 +119,7 @@ resource "hcloud_server" "node" {
   ]
 
   provisioner "local-exec" {
-    command = "cat << EOF >> ~/.bash_ssh_connections\nalias if-${terraform.workspace}-node-${count.index}='ssh -o StrictHostKeyChecking=no root@${self.ipv4_address}'\n"
+    command = "cat << EOF >> ~/.bash_ssh_connections\nalias sis-${terraform.workspace}-node-${count.index}='ssh -o StrictHostKeyChecking=no root@${self.ipv4_address}'\n"
   }
 
   provisioner "remote-exec" {
@@ -135,7 +136,6 @@ resource "hcloud_server" "node" {
       "add-apt-repository 'deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main'",
       "add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable\"",
       "apt-get update && apt-get install rsync docker-ce kubeadm sshpass busybox -y",
-      //      "sed -i -e 's/%sudo	ALL=(ALL:ALL) ALL/%sudo	ALL=(ALL:ALL) NOPASSWD:ALL/g' /etc/sudoers",
       "containerd config default > /etc/containerd/config.toml && systemctl restart containerd",
       "sshpass -p ${local.password} scp -o StrictHostKeyChecking=no root@${hcloud_server.master[0].ipv4_address}:/srv/kubeadm_join /tmp && eval $(cat /tmp/kubeadm_join)",
     ]
@@ -143,11 +143,11 @@ resource "hcloud_server" "node" {
 }
 
 resource "hcloud_server" "master" {
-  location = local.dcLocation
+  //  location = local.dcLocation
   labels = {
     password = local.password
   }
-  name        = "${terraform.workspace}-master-${count.index}"
+  name        = "sis-${terraform.workspace}-master-${count.index}"
   count       = var.masterCount
   image       = "debian-10"
   server_type = "cx21-ceph"
@@ -157,7 +157,7 @@ resource "hcloud_server" "master" {
   ]
 
   provisioner "local-exec" {
-    command = "cat << EOF >> ~/.bash_ssh_connections\nalias if-${terraform.workspace}='ssh -o StrictHostKeyChecking=no root@${self.ipv4_address}'\n"
+    command = "cat << EOF >> ~/.bash_ssh_connections\nalias sis-${terraform.workspace}='ssh -o StrictHostKeyChecking=no root@${self.ipv4_address}'\n"
   }
 
   provisioner "file" {
@@ -183,9 +183,6 @@ resource "hcloud_server" "master" {
       "add-apt-repository 'deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main'",
       "add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable\"",
       "apt-get update && apt-get install rsync docker-ce kubeadm -y",
-      //      "sed -i -e 's/%sudo	ALL=(ALL:ALL) ALL/%sudo	ALL=(ALL:ALL) NOPASSWD:ALL/g' /etc/sudoers",
-      //      "adduser --disabled-password --gecos '' minion && usermod -aG sudo minion && usermod --unlock minion",
-      //      "echo 'minion:${local.password}' | chpasswd",
       "containerd config default > /etc/containerd/config.toml && systemctl restart containerd",
       "kubeadm init --cri-socket /run/containerd/containerd.sock",
       "mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && chown $(id -u):$(id -g) $HOME/.kube/config",
@@ -195,7 +192,6 @@ resource "hcloud_server" "master" {
       //      "kubectl apply -f https://raw.githubusercontent.com/hetznercloud/csi-driver/master/deploy/kubernetes/hcloud-csi.yml",
       "kubectl apply -f /srv/asset/init-helm-rbac-config.yaml",
       "curl -L https://git.io/get_helm.sh | bash && helm init --upgrade",
-      //      "kubectl get svc,node,pvc,deployment,pods,pvc,pv,namespace,serviceaccount,clusterrolebinding -A",
     ]
   }
 }

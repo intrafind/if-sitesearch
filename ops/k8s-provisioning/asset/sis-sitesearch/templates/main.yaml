@@ -1,0 +1,127 @@
+---
+apiVersion: v1
+data:
+    .dockerconfigjson: {{ .Values.app.dockerRegistrySecret }}
+kind: Secret
+metadata:
+    name: docker-registry-credentials-intrafind-net
+type: kubernetes.io/dockerconfigjson
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: hcloud-csi
+    namespace: kube-system
+stringData:
+    token: {{ .Values.app.HETZNER_API_TOKEN }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: if-sitesearch
+    labels:
+        app: if-sitesearch
+spec:
+    selector:
+        matchLabels:
+            app: if-sitesearch
+    template:
+        metadata:
+            name: if-sitesearch
+            labels:
+                app: if-sitesearch
+        spec:
+                {{/*spec:*/}}
+            imagePullSecrets:
+                - name: docker-registry-credentials-intrafind-net
+            containers:
+                - name: if-sitesearch
+                  image: docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
+                  env:
+                      - name: SIS_API_SERVICE_URL
+                        value: https://example.com
+                      - name: SERVICE_SECRET
+                        value: {{ .Values.app.password }}
+                      - name: SIS_SERVICE_HOST
+                        value: example.com
+                      - name: WOO_COMMERCE_CONSUMER_KEY
+                        value: {{ .Values.app.password }}
+                      - name: WOO_COMMERCE_CONSUMER_SECRET
+                        value: {{ .Values.app.password }}
+                      - name: INVISIBLE_RECAPTCHA_SITE_SECRET
+                        value: {{ .Values.app.password }}
+                      - name: ADMIN_SITE_SECRET
+                        value: {{ .Values.app.password }}
+                      - name: SPRING_SECURITY_USER_PASSWORD
+                        value: {{ .Values.app.password }}
+                      - name: BUILD_NUMBER
+                        value: "0"
+                      - name: SCM_HASH
+                        value: "n/a"
+                      - name: SECURITY_OAUTH2_CLIENT_CLIENT_SECRET
+                        value: {{ .Values.app.password }}
+        {{/*              volumeMounts:*/}}
+        {{/*                  - mountPath: "/mnt/persistence"*/}}
+        {{/*                    name: storage-volume*/}}
+        {{/*        volumes:*/}}
+        {{/*            - name: storage-volume*/}}
+        {{/*              persistentVolumeClaim:*/}}
+        {{/*                  claimName: storage*/}}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: pvc-{{ .Values.app.tenant }}
+spec:
+    accessModes:
+        - ReadWriteOnce
+    capacity:
+        storage: 10Gi
+    claimRef:
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        name: storage
+        namespace: {{ .Values.app.tenant }}
+    csi:
+        driver: csi.hetzner.cloud
+        fsType: ext4
+        volumeHandle: "{{ .Values.app.volumeHandle }}"
+    nodeAffinity:
+        required:
+            nodeSelectorTerms:
+                - matchExpressions:
+                      - key: csi.hetzner.cloud/location
+                        operator: In
+                        values:
+                            - nbg1
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: hcloud-volumes
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: storage
+    namespace: {{ .Values.app.tenant }}
+spec:
+    accessModes:
+        - ReadWriteOnce
+    resources:
+        requests:
+            storage: 10Gi
+    storageClassName: hcloud-volumes
+    volumeName: pvc-{{ .Values.app.tenant }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: sis-router
+spec:
+    selector:
+        app: if-sitesearch
+    ports:
+        - name: https
+          port: 8001
+    type: LoadBalancer
+    externalIPs:
+        - {{ .Values.app.EXTERNAL_IP }}
+---
