@@ -177,7 +177,7 @@ public class CrawlerTest {
     @Test
     public void considerNoindexWhileCrawlingTwoSiteConfig() {
         final var siteId = UUID.fromString("f771eb6b-80d6-4e9f-a660-22c9972a8e06");
-        final var siteToCrawl = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(siteId, Instant.now(), -1, "M"))));
+        final var siteToCrawl = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(siteId, Instant.now(), -1, "FREE"))));
         final ResponseEntity<SitesCrawlStatus> request = caller
                 .postForEntity(SiteController.ENDPOINT + "/crawl?serviceSecret=" + SiteTest.ADMIN_SITE_SECRET
                                 + "&clearIndex=true&isThrottled=true&allSitesCrawl=true",
@@ -187,7 +187,7 @@ public class CrawlerTest {
         Objects.requireNonNull(request.getBody()).getSites().stream()
                 .filter(crawlStatus -> crawlStatus.getSiteId().equals(siteId))
                 .forEach(crawlStatus -> assertTrue(400 < crawlStatus.getPageCount()));
-        validateCrawlStatus(request.getBody(), "M");
+        validateCrawlStatus(request.getBody(), "FREE");
     }
 
     // TODO test if sitemapsOnly site profile flag is respected
