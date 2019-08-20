@@ -236,14 +236,16 @@ public class CrawlerTest {
         assertTrue(Instant.now().isAfter(Instant.parse(Objects.requireNonNull(getCrawlStatusWithUpdatedSiteId(sitesCrawlStatus)).getCrawled())));
 
         // crawl stale site
-        final SitesCrawlStatus staleSiteStatus = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(CRAWL_SITE_ID, Instant.now().minus(1, ChronoUnit.DAYS), -1, "S"))));
+        final SitesCrawlStatus staleSiteStatus = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(
+                new CrawlStatus(CRAWL_SITE_ID, Instant.now().minus(1, ChronoUnit.DAYS), -1, "FREE")
+        )));
         final ResponseEntity<SitesCrawlStatus> recrawlStaleSite = caller
                 .postForEntity(SiteController.ENDPOINT + "/crawl?allSitesCrawl=true&serviceSecret=" + SiteTest.ADMIN_SITE_SECRET,
                         new HttpEntity<>(staleSiteStatus), SitesCrawlStatus.class);
         assertEquals(HttpStatus.OK, recrawlStaleSite.getStatusCode());
         final SitesCrawlStatus staleCrawlStatus = recrawlStaleSite.getBody();
         assertTrue(1 < Objects.requireNonNull(staleCrawlStatus).getSites().size());
-        validateCrawlStatus(staleCrawlStatus, "S");
+        validateCrawlStatus(staleCrawlStatus, "FREE");
         assertTrue(containsUpdatedSiteId(staleCrawlStatus));
         assertTrue(Instant.parse(
                 new ArrayList<>(staleSiteStatus.getSites()).get(0).getCrawled())
