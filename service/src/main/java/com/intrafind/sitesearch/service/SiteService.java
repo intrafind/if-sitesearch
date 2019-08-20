@@ -225,11 +225,14 @@ public class SiteService {
         indexService.index(siteConfigDoc);
     }
 
-    private void storeCrawlStatus(SitesCrawlStatus sitesCrawlStatus) {
+    private void storeCrawlStatus(final SitesCrawlStatus sitesCrawlStatus) {
         final Document crawlStatus = new Document(CRAWL_STATUS_SINGLETON_DOCUMENT);
         sitesCrawlStatus.getSites()
                 .forEach(siteCrawlStatus ->
-                        crawlStatus.set(siteCrawlStatus.getSiteId().toString(), Arrays.asList(siteCrawlStatus.getCrawled(), siteCrawlStatus.getPageCount())));
+                        crawlStatus.set(
+                                siteCrawlStatus.getSiteId().toString(),
+                                Arrays.asList(siteCrawlStatus.getCrawled(), siteCrawlStatus.getPageCount(), siteCrawlStatus.getPlan())
+                        ));
 
         indexService.index(crawlStatus);
     }
@@ -246,7 +249,10 @@ public class SiteService {
 
             final Document updatedCrawlStatusDoc = new Document(CRAWL_STATUS_SINGLETON_DOCUMENT);
             sitesCrawlStatus.getSites()
-                    .forEach(updatedCrawlStatus -> updatedCrawlStatusDoc.set(updatedCrawlStatus.getSiteId().toString(), Arrays.asList(updatedCrawlStatus.getCrawled(), updatedCrawlStatus.getPageCount())));
+                    .forEach(updatedCrawlStatus -> updatedCrawlStatusDoc.set(
+                            updatedCrawlStatus.getSiteId().toString(),
+                            Arrays.asList(updatedCrawlStatus.getCrawled(), updatedCrawlStatus.getPageCount(), updatedCrawlStatus.getPlan())
+                    ));
             indexService.index(updatedCrawlStatusDoc);
         });
         return fetchSitesCrawlStatus;
@@ -515,7 +521,13 @@ public class SiteService {
                 } else {
                     pageCount = -1;
                 }
-                sitesCrawlStatus.add(new CrawlStatus(UUID.fromString(uuidKey), Instant.parse(crawledTimestamp.get(0)), pageCount));
+                final String plan;
+                if (crawledTimestamp.size() == 3) {
+                    plan = crawledTimestamp.get(2) == null ? "" : crawledTimestamp.get(2);
+                } else {
+                    plan = "";
+                }
+                sitesCrawlStatus.add(new CrawlStatus(UUID.fromString(uuidKey), Instant.parse(crawledTimestamp.get(0)), pageCount, plan));
             }
         }));
         return Optional.of(new SitesCrawlStatus(sitesCrawlStatus));

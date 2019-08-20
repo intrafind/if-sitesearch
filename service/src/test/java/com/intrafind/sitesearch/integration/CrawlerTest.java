@@ -166,10 +166,19 @@ public class CrawlerTest {
         assertNotEquals(Arrays.asList("Portal", "Start", "Homepage"), fetchThumbnailPage.getBody().getSisLabels());
     }
 
+    static void validateCrawlStatus(final SitesCrawlStatus crawledStatus, final String plan) {
+        final CrawlStatus crawlStatus = new ArrayList<>(crawledStatus.getSites()).get(0);
+        assertNotNull(crawlStatus.getSiteId());
+        assertTrue(Instant.parse(crawlStatus.getCrawled()).isBefore(Instant.now()));
+        assertEquals(-1, crawlStatus.getPageCount());
+        assertTrue("Site ID: " + crawlStatus.getSiteId(), crawlStatus.getPlan().startsWith(plan));
+    }
+
     @Test
     public void considerNoindexWhileCrawlingTwoSiteConfig() {
+        final var plan = "S";
         final var siteId = UUID.fromString("f771eb6b-80d6-4e9f-a660-22c9972a8e06");
-        final var siteToCrawl = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(siteId, Instant.now(), -1))));
+        final var siteToCrawl = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(siteId, Instant.now(), -1, plan))));
         final ResponseEntity<SitesCrawlStatus> request = caller
                 .postForEntity(SiteController.ENDPOINT + "/crawl?serviceSecret=" + SiteTest.ADMIN_SITE_SECRET
                                 + "&clearIndex=true&isThrottled=true&allSitesCrawl=true",
@@ -179,13 +188,14 @@ public class CrawlerTest {
         Objects.requireNonNull(request.getBody()).getSites().stream()
                 .filter(crawlStatus -> crawlStatus.getSiteId().equals(siteId))
                 .forEach(crawlStatus -> assertTrue(400 < crawlStatus.getPageCount()));
+        validateCrawlStatus(request.getBody(), plan);
     }
 
     // TODO test if sitemapsOnly site profile flag is respected
     // TODO test if pageBodyCssSelector site profile info is respected
     @Test
     public void recrawl() {
-        final SitesCrawlStatus freshlyCrawledSiteStatus = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(CRAWL_SITE_ID, Instant.now(), -1))));
+        final SitesCrawlStatus freshlyCrawledSiteStatus = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(CRAWL_SITE_ID, Instant.now(), -1, "FREE"))));
 
         // not authenticated crawl
         final ResponseEntity<SitesCrawlStatus> recrawlNotAuthenticated = caller
@@ -199,6 +209,7 @@ public class CrawlerTest {
                         SitesCrawlStatus.class);
         assertEquals(HttpStatus.OK, currentlyRecrawled.getStatusCode());
         assertTrue(1 < Objects.requireNonNull(currentlyRecrawled.getBody()).getSites().size());
+        validateCrawlStatus(currentlyRecrawled.getBody(), "FREE");
 
         // crawl freshly crawled site
         final ResponseEntity<SitesCrawlStatus> recrawlFreshSite = caller
@@ -226,13 +237,16 @@ public class CrawlerTest {
         assertTrue(Instant.now().isAfter(Instant.parse(Objects.requireNonNull(getCrawlStatusWithUpdatedSiteId(sitesCrawlStatus)).getCrawled())));
 
         // crawl stale site
-        final SitesCrawlStatus staleSiteStatus = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(CRAWL_SITE_ID, Instant.now().minus(1, ChronoUnit.DAYS), -1))));
+        final SitesCrawlStatus staleSiteStatus = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(
+                new CrawlStatus(CRAWL_SITE_ID, Instant.now().minus(1, ChronoUnit.DAYS), -1, "FREE")
+        )));
         final ResponseEntity<SitesCrawlStatus> recrawlStaleSite = caller
                 .postForEntity(SiteController.ENDPOINT + "/crawl?allSitesCrawl=true&serviceSecret=" + SiteTest.ADMIN_SITE_SECRET,
                         new HttpEntity<>(staleSiteStatus), SitesCrawlStatus.class);
         assertEquals(HttpStatus.OK, recrawlStaleSite.getStatusCode());
         final SitesCrawlStatus staleCrawlStatus = recrawlStaleSite.getBody();
         assertTrue(1 < Objects.requireNonNull(staleCrawlStatus).getSites().size());
+        validateCrawlStatus(staleCrawlStatus, "FREE");
         assertTrue(containsUpdatedSiteId(staleCrawlStatus));
         assertTrue(Instant.parse(
                 new ArrayList<>(staleSiteStatus.getSites()).get(0).getCrawled())
@@ -254,6 +268,7 @@ public class CrawlerTest {
         for (CrawlStatus crawlStatus : freshCrawlStatus.getSites()) {
             if (CRAWL_SITE_ID.equals(crawlStatus.getSiteId()) && API_SITE_PAGE_COUNT == crawlStatus.getPageCount()) {
                 freshCrawlStatusCheck = true;
+                break;
             }
         }
         return freshCrawlStatusCheck;
