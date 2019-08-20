@@ -187,7 +187,7 @@ public class CrawlerTest {
         Objects.requireNonNull(request.getBody()).getSites().stream()
                 .filter(crawlStatus -> crawlStatus.getSiteId().equals(siteId))
                 .forEach(crawlStatus -> assertTrue(400 < crawlStatus.getPageCount()));
-        validateCrawlStatus(request.getBody(), "FREE");
+        validateCrawlStatus(request.getBody(), "M");
     }
 
     // TODO test if sitemapsOnly site profile flag is respected
@@ -243,7 +243,7 @@ public class CrawlerTest {
         assertEquals(HttpStatus.OK, recrawlStaleSite.getStatusCode());
         final SitesCrawlStatus staleCrawlStatus = recrawlStaleSite.getBody();
         assertTrue(1 < Objects.requireNonNull(staleCrawlStatus).getSites().size());
-        validateCrawlStatus(staleCrawlStatus, "FREE");
+        validateCrawlStatus(staleCrawlStatus, "S");
         assertTrue(containsUpdatedSiteId(staleCrawlStatus));
         assertTrue(Instant.parse(
                 new ArrayList<>(staleSiteStatus.getSites()).get(0).getCrawled())
@@ -265,6 +265,7 @@ public class CrawlerTest {
         for (CrawlStatus crawlStatus : freshCrawlStatus.getSites()) {
             if (CRAWL_SITE_ID.equals(crawlStatus.getSiteId()) && API_SITE_PAGE_COUNT == crawlStatus.getPageCount()) {
                 freshCrawlStatusCheck = true;
+                break;
             }
         }
         return freshCrawlStatusCheck;

@@ -36,12 +36,6 @@ public class CrawlStatus {
     private CrawlStatus() {
     }
 
-//    public CrawlStatus(UUID siteId, Instant crawled, long pageCount) {
-//        this.siteId = siteId;
-//        this.crawled = crawled;
-//        this.pageCount = pageCount;
-//    }
-
     public String getPlan() {
         return plan;
     }
