@@ -171,7 +171,7 @@ public class CrawlerTest {
         assertNotNull(crawlStatus.getSiteId());
         assertTrue(Instant.parse(crawlStatus.getCrawled()).isBefore(Instant.now()));
         assertEquals(-1, crawlStatus.getPageCount());
-        assertEquals("Site ID: " + crawlStatus.getSiteId(), plan, crawlStatus.getPlan());
+        assertTrue("Site ID: " + crawlStatus.getSiteId(), crawlStatus.getPlan().startsWith(plan));
     }
 
     @Test
@@ -187,7 +187,7 @@ public class CrawlerTest {
         Objects.requireNonNull(request.getBody()).getSites().stream()
                 .filter(crawlStatus -> crawlStatus.getSiteId().equals(siteId))
                 .forEach(crawlStatus -> assertTrue(400 < crawlStatus.getPageCount()));
-        validateCrawlStatus(request.getBody(), "M");
+        validateCrawlStatus(request.getBody(), "FREE");
     }
 
     // TODO test if sitemapsOnly site profile flag is respected
