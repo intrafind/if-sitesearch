@@ -169,9 +169,9 @@ public class CrawlerTest {
     static void validateCrawlStatus(final SitesCrawlStatus crawledStatus, final String plan) {
         final CrawlStatus crawlStatus = new ArrayList<>(crawledStatus.getSites()).get(0);
         assertNotNull(crawlStatus.getSiteId());
-        assertEquals(plan, crawlStatus.getPlan());
         assertTrue(Instant.parse(crawlStatus.getCrawled()).isBefore(Instant.now()));
         assertEquals(-1, crawlStatus.getPageCount());
+        assertEquals("Site ID: " + crawlStatus.getSiteId(), plan, crawlStatus.getPlan());
     }
 
     @Test
