@@ -243,7 +243,7 @@ public class CrawlerTest {
         assertEquals(HttpStatus.OK, recrawlStaleSite.getStatusCode());
         final SitesCrawlStatus staleCrawlStatus = recrawlStaleSite.getBody();
         assertTrue(1 < Objects.requireNonNull(staleCrawlStatus).getSites().size());
-        validateCrawlStatus(staleCrawlStatus, "S");
+        validateCrawlStatus(staleCrawlStatus, "FREE");
         assertTrue(containsUpdatedSiteId(staleCrawlStatus));
         assertTrue(Instant.parse(
                 new ArrayList<>(staleSiteStatus.getSites()).get(0).getCrawled())
