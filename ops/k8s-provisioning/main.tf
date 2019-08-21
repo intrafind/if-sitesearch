@@ -130,7 +130,7 @@ resource "hcloud_server" "node" {
 
     inline = [
       "echo 'root:${local.password}' | chpasswd",
-      "apt-get update && sleep 1 && apt-get install curl software-properties-common -y",
+      "apt-get update && sleep 2 && apt-get install -y curl software-properties-common",
       "curl -s https://download.docker.com/linux/debian/gpg | apt-key add -",
       "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -",
       "add-apt-repository 'deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main'",

@@ -53,7 +53,6 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import static com.intrafind.sitesearch.integration.CrawlerTest.validateCrawlStatus;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -123,7 +122,6 @@ public class SiteTest {
         assertTrue(1 <= initSize);
         assertNotNull(findSearchSiteCrawlStatus(crawlStatus.getBody()).getSiteId());
         assertTrue(Instant.now().isAfter(Instant.parse(findSearchSiteCrawlStatus(crawlStatus.getBody()).getCrawled())));
-        validateCrawlStatus(crawlStatus.getBody(), "");
 
         // update crawl status of a specific site
         final var now = Instant.now();
@@ -138,7 +136,6 @@ public class SiteTest {
         assertNotNull(findSearchSiteCrawlStatus(Objects.requireNonNull(crawlStatusUpdate.getBody())).getSiteId());
         assertEquals(now, Instant.parse(findSearchSiteCrawlStatus(crawlStatusUpdate.getBody()).getCrawled()));
         assertTrue(Instant.now().isAfter(Instant.parse(findSearchSiteCrawlStatus(crawlStatusUpdate.getBody()).getCrawled())));
-        validateCrawlStatus(crawlStatusUpdate.getBody(), "");
 
         // verify crawl status of a specific site
         final var crawlStatusUpdated = caller.exchange(SiteController.ENDPOINT + "/crawl/status?serviceSecret=" +
@@ -148,7 +145,6 @@ public class SiteTest {
         assertNotNull(findSearchSiteCrawlStatus(crawlStatusUpdated.getBody()).getSiteId());
         assertEquals(now, Instant.parse(findSearchSiteCrawlStatus(crawlStatusUpdated.getBody()).getCrawled()));
         assertTrue(Instant.now().isAfter(Instant.parse(findSearchSiteCrawlStatus(crawlStatusUpdated.getBody()).getCrawled())));
-        validateCrawlStatus(crawlStatusUpdated.getBody(), "");
     }
 
     private SiteCreation createNewSite(SiteProfileUpdate siteProfileCreation) {
