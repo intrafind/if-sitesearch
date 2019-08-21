@@ -30,9 +30,7 @@ public class CrawlStatus {
     }
 
     public CrawlStatus(UUID siteId, Instant crawled, long pageCount, SiteProfile siteProfile) {
-        this.siteId = siteId;
-        this.crawled = crawled;
-        this.pageCount = pageCount;
+        this(siteId, crawled, pageCount);
         this.siteProfile = siteProfile;
     }
 

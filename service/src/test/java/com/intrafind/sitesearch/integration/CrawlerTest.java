@@ -169,7 +169,7 @@ public class CrawlerTest {
     @Test
     public void considerNoindexWhileCrawlingTwoSiteConfig() {
         final var siteId = UUID.fromString("f771eb6b-80d6-4e9f-a660-22c9972a8e06");
-        final var siteToCrawl = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(siteId, Instant.now(), -1, null))));
+        final var siteToCrawl = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(siteId, Instant.now(), -1))));
         final ResponseEntity<SitesCrawlStatus> request = caller
                 .postForEntity(SiteController.ENDPOINT + "/crawl?serviceSecret=" + SiteTest.ADMIN_SITE_SECRET
                                 + "&clearIndex=true&isThrottled=true&allSitesCrawl=true",
@@ -185,7 +185,7 @@ public class CrawlerTest {
     // TODO test if pageBodyCssSelector site profile info is respected
     @Test
     public void recrawl() {
-        final SitesCrawlStatus freshlyCrawledSiteStatus = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(CRAWL_SITE_ID, Instant.now(), -1, null))));
+        final SitesCrawlStatus freshlyCrawledSiteStatus = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(CRAWL_SITE_ID, Instant.now(), -1))));
 
         // not authenticated crawl
         final ResponseEntity<SitesCrawlStatus> recrawlNotAuthenticated = caller
@@ -226,7 +226,7 @@ public class CrawlerTest {
         assertTrue(Instant.now().isAfter(Instant.parse(Objects.requireNonNull(getCrawlStatusWithUpdatedSiteId(sitesCrawlStatus)).getCrawled())));
 
         // crawl stale site
-        final SitesCrawlStatus staleSiteStatus = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(CRAWL_SITE_ID, Instant.now().minus(1, ChronoUnit.DAYS), -1, null))));
+        final SitesCrawlStatus staleSiteStatus = new SitesCrawlStatus(new HashSet<>(Collections.singletonList(new CrawlStatus(CRAWL_SITE_ID, Instant.now().minus(1, ChronoUnit.DAYS), -1))));
         final ResponseEntity<SitesCrawlStatus> recrawlStaleSite = caller
                 .postForEntity(SiteController.ENDPOINT + "/crawl?allSitesCrawl=true&serviceSecret=" + SiteTest.ADMIN_SITE_SECRET,
                         new HttpEntity<>(staleSiteStatus), SitesCrawlStatus.class);

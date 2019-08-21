@@ -72,8 +72,7 @@ public class SimpleIndexClient implements Index {
             final var sitesCrawlStatus = new SitesCrawlStatus(new HashSet<>(Collections.emptyList()));
             documents[0].getFields().forEach((siteId, status) ->
                     sitesCrawlStatus.getSites().add(new CrawlStatus(UUID.fromString(siteId),
-                            Instant.parse(status.get(0)), Long.parseLong(status.get(1)),
-                            null
+                            Instant.parse(status.get(0)), Long.parseLong(status.get(1))
                     )));
 
             try {
