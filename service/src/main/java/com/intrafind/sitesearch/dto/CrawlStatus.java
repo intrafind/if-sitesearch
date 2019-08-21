@@ -24,14 +24,26 @@ public class CrawlStatus {
     private UUID siteId;
     private Instant crawled;
     private long pageCount;
+    private SiteProfile siteProfile;
 
     private CrawlStatus() {
+    }
+
+    public CrawlStatus(UUID siteId, Instant crawled, long pageCount, SiteProfile siteProfile) {
+        this.siteId = siteId;
+        this.crawled = crawled;
+        this.pageCount = pageCount;
+        this.siteProfile = siteProfile;
     }
 
     public CrawlStatus(UUID siteId, Instant crawled, long pageCount) {
         this.siteId = siteId;
         this.crawled = crawled;
         this.pageCount = pageCount;
+    }
+
+    public SiteProfile getSiteProfile() {
+        return siteProfile;
     }
 
     public UUID getSiteId() {

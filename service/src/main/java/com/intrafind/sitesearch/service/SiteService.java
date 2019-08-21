@@ -172,11 +172,11 @@ public class SiteService {
                 if (config != null && config.size() > 1) {
                     final boolean allowUrlWithQuery;
                     if (config.size() > 2) {
-                        allowUrlWithQuery = Boolean.valueOf(config.get(2));
+                        allowUrlWithQuery = Boolean.parseBoolean(config.get(2));
                     } else {
                         allowUrlWithQuery = false;
                     }
-                    configs.add(new SiteProfile.Config(configUrl, config.get(0), Boolean.valueOf(config.get(1)), allowUrlWithQuery));
+                    configs.add(new SiteProfile.Config(configUrl, config.get(0), Boolean.parseBoolean(config.get(1)), allowUrlWithQuery));
                 } else {
                     configs.add(new SiteProfile.Config(configUrl, SiteProfile.Config.DEFAULT_PAGE_BODY_CSS_SELECTOR, false, false));
                 }
@@ -509,13 +509,15 @@ public class SiteService {
         final Optional<Document> crawlStatus = indexService.fetch(Index.ALL, CRAWL_STATUS_SINGLETON_DOCUMENT).stream().findAny();
         crawlStatus.ifPresent(document -> document.getFields().forEach((uuidKey, crawledTimestamp) -> {
             if (!uuidKey.startsWith("_")) {
+                final var siteId = UUID.fromString(uuidKey);
+                final var siteProfile = fetchSiteProfile(siteId);
                 long pageCount;
                 if (crawledTimestamp.size() == 2) {
                     pageCount = crawledTimestamp.get(1) == null ? -1 : Long.parseLong(crawledTimestamp.get(1));
                 } else {
                     pageCount = -1;
                 }
-                sitesCrawlStatus.add(new CrawlStatus(UUID.fromString(uuidKey), Instant.parse(crawledTimestamp.get(0)), pageCount));
+                sitesCrawlStatus.add(new CrawlStatus(siteId, Instant.parse(crawledTimestamp.get(0)), pageCount, siteProfile.get()));
             }
         }));
         return Optional.of(new SitesCrawlStatus(sitesCrawlStatus));

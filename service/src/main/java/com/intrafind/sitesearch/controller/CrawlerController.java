@@ -229,7 +229,7 @@ public class CrawlerController {
                                             siteService.removeOldSiteIndexPages(crawlStatus.getSiteId());
                                             LOG.info("siteId: " + crawlStatus.getSiteId() + " - siteUrl: " + configBundle.getUrl().toString() + " - pageCount: " + crawlerJobResult.getPageCount()); // TODO add pattern to logstash
                                         }));
-                                sitesCrawlStatusOverall.getSites().add(new CrawlStatus(profile.getId(), Instant.now(), pageCount.get()));
+                                sitesCrawlStatusOverall.getSites().add(new CrawlStatus(profile.getId(), Instant.now(), pageCount.get(), null));
                             });
                         });
                     });
