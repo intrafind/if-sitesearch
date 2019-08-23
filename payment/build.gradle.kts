@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
 plugins {
-    id("kotlin2js") version "1.3.41"
+    id("kotlin2js") version "1.3.50"
 }
 
 apply {
@@ -26,7 +26,7 @@ apply {
 }
 
 dependencies {
-    val kotlinVersion = "1.3.41"
+    val kotlinVersion = "1.3.50"
 
     compile("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion")
     compile("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")

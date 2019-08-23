@@ -31,7 +31,6 @@ spec:
             labels:
                 app: if-sitesearch
         spec:
-                {{/*spec:*/}}
             imagePullSecrets:
                 - name: docker-registry-credentials-intrafind-net
             containers:
