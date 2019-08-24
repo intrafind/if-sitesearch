@@ -47,8 +47,8 @@ resource "null_resource" "update-migration" {
   provisioner "remote-exec" {
     inline = [
       "kubectl create secret docker-registry docker-registry --docker-server=docker-registry.intrafind.net --docker-username=sitesearch --docker-password=${var.password}",
-      "helm install /srv/asset/sis-sitesearch --name ${terraform.workspace} --namespace ${terraform.workspace} --set app.TENANT=${terraform.workspace},app.HETZNER_API_TOKEN=${var.hetzner_cloud_intrafind},app.tenant=${terraform.workspace},app.password=${var.password},app.dockerRegistrySecret=${var.docker_registry_k8s_secret},app.EXTERNAL_IP=${hcloud_server.master[0].ipv4_address} --set-string app.volumeHandle=3052845",
-      "kubectl get svc,node,pvc,deployment,pods,pvc,pv,namespace,job -A",
+      "helm install /srv/asset/sis-sitesearch --name sis-sitesearch --namespace ${terraform.workspace} --set app.tenant=${terraform.workspace},app.HETZNER_API_TOKEN=${var.hetzner_cloud_intrafind},app.tenant=${terraform.workspace},app.password=${var.password},app.dockerRegistrySecret=${var.docker_registry_k8s_secret},app.EXTERNAL_IP=${hcloud_server.master[0].ipv4_address} --set-string app.volumeHandle=3052845",
+      "kubectl get svc,node,pvc,deployment,pods,pvc,pv,namespace,job -A && helm list",
     ]
   }
 }
@@ -69,33 +69,23 @@ locals {
 }
 
 output "k8s_master" {
-  value = [
-    hcloud_server.master.*.ipv4_address
-  ]
+  value = hcloud_server.master.*.ipv4_address
 }
-
+output "k8s_node" {
+  value = hcloud_server.node.*.ipv4_address
+}
 output "password" {
   value = local.password
 }
-
 output "updated" {
   value = local.updateTrigger
 }
-
 output "k8s_ssh" {
   value = "ssh -o StrictHostKeyChecking=no root@${hcloud_server.master[0].ipv4_address}"
 }
-
-output "k8s_node" {
-  value = [
-    hcloud_server.node.*.ipv4_address
-  ]
-}
-
 provider "hcloud" {
   token = var.hetzner_cloud_intrafind
 }
-
 variable "nodeCount" {
   type    = number
   default = 1
@@ -109,9 +99,10 @@ resource "hcloud_server" "node" {
   labels = {
     password = local.password
   }
-  name        = "sis-${terraform.workspace}-node-${count.index}"
-  count       = var.nodeCount
-  image       = "debian-10"
+  name  = "sis-${terraform.workspace}-node-${count.index}"
+  count = var.nodeCount
+  image = "debian-9"
+  // Debian 10 does not work with Hetzner volumes yet
   server_type = "cx21-ceph"
   ssh_keys = [
     "alex",
@@ -147,9 +138,10 @@ resource "hcloud_server" "master" {
   labels = {
     password = local.password
   }
-  name        = "sis-${terraform.workspace}-master-${count.index}"
-  count       = var.masterCount
-  image       = "debian-10"
+  name  = "sis-${terraform.workspace}-master-${count.index}"
+  count = var.masterCount
+  image = "debian-9"
+  // Debian 10 does not work with Hetzner volumes yet
   server_type = "cx21-ceph"
   ssh_keys = [
     "alex",
@@ -187,9 +179,9 @@ resource "hcloud_server" "master" {
       "kubeadm init --cri-socket /run/containerd/containerd.sock",
       "mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && chown $(id -u):$(id -g) $HOME/.kube/config",
       "kubectl apply -f https://docs.projectcalico.org/v3.8/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml",
+      "kubectl apply -f https://raw.githubusercontent.com/hetznercloud/csi-driver/master/deploy/kubernetes/hcloud-csi.yml",
       "kubectl taint nodes --all node-role.kubernetes.io/master- # override security and enable scheduling of pods on master",
       "echo $(kubeadm token create --print-join-command) --cri-socket /run/containerd/containerd.sock > /srv/kubeadm_join",
-      //      "kubectl apply -f https://raw.githubusercontent.com/hetznercloud/csi-driver/master/deploy/kubernetes/hcloud-csi.yml",
       "kubectl apply -f /srv/asset/init-helm-rbac-config.yaml",
       "curl -L https://git.io/get_helm.sh | bash && helm init --upgrade",
     ]

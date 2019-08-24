@@ -8,12 +8,18 @@ metadata:
 type: kubernetes.io/dockerconfigjson
 ---
 apiVersion: v1
-kind: Secret
+kind: Service
 metadata:
-    name: hcloud-csi
-    namespace: kube-system
-stringData:
-    token: {{ .Values.app.HETZNER_API_TOKEN }}
+    name: sis-router
+spec:
+    selector:
+        app: if-sitesearch
+    ports:
+        - name: https
+          port: 8001
+    type: LoadBalancer
+    externalIPs:
+        - {{ .Values.app.EXTERNAL_IP }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -59,13 +65,35 @@ spec:
                         value: "n/a"
                       - name: SECURITY_OAUTH2_CLIENT_CLIENT_SECRET
                         value: {{ .Values.app.password }}
-        {{/*              volumeMounts:*/}}
-        {{/*                  - mountPath: "/mnt/persistence"*/}}
-        {{/*                    name: storage-volume*/}}
-        {{/*        volumes:*/}}
-        {{/*            - name: storage-volume*/}}
-        {{/*              persistentVolumeClaim:*/}}
-        {{/*                  claimName: storage*/}}
+                  volumeMounts:
+                      - mountPath: "/mnt/persistence"
+                        name: storage-volume
+            volumes:
+                - name: storage-volume
+                  persistentVolumeClaim:
+                      claimName: csi-pvc-storage
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: hcloud-csi
+    namespace: kube-system
+stringData:
+    token: {{ .Values.app.HETZNER_API_TOKEN }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: csi-pvc-storage
+    namespace: {{ .Values.app.tenant }}
+spec:
+    accessModes:
+        - ReadWriteOnce
+    resources:
+        requests:
+            storage: 10Gi
+    storageClassName: hcloud-volumes
+    volumeName: pvc-{{ .Values.app.tenant }}
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -79,7 +107,7 @@ spec:
     claimRef:
         apiVersion: v1
         kind: PersistentVolumeClaim
-        name: storage
+        name: csi-pvc-storage
         namespace: {{ .Values.app.tenant }}
     csi:
         driver: csi.hetzner.cloud
@@ -95,32 +123,4 @@ spec:
                             - nbg1
     persistentVolumeReclaimPolicy: Delete
     storageClassName: hcloud-volumes
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-    name: storage
-    namespace: {{ .Values.app.tenant }}
-spec:
-    accessModes:
-        - ReadWriteOnce
-    resources:
-        requests:
-            storage: 10Gi
-    storageClassName: hcloud-volumes
-    volumeName: pvc-{{ .Values.app.tenant }}
----
-apiVersion: v1
-kind: Service
-metadata:
-    name: sis-router
-spec:
-    selector:
-        app: if-sitesearch
-    ports:
-        - name: https
-          port: 8001
-    type: LoadBalancer
-    externalIPs:
-        - {{ .Values.app.EXTERNAL_IP }}
 ---
