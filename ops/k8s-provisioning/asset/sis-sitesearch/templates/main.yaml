@@ -113,14 +113,6 @@ spec:
         driver: csi.hetzner.cloud
         fsType: ext4
         volumeHandle: "{{ .Values.app.volumeHandle }}"
-    nodeAffinity:
-        required:
-            nodeSelectorTerms:
-                - matchExpressions:
-                      - key: csi.hetzner.cloud/location
-                        operator: In
-                        values:
-                            - nbg1
     persistentVolumeReclaimPolicy: Delete
     storageClassName: hcloud-volumes
 ---

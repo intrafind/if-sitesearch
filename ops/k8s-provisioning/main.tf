@@ -29,6 +29,11 @@ resource "hcloud_network_subnet" "tenant" {
 //  server_id  = hcloud_server.master[0].id
 //  ip         = "10.0.1.10"
 //}
+variable "volumeHandle" {
+  type        = string
+  description = "Hetzner Volume ID to use for re-attachment"
+  default     = ""
+}
 variable "docker_registry_k8s_secret" {
   type    = string
   default = ""
@@ -47,7 +52,7 @@ resource "null_resource" "update-migration" {
   provisioner "remote-exec" {
     inline = [
       "kubectl create secret docker-registry docker-registry --docker-server=docker-registry.intrafind.net --docker-username=sitesearch --docker-password=${var.password}",
-      "helm install /srv/asset/sis-sitesearch --name sis-sitesearch --namespace ${terraform.workspace} --set app.tenant=${terraform.workspace},app.HETZNER_API_TOKEN=${var.hetzner_cloud_intrafind},app.tenant=${terraform.workspace},app.password=${var.password},app.dockerRegistrySecret=${var.docker_registry_k8s_secret},app.EXTERNAL_IP=${hcloud_server.master[0].ipv4_address} --set-string app.volumeHandle=3052845",
+      "helm install /srv/asset/sis-sitesearch --name sis-sitesearch --namespace ${terraform.workspace} --set app.tenant=${terraform.workspace},app.HETZNER_API_TOKEN=${var.hetzner_cloud_intrafind},app.password=${var.password},app.dockerRegistrySecret=${var.docker_registry_k8s_secret},app.EXTERNAL_IP=${hcloud_server.master.0.ipv4_address} --set-string app.volumeHandle=${var.volumeHandle}",
       "kubectl get svc,node,pvc,deployment,pods,pvc,pv,namespace,job -A && helm list",
     ]
   }
@@ -70,6 +75,9 @@ locals {
 
 output "k8s_master" {
   value = hcloud_server.master.*.ipv4_address
+}
+output "k8s_master_node" {
+  value = hcloud_server.master.0.ipv4_address
 }
 output "k8s_node" {
   value = hcloud_server.node.*.ipv4_address
