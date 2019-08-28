@@ -72,7 +72,9 @@ locals {
   updateTrigger = timestamp()
   password      = var.password == "" ? uuid() : var.password
 }
-
+output "web" {
+  value = "http://${hcloud_server.master.0.ipv4_address}:8001"
+}
 output "k8s_master" {
   value = hcloud_server.master.*.ipv4_address
 }
@@ -191,19 +193,20 @@ resource "hcloud_server" "master" {
       "kubectl taint nodes --all node-role.kubernetes.io/master- # override security and enable scheduling of pods on master",
       "echo $(kubeadm token create --print-join-command) --cri-socket /run/containerd/containerd.sock > /srv/kubeadm_join",
       "kubectl apply -f /srv/asset/init-helm-rbac-config.yaml",
-      "curl -L https://git.io/get_helm.sh | bash && helm init --upgrade",
+      //      "curl -L https://git.io/get_helm.sh | bash && helm init --upgrade",
+      "curl -L https://git.io/get_helm.sh | bash && helm init --service-account tiller --upgrade",
     ]
   }
 }
 
-resource "hcloud_rdns" "node" {
-  server_id  = hcloud_server.node[0].id
-  ip_address = hcloud_server.node[0].ipv4_address
-  dns_ptr    = "${hcloud_server.node[0].name}.intrafind.net"
-}
-
-resource "hcloud_rdns" "master" {
-  server_id  = hcloud_server.master[0].id
-  ip_address = hcloud_server.master[0].ipv4_address
-  dns_ptr    = "${hcloud_server.master[0].name}.intrafind.net"
-}
+//resource "hcloud_rdns" "node" {
+//  server_id  = hcloud_server.node[0].id
+//  ip_address = hcloud_server.node[0].ipv4_address
+//  dns_ptr    = "${hcloud_server.node[0].name}.intrafind.net"
+//}
+//
+//resource "hcloud_rdns" "master" {
+//  server_id  = hcloud_server.master[0].id
+//  ip_address = hcloud_server.master[0].ipv4_address
+//  dns_ptr    = "${hcloud_server.master[0].name}.intrafind.net"
+//}
