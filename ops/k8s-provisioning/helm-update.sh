@@ -4,15 +4,18 @@ workspace=`terraform workspace show`
 k8s_master_node=`terraform output k8s_master_node`
 helmName=sis-sitesearch
 
-scp -o StrictHostKeyChecking=no -r asset/$helmName root@$k8s_master_node:/srv/
+scp -q -o StrictHostKeyChecking=no -r asset/$helmName root@$k8s_master_node:/srv/
 
-ssh -o StrictHostKeyChecking=no root@$k8s_master_node helm delete $helmName --purge
-sleep 10
-ssh -o StrictHostKeyChecking=no root@$k8s_master_node \
+ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm delete $helmName --purge
+ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm delete ingress --purge
+sleep 12
+ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node \
   helm install /srv/$helmName --name $helmName --namespace $workspace \
-  --set app.tenant=$workspace,app.EXTERNAL_IP=$k8s_master_node,app.HETZNER_API_TOKEN=$TF_VAR_hetzner_cloud_intrafind,app.password=$TF_VAR_password,app.dockerRegistrySecret=$TF_VAR_docker_registry_k8s_secret \
+  --set app.tenant=$workspace,app.HETZNER_API_TOKEN=$TF_VAR_hetzner_cloud_intrafind,app.password=$TF_VAR_password,app.dockerRegistrySecret=$TF_VAR_docker_registry_k8s_secret \
   --set-string app.volumeHandle=3052845
+ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm install --name ingress stable/nginx-ingress --set rbac.create=true,controller.hostNetwork=true,controller.kind=DaemonSet
 
-ssh -o StrictHostKeyChecking=no root@$k8s_master_node helm test $helmName --cleanup
+ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm test $helmName --cleanup
+ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm list --all
 
 `terraform output k8s_ssh`
