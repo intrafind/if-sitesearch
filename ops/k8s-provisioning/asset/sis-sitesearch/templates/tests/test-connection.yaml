@@ -10,8 +10,7 @@ spec:
     containers:
         - name: api-tester
           image: busybox
-          command: [ "curl" ]
-                {{/*      args:  ['https://www.example.com']*/}}
+          command: [ "wget" ]
+          args: [ "https://www.example.com" ]
                 {{/*      args:  ['{{ include "sis-sitesearch.fullname" . }}:{{ .Values.service.port }}']*/}}
-          args:  [ "-k", "https://api.sitesearch.cloud" ]
     restartPolicy: Never

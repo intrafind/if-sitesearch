@@ -47,7 +47,7 @@ resource "null_resource" "update-migration" {
     private_key = file("~/.ssh/id_rsa")
   }
   triggers = {
-    backup = local.updateTrigger
+    updateTrigger = local.updateTrigger
   }
   provisioner "remote-exec" {
     inline = [
@@ -87,7 +87,7 @@ output "k8s_node" {
 output "password" {
   value = local.password
 }
-output "updated" {
+output "updateTrigger" {
   value = local.updateTrigger
 }
 output "k8s_ssh" {
@@ -131,14 +131,14 @@ resource "hcloud_server" "node" {
 
     inline = [
       "echo 'root:${local.password}' | chpasswd",
-      "apt-get update && sleep 2 && apt-get install curl software-properties-common -y",
+      //      "apt-get update && sleep 2 && apt-get install curl software-properties-common -y",
       "curl -s https://download.docker.com/linux/debian/gpg | apt-key add -",
       "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -",
-      "add-apt-repository 'deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main'",
-      "add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable\"",
+      "echo 'deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main' >> /etc/apt/sources.list",
+      "echo \"deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable\" >> /etc/apt/sources.list",
       "apt-get update && apt-get install rsync docker-ce kubeadm sshpass busybox -y",
       "containerd config default > /etc/containerd/config.toml && systemctl restart containerd",
-      "sshpass -p ${local.password} scp -o StrictHostKeyChecking=no root@${hcloud_server.master[0].ipv4_address}:/srv/kubeadm_join /tmp && eval $(cat /tmp/kubeadm_join)",
+      "sshpass -p ${local.password} scp -o StrictHostKeyChecking=no root@${hcloud_server.master.0.ipv4_address}:/srv/kubeadm_join /tmp && eval $(cat /tmp/kubeadm_join)",
     ]
   }
 }
@@ -179,11 +179,11 @@ resource "hcloud_server" "master" {
 
     inline = [
       "echo 'root:${local.password}' | chpasswd",
-      "apt-get update && sleep 1 && apt-get install curl software-properties-common -y",
+      //      "apt-get update && sleep 1 && apt-get install curl software-properties-common -y",
       "curl -s https://download.docker.com/linux/debian/gpg | apt-key add -",
       "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -",
-      "add-apt-repository 'deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main'",
-      "add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable\"",
+      "echo 'deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main' >> /etc/apt/sources.list",
+      "echo \"deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable\" >> /etc/apt/sources.list",
       "apt-get update && apt-get install rsync docker-ce kubeadm -y",
       "containerd config default > /etc/containerd/config.toml && systemctl restart containerd",
       "kubeadm init --cri-socket /run/containerd/containerd.sock",
@@ -193,7 +193,6 @@ resource "hcloud_server" "master" {
       "kubectl taint nodes --all node-role.kubernetes.io/master- # override security and enable scheduling of pods on master",
       "echo $(kubeadm token create --print-join-command) --cri-socket /run/containerd/containerd.sock > /srv/kubeadm_join",
       "kubectl apply -f /srv/asset/init-helm-rbac-config.yaml",
-      //      "curl -L https://git.io/get_helm.sh | bash && helm init --upgrade",
       "curl -L https://git.io/get_helm.sh | bash && helm init --service-account tiller --upgrade",
     ]
   }

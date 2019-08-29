@@ -7,19 +7,30 @@ metadata:
     name: docker-registry-credentials-intrafind-net
 type: kubernetes.io/dockerconfigjson
 ---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+    name: ingress
+spec:
+    backend:
+        serviceName: if-sitesearch
+        servicePort: 8001
+---
 apiVersion: v1
 kind: Service
 metadata:
-    name: sis-router
+    name: if-sitesearch
 spec:
     selector:
         app: if-sitesearch
     ports:
-        - name: https
+        - name: web
           port: 8001
-    type: LoadBalancer
-    externalIPs:
-        - {{ .Values.app.EXTERNAL_IP }}
+        {{/*          nodePort: 30123*/}}
+        {{/*          targetPort: 8001*/}}
+    type: NodePort
+        {{/*    externalIPs:*/}}
+        {{/*        - {{ .Values.app.EXTERNAL_IP }}*/}}
 ---
 apiVersion: apps/v1
 kind: Deployment

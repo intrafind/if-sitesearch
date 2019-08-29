@@ -36,10 +36,10 @@ Common labels
 */}}
 {{- define "sis-sitesearch.labels" -}}
 app.kubernetes.io/name: {{ include "sis-sitesearch.name" . }}
-helm.sh/chart: {{ include "sis-sitesearch.chart" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+{{/*helm.sh/chart: {{ include "sis-sitesearch.chart" . }}*/}}
+{{/*app.kubernetes.io/instance: {{ .Release.Name }}*/}}
 {{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{/*app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}*/}}
 {{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{/*app.kubernetes.io/managed-by: {{ .Release.Service }}*/}}
 {{- end -}}
