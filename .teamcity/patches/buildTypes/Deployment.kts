@@ -45,7 +45,7 @@ create(DslContext.projectId, BuildType({
             name = "Build service.jar w/ Docker (using TeamCity Docker plugin)"
             scriptContent = """
                 #SPRING_PROFILES_ACTIVE=oss
-                ./gradlew clean includeKotlinJsRuntime build --info
+                ./gradlew clean includeKotlinJsRuntime build --info -x test
             """.trimIndent()
             dockerImage = "openjdk:13-alpine"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
