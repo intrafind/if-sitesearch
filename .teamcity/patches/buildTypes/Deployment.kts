@@ -36,6 +36,7 @@ create(DslContext.projectId, BuildType({
     steps {
         script {
             name = "Enable e-mail delivery"
+            enabled = false
             scriptContent = """
                 cp -r /root/docker-build-data/api-sitesearch/service/config service/
                 chmod -R 755 service/config
