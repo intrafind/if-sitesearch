@@ -63,6 +63,7 @@ create(DslContext.projectId, BuildType({
 
     triggers {
         vcs {
+            enabled = false
             triggerRules = """
                 -:comment=.*SR${'$'}:**
                 -:docs/**
