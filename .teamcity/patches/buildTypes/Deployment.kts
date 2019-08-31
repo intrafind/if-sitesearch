@@ -8,6 +8,7 @@ import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.ScriptBuildStep
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions.BuildFailureOnText
 import jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions.failOnText
+import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.finishBuildTrigger
 import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2018_2.ui.*
 
@@ -73,6 +74,10 @@ create(DslContext.projectId, BuildType({
             """.trimIndent()
             branchFilter = ""
             groupCheckinsByCommitter = true
+        }
+        finishBuildTrigger {
+            buildType = "IntraFind_Oss_Build"
+            successfulOnly = true
         }
     }
 
