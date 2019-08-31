@@ -84,27 +84,25 @@ spec:
                   image: docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
                   env:
                       - name: SIS_API_SERVICE_URL
-                        value: https://example.com
-                      - name: SERVICE_SECRET
-                        value: {{ .Values.app.password }}
+                        value: {{ .Values.app.serviceUrl }}
                       - name: SIS_SERVICE_HOST
-                        value: example.com
+                        value: {{ .Values.app.serviceHost }}
+                      - name: SERVICE_SECRET
+                        value: {{ .Values.app.sis.serviceSecret }}
                       - name: WOO_COMMERCE_CONSUMER_KEY
-                        value: {{ .Values.app.password }}
+                        value: {{ .Values.app.sis.wooCommerceConsumerKey }}
                       - name: WOO_COMMERCE_CONSUMER_SECRET
-                        value: {{ .Values.app.password }}
+                        value: {{ .Values.app.sis.wooCommerceConsumerSecret }}
                       - name: INVISIBLE_RECAPTCHA_SITE_SECRET
-                        value: {{ .Values.app.password }}
+                        value: {{ .Values.app.recaptchaSecret }}
                       - name: ADMIN_SITE_SECRET
-                        value: {{ .Values.app.password }}
-                      - name: SPRING_SECURITY_USER_PASSWORD
-                        value: {{ .Values.app.password }}
+                        value: {{ .Values.app.adminSecret }}
+                      - name: DEV_SKIP_FLAG
+                        value: "{{ .Values.app.devSkip }}"
                       - name: BUILD_NUMBER
                         value: "0"
                       - name: SCM_HASH
                         value: "n/a"
-                      - name: SECURITY_OAUTH2_CLIENT_CLIENT_SECRET
-                        value: {{ .Values.app.password }}
                   volumeMounts:
                       - mountPath: "/mnt/persistence"
                         name: storage-volume
