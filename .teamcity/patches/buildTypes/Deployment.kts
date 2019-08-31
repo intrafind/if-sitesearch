@@ -59,7 +59,7 @@ create(DslContext.projectId, BuildType({
             name = "Build & Run Container"
             scriptContent = """
                 cd ops/k8s-provisioning
-                ./helm-update.sh
+                sh helm-update.sh
             """.trimIndent()
         }
     }
