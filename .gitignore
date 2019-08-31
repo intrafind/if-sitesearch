@@ -9,6 +9,7 @@ config.json
 
 .terraform
 *.tfstate*
+*.pem
 
 /data
 service/config

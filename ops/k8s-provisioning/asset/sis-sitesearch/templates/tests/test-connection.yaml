@@ -11,6 +11,7 @@ spec:
         - name: api-tester
           image: busybox
           command: [ "wget" ]
+                {{/*          args: [ "https://api.sitesearch.cloudd" ]*/}}
           args: [ "https://www.example.com" ]
                 {{/*      args:  ['{{ include "sis-sitesearch.fullname" . }}:{{ .Values.service.port }}']*/}}
     restartPolicy: Never
