@@ -12,6 +12,6 @@ app:
     serviceSecret: 0-0-0-0-0
     wooCommerceConsumerKey: invalid-default
     wooCommerceConsumerSecret: invalid-default
-meta:
-  scmHash: 0f
-  buildNumber: -1
+  meta:
+    scmHash: 0f
+    buildNumber: -1
