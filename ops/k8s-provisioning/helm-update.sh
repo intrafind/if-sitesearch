@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 
-workspace=`terraform workspace show`
-k8s_master_node=`terraform output k8s_master_node`
+#workspace=`terraform workspace show`
+workspace=default
+#k8s_master_node=`terraform output k8s_master_node`
+k8s_master_node=159.69.207.110
 helmName=sis-sitesearch
 
 scp -q -o StrictHostKeyChecking=no root@cd.intrafind.net:/etc/letsencrypt/live/intrafind.net/cert.pem asset/$helmName
