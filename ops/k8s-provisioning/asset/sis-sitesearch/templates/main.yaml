@@ -100,9 +100,9 @@ spec:
                       - name: DEV_SKIP_FLAG
                         value: "{{ .Values.app.devSkip }}"
                       - name: BUILD_NUMBER
-                        value: "0"
+                        value: "{{ .Values.meta.buildNumber }}"
                       - name: SCM_HASH
-                        value: "n/a"
+                        value: {{ .Values.meta.scmHash }}
                   volumeMounts:
                       - mountPath: "/mnt/persistence"
                         name: storage-volume
