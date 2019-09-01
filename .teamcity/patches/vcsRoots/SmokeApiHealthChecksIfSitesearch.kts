@@ -25,6 +25,7 @@ changeVcsRoot(RelativeId("SmokeApiHealthChecksIfSitesearch")) {
     }
 
     (this as GitVcsRoot).apply {
+        useMirrors = false
         authMethod = anonymous()
         param("secure:password", "")
         param("username", "")
