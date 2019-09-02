@@ -1,0 +1,125 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    #    Letsencrypt
+    location ^~ /.well-known/acme-challenge/ {
+        root /etc/letsencrypt;
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    include /etc/nginx/snippets/ssl.conf;
+
+    location / {
+        proxy_pass http://if-sitesearch:8001;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name sitesearch.cloud;
+
+    include /etc/nginx/snippets/ssl.conf;
+
+    location / {
+        proxy_pass http://mirror.sitesearch.online;
+        #        proxy_pass http://217.160.0.69;
+        #        root /etc/letsencrypt/sitesearch.cloud;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name www.sitesearch.cloud;
+
+    include /etc/nginx/snippets/ssl.conf;
+
+    location / {
+        add_header set-cookie 'affiliate = $arg_affiliate; domain = sitesearch.cloud';
+        #        return 301 https://sitesearch.cloud$request_uri; # works
+        #        proxy_pass http://217.160.0.69;
+        proxy_pass http://mirror.sitesearch.online;
+        #        root /etc/letsencrypt/sitesearch.cloud;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name doc.sitesearch.cloud;
+
+    include /etc/nginx/snippets/ssl.conf;
+
+    location / {
+        proxy_pass https://intrafind.github.io/if-sitesearch/;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name affiliate.sitesearch.cloud;
+
+    include /etc/nginx/snippets/ssl.conf;
+
+    location / {
+        add_header set-cookie 'affiliate = $arg_affiliate; domain = sitesearch.cloud';
+        return 301 https://sitesearch.cloud$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name green.sitesearch.cloud;
+
+    include /etc/nginx/snippets/ssl.conf;
+
+    auth_basic "Stats";
+    auth_basic_user_file /etc/nginx/.htpasswd; # supply this via env vars somehow or as raw file at build time
+
+    location /stats {
+        stub_status on;
+        access_log   off;
+        #         allow 192.168.1.5;
+        #         deny all;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name blue.sitesearch.cloud;
+
+    include /etc/nginx/snippets/ssl.conf;
+
+    location / {
+        proxy_pass http://217.160.0.69;
+        #        root /usr/share/nginx/html/frontpage;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name dev.sitesearch.cloud;
+
+    include /etc/nginx/snippets/ssl.conf;
+
+    location / {
+        include /etc/nginx/snippets/cors-headers.conf;
+
+        proxy_pass http://if-sitesearch:8001;
+    }
+}
+
