@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.ow2.asm:asm:7.2-beta">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/7.2-beta/42e26c6613fc9cb3002b55897802ab605c92dc44/asm-7.2-beta.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/7.2-beta/6f19f0041f0695e97bec2dabec03c114863def7f/asm-7.2-beta-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
