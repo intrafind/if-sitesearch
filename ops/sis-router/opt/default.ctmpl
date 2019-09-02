@@ -1,3 +1,4 @@
+{{$basicAuth  := env "BASIC_AUTH"}}
 {{$blue  := env "BLUE_NAME"}}
 {{$green := env "GREEN_NAME"}}
 {{$live  := file "/var/live"}}
@@ -16,6 +17,7 @@ http {
  server_tokens off; # hide nginx version 
 
  upstream ifinder-search-service {
+    proxy_set_header authorization $basicAuth;
     least_conn;
         #server 10.105.217.74:9605; # Kubernetes downstream
         server sitesearch-search-service:9605;
