@@ -1,16 +1,16 @@
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    #    Letsencrypt
-    location ^~ /.well-known/acme-challenge/ {
-        root /etc/letsencrypt;
-    }
-
-    location / {
-        return 301 https://$host$request_uri;
-    }
-}
+#server {
+#    listen 80 default_server;
+#    listen [::]:80 default_server;
+#
+#    #    Letsencrypt
+#    location ^~ /.well-known/acme-challenge/ {
+#        root /etc/letsencrypt;
+#    }
+#
+#    location / {
+#        return 301 https://$host$request_uri;
+#    }
+#}
 
 server {
     listen 443 ssl http2;
