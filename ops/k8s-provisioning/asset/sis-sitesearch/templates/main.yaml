@@ -36,13 +36,18 @@ spec:
         - secretName: tls-certificate
           hosts:
               - delete-this.intrafind.net
+              - delete-this.sitesearch.cloud
     rules:
-        - host: delete-this.intrafind.net
+        - host: delete-this.sitesearch.cloud
           http:
               paths:
                   - backend:
-                        serviceName: if-sitesearch
-                        servicePort: 8001
+                        serviceName: router
+                        servicePort: 443
+                    path: /
+                  - backend:
+                        serviceName: router
+                        servicePort: 80
                     path: /
                   - backend:
                         serviceName: if-sitesearch
@@ -60,6 +65,74 @@ spec:
         - name: web
           port: 8001
     type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: consul
+spec:
+    selector:
+        app: consul
+    ports:
+        - name: web
+          port: 8500
+        {{/*    type: NodePort*/}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: router
+spec:
+    selector:
+        app: router
+    ports:
+        - name: https
+          port: 443
+        - name: http
+          port: 80
+        {{/*    type: NodePort*/}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: router
+    labels:
+        app: router
+spec:
+    selector:
+        matchLabels:
+            app: router
+    template:
+        metadata:
+            name: router
+            labels:
+                app: router
+        spec:
+            imagePullSecrets:
+                - name: docker-registry-credentials-intrafind-net
+            containers:
+                - name: router
+                  image: docker-registry.intrafind.net/intrafind/router:latest
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: consul
+    labels:
+        app: consul
+spec:
+    selector:
+        matchLabels:
+            app: consul
+    template:
+        metadata:
+            name: consul
+            labels:
+                app: consul
+        spec:
+            containers:
+                - name: consul
+                  image: consul:1.4.2
 ---
 apiVersion: apps/v1
 kind: Deployment

@@ -1,9 +1,7 @@
 #!/usr/bin/env sh
 
-#workspace=`terraform workspace show`
-workspace=default
-#k8s_master_node=`terraform output k8s_master_node`
-k8s_master_node=159.69.207.110
+workspace=`terraform workspace show`
+k8s_master_node=`terraform output k8s_master_node`
 helmName=sis-sitesearch
 
 scp -q -o StrictHostKeyChecking=no root@cd.intrafind.net:/etc/letsencrypt/live/intrafind.net/cert.pem asset/$helmName
@@ -30,10 +28,10 @@ ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node \
 ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node \
   helm upgrade ingress stable/nginx-ingress --set rbac.create=true,controller.hostNetwork=true,controller.kind=DaemonSet
 
-ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm test $helmName --cleanup
+#ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm test $helmName --cleanup
 ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm list --all
 
-if [ "$(hostname)" = "sun" ]
+if [ "$(whoami)" = "alex" ]
 then
   $(terraform output k8s_ssh)
 fi
