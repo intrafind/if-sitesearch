@@ -16,77 +16,77 @@ events {
 http {
  server_tokens off; # hide nginx version 
 
- upstream ifinder-search-service {
-    least_conn;
-        #server 10.105.217.74:9605; # Kubernetes downstream
-        server sitesearch-search-service:9605;
-        server sitesearch-search-service-1:9605;
-        server sitesearch-search-service:9605 backup;
-  }
+ #upstream ifinder-search-service {
+ #   least_conn;
+ #       #server 10.105.217.74:9605; # Kubernetes downstream
+ #       server sitesearch-search-service:9605;
+ #       server sitesearch-search-service-1:9605;
+ #       server sitesearch-search-service:9605 backup;
+ # }
 
-  upstream blue {
-    least_conn;
-    {{range service $blue}}
-        server {{.Address}}:{{.Port}} max_fails=3 fail_timeout=60 weight=1;
-    {{else}}
-        server if-sitesearch-blue:8001;
-        server if-sitesearch-blue-1:8001;
-        server if-sitesearch-green:8001 backup;
-    {{end}}
-  }
+ # upstream blue {
+ #   least_conn;
+ #   {{range service $blue}}
+ #       server {{.Address}}:{{.Port}} max_fails=3 fail_timeout=60 weight=1;
+ #   {{else}}
+ #       server if-sitesearch-blue:8001;
+ #       server if-sitesearch-blue-1:8001;
+ #       server if-sitesearch-green:8001 backup;
+ #   {{end}}
+ # }
 
-  upstream green {
-    least_conn;
-    {{range service $green}}
-        server {{.Address}}:{{.Port}} max_fails=3 fail_timeout=60 weight=1;
-    {{else}}
-        server if-sitesearch-green:8001;
-        server if-sitesearch-green-1:8001;
-        server if-sitesearch-blue:8001 backup;
-    {{end}}
-  }
+ # upstream green {
+ #   least_conn;
+ #   {{range service $green}}
+ #       server {{.Address}}:{{.Port}} max_fails=3 fail_timeout=60 weight=1;
+ #   {{else}}
+ #       server if-sitesearch-green:8001;
+ #       server if-sitesearch-green-1:8001;
+ #       server if-sitesearch-blue:8001 backup;
+ #   {{end}}
+ # }
 
-  server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
-    server_name api.sitesearch.cloud cdn.sitesearch.cloud; # Google CDN: 35.227.226.37
+  #server {
+  #  listen 443 ssl http2;
+  #  listen [::]:443 ssl http2;
+  #  server_name api.sitesearch.cloud cdn.sitesearch.cloud; # Google CDN: 35.227.226.37
+  #
+  #  include /etc/nginx/snippets/ssl.conf;
+  #
+  #  location / {
+  #      include /etc/nginx/snippets/cors-headers.conf;
+  #      proxy_read_timeout 600; # required for long-lasting crawler calls
+  #
+  #    {{if eq $live "blue"}}
+  #      proxy_pass http://blue;
+  #    {{else}}
+  #      proxy_pass http://green;
+  #    {{end}}
+  #  }
+  #}
 
-    include /etc/nginx/snippets/ssl.conf;
-
-    location / {
-        include /etc/nginx/snippets/cors-headers.conf;
-        proxy_read_timeout 600; # required for long-lasting crawler calls
-
-      {{if eq $live "blue"}}
-        proxy_pass http://blue;
-      {{else}}
-        proxy_pass http://green;
-      {{end}}
-    }
-  }
-
-  server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
-    server_name test.sitesearch.cloud;
-
-    include /etc/nginx/snippets/ssl.conf;
-
-    location / {
-        include /etc/nginx/snippets/cors-headers.conf;
-
-      {{if eq $live "blue"}}
-        proxy_pass http://green;
-      {{else}}
-        proxy_pass http://blue;
-      {{end}}
-    }
-  }
+  #server {
+  #  listen 443 ssl http2;
+  #  listen [::]:443 ssl http2;
+  #  server_name test.sitesearch.cloud;
+  #
+  #  include /etc/nginx/snippets/ssl.conf;
+  #
+  #  location / {
+  #      include /etc/nginx/snippets/cors-headers.conf;
+  #
+  #    {{if eq $live "blue"}}
+  #      proxy_pass http://green;
+  #    {{else}}
+  #      proxy_pass http://blue;
+  #    {{end}}
+  #  }
+  #}
 
     server {
         listen 443 ssl http2;
         listen [::]:443 ssl http2;
-        server_name main.sitesearch.cloud;
+        server_name none.sitesearch.cloud;
 
         include /etc/nginx/snippets/ssl.conf;
 
