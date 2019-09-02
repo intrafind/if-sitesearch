@@ -98,7 +98,7 @@ http {
         location / {
             auth_basic "Search Service";
             auth_basic_user_file /etc/nginx/.htpasswd; # supply this via env vars somehow or as raw file at build time
-            proxy_set_header authorization Basic $basicAuth;
+            proxy_set_header authorization "Basic $basicAuth";
 
             proxy_pass https://main.sitesearch.cloud;
         }
