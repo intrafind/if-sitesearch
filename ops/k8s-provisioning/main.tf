@@ -52,7 +52,7 @@ resource "null_resource" "update-migration" {
   provisioner "remote-exec" {
     inline = [
       "kubectl create secret docker-registry docker-registry --docker-server=docker-registry.intrafind.net --docker-username=sitesearch --docker-password=${var.password}",
-      "helm install /srv/asset/sis-sitesearch --name sis-sitesearch --namespace ${terraform.workspace} --set app.tenant=${terraform.workspace},app.HETZNER_API_TOKEN=${var.hetzner_cloud_intrafind},app.password=${var.password},app.dockerRegistrySecret=${var.docker_registry_k8s_secret} --set-string app.volumeHandle=${var.volumeHandle}",
+      "helm install /opt/asset/sis-sitesearch --name sis-sitesearch --namespace ${terraform.workspace} --set app.tenant=${terraform.workspace},app.HETZNER_API_TOKEN=${var.hetzner_cloud_intrafind},app.password=${var.password},app.dockerRegistrySecret=${var.docker_registry_k8s_secret} --set-string app.volumeHandle=${var.volumeHandle}",
       "helm install --name ingress stable/nginx-ingress --set rbac.create=true,controller.hostNetwork=true,controller.kind=DaemonSet",
       "kubectl get svc,node,pvc,deployment,pods,pvc,pv,namespace,job -A && helm list",
     ]
@@ -169,7 +169,7 @@ resource "hcloud_server" "master" {
       private_key = file("~/.ssh/id_rsa")
     }
     source      = "asset"
-    destination = "/srv/asset"
+    destination = "/opt/asset"
   }
 
   provisioner "remote-exec" {
@@ -192,7 +192,7 @@ resource "hcloud_server" "master" {
       "kubectl apply -f https://raw.githubusercontent.com/hetznercloud/csi-driver/master/deploy/kubernetes/hcloud-csi.yml",
       "kubectl taint nodes --all node-role.kubernetes.io/master- # override security and enable scheduling of pods on master",
       "echo $(kubeadm token create --print-join-command) --cri-socket /run/containerd/containerd.sock > /srv/kubeadm_join",
-      "kubectl apply -f /srv/asset/init-helm-rbac-config.yaml",
+      "kubectl apply -f /opt/asset/init-helm-rbac-config.yaml",
       "curl -L https://git.io/get_helm.sh | bash && helm init --service-account tiller --upgrade",
     ]
   }

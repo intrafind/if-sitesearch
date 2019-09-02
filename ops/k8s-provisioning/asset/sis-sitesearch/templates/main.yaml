@@ -42,11 +42,11 @@ spec:
           http:
               paths:
                   - backend:
-                        serviceName: router
+                        serviceName: sis-router
                         servicePort: 443
                     path: /
                   - backend:
-                        serviceName: router
+                        serviceName: sis-router
                         servicePort: 80
                     path: /
                   - backend:
@@ -81,10 +81,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-    name: router
+    name: sis-router
 spec:
     selector:
-        app: router
+        app: sis-router
     ports:
         - name: https
           port: 443
@@ -95,24 +95,27 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: router
+    name: sis-router
     labels:
-        app: router
+        app: sis-router
 spec:
     selector:
         matchLabels:
-            app: router
+            app: sis-router
     template:
         metadata:
-            name: router
+            name: sis-router
             labels:
-                app: router
+                app: sis-router
         spec:
             imagePullSecrets:
                 - name: docker-registry-credentials-intrafind-net
             containers:
-                - name: router
-                  image: docker-registry.intrafind.net/intrafind/router:latest
+                - name: sis-router
+                  image: docker-registry.intrafind.net/intrafind/sis-router:latest
+                  env:
+                      - name: BASIC_AUTH
+                        value: {{ .Values.app.basicAuth }}
 ---
 apiVersion: apps/v1
 kind: Deployment

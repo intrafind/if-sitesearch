@@ -17,7 +17,6 @@ http {
  server_tokens off; # hide nginx version 
 
  upstream ifinder-search-service {
-    proxy_set_header authorization $basicAuth;
     least_conn;
         #server 10.105.217.74:9605; # Kubernetes downstream
         server sitesearch-search-service:9605;
@@ -99,8 +98,9 @@ http {
         location / {
             auth_basic "Search Service";
             auth_basic_user_file /etc/nginx/.htpasswd; # supply this via env vars somehow or as raw file at build time
+            proxy_set_header authorization Basic $basicAuth;
 
-            proxy_pass http://ifinder-search-service;
+            proxy_pass https://main.sitesearch.cloud;
         }
     }
 
