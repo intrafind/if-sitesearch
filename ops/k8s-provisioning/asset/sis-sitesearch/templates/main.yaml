@@ -170,13 +170,13 @@ spec:
                         value: "{{ .Values.app.meta.buildNumber }}"
                       - name: SCM_HASH
                         value: {{ .Values.app.meta.scmHash }}
-                  volumeMounts:
-                      - mountPath: "/mnt/persistence"
-                        name: storage-volume
-            volumes:
-                - name: storage-volume
-                  persistentVolumeClaim:
-                      claimName: csi-pvc-storage
+                {{/*                  volumeMounts:*/}}
+                {{/*                      - mountPath: "/mnt/persistence"*/}}
+                {{/*                        name: storage-volume*/}}
+                {{/*            volumes:*/}}
+                {{/*                - name: storage-volume*/}}
+            {{/*                  persistentVolumeClaim:*/}}
+        {{/*                      claimName: csi-pvc-storage*/}}
 ---
 apiVersion: v1
 kind: Secret
