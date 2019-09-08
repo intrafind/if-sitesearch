@@ -31,28 +31,21 @@ metadata:
     name: ingress
     annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /
+        nginx.ingress.kubernetes.io/proxy-read-timeout: 600s # required for long-lasting crawler calls
+        {{/*        nginx.ingress.kubernetes.io/client-body-buffer-size: 100M*/}}
 spec:
     tls:
         - secretName: tls-certificate
           hosts:
-              - delete-this.intrafind.net
-              - delete-this.sitesearch.cloud
+              - sis.sitesearch.cloud
     rules:
-        - host: delete-this.sitesearch.cloud
+        - host: sis.sitesearch.cloud
           http:
               paths:
                   - backend:
-                        serviceName: sis-router
-                        servicePort: 443
-                    path: /
-                  - backend:
-                        serviceName: sis-router
-                        servicePort: 80
-                    path: /
-                  - backend:
                         serviceName: if-sitesearch
                         servicePort: 8001
-                    path: /prefix
+                    path: /
 ---
 apiVersion: v1
 kind: Service
@@ -64,7 +57,6 @@ spec:
     ports:
         - name: web
           port: 8001
-    type: NodePort
 ---
 apiVersion: v1
 kind: Service
@@ -76,7 +68,6 @@ spec:
     ports:
         - name: web
           port: 8500
-        {{/*    type: NodePort*/}}
 ---
 apiVersion: v1
 kind: Service
@@ -86,8 +77,8 @@ spec:
     selector:
         app: sis-router
     ports:
-        - name: https
-          port: 443
+            {{/*        - name: https*/}}
+            {{/*          port: 443*/}}
         - name: http
           port: 80
         {{/*    type: NodePort*/}}
