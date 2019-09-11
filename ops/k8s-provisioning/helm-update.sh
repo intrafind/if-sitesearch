@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 
 workspace=default
-k8s_master_node=116.203.206.121
+k8s_master_node=116.203.228.233
+k8s_master_node=$(terraform output k8s_master_node)
 helmName=sis-sitesearch
 
 scp -q -o StrictHostKeyChecking=no root@cd.intrafind.net:/etc/letsencrypt/live/intrafind.net/cert.pem asset/$helmName
@@ -33,3 +34,9 @@ if [ "$(whoami)" = "alex" ]
 then
   $(terraform output k8s_ssh)
 fi
+
+#kubectl create configmap \
+#    --namespace kube-system kube-gelf \
+#    --from-literal GELF_HOST=logs.sitesearch.cloud \
+#    --from-literal GELF_PORT=12201 \
+#    --from-literal GELF_PROTOCOL=udp
