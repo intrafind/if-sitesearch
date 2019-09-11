@@ -58,75 +58,75 @@ spec:
         - name: web
           port: 8001
 ---
-apiVersion: v1
-kind: Service
-metadata:
-    name: consul
-spec:
-    selector:
-        app: consul
-    ports:
-        - name: web
-          port: 8500
----
-apiVersion: v1
-kind: Service
-metadata:
-    name: sis-router
-spec:
-    selector:
-        app: sis-router
-    ports:
-            {{/*        - name: https*/}}
-            {{/*          port: 443*/}}
-        - name: http
-          port: 80
-        {{/*    type: NodePort*/}}
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-    name: sis-router
-    labels:
-        app: sis-router
-spec:
-    selector:
-        matchLabels:
-            app: sis-router
-    template:
-        metadata:
-            name: sis-router
-            labels:
-                app: sis-router
-        spec:
-            imagePullSecrets:
-                - name: docker-registry-credentials-intrafind-net
-            containers:
-                - name: sis-router
-                  image: docker-registry.intrafind.net/intrafind/sis-router:latest
-                  env:
-                      - name: BASIC_AUTH
-                        value: {{ .Values.app.basicAuth }}
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-    name: consul
-    labels:
-        app: consul
-spec:
-    selector:
-        matchLabels:
-            app: consul
-    template:
-        metadata:
-            name: consul
-            labels:
-                app: consul
-        spec:
-            containers:
-                - name: consul
-                  image: consul:1.4.2
+{{/*apiVersion: v1*/}}
+{{/*kind: Service*/}}
+{{/*metadata:*/}}
+{{/*    name: consul*/}}
+{{/*spec:*/}}
+{{/*    selector:*/}}
+{{/*        app: consul*/}}
+{{/*    ports:*/}}
+{{/*        - name: web*/}}
+{{/*          port: 8500*/}}
+{{/*---*/}}
+{{/*apiVersion: v1*/}}
+{{/*kind: Service*/}}
+{{/*metadata:*/}}
+{{/*    name: sis-router*/}}
+{{/*spec:*/}}
+{{/*    selector:*/}}
+{{/*        app: sis-router*/}}
+{{/*    ports:*/}}
+{{/*            */}}{{/*        - name: https*/}}
+{{/*            */}}{{/*          port: 443*/}}
+{{/*        - name: http*/}}
+{{/*          port: 80*/}}
+{{/*        */}}{{/*    type: NodePort*/}}
+{{/*---*/}}
+{{/*apiVersion: apps/v1*/}}
+{{/*kind: Deployment*/}}
+{{/*metadata:*/}}
+{{/*    name: sis-router*/}}
+{{/*    labels:*/}}
+{{/*        app: sis-router*/}}
+{{/*spec:*/}}
+{{/*    selector:*/}}
+{{/*        matchLabels:*/}}
+{{/*            app: sis-router*/}}
+{{/*    template:*/}}
+{{/*        metadata:*/}}
+{{/*            name: sis-router*/}}
+{{/*            labels:*/}}
+{{/*                app: sis-router*/}}
+{{/*        spec:*/}}
+{{/*            imagePullSecrets:*/}}
+{{/*                - name: docker-registry-credentials-intrafind-net*/}}
+{{/*            containers:*/}}
+{{/*                - name: sis-router*/}}
+{{/*                  image: docker-registry.intrafind.net/intrafind/sis-router:latest*/}}
+{{/*                  env:*/}}
+{{/*                      - name: BASIC_AUTH*/}}
+{{/*                        value: {{ .Values.app.basicAuth }}*/}}
+{{/*---*/}}
+{{/*apiVersion: apps/v1*/}}
+{{/*kind: Deployment*/}}
+{{/*metadata:*/}}
+{{/*    name: consul*/}}
+{{/*    labels:*/}}
+{{/*        app: consul*/}}
+{{/*spec:*/}}
+{{/*    selector:*/}}
+{{/*        matchLabels:*/}}
+{{/*            app: consul*/}}
+{{/*    template:*/}}
+{{/*        metadata:*/}}
+{{/*            name: consul*/}}
+{{/*            labels:*/}}
+{{/*                app: consul*/}}
+{{/*        spec:*/}}
+{{/*            containers:*/}}
+{{/*                - name: consul*/}}
+        {{/*                  image: consul:1.4.2*/}}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -135,6 +135,7 @@ metadata:
     labels:
         app: if-sitesearch
 spec:
+    minReadySeconds: 15
     selector:
         matchLabels:
             app: if-sitesearch
