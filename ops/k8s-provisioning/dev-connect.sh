@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 
 k8s_master_node=`terraform output k8s_master_node`
-tenant=`terraform workspace show`
+#tenant=`terraform workspace show`
+tenant=kube-system
 
 ssh-keygen -f ~/.ssh/known_hosts -R $k8s_master_node
 screen -wipe

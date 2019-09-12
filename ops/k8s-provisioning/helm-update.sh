@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-workspace=default
+workspace=kube-system
 k8s_master_node=116.203.228.233
 k8s_master_node=$(terraform output k8s_master_node)
 helmName=sis-sitesearch
@@ -11,9 +11,14 @@ scp -q -o StrictHostKeyChecking=no root@cd.intrafind.net:/etc/letsencrypt/live/i
 ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node rm -rf /opt/$helmName
 scp -q -o StrictHostKeyChecking=no -r asset/$helmName root@$k8s_master_node:/opt/
 
-#ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm delete $helmName --purge
-#ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm delete ingress --purge
-#sleep 13
+ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node curl -L -O https://raw.githubusercontent.com/elastic/beats/7.3/deploy/kubernetes/filebeat-kubernetes.yaml
+
+ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node kubectl delete -f /root/filebeat-kubernetes.yaml
+ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm delete $helmName --purge
+ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm delete ingress --purge
+sleep 13
+
+ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node kubectl apply -f /root/filebeat-kubernetes.yaml
 
 ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node \
   helm upgrade $helmName /opt/$helmName --install --namespace $workspace \
@@ -34,9 +39,3 @@ if [ "$(whoami)" = "alex" ]
 then
   $(terraform output k8s_ssh)
 fi
-
-#kubectl create configmap \
-#    --namespace kube-system kube-gelf \
-#    --from-literal GELF_HOST=logs.sitesearch.cloud \
-#    --from-literal GELF_PORT=12201 \
-#    --from-literal GELF_PROTOCOL=udp
