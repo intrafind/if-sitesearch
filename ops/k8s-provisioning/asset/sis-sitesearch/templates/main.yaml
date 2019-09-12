@@ -310,35 +310,35 @@ spec:
     ports:
         - port: 9200
 ---
-kind: DaemonSet
-apiVersion: apps/v1
-metadata:
-    namespace: kube-system
-    name: logstash
-    labels:
-        app: logstash
-spec:
-    selector:
-        matchLabels:
-            app: logstash
-    template:
-        metadata:
-            name: logstash
-            labels:
-                app: logstash
-        spec:
-            volumes:
-                - name: config
-                  configMap:
-                      name: sis-config
-            containers:
-                - name: logstash
-                  image: docker.elastic.co/logstash/logstash:7.3.1
-                  volumeMounts:
-                      - name: config
-                        mountPath: /usr/share/logstash/pipeline/logstash.conf
-                        subPath: logstash.conf
----
+        {{/*kind: DaemonSet*/}}
+        {{/*apiVersion: apps/v1*/}}
+        {{/*metadata:*/}}
+        {{/*    namespace: kube-system*/}}
+        {{/*    name: logstash*/}}
+        {{/*    labels:*/}}
+        {{/*        app: logstash*/}}
+        {{/*spec:*/}}
+        {{/*    selector:*/}}
+        {{/*        matchLabels:*/}}
+        {{/*            app: logstash*/}}
+        {{/*    template:*/}}
+        {{/*        metadata:*/}}
+        {{/*            name: logstash*/}}
+        {{/*            labels:*/}}
+        {{/*                app: logstash*/}}
+        {{/*        spec:*/}}
+        {{/*            volumes:*/}}
+        {{/*                - name: config*/}}
+        {{/*                  configMap:*/}}
+        {{/*                      name: sis-config*/}}
+        {{/*            containers:*/}}
+        {{/*                - name: logstash*/}}
+        {{/*                  image: docker.elastic.co/logstash/logstash:7.3.1*/}}
+        {{/*                  volumeMounts:*/}}
+        {{/*                      - name: config*/}}
+        {{/*                        mountPath: /usr/share/logstash/pipeline/logstash.conf*/}}
+        {{/*                        subPath: logstash.conf*/}}
+        {{/*---*/}}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
