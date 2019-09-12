@@ -48,17 +48,17 @@ spec:
           http:
               paths:
                   - backend:
-                        serviceName: if-sitesearch
+                        serviceName: sis-sitesearch
                         servicePort: 8001
                     path: /
 ---
 apiVersion: v1
 kind: Service
 metadata:
-    name: if-sitesearch
+    name: sis-sitesearch
 spec:
     selector:
-        app: if-sitesearch
+        app: sis-sitesearch
     ports:
         - name: web
           port: 8001
@@ -136,24 +136,25 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: if-sitesearch
+    name: sis-sitesearch
     labels:
-        app: if-sitesearch
+        app: sis-sitesearch
 spec:
+    replicas: 2
     minReadySeconds: 15
     selector:
         matchLabels:
-            app: if-sitesearch
+            app: sis-sitesearch
     template:
         metadata:
-            name: if-sitesearch
+            name: sis-sitesearch
             labels:
-                app: if-sitesearch
+                app: sis-sitesearch
         spec:
             imagePullSecrets:
                 - name: docker-registry-credentials-intrafind-net
             containers:
-                - name: if-sitesearch
+                - name: sis-sitesearch
                   image: docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
                   env:
                       - name: SIS_API_SERVICE_URL
@@ -230,21 +231,21 @@ spec:
 kind: StatefulSet
 apiVersion: apps/v1
 metadata:
-    name: core
+    name: elasticsearch
     labels:
-        app: core
+        app: elasticsearch
 spec:
-    serviceName: core
+    serviceName: elasticsearch
     selector:
         matchLabels:
-            app: core
+            app: elasticsearch
     updateStrategy:
         type: RollingUpdate
     template:
         metadata:
-            name: core
+            name: elasticsearch
             labels:
-                app: core
+                app: elasticsearch
         spec:
             initContainers:
                 - name: set-elasticsearch-requirement
@@ -254,29 +255,12 @@ spec:
                       privileged: true
             securityContext:
                 fsGroup: 1000
+                runAsUser: 1000
+                runAsGroup: 1000
+                runAsNonRoot: true
             containers:
                 - name: elasticsearch
-                        {{/*                  securityContext:*/}}
-                        {{/*                      runAsUser: 1000*/}}
                   image: docker.elastic.co/elasticsearch/elasticsearch:7.3.1
-                        {{/*                  readinessProbe:*/}}
-                        {{/*                      exec:*/}}
-                        {{/*                          command:*/}}
-                        {{/*                              - /bin/sh*/}}
-                        {{/*                              - -c*/}}
-                        {{/*                              - if echo `curl -s localhost:9200/_cat/health?h=status` | grep green || echo `curl -s localhost:9200/_cat/health?h=status` | grep yellow; then exit 0; else exit 1; fi*/}}
-                        {{/*                      periodSeconds: 10*/}}
-                        {{/*                      initialDelaySeconds: 30*/}}
-                        {{/*                  livenessProbe:*/}}
-                        {{/*                      exec:*/}}
-                        {{/*                          command:*/}}
-                        {{/*                              - /bin/sh*/}}
-                        {{/*                              - -c*/}}
-                        {{/*                              - if echo `curl -s localhost:9200/_cat/health?h=status` | grep yellow; then exit 0; else exit 1; fi*/}}
-                        {{/*                      periodSeconds: 60*/}}
-                        {{/*                  volumeMounts:*/}}
-                        {{/*                      - mountPath: /mnt/persistence*/}}
-                        {{/*                        name: storage*/}}
                   env:
                       - name: discovery.type
                         value: single-node
@@ -286,55 +270,74 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-    name: core
+    name: elasticsearch
 spec:
     selector:
-        app: core
+        app: elasticsearch
     ports:
         - port: 9200
 ---
-kind: Deployment
+kind: DaemonSet
 apiVersion: apps/v1
 metadata:
-    name: logging
+    namespace: kube-system
+    name: logstash
     labels:
-        app: logging
+        app: logstash
 spec:
     selector:
         matchLabels:
-            app: logging
+            app: logstash
     template:
         metadata:
-            name: logging
+            name: logstash
             labels:
-                app: logging
+                app: logstash
         spec:
             containers:
                 - name: logstash
                   image: docker.elastic.co/logstash/logstash:7.3.1
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+    name: kibana
+    labels:
+        app: kibana
+spec:
+    selector:
+        matchLabels:
+            app: kibana
+    template:
+        metadata:
+            name: kibana
+            labels:
+                app: kibana
+        spec:
+            containers:
                 - name: kibana
                   image: docker.elastic.co/kibana/kibana:7.3.1
-                  env:
-                      - name: xpack.security.enabled
-                        value: "false"
-                      - name: xpack.monitoring.report_stats
-                        value: "false"
-                      - name: xpack.monitoring.collection.enabled
-                        value: "true"
-                      - name: ELASTICSEARCH_URL
-                        value: http://core:9200
+        {{/*                  env:*/}}
+        {{/*                      - name: XPACK_SECURITY_ENABLED*/}}
+        {{/*                        value: "true"*/}}
+        {{/*                      - name: XPACK_MONITORING_REPORT_STATS*/}}
+        {{/*                        value: "true"*/}}
+        {{/*                      - name: XPACK_MONITORING_COLLECTION_ENABLED*/}}
+        {{/*                        value: "true"*/}}
+        {{/*                      - name: ELASTICSEARCH_HOSTS*/}}
+        {{/*                        value: http://core:9200*/}}
 ---
 kind: Service
 apiVersion: v1
 metadata:
-    name: logging
+    name: kibana
 spec:
     selector:
-        app: logging
+        app: kibana
     ports:
-        - port: 12201
-          name: logstash
-          protocol: UDP
+            {{/*        - port: 12201*/}}
+            {{/*          name: logstash*/}}
+            {{/*          protocol: UDP*/}}
         - port: 5601
           name: kibana
 ---
