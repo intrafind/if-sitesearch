@@ -19,7 +19,7 @@ docker start teamcity-agent-merkur
 docker-compose --file /srv/if-sitesearch/opt/docker-compose-elk.yaml -p main up -d
 
 docker start gitlab
-docker start gitlab-shared-runner1
-docker start gitlab-shared-runner2
+docker start gitlab-shared-runner3
+docker start gitlab-shared-runner4
 
 docker start main-router
