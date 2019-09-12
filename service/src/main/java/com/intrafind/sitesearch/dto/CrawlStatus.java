@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 IntraFind Software AG. All rights reserved.
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,14 +24,24 @@ public class CrawlStatus {
     private UUID siteId;
     private Instant crawled;
     private long pageCount;
+    private SiteProfile siteProfile;
 
     private CrawlStatus() {
+    }
+
+    public CrawlStatus(UUID siteId, Instant crawled, long pageCount, SiteProfile siteProfile) {
+        this(siteId, crawled, pageCount);
+        this.siteProfile = siteProfile;
     }
 
     public CrawlStatus(UUID siteId, Instant crawled, long pageCount) {
         this.siteId = siteId;
         this.crawled = crawled;
         this.pageCount = pageCount;
+    }
+
+    public SiteProfile getSiteProfile() {
+        return siteProfile;
     }
 
     public UUID getSiteId() {

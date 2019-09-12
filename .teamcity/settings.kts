@@ -6,6 +6,7 @@ import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions.BuildFailureOnText
 import jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions.failOnText
 import jetbrains.buildServer.configs.kotlin.v2018_2.projectFeatures.dockerRegistry
+import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.finishBuildTrigger
 import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.schedule
 import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
@@ -47,6 +48,7 @@ project {
     buildType(Recrawl)
     buildType(LoadTest)
     buildType(BGRelease)
+    buildType(Deployment)
     buildType(Build)
     buildType(SmokeTest)
 
@@ -260,6 +262,101 @@ object Build : BuildType({
     }
 })
 
+object Deployment : BuildType({
+    name = "Deployment"
+    description = "Continuous incremental & automated release"
+
+    params {
+        param("env.DEV_SKIP_FLAG", "true")
+        param("env.SCM_HASH", "%build.vcs.number%")
+        param("env.BUILD_NUMBER", "%build.counter%")
+    }
+
+    vcs {
+        root(DslContext.settingsRoot)
+
+        cleanCheckout = true
+    }
+
+    steps {
+        script {
+            name = "Enable e-mail delivery"
+            enabled = false
+            scriptContent = """
+                cp -r /root/docker-build-data/api-sitesearch/service/config service/
+                chmod -R 755 service/config
+            """.trimIndent()
+        }
+        script {
+            name = "Build service.jar w/ Docker (using TeamCity Docker plugin)"
+            enabled = false
+            scriptContent = """
+                #SPRING_PROFILES_ACTIVE=oss
+                ./gradlew clean includeKotlinJsRuntime build --info -x test
+            """.trimIndent()
+            dockerImage = "openjdk:13-alpine"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+            dockerPull = true
+            dockerRunParameters = "-v /root/.gradle:/root/.gradle"
+        }
+        script {
+            name = "Build & Run Container"
+            scriptContent = """
+                cd ops/k8s-provisioning
+                sh helm-update.sh
+            """.trimIndent()
+        }
+    }
+
+    triggers {
+        vcs {
+            enabled = false
+            triggerRules = """
+                -:comment=.*SR${'$'}:**
+                -:docs/**
+                -:**/sitesearch/jmh/**
+                -:docker-router/**
+                -:opt/**
+                -:bootstrap/**
+                -:docker-router/frontpage/**
+            """.trimIndent()
+            branchFilter = ""
+            groupCheckinsByCommitter = true
+        }
+        finishBuildTrigger {
+            buildType = "${Build.id}"
+            successfulOnly = true
+        }
+    }
+
+    failureConditions {
+        executionTimeoutMin = 60
+        errorMessage = true
+        failOnText {
+            conditionType = BuildFailureOnText.ConditionType.CONTAINS
+            pattern = "ERROR"
+            reverse = false
+            stopBuildOnFailure = true
+        }
+        failOnText {
+            conditionType = BuildFailureOnText.ConditionType.CONTAINS
+            pattern = "AssertionError"
+            failureMessage = "AssertionError"
+            reverse = false
+            stopBuildOnFailure = true
+        }
+    }
+
+    features {
+        sshAgent {
+            teamcitySshKey = "dev"
+        }
+        perfmon {
+            enabled = false
+        }
+    }
+})
+
 object LoadTest : BuildType({
     name = "Throughput & Load Test"
 
@@ -275,6 +372,7 @@ object LoadTest : BuildType({
             scriptContent = "sh load-test.sh"
             dockerImage = "openjdk:13-alpine"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+            dockerPull = true
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
         }
     }
@@ -430,8 +528,6 @@ object Recrawl_1 : GitVcsRoot({
 object SmokeApiHealthChecksIfSitesearch : GitVcsRoot({
     name = "smoke-api-health-check"
     url = "https://github.com/intrafind/if-sitesearch"
-    authMethod = password {
-        userName = "loxal"
-        password = "credentialsJSON:91f52c32-83d5-465b-bd17-262b0a37cd3f"
-    }
+    param("secure:password", "")
+    param("username", "")
 })

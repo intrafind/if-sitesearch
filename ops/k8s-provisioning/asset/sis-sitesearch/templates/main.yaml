@@ -1,0 +1,343 @@
+---
+apiVersion: v1
+data:
+    .dockerconfigjson: {{ .Values.app.dockerRegistrySecret }}
+kind: Secret
+metadata:
+    name: docker-registry-credentials-intrafind-net
+type: kubernetes.io/dockerconfigjson
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: sis-config
+data:
+    tlsCrt: {{ .Values.app.none | quote }}
+    tlsKey: {{ .Values.app.none }}
+---
+        {{/*    kubectl create secret tls test-tls --key="tls.key" --cert="tls.crt"*/}}
+apiVersion: v1
+kind: Secret
+metadata:
+    name: tls-certificate
+type: kubernetes.io/tls
+data:
+    tls.crt: {{ .Files.Get "cert.pem" | b64enc }}
+    tls.key: {{ .Files.Get "privkey.pem" | b64enc }}
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+    name: ingress
+    annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /
+        nginx.ingress.kubernetes.io/enable-cors: "true"
+        nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+        nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range"
+        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS, PUT, DELETE"
+        nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: 600s # required for long-lasting crawler calls
+        {{/*        nginx.ingress.kubernetes.io/client-body-buffer-size: 100M*/}}
+spec:
+    tls:
+        - secretName: tls-certificate
+          hosts:
+              - sis.sitesearch.cloud
+    rules:
+        - host: sis.sitesearch.cloud
+          http:
+              paths:
+                  - backend:
+                        serviceName: sis-sitesearch
+                        servicePort: 8001
+                    path: /
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: sis-sitesearch
+spec:
+    selector:
+        app: sis-sitesearch
+    ports:
+        - name: web
+          port: 8001
+---
+{{/*apiVersion: v1*/}}
+{{/*kind: Service*/}}
+{{/*metadata:*/}}
+{{/*    name: consul*/}}
+{{/*spec:*/}}
+{{/*    selector:*/}}
+{{/*        app: consul*/}}
+{{/*    ports:*/}}
+{{/*        - name: web*/}}
+{{/*          port: 8500*/}}
+{{/*---*/}}
+{{/*apiVersion: v1*/}}
+{{/*kind: Service*/}}
+{{/*metadata:*/}}
+{{/*    name: sis-router*/}}
+{{/*spec:*/}}
+{{/*    selector:*/}}
+{{/*        app: sis-router*/}}
+{{/*    ports:*/}}
+{{/*            */}}{{/*        - name: https*/}}
+{{/*            */}}{{/*          port: 443*/}}
+{{/*        - name: http*/}}
+{{/*          port: 80*/}}
+{{/*        */}}{{/*    type: NodePort*/}}
+{{/*---*/}}
+{{/*apiVersion: apps/v1*/}}
+{{/*kind: Deployment*/}}
+{{/*metadata:*/}}
+{{/*    name: sis-router*/}}
+{{/*    labels:*/}}
+{{/*        app: sis-router*/}}
+{{/*spec:*/}}
+{{/*    selector:*/}}
+{{/*        matchLabels:*/}}
+{{/*            app: sis-router*/}}
+{{/*    template:*/}}
+{{/*        metadata:*/}}
+{{/*            name: sis-router*/}}
+{{/*            labels:*/}}
+{{/*                app: sis-router*/}}
+{{/*        spec:*/}}
+{{/*            imagePullSecrets:*/}}
+{{/*                - name: docker-registry-credentials-intrafind-net*/}}
+{{/*            containers:*/}}
+{{/*                - name: sis-router*/}}
+{{/*                  image: docker-registry.intrafind.net/intrafind/sis-router:latest*/}}
+{{/*                  env:*/}}
+{{/*                      - name: BASIC_AUTH*/}}
+{{/*                        value: {{ .Values.app.basicAuth }}*/}}
+{{/*---*/}}
+{{/*apiVersion: apps/v1*/}}
+{{/*kind: Deployment*/}}
+{{/*metadata:*/}}
+{{/*    name: consul*/}}
+{{/*    labels:*/}}
+{{/*        app: consul*/}}
+{{/*spec:*/}}
+{{/*    selector:*/}}
+{{/*        matchLabels:*/}}
+{{/*            app: consul*/}}
+{{/*    template:*/}}
+{{/*        metadata:*/}}
+{{/*            name: consul*/}}
+{{/*            labels:*/}}
+{{/*                app: consul*/}}
+{{/*        spec:*/}}
+{{/*            containers:*/}}
+{{/*                - name: consul*/}}
+        {{/*                  image: consul:1.4.2*/}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: sis-sitesearch
+    labels:
+        app: sis-sitesearch
+spec:
+    replicas: 2
+    minReadySeconds: 15
+    selector:
+        matchLabels:
+            app: sis-sitesearch
+    template:
+        metadata:
+            name: sis-sitesearch
+            labels:
+                app: sis-sitesearch
+        spec:
+            imagePullSecrets:
+                - name: docker-registry-credentials-intrafind-net
+            containers:
+                - name: sis-sitesearch
+                  image: docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
+                  env:
+                      - name: SIS_API_SERVICE_URL
+                        value: {{ .Values.app.serviceUrl }}
+                      - name: SIS_SERVICE_HOST
+                        value: {{ .Values.app.serviceHost }}
+                      - name: SERVICE_SECRET
+                        value: {{ .Values.app.sis.serviceSecret }}
+                      - name: WOO_COMMERCE_CONSUMER_KEY
+                        value: {{ .Values.app.sis.wooCommerceConsumerKey }}
+                      - name: WOO_COMMERCE_CONSUMER_SECRET
+                        value: {{ .Values.app.sis.wooCommerceConsumerSecret }}
+                      - name: INVISIBLE_RECAPTCHA_SITE_SECRET
+                        value: {{ .Values.app.recaptchaSecret }}
+                      - name: ADMIN_SITE_SECRET
+                        value: {{ .Values.app.adminSecret }}
+                      - name: DEV_SKIP_FLAG
+                        value: "{{ .Values.app.devSkip }}"
+                      - name: BUILD_NUMBER
+                        value: "{{ .Values.app.meta.buildNumber }}"
+                      - name: SCM_HASH
+                        value: {{ .Values.app.meta.scmHash }}
+                {{/*                  volumeMounts:*/}}
+                {{/*                      - mountPath: "/mnt/persistence"*/}}
+                {{/*                        name: storage-volume*/}}
+                {{/*            volumes:*/}}
+                {{/*                - name: storage-volume*/}}
+            {{/*                  persistentVolumeClaim:*/}}
+        {{/*                      claimName: csi-pvc-storage*/}}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: hcloud-csi
+    namespace: kube-system
+stringData:
+    token: {{ .Values.app.HETZNER_API_TOKEN }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: csi-pvc-storage
+    namespace: {{ .Values.app.tenant }}
+spec:
+    accessModes:
+        - ReadWriteOnce
+    resources:
+        requests:
+            storage: 10Gi
+    storageClassName: hcloud-volumes
+    volumeName: pvc-{{ .Values.app.tenant }}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: pvc-{{ .Values.app.tenant }}
+spec:
+    accessModes:
+        - ReadWriteOnce
+    capacity:
+        storage: 10Gi
+    claimRef:
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        name: csi-pvc-storage
+        namespace: {{ .Values.app.tenant }}
+    csi:
+        driver: csi.hetzner.cloud
+        fsType: ext4
+        volumeHandle: "{{ .Values.app.volumeHandle }}"
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: hcloud-volumes
+---
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+    name: elasticsearch
+    labels:
+        app: elasticsearch
+spec:
+    serviceName: elasticsearch
+    selector:
+        matchLabels:
+            app: elasticsearch
+    updateStrategy:
+        type: RollingUpdate
+    template:
+        metadata:
+            name: elasticsearch
+            labels:
+                app: elasticsearch
+        spec:
+            initContainers:
+                - name: set-elasticsearch-requirement
+                  image: busybox
+                  command: [ "sysctl", "-w", "vm.max_map_count=262144" ]
+                  securityContext:
+                      privileged: true
+            securityContext:
+                fsGroup: 1000
+                runAsUser: 1000
+                runAsGroup: 1000
+                runAsNonRoot: true
+            containers:
+                - name: elasticsearch
+                  image: docker.elastic.co/elasticsearch/elasticsearch:7.3.1
+                  env:
+                      - name: discovery.type
+                        value: single-node
+                      - name: bootstrap.memory_lock
+                        value: "true"
+---
+kind: Service
+apiVersion: v1
+metadata:
+    name: elasticsearch
+spec:
+    selector:
+        app: elasticsearch
+    ports:
+        - port: 9200
+---
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+    namespace: kube-system
+    name: logstash
+    labels:
+        app: logstash
+spec:
+    selector:
+        matchLabels:
+            app: logstash
+    template:
+        metadata:
+            name: logstash
+            labels:
+                app: logstash
+        spec:
+            containers:
+                - name: logstash
+                  image: docker.elastic.co/logstash/logstash:7.3.1
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+    name: kibana
+    labels:
+        app: kibana
+spec:
+    selector:
+        matchLabels:
+            app: kibana
+    template:
+        metadata:
+            name: kibana
+            labels:
+                app: kibana
+        spec:
+            containers:
+                - name: kibana
+                  image: docker.elastic.co/kibana/kibana:7.3.1
+        {{/*                  env:*/}}
+        {{/*                      - name: XPACK_SECURITY_ENABLED*/}}
+        {{/*                        value: "true"*/}}
+        {{/*                      - name: XPACK_MONITORING_REPORT_STATS*/}}
+        {{/*                        value: "true"*/}}
+        {{/*                      - name: XPACK_MONITORING_COLLECTION_ENABLED*/}}
+        {{/*                        value: "true"*/}}
+        {{/*                      - name: ELASTICSEARCH_HOSTS*/}}
+        {{/*                        value: http://core:9200*/}}
+---
+kind: Service
+apiVersion: v1
+metadata:
+    name: kibana
+spec:
+    selector:
+        app: kibana
+    ports:
+            {{/*        - port: 12201*/}}
+            {{/*          name: logstash*/}}
+            {{/*          protocol: UDP*/}}
+        - port: 5601
+          name: kibana
+---

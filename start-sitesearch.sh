@@ -7,7 +7,7 @@ docker build --pull --no-cache --tag docker-registry.intrafind.net/intrafind/sis
 docker push docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
 
 ssh ubuntu@main.sitesearch.cloud docker rm -f if-sitesearch
-ssh ubuntu@main.sitesearch.cloud docker run --rm -d --name if-sitesearch \
+ssh ubuntu@main.sitesearch.cloud docker run -d --name if-sitesearch \
     --env SIS_API_SERVICE_URL=$SIS_API_SERVICE_URL \
     --env SERVICE_SECRET=$SERVICE_SECRET \
     --env SIS_SERVICE_HOST=$SIS_SERVICE_HOST \
@@ -19,6 +19,7 @@ ssh ubuntu@main.sitesearch.cloud docker run --rm -d --name if-sitesearch \
     --env BUILD_NUMBER=$BUILD_NUMBER \
     --env SCM_HASH=$SCM_HASH \
     --env SECURITY_OAUTH2_CLIENT_CLIENT_SECRET=$SECURITY_OAUTH2_CLIENT_CLIENT_SECRET \
+    --restart unless-stopped \
     --network sitesearch \
     docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
 

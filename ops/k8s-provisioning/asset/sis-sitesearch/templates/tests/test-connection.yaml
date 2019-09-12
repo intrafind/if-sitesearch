@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: "{{ include "sis-sitesearch.fullname" . }}-test-connection"
+    labels:
+        {{ include "sis-sitesearch.labels" . | indent 4 }}
+    annotations:
+        "helm.sh/hook": test-success
+spec:
+    containers:
+        - name: api-tester
+          image: busybox
+          command: [ "wget" ]
+                {{/*          args: [ "https://api.sitesearch.cloudd" ]*/}}
+          args: [ "https://www.example.com" ]
+                {{/*      args:  ['{{ include "sis-sitesearch.fullname" . }}:{{ .Values.service.port }}']*/}}
+    restartPolicy: Never

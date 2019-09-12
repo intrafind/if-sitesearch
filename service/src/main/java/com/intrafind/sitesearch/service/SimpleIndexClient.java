@@ -69,8 +69,6 @@ public class SimpleIndexClient implements Index {
         final var indexType = getIndexType(docId);
 
         if (indexType.equals(SVC_SINGLETONS)) {
-//            final List<CrawlStatus> crawlStatus = new ArrayList<>();
-//            final var sitesCrawlStatus = new SitesCrawlStatus(new HashSet<>(crawlStatus));
             final var sitesCrawlStatus = new SitesCrawlStatus(new HashSet<>(Collections.emptyList()));
             documents[0].getFields().forEach((siteId, status) ->
                     sitesCrawlStatus.getSites().add(new CrawlStatus(UUID.fromString(siteId),
@@ -166,7 +164,7 @@ public class SimpleIndexClient implements Index {
         final var indexType = getIndexType(docId);
 
         final var call = HttpRequest.newBuilder()
-                .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_delete_by_query?refresh=true"))
+                .uri(URI.create(ELASTICSEARCH_SERVICE + "/" + indexType + "/_delete_by_query?refresh=false"))
                 .header(HttpHeaders.AUTHORIZATION, BASIC_AUTH_HEADER)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .POST(HttpRequest.BodyPublishers.ofString("{\"query\": {\"terms\": {\"_id\":" +

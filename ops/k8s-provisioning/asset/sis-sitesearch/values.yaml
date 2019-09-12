@@ -1,0 +1,18 @@
+app:
+  tenant: none
+  adminSecret: 0-0-0-0-0
+  dockerRegistrySecret: invalid-default
+  HETZNER_API_TOKEN: invalid-default
+  volumeHandle: invalid-default
+  serviceUrl: https://api.sitesearch.cloud
+  serviceHost: api.sitesearch.cloud
+  recaptchaSecret: invalid-default
+  devSkip: true
+  basicAuth: none
+  sis:
+    serviceSecret: 0-0-0-0-0
+    wooCommerceConsumerKey: invalid-default
+    wooCommerceConsumerSecret: invalid-default
+  meta:
+    buildNumber: -1
+    scmHash: 0f
