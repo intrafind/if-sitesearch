@@ -8,6 +8,6 @@ docker network create $docker_network
 cd main-router
 sudo rm -rf letsencrypt
 sudo cp -r /etc/letsencrypt .
-sudo docker build --no-cache --pull --tag docker-registry.sitesearch.cloud/intrafind/${docker_redirect_image}:${docker_tag} .
+sudo docker build --no-cache --pull --tag docker-registry.intrafind.net/intrafind/${docker_redirect_image}:${docker_tag} .
 sudo rm -rf letsencrypt
-docker push docker-registry.sitesearch.cloud/intrafind/${docker_redirect_image}:${docker_tag}
+docker push docker-registry.intrafind.net/intrafind/${docker_redirect_image}:${docker_tag}
