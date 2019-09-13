@@ -1,8 +1,8 @@
 ---
+kind: Secret
 apiVersion: v1
 data:
     .dockerconfigjson: {{ .Values.app.dockerRegistrySecret }}
-kind: Secret
 metadata:
     name: docker-registry-credentials-intrafind-net
 type: kubernetes.io/dockerconfigjson
@@ -10,6 +10,7 @@ type: kubernetes.io/dockerconfigjson
 kind: ConfigMap
 apiVersion: v1
 metadata:
+    namespace: kube-system
     name: sis-config
 data:
     logstash.conf: |
@@ -80,8 +81,8 @@ data:
         }
 ---
         {{/*    kubectl create secret tls test-tls --key="tls.key" --cert="tls.crt"*/}}
-apiVersion: v1
 kind: Secret
+apiVersion: v1
 metadata:
     name: tls-certificate
 type: kubernetes.io/tls
@@ -116,8 +117,8 @@ spec:
                         servicePort: 8001
                     path: /
 ---
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
     name: sis-sitesearch
 spec:
@@ -166,8 +167,8 @@ spec:
 {{/*                      - name: BASIC_AUTH*/}}
 {{/*                        value: {{ .Values.app.basicAuth }}*/}}
 ---
-apiVersion: apps/v1
 kind: Deployment
+apiVersion: apps/v1
 metadata:
     name: sis-sitesearch
     labels:
@@ -218,16 +219,16 @@ spec:
             {{/*                  persistentVolumeClaim:*/}}
         {{/*                      claimName: csi-pvc-storage*/}}
 ---
-apiVersion: v1
 kind: Secret
+apiVersion: v1
 metadata:
     name: hcloud-csi
     namespace: kube-system
 stringData:
     token: {{ .Values.app.HETZNER_API_TOKEN }}
 ---
-apiVersion: v1
 kind: PersistentVolumeClaim
+apiVersion: v1
 metadata:
     name: csi-pvc-storage
     namespace: {{ .Values.app.tenant }}
@@ -240,8 +241,8 @@ spec:
     storageClassName: hcloud-volumes
     volumeName: pvc-{{ .Values.app.tenant }}
 ---
-apiVersion: v1
 kind: PersistentVolume
+apiVersion: v1
 metadata:
     name: pvc-{{ .Values.app.tenant }}
 spec:
@@ -310,38 +311,39 @@ spec:
     ports:
         - port: 9200
 ---
-        {{/*kind: DaemonSet*/}}
-        {{/*apiVersion: apps/v1*/}}
-        {{/*metadata:*/}}
-        {{/*    namespace: kube-system*/}}
-        {{/*    name: logstash*/}}
-        {{/*    labels:*/}}
-        {{/*        app: logstash*/}}
-        {{/*spec:*/}}
-        {{/*    selector:*/}}
-        {{/*        matchLabels:*/}}
-        {{/*            app: logstash*/}}
-        {{/*    template:*/}}
-        {{/*        metadata:*/}}
-        {{/*            name: logstash*/}}
-        {{/*            labels:*/}}
-        {{/*                app: logstash*/}}
-        {{/*        spec:*/}}
-        {{/*            volumes:*/}}
-        {{/*                - name: config*/}}
-        {{/*                  configMap:*/}}
-        {{/*                      name: sis-config*/}}
-        {{/*            containers:*/}}
-        {{/*                - name: logstash*/}}
-        {{/*                  image: docker.elastic.co/logstash/logstash:7.3.1*/}}
-        {{/*                  volumeMounts:*/}}
-        {{/*                      - name: config*/}}
-        {{/*                        mountPath: /usr/share/logstash/pipeline/logstash.conf*/}}
-        {{/*                        subPath: logstash.conf*/}}
-        {{/*---*/}}
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+    namespace: kube-system
+    name: logstash
+    labels:
+        app: logstash
+spec:
+    selector:
+        matchLabels:
+            app: logstash
+    template:
+        metadata:
+            name: logstash
+            labels:
+                app: logstash
+        spec:
+            volumes:
+                - name: config
+                  configMap:
+                      name: sis-config
+            containers:
+                - name: logstash
+                  image: docker.elastic.co/logstash/logstash:7.3.1
+                  volumeMounts:
+                      - name: config
+                        mountPath: /usr/share/logstash/pipeline/logstash.conf
+                        subPath: logstash.conf
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
+    namespace: kube-system
     name: kibana
     labels:
         app: kibana

@@ -69,7 +69,7 @@ dependencies {
     compile("org.codehaus.groovy:groovy-templates:3.0.0-beta-3")
     runtimeClasspath("org.springframework.boot:spring-boot-devtools:$springBootVersion")
 
-    compile("com.squareup.okhttp3:okhttp:4.1.1")
+    compile("com.squareup.okhttp3:okhttp:4.2.0")
     compile("org.jsoup:jsoup:1.12.1")
 
     compile("org.mnode.mstor:mstor:1.0.0")

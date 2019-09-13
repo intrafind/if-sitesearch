@@ -1,0 +1,244 @@
+[
+  {
+    "_id": "7c58ca40-d516-11e7-a9b3-91c93f0e13a7",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Site Search - site-specific",
+      "hits": 0,
+      "description": "BI Insights",
+      "panelsJSON": "[{\"gridData\":{\"h\":3,\"i\":\"1\",\"w\":6,\"x\":0,\"y\":0},\"id\":\"7ab54250-cd95-11e7-a9b3-91c93f0e13a7\",\"panelIndex\":\"1\",\"type\":\"visualization\",\"version\":\"6.1.0\"},{\"gridData\":{\"h\":3,\"i\":\"2\",\"w\":6,\"x\":6,\"y\":0},\"id\":\"054aaf10-d06e-11e7-a9b3-91c93f0e13a7\",\"panelIndex\":\"2\",\"type\":\"visualization\",\"version\":\"6.1.0\"},{\"gridData\":{\"h\":3,\"i\":\"4\",\"w\":6,\"x\":6,\"y\":3},\"id\":\"30ad8030-d8fa-11e7-a9b3-91c93f0e13a7\",\"panelIndex\":\"4\",\"type\":\"visualization\",\"version\":\"6.1.0\"},{\"gridData\":{\"h\":3,\"i\":\"5\",\"w\":6,\"x\":0,\"y\":3},\"id\":\"0c2b2ff0-d8fa-11e7-a9b3-91c93f0e13a7\",\"panelIndex\":\"5\",\"type\":\"visualization\",\"version\":\"6.1.0\"},{\"gridData\":{\"h\":3,\"i\":\"6\",\"w\":6,\"x\":6,\"y\":6},\"id\":\"28ec8b90-e410-11e7-bb22-5be67155abbc\",\"panelIndex\":\"6\",\"type\":\"visualization\",\"version\":\"6.1.0\"},{\"gridData\":{\"h\":3,\"i\":\"7\",\"w\":6,\"x\":0,\"y\":6},\"id\":\"56ba2c80-fad1-11e7-8a1b-c5b053baa637\",\"panelIndex\":\"7\",\"type\":\"visualization\",\"version\":\"6.1.1\"},{\"gridData\":{\"h\":3,\"i\":\"8\",\"w\":6,\"x\":0,\"y\":9},\"id\":\"83101ea0-faf6-11e7-8a1b-c5b053baa637\",\"panelIndex\":\"8\",\"type\":\"visualization\",\"version\":\"6.1.1\"}]",
+      "optionsJSON": "{\"darkTheme\":false,\"useMargins\":false}",
+      "uiStateJSON": "{\"P-1\":{\"vis\":{\"defaultColors\":{\"0 - 100\":\"rgb(0,104,55)\"}}},\"P-4\":{\"vis\":{\"defaultColors\":{\"0 - 100\":\"rgb(0,104,55)\"}}},\"P-5\":{\"vis\":{\"defaultColors\":{\"0 - 100\":\"rgb(0,104,55)\"}}},\"P-6\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}},\"P-7\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}}",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-7d",
+      "refreshInterval": {
+        "display": "Off",
+        "pause": false,
+        "value": 0
+      },
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"siteId:563714f1-96c0-4500-b366-4fc7e734fa1d\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  },
+  {
+    "_id": "4dccd120-0b5e-11e8-a9d2-db71b20d7a57",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Site Search - cross-site & service-wide",
+      "hits": 0,
+      "description": "Cross-site Insights",
+      "panelsJSON": "[{\"gridData\":{\"h\":15,\"i\":\"1\",\"w\":24,\"x\":0,\"y\":30},\"id\":\"679997a0-d5b7-11e7-a9b3-91c93f0e13a7\",\"panelIndex\":\"1\",\"type\":\"visualization\",\"version\":\"6.3.0\"},{\"embeddableConfig\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}},\"gridData\":{\"h\":15,\"i\":\"2\",\"w\":24,\"x\":24,\"y\":15},\"id\":\"86e7b190-0b5f-11e8-a9d2-db71b20d7a57\",\"panelIndex\":\"2\",\"type\":\"visualization\",\"version\":\"6.3.0\"},{\"gridData\":{\"h\":15,\"i\":\"3\",\"w\":24,\"x\":0,\"y\":15},\"id\":\"0fcb0e30-5368-11e8-b2bc-016dc67ea8d5\",\"panelIndex\":\"3\",\"type\":\"visualization\",\"version\":\"6.3.0\"},{\"gridData\":{\"h\":15,\"i\":\"4\",\"w\":24,\"x\":24,\"y\":0},\"id\":\"6b5e8c30-5369-11e8-b2bc-016dc67ea8d5\",\"panelIndex\":\"4\",\"type\":\"visualization\",\"version\":\"6.3.0\"},{\"embeddableConfig\":{},\"gridData\":{\"h\":15,\"i\":\"5\",\"w\":24,\"x\":0,\"y\":0},\"id\":\"2be2aae0-7f70-11e8-86c6-c7b78f877065\",\"panelIndex\":\"5\",\"type\":\"visualization\",\"version\":\"6.3.0\"},{\"embeddableConfig\":{},\"gridData\":{\"h\":15,\"i\":\"6\",\"w\":24,\"x\":24,\"y\":30},\"id\":\"7f0db0d0-724e-11e9-80cc-f1c6f49ca31f\",\"panelIndex\":\"6\",\"type\":\"visualization\",\"version\":\"6.4.3\"}]",
+      "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-7d",
+      "refreshInterval": {
+        "pause": true,
+        "value": 0
+      },
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  },
+  {
+    "_id": "0c2b2ff0-d8fa-11e7-a9b3-91c93f0e13a7",
+    "_type": "visualization",
+    "_source": {
+      "title": "Indexations",
+      "visState": "{\"title\":\"Indexations\",\"type\":\"metric\",\"params\":{\"addTooltip\":true,\"addLegend\":false,\"type\":\"gauge\",\"gauge\":{\"verticalSplit\":false,\"autoExtend\":false,\"percentageMode\":false,\"gaugeType\":\"Metric\",\"gaugeStyle\":\"Full\",\"backStyle\":\"Full\",\"orientation\":\"vertical\",\"colorSchema\":\"Green to Red\",\"gaugeColorMode\":\"None\",\"useRange\":false,\"colorsRange\":[{\"from\":0,\"to\":100}],\"invertColors\":false,\"labels\":{\"show\":true,\"color\":\"black\"},\"scale\":{\"show\":false,\"labels\":false,\"color\":\"#333\",\"width\":2},\"type\":\"simple\",\"style\":{\"fontSize\":60,\"bgColor\":false,\"labelColor\":false,\"subText\":\"\"}}},\"aggs\":[{\"id\":\"2\",\"enabled\":true,\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"siteId.keyword\",\"customLabel\":\"Sites\"}},{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}}]}",
+      "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 100\":\"rgb(0,104,55)\"}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"filter\":[{\"meta\":{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"negate\":false,\"disabled\":false,\"alias\":\"Indexations\",\"type\":\"phrase\",\"key\":\"tags\",\"value\":\"index\",\"params\":{\"query\":\"index\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"tags\":{\"query\":\"index\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    }
+  },
+  {
+    "_id": "054aaf10-d06e-11e7-a9b3-91c93f0e13a7",
+    "_type": "visualization",
+    "_source": {
+      "title": "Search Query Cloud",
+      "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{},\"schema\":\"metric\",\"type\":\"count\"},{\"enabled\":true,\"id\":\"2\",\"params\":{\"customLabel\":\"Queries\",\"field\":\"query.keyword\",\"order\":\"desc\",\"orderBy\":\"1\",\"size\":100},\"schema\":\"segment\",\"type\":\"terms\"}],\"params\":{\"maxFontSize\":72,\"minFontSize\":18,\"orientation\":\"single\",\"scale\":\"linear\"},\"title\":\"Search Query Cloud\",\"type\":\"tagcloud\"}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"filter\":[],\"query\":{\"language\":\"lucene\",\"query\":\"\"}}"
+      }
+    }
+  },
+  {
+    "_id": "7ab54250-cd95-11e7-a9b3-91c93f0e13a7",
+    "_type": "visualization",
+    "_source": {
+      "title": "Search",
+      "visState": "{\"title\":\"Search\",\"type\":\"metric\",\"params\":{\"addLegend\":false,\"addTooltip\":true,\"type\":\"metric\",\"metric\":{\"colorSchema\":\"Green to Red\",\"colorsRange\":[{\"from\":0,\"to\":100}],\"invertColors\":false,\"labels\":{\"color\":\"black\",\"show\":true},\"maxAngle\":6.283185307179586,\"minAngle\":0,\"percentageMode\":false,\"style\":{\"bgColor\":false,\"fontSize\":60,\"labelColor\":false,\"subText\":\"\"},\"useRange\":false,\"metricColorMode\":\"None\"}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"siteId.keyword\",\"customLabel\":\"Sites\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"3\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"results\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"median\",\"schema\":\"metric\",\"params\":{\"field\":\"results\",\"percents\":[50]}}]}",
+      "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 100\":\"rgb(0,104,55)\"}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"filter\":[{\"meta\":{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"tags.keyword\",\"value\":\"search\",\"params\":{\"query\":\"search\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"tags.keyword\":{\"query\":\"search\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}],\"query\":{\"language\":\"lucene\",\"query\":\"tags:search\"}}"
+      }
+    }
+  },
+  {
+    "_id": "30ad8030-d8fa-11e7-a9b3-91c93f0e13a7",
+    "_type": "visualization",
+    "_source": {
+      "title": "Autocomplete",
+      "visState": "{\"title\":\"Autocomplete\",\"type\":\"metric\",\"params\":{\"addTooltip\":true,\"addLegend\":false,\"type\":\"metric\",\"metric\":{\"percentageMode\":false,\"colorSchema\":\"Green to Red\",\"useRange\":false,\"colorsRange\":[{\"from\":0,\"to\":100}],\"invertColors\":false,\"labels\":{\"show\":true,\"color\":\"black\"},\"style\":{\"fontSize\":60,\"bgColor\":false,\"labelColor\":false,\"subText\":\"\"},\"metricColorMode\":\"None\"}},\"aggs\":[{\"id\":\"2\",\"enabled\":true,\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"siteId.keyword\",\"customLabel\":\"Sites\"}},{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"3\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"autocompletes\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"median\",\"schema\":\"metric\",\"params\":{\"field\":\"autocompletes\",\"percents\":[50]}}]}",
+      "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 100\":\"rgb(0,104,55)\"}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"filter\":[{\"meta\":{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"tags.keyword\",\"value\":\"autocomplete\",\"params\":{\"query\":\"autocomplete\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"tags.keyword\":{\"query\":\"autocomplete\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}],\"query\":{\"language\":\"lucene\",\"query\":\"\"}}"
+      }
+    }
+  },
+  {
+    "_id": "28ec8b90-e410-11e7-bb22-5be67155abbc",
+    "_type": "visualization",
+    "_source": {
+      "title": "Indexed Pages Properties",
+      "visState": "{\"title\":\"Indexed Pages Properties\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"bodySize\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"bodySize\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"median\",\"schema\":\"metric\",\"params\":{\"field\":\"bodySize\",\"percents\":[50]}},{\"id\":\"4\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"titleSize\"}},{\"id\":\"5\",\"enabled\":true,\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"titleSize\"}},{\"id\":\"6\",\"enabled\":true,\"type\":\"median\",\"schema\":\"metric\",\"params\":{\"field\":\"titleSize\",\"percents\":[50]}}]}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    }
+  },
+  {
+    "_id": "83101ea0-faf6-11e7-8a1b-c5b053baa637",
+    "_type": "visualization",
+    "_source": {
+      "title": "Autocompletes",
+      "visState": "{\"title\":\"Autocompletes\",\"type\":\"line\",\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"labels\":{\"show\":true,\"truncate\":100},\"position\":\"bottom\",\"scale\":{\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{},\"type\":\"category\"}],\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"legendPosition\":\"right\",\"seriesParams\":[{\"data\":{\"id\":\"1\",\"label\":\"Count\"},\"drawLinesBetweenPoints\":true,\"mode\":\"normal\",\"show\":\"true\",\"showCircles\":true,\"type\":\"line\",\"valueAxis\":\"ValueAxis-1\"}],\"times\":[],\"type\":\"line\",\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"labels\":{\"filter\":false,\"rotate\":0,\"show\":true,\"truncate\":100},\"name\":\"LeftAxis-1\",\"position\":\"left\",\"scale\":{\"mode\":\"normal\",\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"Count\"},\"type\":\"value\"}]},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"d\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"tags.keyword\",\"include\":\"autocomplete\",\"size\":1,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"filter\":[],\"query\":{\"language\":\"lucene\",\"query\":\"\"}}"
+      }
+    }
+  },
+  {
+    "_id": "56ba2c80-fad1-11e7-8a1b-c5b053baa637",
+    "_type": "visualization",
+    "_source": {
+      "title": "Searches",
+      "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{},\"schema\":\"metric\",\"type\":\"count\"},{\"enabled\":true,\"id\":\"2\",\"params\":{\"customInterval\":\"2h\",\"extended_bounds\":{},\"field\":\"@timestamp\",\"interval\":\"d\",\"min_doc_count\":1},\"schema\":\"segment\",\"type\":\"date_histogram\"},{\"enabled\":true,\"id\":\"3\",\"params\":{\"customLabel\":\"\",\"field\":\"tags.keyword\",\"include\":\"search\",\"order\":\"desc\",\"orderBy\":\"1\",\"size\":1},\"schema\":\"group\",\"type\":\"terms\"}],\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"labels\":{\"show\":true,\"truncate\":100},\"position\":\"bottom\",\"scale\":{\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{},\"type\":\"category\"}],\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"legendPosition\":\"right\",\"seriesParams\":[{\"data\":{\"id\":\"1\",\"label\":\"Count\"},\"drawLinesBetweenPoints\":true,\"mode\":\"normal\",\"show\":\"true\",\"showCircles\":true,\"type\":\"line\",\"valueAxis\":\"ValueAxis-1\"}],\"times\":[],\"type\":\"line\",\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"labels\":{\"filter\":false,\"rotate\":0,\"show\":true,\"truncate\":100},\"name\":\"LeftAxis-1\",\"position\":\"left\",\"scale\":{\"mode\":\"normal\",\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"Count\"},\"type\":\"value\"}]},\"title\":\"Searches\",\"type\":\"line\"}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"filter\":[],\"query\":{\"language\":\"lucene\",\"query\":\"\"}}"
+      }
+    }
+  },
+  {
+    "_id": "f4766c70-faf6-11e7-8a1b-c5b053baa637",
+    "_type": "visualization",
+    "_source": {
+      "title": "Index",
+      "visState": "{\"title\":\"Index\",\"type\":\"line\",\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"labels\":{\"show\":true,\"truncate\":100},\"position\":\"bottom\",\"scale\":{\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{},\"type\":\"category\"}],\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"legendPosition\":\"right\",\"seriesParams\":[{\"data\":{\"id\":\"1\",\"label\":\"Count\"},\"drawLinesBetweenPoints\":true,\"mode\":\"normal\",\"show\":\"true\",\"showCircles\":true,\"type\":\"line\",\"valueAxis\":\"ValueAxis-1\"}],\"times\":[],\"type\":\"line\",\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"labels\":{\"filter\":false,\"rotate\":0,\"show\":true,\"truncate\":100},\"name\":\"LeftAxis-1\",\"position\":\"left\",\"scale\":{\"mode\":\"normal\",\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"Count\"},\"type\":\"value\"}]},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"d\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"tags.keyword\",\"include\":\"index\",\"size\":1,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"filter\":[],\"query\":{\"language\":\"lucene\",\"query\":\"\"}}"
+      }
+    }
+  },
+  {
+    "_id": "0fcb0e30-5368-11e8-b2bc-016dc67ea8d5",
+    "_type": "visualization",
+    "_source": {
+      "title": "Autocomplete Percentiles",
+      "visState": "{\"title\":\"Autocomplete Percentiles\",\"type\":\"horizontal_bar\",\"params\":{\"type\":\"histogram\",\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":200},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"BottomAxis-1\",\"type\":\"value\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":75,\"filter\":true,\"truncate\":100},\"title\":{\"text\":\"Autocomplete\"}}],\"seriesParams\":[{\"show\":true,\"type\":\"histogram\",\"mode\":\"normal\",\"data\":{\"label\":\"Autocomplete\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"interpolate\":\"step-after\"}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"percentiles\",\"schema\":\"metric\",\"params\":{\"field\":\"autocompleteDurationInMs\",\"percents\":[1,5,25,50,75,95,99],\"customLabel\":\"Autocomplete\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    }
+  },
+  {
+    "_id": "86e7b190-0b5f-11e8-a9d2-db71b20d7a57",
+    "_type": "visualization",
+    "_source": {
+      "title": "Crawler",
+      "visState": "{\"title\":\"Crawler\",\"type\":\"table\",\"params\":{\"perPage\":20,\"showMeticsAtAllLevels\":false,\"showPartialRows\":false,\"showTotal\":true,\"sort\":{\"columnIndex\":null,\"direction\":null},\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"median\",\"schema\":\"metric\",\"params\":{\"field\":\"pageCount\",\"percents\":[50],\"customLabel\":\"\"}},{\"id\":\"2\",\"enabled\":false,\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"url.keyword\",\"customLabel\":\"URLs\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{\"customLabel\":\"crawled times\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"pageCount\",\"customLabel\":\"Total Pages\"}},{\"id\":\"5\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"email.keyword\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":true,\"missingBucketLabel\":\"Missing\",\"size\":15,\"order\":\"desc\",\"orderBy\":\"_term\",\"customLabel\":\"E-mail\"}},{\"id\":\"6\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"siteUrl.keyword\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"size\":15,\"order\":\"desc\",\"orderBy\":\"_term\",\"customLabel\":\"Website\"}}]}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"filter\":[],\"query\":{\"language\":\"lucene\",\"query\":\"\"}}"
+      }
+    }
+  },
+  {
+    "_id": "2be2aae0-7f70-11e8-86c6-c7b78f877065",
+    "_type": "visualization",
+    "_source": {
+      "title": "Number of Requests",
+      "visState": "{\"title\":\"Number of Requests\",\"type\":\"gauge\",\"params\":{\"type\":\"gauge\",\"addTooltip\":true,\"addLegend\":true,\"isDisplayWarning\":false,\"gauge\":{\"verticalSplit\":false,\"extendRange\":true,\"percentageMode\":false,\"gaugeType\":\"Arc\",\"gaugeStyle\":\"Full\",\"backStyle\":\"Full\",\"orientation\":\"vertical\",\"colorSchema\":\"Green to Red\",\"gaugeColorMode\":\"Labels\",\"colorsRange\":[{\"from\":0,\"to\":3000},{\"from\":3000,\"to\":3500},{\"from\":3500,\"to\":4000}],\"invertColors\":false,\"labels\":{\"show\":true,\"color\":\"black\"},\"scale\":{\"show\":true,\"labels\":false,\"color\":\"#333\"},\"type\":\"meter\",\"style\":{\"bgWidth\":0.9,\"width\":0.9,\"mask\":false,\"bgMask\":false,\"maskBars\":50,\"bgFill\":\"#eee\",\"bgColor\":false,\"subText\":\"\",\"fontSize\":60,\"labelColor\":true}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{\"customLabel\":\"API Requests\"}}]}",
+      "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 3000\":\"rgb(0,104,55)\",\"3000 - 3500\":\"rgb(255,255,190)\",\"3500 - 4000\":\"rgb(165,0,38)\"}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"filter\":[],\"query\":{\"language\":\"lucene\",\"query\":\"\"}}"
+      }
+    }
+  },
+  {
+    "_id": "6b5e8c30-5369-11e8-b2bc-016dc67ea8d5",
+    "_type": "visualization",
+    "_source": {
+      "title": "Search Percentiles",
+      "visState": "{\"title\":\"Search Percentiles\",\"type\":\"horizontal_bar\",\"params\":{\"type\":\"histogram\",\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":200},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":75,\"filter\":true,\"truncate\":100},\"title\":{\"text\":\"Search\"}}],\"seriesParams\":[{\"show\":true,\"mode\":\"normal\",\"type\":\"histogram\",\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"data\":{\"id\":\"2\",\"label\":\"Search\"},\"valueAxis\":\"ValueAxis-1\"}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"2\",\"enabled\":true,\"type\":\"percentiles\",\"schema\":\"metric\",\"params\":{\"field\":\"searchDurationInMs\",\"percents\":[1,5,25,50,75,95,99],\"customLabel\":\"Search\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    }
+  },
+  {
+    "_id": "679997a0-d5b7-11e7-a9b3-91c93f0e13a7",
+    "_type": "visualization",
+    "_source": {
+      "title": "Gstanzl",
+      "visState": "{\"title\":\"Gstanzl\",\"type\":\"markdown\",\"params\":{\"fontSize\":18,\"markdown\":\"\\\"Release ***early***, release **often**, you must!\\\" --Yoda, the Product Engineer\"},\"aggs\":[]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    }
+  },
+  {
+    "_id": "7f0db0d0-724e-11e9-80cc-f1c6f49ca31f",
+    "_type": "visualization",
+    "_source": {
+      "title": "Search Count per Site",
+      "visState": "{\"title\":\"Search Count per Site\",\"type\":\"table\",\"params\":{\"perPage\":20,\"showPartialRows\":false,\"showMetricsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"filters\",\"schema\":\"bucket\",\"params\":{\"filters\":[{\"input\":{\"query\":\"siteId:a2e8d60b-0696-47ea-bc48-982598ee35bd AND tags:search\"},\"label\":\"api.sitesearch.cloud\"},{\"input\":{\"query\":\"siteId:749ae989-bcbd-4f80-a104-37ea4e3e823c AND tags:search\"},\"label\":\"www.analyzelaw.com\"},{\"input\":{\"query\":\"siteId:c7d080ff-6eec-496e-a70e-db5ec81948ab AND tags:search\"},\"label\":\"Moebelhof.de\"},{\"input\":{\"query\":\"siteId:563714f1-96c0-4500-b366-4fc7e734fa1d AND tags:search\"},\"label\":\"migrosbank.ch/de\"},{\"input\":{\"query\":\"siteId:3b92b560-8ad6-429f-97cc-33505c83b4d3 AND tags:search\"},\"label\":\"www.driescher.de/en/\"},{\"input\":{\"query\":\"siteId:ba598c15-0f73-4479-aef0-84c256e3cc04 AND tags:search\"},\"label\":\"drepper.com\"},{\"input\":{\"query\":\"siteId:23cdca21-69cc-45f2-ab38-6f76dc989ab1 AND tags:search\"},\"label\":\"migrosbank.ch/it\"},{\"input\":{\"query\":\"siteId:7a5e5380-2013-4924-a49c-9145a0528596 AND tags:search\"},\"label\":\"www.driescher.de\"},{\"input\":{\"query\":\"siteId:b737117e-ab11-41af-9cf4-d752c4c960eb AND tags:search\"},\"label\":\"www.berneck-zwerenberg.de/bz\"},{\"input\":{\"query\":\"siteId:d1b47c93-f359-47f8-8eed-5988d1ae783b AND tags:search\"},\"label\":\"www.intrafind.de\"},{\"input\":{\"query\":\"siteId:f0f4400c-afe2-4084-9f1f-a8d56888e327 AND tags:search\"},\"label\":\"migrosbank.ch/fr\"}]}}]}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ef1d18d0-d5c3-11e7-a9b3-91c93f0e13a7\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
+      }
+    }
+  }
+]

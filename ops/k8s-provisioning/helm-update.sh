@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-workspace=kube-system
+workspace=default
 k8s_master_node=116.203.228.233
 k8s_master_node=$(terraform output k8s_master_node)
 helmName=sis-sitesearch
