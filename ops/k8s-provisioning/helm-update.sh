@@ -1,26 +1,31 @@
 #!/usr/bin/env sh
 
 workspace=default
+#workspace=kube-system
 k8s_master_node=116.203.228.233
 k8s_master_node=$(terraform output k8s_master_node)
 helmName=sis-sitesearch
 
-scp -q -o StrictHostKeyChecking=no root@cd.intrafind.net:/etc/letsencrypt/live/intrafind.net/cert.pem asset/$helmName
-scp -q -o StrictHostKeyChecking=no root@cd.intrafind.net:/etc/letsencrypt/live/intrafind.net/privkey.pem asset/$helmName
+ssh-keygen -f ~/.ssh/known_hosts -R $k8s_master_node
 
-ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node rm -rf /opt/$helmName
-scp -q -o StrictHostKeyChecking=no -r asset/$helmName root@$k8s_master_node:/opt/
+scp -o StrictHostKeyChecking=no root@cd.intrafind.net:/etc/letsencrypt/live/intrafind.net/cert.pem asset/$helmName
+scp -o StrictHostKeyChecking=no root@cd.intrafind.net:/etc/letsencrypt/live/intrafind.net/privkey.pem asset/$helmName
 
-ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node curl -L -O https://raw.githubusercontent.com/elastic/beats/7.3/deploy/kubernetes/filebeat-kubernetes.yaml
+ssh -o StrictHostKeyChecking=no root@$k8s_master_node rm -rf /opt/$helmName
+scp -o StrictHostKeyChecking=no -r asset/$helmName root@$k8s_master_node:/opt/
 
-ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node kubectl delete -f /root/filebeat-kubernetes.yaml
-ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm delete $helmName --purge
-ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm delete ingress --purge
-sleep 13
+#ssh -o StrictHostKeyChecking=no root@$k8s_master_node curl -L -O https://raw.githubusercontent.com/elastic/beats/7.3/deploy/kubernetes/filebeat-kubernetes.yaml
 
-ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node kubectl apply -f /root/filebeat-kubernetes.yaml
+#ssh -o StrictHostKeyChecking=no root@$k8s_master_node kubectl delete -f /root/filebeat-kubernetes.yaml
+ssh -o StrictHostKeyChecking=no root@$k8s_master_node kubectl delete -f https://raw.githubusercontent.com/elastic/beats/7.3/deploy/kubernetes/filebeat-kubernetes.yaml
+ssh -o StrictHostKeyChecking=no root@$k8s_master_node helm delete $helmName --purge
+ssh -o StrictHostKeyChecking=no root@$k8s_master_node helm delete ingress --purge
+sleep 11
 
-ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node \
+#ssh -o StrictHostKeyChecking=no root@$k8s_master_node kubectl apply -f /root/filebeat-kubernetes.yaml
+ssh -o StrictHostKeyChecking=no root@$k8s_master_node kubectl apply -f https://raw.githubusercontent.com/elastic/beats/7.3/deploy/kubernetes/filebeat-kubernetes.yaml
+
+ssh -o StrictHostKeyChecking=no root@$k8s_master_node \
   helm upgrade $helmName /opt/$helmName --install --namespace $workspace \
   --set app.tenant=$workspace,app.HETZNER_API_TOKEN=$TF_VAR_hetzner_cloud_intrafind,app.adminSecret=$ADMIN_SITE_SECRET, \
   --set app.dockerRegistrySecret=$TF_VAR_docker_registry_k8s_secret,app.sis.wooCommerceConsumerKey=$WOO_COMMERCE_CONSUMER_KEY \
@@ -29,11 +34,11 @@ ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node \
   --set-string app.volumeHandle=3052845, \
   --set app.basicAuth=$BASIC_ENCODED_PASSWORD
 
-ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node \
+ssh -o StrictHostKeyChecking=no root@$k8s_master_node \
   helm upgrade ingress stable/nginx-ingress --install --namespace $workspace --set rbac.create=true,controller.hostNetwork=true,controller.kind=DaemonSet
 
-#ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm test $helmName --cleanup
-ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm list --all
+#ssh -o StrictHostKeyChecking=no root@$k8s_master_node helm test $helmName --cleanup
+ssh -o StrictHostKeyChecking=no root@$k8s_master_node helm list --all
 
 if [ "$(whoami)" = "alex" ]
 then
