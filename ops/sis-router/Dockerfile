@@ -3,7 +3,7 @@ FROM nginx:stable
 MAINTAINER IntraFind Software AG <alexander.orlov@intrafind.de>
 
 RUN apt-get update
-RUN apt-get -y install unzip vim
+RUN apt-get install unzip vim curl iputils-ping -y
 ADD https://releases.hashicorp.com/consul-template/0.19.5/consul-template_0.19.5_linux_amd64.zip /usr/bin/
 RUN unzip /usr/bin/consul-template_0.19.5_linux_amd64.zip -d /usr/local/bin
 

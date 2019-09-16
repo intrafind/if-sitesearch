@@ -2,7 +2,7 @@
 
 #workspace=default
 workspace=kube-system
-k8s_master_node=116.203.228.233
+k8s_master_node=sis.sitesearch.cloud
 k8s_master_node=$(terraform output k8s_master_node)
 helmName=sis-sitesearch
 
@@ -17,7 +17,7 @@ scp -o StrictHostKeyChecking=no -r asset/$helmName root@$k8s_master_node:/opt/
 ssh root@$k8s_master_node kubectl delete -f https://raw.githubusercontent.com/elastic/beats/7.3/deploy/kubernetes/filebeat-kubernetes.yaml
 ssh root@$k8s_master_node helm delete $helmName --purge
 ssh root@$k8s_master_node helm delete ingress --purge
-sleep 11
+sleep 15
 
 ssh root@$k8s_master_node kubectl apply -f https://raw.githubusercontent.com/elastic/beats/7.3/deploy/kubernetes/filebeat-kubernetes.yaml
 

@@ -150,31 +150,31 @@ spec:
 {{/*        - name: http*/}}
 {{/*          port: 80*/}}
 {{/*        */}}{{/*    type: NodePort*/}}
-{{/*---*/}}
-{{/*apiVersion: apps/v1*/}}
-{{/*kind: Deployment*/}}
-{{/*metadata:*/}}
-{{/*    name: sis-router*/}}
-{{/*    labels:*/}}
-{{/*        app: sis-router*/}}
-{{/*spec:*/}}
-{{/*    selector:*/}}
-{{/*        matchLabels:*/}}
-{{/*            app: sis-router*/}}
-{{/*    template:*/}}
-{{/*        metadata:*/}}
-{{/*            name: sis-router*/}}
-{{/*            labels:*/}}
-{{/*                app: sis-router*/}}
-{{/*        spec:*/}}
-{{/*            imagePullSecrets:*/}}
-{{/*                - name: docker-registry-credentials-intrafind-net*/}}
-{{/*            containers:*/}}
-{{/*                - name: sis-router*/}}
-{{/*                  image: docker-registry.intrafind.net/intrafind/sis-router:latest*/}}
-{{/*                  env:*/}}
-{{/*                      - name: BASIC_AUTH*/}}
-{{/*                        value: {{ .Values.app.basicAuth }}*/}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: sis-router
+    labels:
+        app: sis-router
+spec:
+    selector:
+        matchLabels:
+            app: sis-router
+    template:
+        metadata:
+            name: sis-router
+            labels:
+                app: sis-router
+        spec:
+            imagePullSecrets:
+                - name: docker-registry-credentials-intrafind-net
+            containers:
+                - name: sis-router
+                  image: docker-registry.intrafind.net/intrafind/sis-router:latest
+                  env:
+                      - name: BASIC_AUTH
+                        value: {{ .Values.app.basicAuth }}
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -184,7 +184,7 @@ metadata:
         app: sis-sitesearch
 spec:
     replicas: 2
-        {{/*    minReadySeconds: 15*/}}
+    minReadySeconds: 0
     selector:
         matchLabels:
             app: sis-sitesearch
