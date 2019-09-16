@@ -119,15 +119,15 @@ spec:
           http:
               paths:
                   - backend:
-                        serviceName: sis-sitesearch
-                        servicePort: 8001
+                        serviceName: sis-router
+                        servicePort: 80
                     path: /
         - host: logging.sitesearch.cloud
           http:
               paths:
                   - backend:
-                        serviceName: kibana
-                        servicePort: 5601
+                        serviceName: sis-router
+                        servicePort: 80
                     path: /
         - host: finder.sitesearch.cloud
           http:
