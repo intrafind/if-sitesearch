@@ -26,9 +26,9 @@ http {
 
     server {
         #        listen 443 ssl http2;
-        listen 80 http2 default_server;
+        listen 80 default_server;
 
-        include /etc/nginx/snippets/ssl.conf;
+        #        include /etc/nginx/snippets/ssl.conf;
 
         location / {
             proxy_pass http://sis-sitesearch:8001;
@@ -37,10 +37,10 @@ http {
 
     server {
         #        listen 443 ssl http2;
-        listen 80 http2;
+        listen 80;
         server_name sitesearch.cloud;
 
-        include /etc/nginx/snippets/ssl.conf;
+        #        include /etc/nginx/snippets/ssl.conf;
 
         location / {
             proxy_pass http://mirror.sitesearch.online;
@@ -50,10 +50,10 @@ http {
     }
 
     server {
-        listen 443 ssl http2;
+        listen 80;
         server_name doc.sitesearch.cloud;
 
-        include /etc/nginx/snippets/ssl.conf;
+        #        include /etc/nginx/snippets/ssl.conf;
 
         location / {
             proxy_pass https://intrafind.github.io/if-sitesearch/;
@@ -62,10 +62,10 @@ http {
 
     server {
         #        listen 443 ssl http2;
-        listen 80 http2;
+        listen 80;
         server_name affiliate.sitesearch.cloud;
 
-        include /etc/nginx/snippets/ssl.conf;
+        #        include /etc/nginx/snippets/ssl.conf;
 
         location / {
             add_header set-cookie 'affiliate = $arg_affiliate; domain = sitesearch.cloud';
@@ -75,13 +75,14 @@ http {
 
     server {
         #        listen 443 ssl http2;
-        listen 80 http2;
+        listen 80;
         server_name green.sitesearch.cloud;
 
         #        include /etc/nginx/snippets/ssl.conf;
         #
-#        auth_basic "Stats";
-        #        auth_basic_user_file /etc/nginx/.htpasswd; # supply this via env vars somehow or as raw file at build time
+
+        auth_basic "Status";
+        auth_basic_user_file /etc/nginx/.htpasswd; # supply this via env vars somehow or as raw file at build time
 
         location /status {
             stub_status on;
@@ -107,10 +108,10 @@ http {
 
     server {
         #        listen 443 ssl http2;
-        listen 80 http2;
+        listen 80;
         server_name dev.sitesearch.cloud;
 
-        include /etc/nginx/snippets/ssl.conf;
+        #        include /etc/nginx/snippets/ssl.conf;
 
         location / {
             include /etc/nginx/snippets/cors-headers.conf;

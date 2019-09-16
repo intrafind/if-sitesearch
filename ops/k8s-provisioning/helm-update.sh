@@ -15,7 +15,7 @@ ssh -o StrictHostKeyChecking=no root@$k8s_master_node rm -rf /opt/$helmName
 scp -o StrictHostKeyChecking=no -r asset/$helmName root@$k8s_master_node:/opt/
 
 ssh root@$k8s_master_node kubectl delete -f https://raw.githubusercontent.com/elastic/beats/7.3/deploy/kubernetes/filebeat-kubernetes.yaml
-ssh root@$k8s_master_node helm delete $helmName --purge
+#ssh root@$k8s_master_node helm delete $helmName --purge
 ssh root@$k8s_master_node helm delete ingress --purge
 sleep 18
 
