@@ -95,6 +95,8 @@ apiVersion: networking.k8s.io/v1beta1
 metadata:
     name: ingress
     annotations:
+        nginx.ingress.kubernetes.io/auth-type: basic
+        nginx.ingress.kubernetes.io/auth-secret: basic-auth
         nginx.ingress.kubernetes.io/rewrite-target: /
         nginx.ingress.kubernetes.io/enable-cors: "true"
         nginx.ingress.kubernetes.io/cors-allow-origin: "*"
@@ -108,6 +110,7 @@ spec:
         - secretName: tls-certificate
           hosts:
               - sis.sitesearch.cloud
+              - logging.sitesearch.cloud
     rules:
         - host: sis.sitesearch.cloud
           http:
@@ -115,6 +118,13 @@ spec:
                   - backend:
                         serviceName: sis-sitesearch
                         servicePort: 8001
+                    path: /
+        - host: logging.sitesearch.cloud
+          http:
+              paths:
+                  - backend:
+                        serviceName: kibana
+                        servicePort: 5601
                     path: /
 ---
 kind: Service
@@ -210,13 +220,6 @@ spec:
                         value: "{{ .Values.app.meta.buildNumber }}"
                       - name: SCM_HASH
                         value: {{ .Values.app.meta.scmHash }}
-                {{/*                  volumeMounts:*/}}
-                {{/*                      - mountPath: "/mnt/persistence"*/}}
-                {{/*                        name: storage-volume*/}}
-                {{/*            volumes:*/}}
-                {{/*                - name: storage-volume*/}}
-            {{/*                  persistentVolumeClaim:*/}}
-        {{/*                      claimName: csi-pvc-storage*/}}
 ---
 kind: Secret
 apiVersion: v1
@@ -273,8 +276,6 @@ spec:
     selector:
         matchLabels:
             app: elasticsearch
-        {{/*    updateStrategy:*/}}
-        {{/*        type: RollingUpdate*/}}
     template:
         metadata:
             name: elasticsearch
@@ -300,6 +301,13 @@ spec:
                         value: single-node
                       - name: bootstrap.memory_lock
                         value: "true"
+                  volumeMounts:
+                      - mountPath: "/usr/share/elasticsearch/data"
+                        name: storage-volume
+            volumes:
+                - name: storage-volume
+                  persistentVolumeClaim:
+                      claimName: csi-pvc-storage
 ---
 kind: Service
 apiVersion: v1
@@ -380,7 +388,7 @@ spec:
         app: kibana
     ports:
         - port: 5601
-          name: kibana
+          name: main
 ---
 kind: Service
 apiVersion: v1
@@ -393,9 +401,15 @@ spec:
     ports:
         - port: 5000
           name: trythis
-            {{/*        - port: 5044*/}}
-            {{/*          name: andthis*/}}
         - port: 5044
-          name: andthis1
-          protocol: TCP
+          name: main
+---
+kind: Secret
+apiVersion: v1
+data:
+    auth: {{ .Values.app.basicAuthBase64 }}
+metadata:
+    namespace: kube-system
+    name: basic-auth
+type: Opaque
 ---

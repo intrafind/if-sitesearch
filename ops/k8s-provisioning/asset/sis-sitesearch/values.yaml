@@ -9,6 +9,7 @@ app:
   recaptchaSecret: invalid-default
   devSkip: true
   basicAuth: none
+  basicAuthBase64: none
   sis:
     serviceSecret: 0-0-0-0-0
     wooCommerceConsumerKey: invalid-default
