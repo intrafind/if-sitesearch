@@ -1,16 +1,29 @@
-#server {
-#    listen 80 default_server;
-#    listen [::]:80 default_server;
-#
-#    #    Letsencrypt
-#    location ^~ /.well-known/acme-challenge/ {
-#        root /etc/letsencrypt;
-#    }
-#
-#    location / {
-#        return 301 https://$host$request_uri;
-#    }
-#}
+user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    server_tokens off; # hide nginx version
+
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        #    Letsencrypt
+        location ^~ /.well-known/acme-challenge/ {
+            root /etc/letsencrypt;
+        }
+
+        location / {
+            return 301 https://$host$request_uri;
+        }
+    }
 
 # TODO remove default.tmpl and use a pattern like in `main-router/default.nginx`, i.e. a single file for both routing and main configuration 
 
@@ -107,5 +120,30 @@ server {
 
         proxy_pass http://sis-sitesearch:8001;
     }
+
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    '$status $body_bytes_sent "$http_referer" '
+    '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    resolver_timeout          5s;
+
+    gzip on;
+    gzip_types text/plain text/css application/xml application/json application/javascript;
+
+    map $http_upgrade $connection_upgrade {
+        default upgrade;
+        "" close;
+    }
+    include /etc/nginx/conf.d/*.conf;
 }
 
