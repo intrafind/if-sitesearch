@@ -22,7 +22,7 @@ sleep 18
 ssh root@$k8s_master_node kubectl apply -f https://raw.githubusercontent.com/elastic/beats/7.3/deploy/kubernetes/filebeat-kubernetes.yaml
 
 ssh root@$k8s_master_node \
-  helm upgrade $helmName /opt/$helmName --install --namespace $workspace \
+  helm upgrade $helmName /opt/$helmName --install --namespace $workspace --atomic --recreate-pods \
   --set app.tenant=$workspace,app.HETZNER_API_TOKEN=$TF_VAR_hetzner_cloud_intrafind,app.adminSecret=$ADMIN_SITE_SECRET, \
   --set app.dockerRegistrySecret=$TF_VAR_docker_registry_k8s_secret,app.sis.wooCommerceConsumerKey=$WOO_COMMERCE_CONSUMER_KEY \
   --set app.sis.wooCommerceConsumerSecret=$WOO_COMMERCE_CONSUMER_SECRET,app.sis.serviceSecret=$SERVICE_SECRET, \
