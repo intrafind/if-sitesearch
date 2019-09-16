@@ -153,8 +153,8 @@ spec:
     selector:
         app: sis-router
     ports:
-        - name: main
-          port: 443
+            {{/*        - name: main*/}}
+            {{/*          port: 443*/}}
         - name: to-use
           port: 80
         {{/*            type: NodePort*/}}
