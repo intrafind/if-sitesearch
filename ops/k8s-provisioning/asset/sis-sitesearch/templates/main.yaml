@@ -112,6 +112,8 @@ spec:
               - sis.sitesearch.cloud
               - logging.sitesearch.cloud
               - finder.sitesearch.cloud
+              - blue.sitesearch.cloud
+              - green.sitesearch.cloud
     rules:
         - host: sis.sitesearch.cloud
           http:
@@ -128,6 +130,20 @@ spec:
                         servicePort: 5601
                     path: /
         - host: finder.sitesearch.cloud
+          http:
+              paths:
+                  - backend:
+                        serviceName: sis-router
+                        servicePort: 80
+                    path: /
+        - host: blue.sitesearch.cloud
+          http:
+              paths:
+                  - backend:
+                        serviceName: sis-router
+                        servicePort: 80
+                    path: /
+        - host: green.sitesearch.cloud
           http:
               paths:
                   - backend:
@@ -153,9 +169,7 @@ spec:
     selector:
         app: sis-router
     ports:
-            {{/*        - name: main*/}}
-            {{/*          port: 443*/}}
-        - name: to-use
+        - name: main
           port: 80
         {{/*            type: NodePort*/}}
 ---

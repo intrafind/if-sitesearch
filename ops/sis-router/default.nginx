@@ -78,10 +78,10 @@ http {
         listen 80 http2;
         server_name green.sitesearch.cloud;
 
-        include /etc/nginx/snippets/ssl.conf;
-
-        auth_basic "Stats";
-        auth_basic_user_file /etc/nginx/.htpasswd; # supply this via env vars somehow or as raw file at build time
+        #        include /etc/nginx/snippets/ssl.conf;
+        #
+#        auth_basic "Stats";
+        #        auth_basic_user_file /etc/nginx/.htpasswd; # supply this via env vars somehow or as raw file at build time
 
         location /status {
             stub_status on;
@@ -93,14 +93,15 @@ http {
 
     server {
         #        listen 443 ssl http2;
-        listen 80 http2;
+        listen 80;
         server_name blue.sitesearch.cloud;
 
-        include /etc/nginx/snippets/ssl.conf;
+        #        include /etc/nginx/snippets/ssl.conf;
 
         location / {
-            proxy_pass http://217.160.0.69;
-            #        root /usr/share/nginx/html/frontpage;
+            include /etc/nginx/snippets/cors-headers.conf;
+
+            proxy_pass http://sis-sitesearch:8001;
         }
     }
 
