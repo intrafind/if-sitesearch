@@ -111,6 +111,7 @@ spec:
           hosts:
               - sis.sitesearch.cloud
               - logging.sitesearch.cloud
+              - finder.sitesearch.cloud
     rules:
         - host: sis.sitesearch.cloud
           http:
@@ -126,6 +127,13 @@ spec:
                         serviceName: kibana
                         servicePort: 5601
                     path: /
+        - host: finder.sitesearch.cloud
+          http:
+              paths:
+                  - backend:
+                        serviceName: sis-router
+                        servicePort: 80
+                    path: /
 ---
 kind: Service
 apiVersion: v1
@@ -137,22 +145,22 @@ spec:
     ports:
         - port: 8001
 ---
-{{/*apiVersion: v1*/}}
-{{/*kind: Service*/}}
-{{/*metadata:*/}}
-{{/*    name: sis-router*/}}
-{{/*spec:*/}}
-{{/*    selector:*/}}
-{{/*        app: sis-router*/}}
-{{/*    ports:*/}}
-{{/*            */}}{{/*        - name: https*/}}
-{{/*            */}}{{/*          port: 443*/}}
-{{/*        - name: http*/}}
-{{/*          port: 80*/}}
-{{/*        */}}{{/*    type: NodePort*/}}
+kind: Service
+apiVersion: v1
+metadata:
+    name: sis-router
+spec:
+    selector:
+        app: sis-router
+    ports:
+        - name: main
+          port: 443
+        - name: to-use
+          port: 80
+        {{/*            type: NodePort*/}}
 ---
-apiVersion: apps/v1
 kind: Deployment
+apiVersion: apps/v1
 metadata:
     name: sis-router
     labels:
