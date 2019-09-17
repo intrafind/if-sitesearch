@@ -190,7 +190,6 @@ resource "hcloud_server" "master" {
       //      "kubeadm init --cri-socket /run/containerd/containerd.sock --apiserver-advertise-address 10.0.0.1",
       "kubeadm init --cri-socket /run/containerd/containerd.sock",
       "mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && chown $(id -u):$(id -g) $HOME/.kube/config",
-      //      "kubectl apply -f https://docs.projectcalico.org/v3.8/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml",
       "kubectl taint nodes --all node-role.kubernetes.io/master- # override security and enable scheduling of pods on master",
       "kubectl apply -f https://docs.projectcalico.org/v3.9/manifests/calico.yaml",
       "kubectl apply -f https://raw.githubusercontent.com/hetznercloud/csi-driver/master/deploy/kubernetes/hcloud-csi.yml",

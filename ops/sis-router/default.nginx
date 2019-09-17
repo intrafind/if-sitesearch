@@ -23,9 +23,7 @@ http {
             auth_basic "Protected";
             auth_basic_user_file /etc/nginx/.htpasswd;
             stub_status on;
-            access_log   off;
-            #         allow 192.168.1.5;
-            #         deny all;
+            access_log  off;
         }
     }
 
