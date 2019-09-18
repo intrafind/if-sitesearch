@@ -50,7 +50,7 @@ dependencies {
     compile("edu.uci.ics:crawler4j:4.4.0")
     compile("com.github.crawler-commons:crawler-commons:1.0")
 
-    compile("com.rometools:rome:1.12.1")
+    compile("com.rometools:rome:1.12.2")
 
     compile("com.caucho:hessian:4.0.62")
 

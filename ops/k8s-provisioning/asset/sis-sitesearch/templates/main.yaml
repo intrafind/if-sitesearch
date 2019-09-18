@@ -1,16 +1,15 @@
 ---
 kind: Secret
 apiVersion: v1
-data:
-    .dockerconfigjson: {{ .Values.app.dockerRegistrySecret }}
 metadata:
     name: docker-registry-credentials-intrafind-net
+data:
+    .dockerconfigjson: {{ .Values.app.dockerRegistrySecret }}
 type: kubernetes.io/dockerconfigjson
 ---
 kind: ConfigMap
 apiVersion: v1
 metadata:
-    namespace: kube-system
     name: sis-config
 data:
     logstash.conf: |
@@ -76,10 +75,7 @@ data:
 
         output {
             elasticsearch {
-                hosts => [ "elasticsearch:9200" ]
-                manage_template => false
-                index => "%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}"
-                document_type => "%{[@metadata][type]}"
+                hosts => [ "elasticsearch" ]
             }
         }
 ---
@@ -115,16 +111,8 @@ spec:
               - finder.sitesearch.cloud
               - blue.sitesearch.cloud
               - logging.sitesearch.cloud
-              - sis.sitesearch.cloud
               - green.sitesearch.cloud
     rules:
-        - host: sis.sitesearch.cloud
-          http:
-              paths:
-                  - backend:
-                        serviceName: sis-router
-                        servicePort: 80
-                    path: /
         - host: logging.sitesearch.cloud
           http:
               paths:
@@ -172,8 +160,7 @@ spec:
     selector:
         app: sis-router
     ports:
-        - name: main
-          port: 80
+        - port: 80
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -256,8 +243,8 @@ stringData:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
+        {{/*    namespace: {{ .Values.app.tenant }}*/}}
     name: csi-pvc-storage
-    namespace: {{ .Values.app.tenant }}
 spec:
     accessModes:
         - ReadWriteOnce
@@ -291,7 +278,6 @@ spec:
 kind: StatefulSet
 apiVersion: apps/v1
 metadata:
-    namespace: kube-system
     name: elasticsearch
     labels:
         app: elasticsearch
@@ -336,19 +322,16 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-    namespace: kube-system
     name: elasticsearch
 spec:
     selector:
         app: elasticsearch
     ports:
         - port: 9200
-          name: main
 ---
 kind: DaemonSet
 apiVersion: apps/v1
 metadata:
-    namespace: kube-system
     name: logstash
     labels:
         app: logstash
@@ -377,7 +360,6 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-    namespace: kube-system
     name: kibana
     labels:
         app: kibana
@@ -405,33 +387,28 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-    namespace: kube-system
     name: kibana
 spec:
     selector:
         app: kibana
     ports:
         - port: 5601
-          name: main
 ---
 kind: Service
 apiVersion: v1
 metadata:
-    namespace: kube-system
     name: logstash
 spec:
     selector:
         app: logstash
     ports:
         - port: 5044
-          name: main
 ---
 kind: Secret
 apiVersion: v1
 data:
     auth: {{ .Values.app.basicAuthBase64 }}
 metadata:
-    namespace: kube-system
     name: basic-auth
 type: Opaque
 ---
