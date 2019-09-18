@@ -76,7 +76,10 @@ data:
 
         output {
             elasticsearch {
-                hosts => [ "elasticsearch" ]
+                hosts => [ "elasticsearch:9200" ]
+                manage_template => false
+                index => "%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}"
+                document_type => "%{[@metadata][type]}"
             }
         }
 ---
@@ -97,6 +100,7 @@ metadata:
     annotations:
             {{/*        nginx.ingress.kubernetes.io/auth-type: basic*/}}
             {{/*        nginx.ingress.kubernetes.io/auth-secret: basic-auth*/}}
+            {{/*        nginx.ingress.kubernetes.io/client-body-buffer-size: 100M*/}}
         nginx.ingress.kubernetes.io/rewrite-target: /
         nginx.ingress.kubernetes.io/enable-cors: "true"
         nginx.ingress.kubernetes.io/cors-allow-origin: "*"
@@ -104,15 +108,14 @@ metadata:
         nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS, PUT, DELETE"
         nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
         nginx.ingress.kubernetes.io/proxy-read-timeout: 600s # required for long-lasting crawler calls
-        {{/*        nginx.ingress.kubernetes.io/client-body-buffer-size: 100M*/}}
 spec:
     tls:
         - secretName: tls-certificate
           hosts:
-              - sis.sitesearch.cloud
-              - logging.sitesearch.cloud
               - finder.sitesearch.cloud
               - blue.sitesearch.cloud
+              - logging.sitesearch.cloud
+              - sis.sitesearch.cloud
               - green.sitesearch.cloud
     rules:
         - host: sis.sitesearch.cloud
@@ -171,7 +174,6 @@ spec:
     ports:
         - name: main
           port: 80
-        {{/*            type: NodePort*/}}
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -421,8 +423,6 @@ spec:
     selector:
         app: logstash
     ports:
-        - port: 5000
-          name: trythis
         - port: 5044
           name: main
 ---
