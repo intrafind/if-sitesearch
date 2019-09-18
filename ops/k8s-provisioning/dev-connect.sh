@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-k8s_master_node=`terraform output k8s_master_node`
+k8s_master_node=$(terraform output k8s_master_node)
 #tenant=`terraform workspace show`
 tenant=kube-system
 
