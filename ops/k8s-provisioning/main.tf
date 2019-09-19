@@ -74,7 +74,7 @@ locals {
   password      = var.password == "" ? uuid() : var.password
 }
 output "web" {
-  value = "http://${hcloud_server.master.0.ipv4_address}"
+  value = "https://es.sitesearch.cloud"
 }
 output "k8s_master" {
   value = hcloud_server.master.*.ipv4_address
@@ -106,7 +106,6 @@ variable "masterCount" {
   default = 1
 }
 resource "hcloud_server" "node" {
-  //  location = local.dcLocation
   labels = {
     password = local.password
   }
@@ -136,7 +135,8 @@ resource "hcloud_server" "node" {
       "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -",
       "echo 'deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main' >> /etc/apt/sources.list",
       "echo \"deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable\" >> /etc/apt/sources.list",
-      "apt-get update && apt-get install docker-ce kubeadm sshpass busybox -y",
+      //      "apt-get update && apt-get install docker-ce kubeadm sshpass busybox -y",
+      "apt-get update && apt-get install docker-ce kubeadm=1.15.4-00 kubelet=1.15.4-00 sshpass busybox -y",
       "containerd config default > /etc/containerd/config.toml && systemctl restart containerd",
       "sshpass -p ${local.password} scp -q -o StrictHostKeyChecking=no root@${hcloud_server.master.0.ipv4_address}:/srv/kubeadm_join /tmp && eval $(cat /tmp/kubeadm_join)",
     ]
@@ -144,7 +144,6 @@ resource "hcloud_server" "node" {
 }
 
 resource "hcloud_server" "master" {
-  //  location = local.dcLocation
   labels = {
     password = local.password
   }
@@ -183,7 +182,8 @@ resource "hcloud_server" "master" {
       "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -",
       "echo 'deb [arch=amd64] https://packages.cloud.google.com/apt kubernetes-xenial main' >> /etc/apt/sources.list",
       "echo \"deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable\" >> /etc/apt/sources.list",
-      "apt-get update && apt-get install docker-ce kubeadm -y",
+      //      "apt-get update && apt-get install docker-ce kubeadm -y",
+      "apt-get update && apt-get install docker-ce kubeadm=1.15.4-00 kubelet=1.15.4-00 -y",
       "containerd config default > /etc/containerd/config.toml && systemctl restart containerd",
       //      "kubeadm init --cri-socket /run/containerd/containerd.sock --service-cidr=${hcloud_network_subnet.tenant.ip_range}",
       //      "kubeadm init --cri-socket /run/containerd/containerd.sock --pod-network-cidr ${hcloud_network_subnet.tenant.ip_range} --apiserver-advertise-address 10.0.0.1",
@@ -204,11 +204,11 @@ resource "hcloud_server" "master" {
 resource "hcloud_rdns" "node" {
   server_id  = hcloud_server.node.0.id
   ip_address = hcloud_server.node.0.ipv4_address
-  dns_ptr    = "${hcloud_server.node.0.name}.intrafind.net"
+  dns_ptr    = "${hcloud_server.node.0.name}.sitesearch.cloud"
 }
 
 resource "hcloud_rdns" "master" {
   server_id  = hcloud_server.master.0.id
   ip_address = hcloud_server.master.0.ipv4_address
-  dns_ptr    = "${hcloud_server.master.0.name}.intrafind.net"
+  dns_ptr    = "${hcloud_server.master.0.name}.sitesearch.cloud"
 }

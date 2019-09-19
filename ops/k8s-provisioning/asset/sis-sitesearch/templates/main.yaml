@@ -108,9 +108,9 @@ spec:
     tls:
         - secretName: tls-certificate
           hosts:
-              - finder.sitesearch.cloud
-              - blue.sitesearch.cloud
               - logging.sitesearch.cloud
+              - finder.sitesearch.cloud
+              - es.sitesearch.cloud
               - green.sitesearch.cloud
     rules:
         - host: logging.sitesearch.cloud
@@ -127,7 +127,7 @@ spec:
                         serviceName: sis-router
                         servicePort: 80
                     path: /
-        - host: blue.sitesearch.cloud
+        - host: es.sitesearch.cloud
           http:
               paths:
                   - backend:
@@ -243,7 +243,6 @@ stringData:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-        {{/*    namespace: {{ .Values.app.tenant }}*/}}
     name: csi-pvc-storage
 spec:
     accessModes:

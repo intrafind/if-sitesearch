@@ -67,11 +67,11 @@ http {
 
     server {
         listen 80;
-        server_name blue.sitesearch.cloud;
+        server_name es.sitesearch.cloud;
 
         location / {
-            include /etc/nginx/snippets/cors-headers.conf;
-            proxy_pass http://sis-sitesearch:8001;
+            #            include /etc/nginx/snippets/cors-headers.conf;
+            proxy_pass http://elasticsearch:9200;
         }
     }
 
