@@ -3,7 +3,7 @@
 #workspace=default
 workspace=kube-system
 k8s_master_node=sis.sitesearch.cloud
-k8s_master_node=$(terraform output k8s_master_node)
+#k8s_master_node=$(terraform output k8s_master_node)
 helmName=sis-sitesearch
 
 ssh-keygen -f ~/.ssh/known_hosts -R $k8s_master_node
