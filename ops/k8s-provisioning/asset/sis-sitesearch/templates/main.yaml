@@ -212,7 +212,7 @@ spec:
                   image: docker-registry.intrafind.net/intrafind/sis-sitesearch:latest
                   env:
                       - name: SPRING_PROFILES_ACTIVE
-                        value: {{ .Values.app.springProfile }}
+                        value: {{ .Values.app.springProfiles }}
                       - name: SIS_API_SERVICE_URL
                         value: {{ .Values.app.serviceUrl }}
                       - name: SIS_SERVICE_HOST
