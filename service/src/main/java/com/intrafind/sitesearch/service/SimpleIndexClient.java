@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intrafind.api.Document;
 import com.intrafind.api.index.Index;
 import com.intrafind.sitesearch.Application;
+import com.intrafind.sitesearch.BaseConfig;
 import com.intrafind.sitesearch.dto.CrawlStatus;
 import com.intrafind.sitesearch.dto.SitesCrawlStatus;
 import org.slf4j.Logger;
@@ -59,6 +60,10 @@ public class SimpleIndexClient implements Index {
     static final String BASIC_AUTH_HEADER = "Basic " + Base64.getEncoder().encodeToString(credentials);
     static final ObjectMapper MAPPER = new ObjectMapper();
     private static final String SVC_SINGLETONS = "svc-singletons";
+
+    static { // required because Java 13 does accept Letsencrypt certificates
+        new BaseConfig.TrustAllX509TrustManager();
+    }
 
     @Override
     public void index(final Document... documents) {
