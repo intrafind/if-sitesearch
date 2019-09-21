@@ -57,21 +57,23 @@ http {
 
     server {
         listen 80;
-        server_name green.sitesearch.cloud;
+        server_name es.sitesearch.cloud;
 
         location / {
-            include /etc/nginx/snippets/cors-headers.conf;
-            proxy_pass http://sis-sitesearch:8001;
+            auth_basic "Protected";
+            auth_basic_user_file /etc/nginx/.htpasswd;
+            proxy_pass http://elasticsearch:9200;
         }
     }
 
     server {
         listen 80;
-        server_name es.sitesearch.cloud;
+        server_name green.sitesearch.cloud;
 
         location / {
-            #            include /etc/nginx/snippets/cors-headers.conf;
-            proxy_pass http://elasticsearch:9200;
+            auth_basic "Protected";
+            auth_basic_user_file /etc/nginx/.htpasswd;
+            proxy_pass https://es.loxal.net;
         }
     }
 
