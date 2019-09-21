@@ -61,7 +61,7 @@ public class SimpleIndexClient implements Index {
     static final ObjectMapper MAPPER = new ObjectMapper();
     private static final String SVC_SINGLETONS = "svc-singletons";
 
-    static { // required because Java 13 does accept Letsencrypt certificates
+    static { // required because Java 13 does accept Letsencrypt certificates TODO remove once Elasticsearch runs in the same subnetwork
         new BaseConfig.TrustAllX509TrustManager();
     }
 
