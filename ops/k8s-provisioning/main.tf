@@ -52,8 +52,6 @@ resource "null_resource" "update-migration" {
   provisioner "remote-exec" {
     inline = [
       "kubectl create secret docker-registry docker-registry --docker-server=docker-registry.intrafind.net --docker-username=sitesearch --docker-password=${var.password}",
-      //      "helm install /opt/asset/sis-sitesearch --name sis-sitesearch --namespace ${terraform.workspace} --set app.tenant=${terraform.workspace},app.HETZNER_API_TOKEN=${var.hetzner_cloud_intrafind},app.password=${var.password},app.dockerRegistrySecret=${var.docker_registry_k8s_secret} --set-string app.volumeHandle=${var.volumeHandle}",
-      //      "helm install --name ingress stable/nginx-ingress --set rbac.create=true,controller.hostNetwork=true,controller.kind=DaemonSet",
       "kubectl get svc,node,pvc,deployment,pods,pvc,pv,namespace,job -A && helm list",
     ]
   }
