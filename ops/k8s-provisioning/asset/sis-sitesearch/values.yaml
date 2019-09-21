@@ -7,9 +7,10 @@ app:
   serviceUrl: https://api.sitesearch.cloud
   serviceHost: api.sitesearch.cloud
   recaptchaSecret: invalid-default
-  devSkip: true
+  devSkip: false
   basicAuth: none
   basicAuthBase64: none
+  springProfile:
   sis:
     serviceSecret: 0-0-0-0-0
     wooCommerceConsumerKey: invalid-default
