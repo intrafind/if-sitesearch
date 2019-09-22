@@ -66,8 +66,6 @@ variable "hetzner_cloud_intrafind" {
 }
 
 locals {
-  //  dcLocation    = "nbg1"
-  dc            = "nbg1-dc3"
   updateTrigger = timestamp()
   password      = var.password == "" ? uuid() : var.password
 }

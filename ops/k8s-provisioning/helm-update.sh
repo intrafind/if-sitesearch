@@ -15,7 +15,7 @@ scp -q -o StrictHostKeyChecking=no -r asset/$helmName root@$k8s_master_node:/opt
 
 ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm delete $helmName --purge
 ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node helm delete ingress --purge
-sleep 18
+sleep 21
 
 ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node \
   helm upgrade $helmName /opt/$helmName --install --namespace $workspace --recreate-pods \
