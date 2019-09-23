@@ -8,7 +8,7 @@ RUN apt-get update && \
 
 RUN groupadd -g 1200 svc && \
     useradd --create-home --system -u 1200 -g svc svc
-USER svc
+#USER svc
 
 WORKDIR /home/svc
 COPY config config
