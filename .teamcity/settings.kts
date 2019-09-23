@@ -1,3 +1,19 @@
+/*
+ * Copyright 2019 IntraFind Software AG. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.sshAgent
@@ -207,7 +223,7 @@ object Build : BuildType({
                 #SPRING_PROFILES_ACTIVE=oss
                 ./gradlew clean includeKotlinJsRuntime build --info
             """.trimIndent()
-            dockerImage = "openjdk:13-alpine"
+            dockerImage = "openjdk:13-slim-buster"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerPull = true
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
@@ -294,7 +310,7 @@ object Deployment : BuildType({
                 #SPRING_PROFILES_ACTIVE=oss
                 ./gradlew clean includeKotlinJsRuntime build --info -x test
             """.trimIndent()
-            dockerImage = "openjdk:13-alpine"
+            dockerImage = "openjdk:13-slim-buster"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerPull = true
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
@@ -370,7 +386,7 @@ object LoadTest : BuildType({
     steps {
         script {
             scriptContent = "sh load-test.sh"
-            dockerImage = "openjdk:13-alpine"
+            dockerImage = "openjdk:13-slim-buster"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerPull = true
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
@@ -449,7 +465,7 @@ object SmokeTest : BuildType({
     steps {
         script {
             scriptContent = "sh ./ops/smoke-test.sh"
-            dockerImage = "openjdk:13-alpine"
+            dockerImage = "openjdk:13-slim-buster"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerRunParameters = "-v /root/.gradle:/root/.gradle"
         }

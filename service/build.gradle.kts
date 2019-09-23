@@ -78,7 +78,7 @@ dependencies {
 }
 
 jib {
-    from.image = "openjdk:13-alpine"
+    from.image = "openjdk:13-slim-buster"
     container.mainClass = "com.intrafind.sitesearch.Application"
     to.image = "docker-registry.intrafind.net/intrafind/sis-sitesearch:tmp"
     to.auth.username = "sitesearch"

@@ -9,7 +9,7 @@ after_script:
 - ls -la
 
 build-service:
-  image: openjdk:13-alpine
+  image: openjdk:13-slim-buster
   stage: build-service
   script:
   - ./gradlew build --build-cache --info -x test
