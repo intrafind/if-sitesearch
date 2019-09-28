@@ -67,6 +67,10 @@ public class LoadTest {
     private static final UUID LOAD_SITE_ID = UUID.fromString("563714f1-96c0-4500-b366-4fc7e734fa1d");
 
     static {
+        LOG.warn("=================");
+        LOG.warn(System.getenv("SPRING_PROFILES_ACTIVE"));
+        LOG.warn(System.getenv("LOAD_TARGET"));
+        LOG.warn("=================");
         SEARCH_QUERIES.put("hypothek", 40);
         SEARCH_QUERIES.put("swiss", 30);
         SEARCH_QUERIES.put("migros", 40);
