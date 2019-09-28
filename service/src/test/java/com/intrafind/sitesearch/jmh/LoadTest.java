@@ -17,7 +17,6 @@
 package com.intrafind.sitesearch.jmh;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.intrafind.api.Document;
 import com.intrafind.sitesearch.controller.AutocompleteController;
 import com.intrafind.sitesearch.controller.SearchController;
 import com.intrafind.sitesearch.controller.SiteController;
@@ -74,9 +73,9 @@ public class LoadTest {
         SEARCH_QUERIES.put("\uD83E\uDD84", -1);
 
         AUTOCOMPLETE_QUERIES.put("hyp", 0);
-        AUTOCOMPLETE_QUERIES.put("swi", Document.IS_OSS ? 5 : 6);
+        AUTOCOMPLETE_QUERIES.put("swi", 6);
         AUTOCOMPLETE_QUERIES.put("mig", 1);
-        AUTOCOMPLETE_QUERIES.put("inv", Document.IS_OSS ? 5 : 8);
+        AUTOCOMPLETE_QUERIES.put("inv", 8);
         AUTOCOMPLETE_QUERIES.put("bank", 1);
         AUTOCOMPLETE_QUERIES.put("fond", 1);
         AUTOCOMPLETE_QUERIES.put("welt", 4);
@@ -123,7 +122,6 @@ public class LoadTest {
 
     @Benchmark
     public void autocomplete() throws IOException {
-//        LOG.info("================= TODO: REMOVE THIS" + System.getenv("SPRING_PROFILES_ACTIVE") + System.getenv("SIS_API_SERVICE_URL") + String.valueOf(Document.IS_OSS) + LOAD_TARGET);
         final var randomSiteIndex = PSEUDO_ENTROPY.nextInt(SEARCH_DATA.size());
         final var randomSiteId = (UUID) AUTOCOMPLETE_DATA.keySet().toArray()[randomSiteIndex];
         final var randomSite = AUTOCOMPLETE_DATA.get(randomSiteId);
