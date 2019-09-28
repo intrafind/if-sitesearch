@@ -123,12 +123,12 @@ public class LoadTest {
 
     @Benchmark
     public void autocomplete() throws IOException {
-        LOG.warn("=================");
-        LOG.warn(System.getenv("SPRING_PROFILES_ACTIVE"));
-        LOG.warn(System.getenv("SIS_API_SERVICE_URL"));
-        LOG.warn(String.valueOf(Document.IS_OSS));
-        LOG.warn(LOAD_TARGET);
-        LOG.warn("=================");
+        LOG.info("================= TODO: REMOVE THIS BELOW");
+        LOG.info(System.getenv("SPRING_PROFILES_ACTIVE"));
+        LOG.info(System.getenv("SIS_API_SERVICE_URL"));
+        LOG.info(String.valueOf(Document.IS_OSS));
+        LOG.info(LOAD_TARGET);
+        LOG.info("================= TODO: REMOVE THIS ABOVE");
         
         final var randomSiteIndex = PSEUDO_ENTROPY.nextInt(SEARCH_DATA.size());
         final var randomSiteId = (UUID) AUTOCOMPLETE_DATA.keySet().toArray()[randomSiteIndex];
