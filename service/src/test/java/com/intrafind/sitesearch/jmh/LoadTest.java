@@ -125,7 +125,9 @@ public class LoadTest {
     public void autocomplete() throws IOException {
         LOG.warn("=================");
         LOG.warn(System.getenv("SPRING_PROFILES_ACTIVE"));
+        LOG.warn(System.getenv("SIS_API_SERVICE_URL"));
         LOG.warn(System.getenv("LOAD_TARGET"));
+        LOG.warn(LOAD_TARGET);
         LOG.warn("=================");
         
         final var randomSiteIndex = PSEUDO_ENTROPY.nextInt(SEARCH_DATA.size());
