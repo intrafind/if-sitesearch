@@ -99,11 +99,6 @@ public class LoadTest {
 
     @Benchmark
     public void search() throws IOException {
-        LOG.warn("=================");
-        LOG.warn(System.getenv("SPRING_PROFILES_ACTIVE"));
-        LOG.warn(System.getenv("LOAD_TARGET"));
-        LOG.warn("=================");
-        
         final int randomSiteIndex = PSEUDO_ENTROPY.nextInt(SEARCH_DATA.size());
         final UUID randomSiteId = (UUID) SEARCH_DATA.keySet().toArray()[randomSiteIndex];
         final Map<String, Integer> randomSite = SEARCH_DATA.get(randomSiteId);
@@ -128,6 +123,11 @@ public class LoadTest {
 
     @Benchmark
     public void autocomplete() throws IOException {
+        LOG.warn("=================");
+        LOG.warn(System.getenv("SPRING_PROFILES_ACTIVE"));
+        LOG.warn(System.getenv("LOAD_TARGET"));
+        LOG.warn("=================");
+        
         final var randomSiteIndex = PSEUDO_ENTROPY.nextInt(SEARCH_DATA.size());
         final var randomSiteId = (UUID) AUTOCOMPLETE_DATA.keySet().toArray()[randomSiteIndex];
         final var randomSite = AUTOCOMPLETE_DATA.get(randomSiteId);
