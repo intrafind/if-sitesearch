@@ -92,6 +92,6 @@ jmh {
     fork = 1
     iterations = 3
     resultFormat = "JSON"
-    threads = 30
+    threads = 20
     failOnError = true
 }
