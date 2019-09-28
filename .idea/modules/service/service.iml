@@ -29,14 +29,14 @@
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-security:2.1.8.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: edu.uci.ics:crawler4j:4.4.0" level="project" />
     <orderEntry type="library" name="Gradle: com.github.crawler-commons:crawler-commons:1.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.rometools:rome:1.12.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.rometools:rome:1.12.2" level="project" />
     <orderEntry type="library" name="Gradle: com.caucho:hessian:4.0.62" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-webflux:2.1.8.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-undertow:2.1.8.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger2:2.9.2" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger-ui:2.9.2" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-templates:3.0.0-beta-3" level="project" />
-    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:4.1.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:4.2.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jsoup:jsoup:1.12.1" level="project" />
     <orderEntry type="library" name="Gradle: org.mnode.mstor:mstor:1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.oauth-client:google-oauth-client-jetty:1.30.1" level="project" />
@@ -70,7 +70,7 @@
     <orderEntry type="library" name="Gradle: org.springframework:spring-context:5.1.9.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-aop:5.1.9.RELEASE" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.apache.tika:tika-parsers:1.16" level="project" />
-    <orderEntry type="library" name="Gradle: com.rometools:rome-utils:1.12.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.rometools:rome-utils:1.12.2" level="project" />
     <orderEntry type="library" name="Gradle: org.synchronoss.cloud:nio-multipart-parser:1.1.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: net.sf.ehcache:ehcache-core:2.5.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-logging:2.1.8.RELEASE" level="project" />

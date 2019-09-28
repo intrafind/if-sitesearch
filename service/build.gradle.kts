@@ -41,7 +41,7 @@ dependencies {
     val swaggerVersion = "2.9.2"
     val tikaVersion = "1.22"
 
-    runtimeClasspath("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.0.pr2") // to fix warning: background-preinit Jackson2ObjectM - but is it ACTUALLY needed?
+    runtimeClasspath("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.0.pr3") // to fix warning: background-preinit Jackson2ObjectM - but is it ACTUALLY needed?
     runtimeOnly("org.apache.tika:tika-parsers:$tikaVersion")
     compile("org.apache.tika:tika:$tikaVersion")
     compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:$springBootVersion")
@@ -92,6 +92,6 @@ jmh {
     fork = 1
     iterations = 3
     resultFormat = "JSON"
-    threads = 40
+    threads = 30
     failOnError = true
 }

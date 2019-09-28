@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.rometools:rome-utils:1.12.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.rometools/rome-utils/1.12.2/240dc40fb9333ac872319e7d31178bffc63f7900/rome-utils-1.12.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.rometools/rome-utils/1.12.2/d27c01295ababef9a2d6266dec6d22b0ad137dce/rome-utils-1.12.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
