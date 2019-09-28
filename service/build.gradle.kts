@@ -22,7 +22,7 @@ plugins {
     id("io.morethan.jmhreport") version "0.9.0"
     id("org.springframework.boot") version "2.1.8.RELEASE"
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
-    id("com.google.cloud.tools.jib") version "1.5.1"
+    id("com.google.cloud.tools.jib") version "1.6.1"
 }
 
 idea {
