@@ -2,7 +2,6 @@
 
 # add "--debug-jvm" to attach debugger
 {
-#    SPRING_PROFILES_ACTIVE=oss \
     SPRING_CONFIG_NAME="application, local" \
         ./gradlew bootRun --continue --no-scan --no-build-cache $1
 #        ./gradlew bootRun --continue --continuous --no-scan --parallel --build-cache --refresh-dependencies $1

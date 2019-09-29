@@ -10,7 +10,6 @@ app:
   devSkip: false
   basicAuth: none
   basicAuthBase64: none
-  springProfiles:
   sis:
     serviceSecret: 0-0-0-0-0
     wooCommerceConsumerKey: invalid-default

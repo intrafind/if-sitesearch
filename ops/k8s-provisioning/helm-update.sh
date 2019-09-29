@@ -26,7 +26,6 @@ ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node \
   --set-string app.volumeHandle=3052845, \
   --set app.basicAuth=$BASIC_ENCODED_PASSWORD, \
   --set app.basicAuthBase64=$BASE64_ENCODED_HTPASSWD, \
-  --set app.springProfiles=$SPRING_PROFILES_ACTIVE \
 
 ssh -q -o StrictHostKeyChecking=no root@$k8s_master_node \
   helm upgrade ingress stable/nginx-ingress --install --namespace $workspace \
