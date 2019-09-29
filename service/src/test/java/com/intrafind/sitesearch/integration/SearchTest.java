@@ -31,7 +31,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Collections;
 import java.util.UUID;
 
-import static com.intrafind.api.Document.IS_OSS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -55,10 +54,8 @@ public class SearchTest {
         assertEquals(1, searchResults.getBody().getResults().size());
         final var found = searchResults.getBody().getResults().get(0);
         assertEquals("Wie die Semantische Suche vom <span class=\"if-teaser-highlight\">Knowledge</span> Graph profitiert", found.getTitle());
-        if (!IS_OSS) // TODO this is NOT an OSS_WORKAROUND, CHECK if the content is not empty!
             assertEquals("http:&#x2F;&#x2F;intrafind.de&#x2F;blog&#x2F;wie-die-semantische-suche-vom-<span class=\"if-teaser-highlight\">knowledge</span>-graph-profitiert", found.getUrl());
         assertEquals("http://intrafind.de/blog/wie-die-semantische-suche-vom-knowledge-graph-profitiert", found.getUrlRaw());
-        if (!IS_OSS) // TODO this is NOT an OSS_WORKAROUND, CHECK if the content is not empty!
             assertTrue(found.getBody().startsWith("&lt;p&gt;Der <span class=\"if-teaser-highlight\">Knowledge</span> Graph ist vielen Nutzern bereits durch Google oder Facebook bekannt. Aber auch"));
     }
 
@@ -72,10 +69,8 @@ public class SearchTest {
         assertEquals(1, searchResults.getBody().getResults().size());
         final var found = searchResults.getBody().getResults().get(0);
         assertEquals("Wie die Semantische Suche vom <span class=\"if-teaser-highlight\">Knowledge</span> Graph profitiert", found.getTitle());
-        if (!IS_OSS) // TODO this is NOT an OSS_WORKAROUND, CHECK if the content is not empty!
             assertEquals("http:&#x2F;&#x2F;intrafind.de&#x2F;blog&#x2F;wie-die-semantische-suche-vom-<span class=\"if-teaser-highlight\">knowledge</span>-graph-profitiert", found.getUrl());
         assertEquals("http://intrafind.de/blog/wie-die-semantische-suche-vom-knowledge-graph-profitiert", found.getUrlRaw());
-        if (!IS_OSS) // TODO this is NOT an OSS_WORKAROUND, CHECK if the content is not empty!
             assertTrue(found.getBody().startsWith("&lt;p&gt;Der <span class=\"if-teaser-highlight\">Knowledge</span> Graph ist vielen Nutzern bereits durch Google oder Facebook bekannt. Aber auch"));
         assertEquals(Collections.emptyList(), found.getSisLabels());
         assertEquals("", found.getThumbnail());

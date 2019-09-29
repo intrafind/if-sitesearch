@@ -107,7 +107,6 @@ public final class Document implements Serializable {
         return this;
     }
 
-    public static final boolean IS_OSS = System.getenv("SPRING_PROFILES_ACTIVE") != null && "oss".equals(System.getenv("SPRING_PROFILES_ACTIVE"));
     private static final String HIT_TEASER_PREFIX = "hit.teaser.";
 
     public Map<String, List<String>> getHighlight() {

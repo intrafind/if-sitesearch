@@ -16,7 +16,6 @@
 
 package com.intrafind.sitesearch;
 
-import com.intrafind.api.Document;
 import com.intrafind.sitesearch.controller.SiteController;
 import com.intrafind.sitesearch.dto.FetchedPage;
 import com.intrafind.sitesearch.dto.Hits;
@@ -123,11 +122,6 @@ public class SimpleClientTest {
         assertEquals(1, search.getBody().getResults().size());
         final var foundPage = search.getBody().getResults().get(0);
         assertEquals(SiteTest.buildPage().getSisLabels(), Arrays.asList("mars", "Venus"));
-        if (Document.IS_OSS) { 
-            assertEquals(SiteTest.buildPage().getTitle(), foundPage.getTitle());
-            assertEquals("Site Search is IntraFind's on-<span class=\"if-teaser-highlight\">demand</span> solution for site search.", foundPage.getBody());
-            assertEquals(SiteTest.buildPage().getUrl(), foundPage.getUrl());
-        }
     }
 
     private void updateSiteProfile() {

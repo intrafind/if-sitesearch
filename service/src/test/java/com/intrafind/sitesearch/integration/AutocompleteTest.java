@@ -29,7 +29,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.intrafind.api.Document.IS_OSS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -48,7 +47,6 @@ public class AutocompleteTest {
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertNotNull(actual.getBody());
         assertTrue(1 <= actual.getBody().getResults().size());
-        if (!IS_OSS) // TODO this is NOT an OSS_WORKAROUND, CHECK if the content is not empty!
             assertEquals("knowledge graph", actual.getBody().getResults().get(0).toLowerCase());
     }
 
@@ -59,7 +57,6 @@ public class AutocompleteTest {
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertNotNull(actual.getBody());
         assertTrue(1 <= actual.getBody().getResults().size());
-        if (!IS_OSS) // TODO this is NOT an OSS_WORKAROUND, CHECK if the content is not empty!
             assertEquals("knowledge graph", actual.getBody().getResults().get(0).toLowerCase());
     }
 
