@@ -75,7 +75,7 @@ public class LoadTest {
         AUTOCOMPLETE_QUERIES.put("hyp", 0);
         AUTOCOMPLETE_QUERIES.put("swi", 6);
         AUTOCOMPLETE_QUERIES.put("mig", 1);
-        AUTOCOMPLETE_QUERIES.put("inv", 8);
+        AUTOCOMPLETE_QUERIES.put("inv", 7);
         AUTOCOMPLETE_QUERIES.put("bank", 1);
         AUTOCOMPLETE_QUERIES.put("fond", 1);
         AUTOCOMPLETE_QUERIES.put("welt", 4);
