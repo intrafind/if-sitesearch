@@ -27,7 +27,6 @@ import kotlin.browser.window
 private fun main() {
     window.onload = {
         js("IFS.eventbus.addEventListener(IFS.jQuery.ifs.constants.events.SEARCHBAR_RENDERED_INITIALLY, function () { stats.com.intrafind.sitesearch.stats.initHelper(); }); ")
-//        window.setTimeout({ Stats() }, 1_000)
     }
 }
 

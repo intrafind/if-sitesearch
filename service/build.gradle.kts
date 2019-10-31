@@ -20,7 +20,7 @@ plugins {
     idea
     id("me.champeau.gradle.jmh") version "0.5.0-rc-1"
     id("io.morethan.jmhreport") version "0.9.0"
-    id("org.springframework.boot") version "2.1.8.RELEASE"
+    id("org.springframework.boot") version "2.1.9.RELEASE"
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
     id("com.google.cloud.tools.jib") version "1.6.1"
 }
@@ -37,11 +37,10 @@ java {
 }
 
 dependencies {
-    val springBootVersion = "2.1.8.RELEASE"
+    val springBootVersion = "2.1.9.RELEASE"
     val swaggerVersion = "2.9.2"
     val tikaVersion = "1.22"
 
-    runtimeClasspath("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.0.pr3") // to fix warning: background-preinit Jackson2ObjectM - but is it ACTUALLY needed?
     runtimeOnly("org.apache.tika:tika-parsers:$tikaVersion")
     compile("org.apache.tika:tika:$tikaVersion")
     compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:$springBootVersion")
@@ -66,10 +65,10 @@ dependencies {
     testCompile("org.openjdk.jmh:jmh-core:1.21")
     testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
 
-    compile("org.codehaus.groovy:groovy-templates:3.0.0-beta-3")
+    compile("org.codehaus.groovy:groovy-templates:3.0.0-rc-1")
     runtimeClasspath("org.springframework.boot:spring-boot-devtools:$springBootVersion")
 
-    compile("com.squareup.okhttp3:okhttp:4.2.0")
+    compile("com.squareup.okhttp3:okhttp:4.2.2")
     compile("org.jsoup:jsoup:1.12.1")
 
     compile("org.mnode.mstor:mstor:1.0.0")
