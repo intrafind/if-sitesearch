@@ -14,23 +14,10 @@
  * limitations under the License.
  */
 
-rootProject.name = "if-sitesearch"
+package com.intrafind.sitesearch.stats
 
-include(
-        "service",
-
-        "stats",
-        "payment",
-        "gadget",
-        "dashboard"
-)
-
-pluginManagement {
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.id === "kotlin2js") {
-                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:${requested.version}")
-            }
-        }
+class Adder {
+    fun add(left: Int, right: Int): Int {
+        return left + right
     }
 }

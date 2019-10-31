@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/gadget" />
             <option value="$PROJECT_DIR$/payment" />
             <option value="$PROJECT_DIR$/service" />
+            <option value="$PROJECT_DIR$/stats" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

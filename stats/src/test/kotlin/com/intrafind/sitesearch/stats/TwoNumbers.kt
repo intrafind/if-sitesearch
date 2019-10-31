@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
-rootProject.name = "if-sitesearch"
+package com.intrafind.sitesearch.stats
 
-include(
-        "service",
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-        "stats",
-        "payment",
-        "gadget",
-        "dashboard"
-)
+class TwoNumbers {
+    @Test
+    fun canBeAdded() {
+        val adder = Adder()
+        assertEquals(10, adder.add(5, 5))
+        assertEquals(11, adder.add(5, 5)) // purposely broken, to show failure
+    }
 
-pluginManagement {
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.id === "kotlin2js") {
-                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:${requested.version}")
-            }
-        }
+    @Test
+    fun canBeAdded_whenInputIsNegative() {
+        val adder = Adder()
+        assertEquals(-10, adder.add(-5, -5))
     }
 }

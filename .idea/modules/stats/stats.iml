@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":payment" external.linked.project.path="$MODULE_DIR$/../../payment" external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="if-sitesearch" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":stats" external.linked.project.path="$MODULE_DIR$/../../../stats" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="if-sitesearch" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
-      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" pureKotlinSourceFolders="$MODULE_DIR$/../../payment/src/test/kotlin;/home/alex/my/project/intrafind/if-sitesearch/payment/src/main/kotlin">
-        <testOutputPath>$MODULE_DIR$/../../payment/build/classes/kotlin/test/payment_test.js</testOutputPath>
+      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" pureKotlinSourceFolders="$MODULE_DIR$/../../../stats/src/test/kotlin;/home/alex/my/project/intrafind/if-sitesearch/stats/src/main/kotlin">
+        <testOutputPath>$MODULE_DIR$/../../../stats/build/classes/kotlin/test/stats_test.js</testOutputPath>
         <compilerSettings />
         <compilerArguments>
-          <option name="outputFile" value="$MODULE_DIR$/../../service/build/resources/main/static/app/payment/payment.js" />
+          <option name="outputFile" value="$MODULE_DIR$/../../../service/build/resources/main/static/app/stats/stats.js" />
           <option name="noStdlib" value="true" />
           <option name="sourceMap" value="true" />
           <option name="sourceMapEmbedSources" value="always" />
@@ -30,16 +30,16 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">
-    <output url="file://$MODULE_DIR$/../../payment/out/production/classes" />
-    <output-test url="file://$MODULE_DIR$/../../payment/out/test/classes" />
+    <output url="file://$MODULE_DIR$/../../../stats/out/production/classes" />
+    <output-test url="file://$MODULE_DIR$/../../../stats/out/test/classes" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../payment">
-      <sourceFolder url="file://$MODULE_DIR$/../../payment/src/main/kotlin" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../payment/src/test/kotlin" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../payment/src/main/resources" type="java-resource" />
-      <excludeFolder url="file://$MODULE_DIR$/../../payment/.gradle" />
-      <excludeFolder url="file://$MODULE_DIR$/../../payment/build" />
-      <excludeFolder url="file://$MODULE_DIR$/../../payment/out" />
+    <content url="file://$MODULE_DIR$/../../../stats">
+      <sourceFolder url="file://$MODULE_DIR$/../../../stats/src/main/kotlin" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../stats/src/test/kotlin" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../stats/src/main/resources" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../stats/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../stats/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../stats/out" />
     </content>
     <orderEntry type="jdk" jdkName="Kotlin SDK" jdkType="KotlinSDK" />
     <orderEntry type="sourceFolder" forTests="false" />

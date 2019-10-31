@@ -12,11 +12,15 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="analytics" target="11" />
+      <module name="analytics-hook" target="11" />
       <module name="client" target="11" />
       <module name="dashboard" target="11" />
       <module name="finder" target="11" />
       <module name="gadget" target="11" />
+      <module name="payment" target="11" />
       <module name="service" target="11" />
+      <module name="stats" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
