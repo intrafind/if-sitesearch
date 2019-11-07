@@ -211,7 +211,7 @@ Or what should be the first thing, I need to do, to **get started** with Site Se
     
             <script src="https://cdn.sitesearch.cloud/app/runtime/kotlin.js"></script>
             <script
-                    data-analyticsTrackingId="UA-12323987-3"
+                    data-analyticsTrackingId="UA-12345678-9"
                     src="https://cdn.sitesearch.cloud/app/stats/stats.js"
             ></script>
             
