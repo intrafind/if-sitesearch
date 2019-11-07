@@ -26,7 +26,15 @@ import kotlin.browser.window
 
 private fun main() {
     window.onload = {
+        console.warn(0)
         js("IFS.eventbus.addEventListener(IFS.jQuery.ifs.constants.events.SEARCHBAR_RENDERED_INITIALLY, function () { stats.com.intrafind.sitesearch.stats.initHelper(); }); ")
+        console.warn(1)
+        window.setTimeout({
+            console.warn(2)
+            if (!isInitialized)
+                Stats()
+            console.warn(3)
+        }, 10_000)
     }
 }
 
@@ -34,6 +42,7 @@ fun initHelper() {
     Stats()
 }
 
+private var isInitialized: Boolean = false
 private val sisHookInit: HTMLScriptElement = document.currentScript as HTMLScriptElement
 
 class Stats {
@@ -49,6 +58,7 @@ class Stats {
 
     init {
         log("Site Search Analytics Initalized")
+        isInitialized = true
         sisSearchbar.addEventListener("keydown", { event: Event ->
             val keyboardEvent = event as KeyboardEvent
             if (keyboardEvent.key === "Enter") {
