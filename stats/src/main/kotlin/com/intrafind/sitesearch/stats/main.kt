@@ -30,7 +30,7 @@ private fun main() {
         window.setTimeout({
             if (!isInitialized)
                 Stats()
-        }, 3_000)
+        }, 2_000)
     }
 }
 

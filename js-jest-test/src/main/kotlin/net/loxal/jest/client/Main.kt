@@ -14,15 +14,8 @@
  * limitations under the License.
  */
 
-plugins {
-    id("kotlin2js") apply false
-}
+package net.loxal.jest.client
 
-subprojects {
-    if ("service" !== name) {
-        apply(plugin = "kotlin2js")
-    }
-    repositories {
-        jcenter()
-    }
-}
+fun result() = 10
+fun neptun() = 11
+fun saturn() = 12

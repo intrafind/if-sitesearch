@@ -14,15 +14,10 @@
  * limitations under the License.
  */
 
-plugins {
-    id("kotlin2js") apply false
-}
+package net.loxal.jest.client
 
-subprojects {
-    if ("service" !== name) {
-        apply(plugin = "kotlin2js")
-    }
-    repositories {
-        jcenter()
+class Adder {
+    fun add(left: Int, right: Int): Int {
+        return left + right
     }
 }

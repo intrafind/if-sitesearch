@@ -19,6 +19,7 @@ rootProject.name = "if-sitesearch"
 include(
         "service",
 
+        "js-jest-test",
         "stats",
         "payment",
         "gadget",
@@ -26,10 +27,17 @@ include(
 )
 
 pluginManagement {
+    repositories {
+        maven("https://dl.bintray.com/kotlin/kotlinx")
+        gradlePluginPortal()
+    }
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id === "kotlin2js") {
-                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:${requested.version}")
+                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.60")
+            }
+            if (requested.id.id === "com.github.node-gradle.node") {
+                useModule("com.github.node-gradle:gradle-node-plugin:2.2.0")
             }
         }
     }

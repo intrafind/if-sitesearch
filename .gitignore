@@ -2,7 +2,7 @@ confidential
 generated_tests/
 config.json
 
-\.DS_Store
+package-lock.json
 /service/data
 /*.log
 /*.hprof

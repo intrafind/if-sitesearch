@@ -14,15 +14,39 @@
  * limitations under the License.
  */
 
-plugins {
-    id("kotlin2js") apply false
+package net.loxal.jest.client
+
+import kotlin.test.Ignore
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+class MainTest {
+
+    @Test
+    fun testResult() {
+        assertEquals(10, result())
+    }
+
+    @Test
+    fun testNeptun() {
+        assertEquals(11, neptun())
+    }
+
+    @Test
+    fun testSaturn() {
+        assertEquals(12, saturn())
+    }
+
+    @Ignore
+    @Test
+    fun testFailure() {
+        assertEquals(20, result())
+    }
 }
 
-subprojects {
-    if ("service" !== name) {
-        apply(plugin = "kotlin2js")
-    }
-    repositories {
-        jcenter()
+class TestTest {
+    @Test
+    fun emptyTest() {
+        // Will not run
     }
 }

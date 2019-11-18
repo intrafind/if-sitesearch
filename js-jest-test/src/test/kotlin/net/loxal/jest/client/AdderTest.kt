@@ -14,15 +14,23 @@
  * limitations under the License.
  */
 
-plugins {
-    id("kotlin2js") apply false
-}
+package net.loxal.jest.client
 
-subprojects {
-    if ("service" !== name) {
-        apply(plugin = "kotlin2js")
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
+
+class AdderTest {
+    @Test
+    fun canBeAdded() {
+        val adder = Adder()
+        assertEquals(10, adder.add(5, 5))
+        assertNotEquals(11, adder.add(5, 5)) // purposely broken, to show failure
     }
-    repositories {
-        jcenter()
+
+    @Test
+    fun canBeAddedWhenInputIsNegative() {
+        val adder = Adder()
+        assertEquals(-10, adder.add(-5, -5))
     }
 }

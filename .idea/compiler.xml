@@ -19,7 +19,7 @@
       <module name="finder" target="11" />
       <module name="gadget" target="11" />
       <module name="payment" target="11" />
-      <module name="service" target="11" />
+      <module name="service" target="12" />
       <module name="stats" target="11" />
     </bytecodeTargetLevel>
   </component>
