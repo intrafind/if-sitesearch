@@ -204,4 +204,17 @@ Or what should be the first thing, I need to do, to **get started** with Site Se
                     });
                 </script>
             </div>
+
+* How can I see the search queries that users are performing or how can I include them in my Google Analytics reports? 
+    * Just place the code snippet below at the bottom of the body of the page where you have integrated Site Search' searchbar.
+    Hereby replace the value of `data-analyticsTrackingId` with your Google Analytics Tracking ID. 
     
+            <script src="https://cdn.sitesearch.cloud/app/runtime/kotlin.js"></script>
+            <script
+                    data-analyticsTrackingId="UA-12345678-9"
+                    src="https://cdn.sitesearch.cloud/app/stats/stats.js"
+            ></script>
+            
+    Afterwards enable "Site search Tracking" in your Google Analytics admin dashboard and specify the search query parameter `query`.
+    ![Google Analytics Integration](https://cdn.sitesearch.cloud/app/stats/resources/Google%20Analytics%20Integration.png "Google Analytics Integration")
+    Please consider a Google Analytics specific delay of up to 30 minutes, until you can see the search queries.
