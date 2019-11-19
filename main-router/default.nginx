@@ -123,6 +123,13 @@ http {
 
             proxy_pass http://docker-registry:5000/v2/bfst/;
         }
+
+        location /wkd/ {
+            auth_basic "Docker Registry";
+            auth_basic_user_file /etc/nginx/.htpasswd-wkd;
+
+            proxy_pass http://docker-registry:5000/v2/wkd/;
+        }
     }
 
     server {
@@ -180,6 +187,34 @@ http {
             root /srv/maven-repository;
         }
     }
+
+    server {
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
+        server_name docker-registry-auth.intrafind.net;
+
+        include /etc/nginx/snippets/ssl.conf;
+
+        location /auth {
+            proxy_pass http://docker-auth:5001/auth;
+        }
+    }
+
+    server {
+        listen      443 ssl http2;
+        listen [::]:443 ssl http2;
+        server_name  docker-registry-w-auth.intrafind.net;
+
+        include /etc/nginx/snippets/ssl.conf;
+
+        client_max_body_size 0;
+        chunked_transfer_encoding on;
+
+        location /v2 {
+            proxy_pass http://docker-registry-w-auth:5000;
+        }
+    }
+
 
     include       /etc/nginx/mime.types;
     default_type  application/octet-stream;
