@@ -18,17 +18,18 @@ package com.intrafind.sitesearch.stats
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
-class TwoNumbers {
+class AdderTest {
     @Test
     fun canBeAdded() {
         val adder = Adder()
         assertEquals(10, adder.add(5, 5))
-        assertEquals(11, adder.add(5, 5)) // purposely broken, to show failure
+        assertNotEquals(11, adder.add(5, 5)) // purposely broken, to show failure
     }
 
     @Test
-    fun canBeAdded_whenInputIsNegative() {
+    fun canBeAddedWhenInputIsNegative() {
         val adder = Adder()
         assertEquals(-10, adder.add(-5, -5))
     }
