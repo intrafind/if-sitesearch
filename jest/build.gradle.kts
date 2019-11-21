@@ -88,7 +88,6 @@ val runDceKotlinJs = tasks.named<KotlinJsDce>("runDceKotlinJs") {
 
 val runJest = tasks.register<NodeTask>("runJest") {
     dependsOn(compileTestKotlin2Js, populateNodeModules, installJest)
-//    dependsOn(compileTestKotlin2Js, populateNodeModules)
     script = file("node_modules/jest/bin/jest.js")
     addArgs((tasks.getByName("compileTestKotlin2Js", Kotlin2JsCompile::class)).outputFile)
 }

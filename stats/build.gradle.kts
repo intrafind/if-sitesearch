@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
+import com.moowork.gradle.node.npm.NpmTask
+import com.moowork.gradle.node.task.NodeTask
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
-
 plugins {
     id("kotlin2js")
+    id("com.github.node-gradle.node")
 }
 
 apply {
@@ -33,29 +35,70 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
 }
 
-tasks {
-    val artifactPath = "${project(":service").buildDir}/resources/main/static/app" // the only module specific property
-    project.file("$artifactPath/${project.name}").delete()
+node {
+    version = "12.13.0"
+    download = true
+}
 
-    "compileKotlin2Js"(Kotlin2JsCompile::class) {
-        kotlinOptions {
-            outputFile = "$artifactPath/${project.name}/${project.name}.js"
-            sourceMap = true
-            sourceMapEmbedSources = "always"
-            moduleKind = "umd"
-            noStdlib = true
+tasks.test {
+    dependsOn(runJest)
+}
+
+val installJest = task<NpmTask>("installJest") {
+    setNpmCommand("install", "--save-dev", "jest")
+}
+
+val artifactPath = "${project(":service").buildDir}/resources/main/static/app" // the only module specific property
+project.file("$artifactPath/${project.name}").delete()
+
+val compileKotlin2Js = tasks.named<Kotlin2JsCompile>("compileKotlin2Js") {
+    kotlinOptions {
+        sourceMap = true
+        sourceMapEmbedSources = "always"
+        moduleKind = "umd"
+        noStdlib = true
+    }
+    doLast {
+        copy {
+            from(sourceSets.main.get().resources)
+            into("$artifactPath/${project.name}/resources")
         }
-        doLast {
-            copy {
-                from(sourceSets.main.get().resources)
-                into("$artifactPath/${project.name}/resources")
-            }
+        copy {
+            from(sourceSets.main.get().output)
+            into("$artifactPath/${project.name}")
+        }
+        copy {
+            from(sourceSets.test.get().output)
+            into("$artifactPath/${project.name}")
         }
     }
+}
 
-    "runDceKotlinJs"(KotlinJsDce::class) {
-        keep("main.loop")
-        dceOptions.devMode = false
-        dceOptions.outputDirectory = "$artifactPath/${project.name}/min"
+val compileTestKotlin2Js = tasks.named<Kotlin2JsCompile>("compileTestKotlin2Js") {
+    kotlinOptions {
+        moduleKind = "umd"
     }
+}
+
+val runDceKotlinJs = tasks.named<KotlinJsDce>("runDceKotlinJs") {
+    keep("main.loop")
+    dceOptions.devMode = false
+    dceOptions.outputDirectory = "$artifactPath/${project.name}/min"
+}
+
+val runJest = tasks.register<NodeTask>("runJest") {
+    dependsOn(compileTestKotlin2Js, populateNodeModules, installJest)
+    script = file("node_modules/jest/bin/jest.js")
+    addArgs((tasks.getByName("compileTestKotlin2Js", Kotlin2JsCompile::class)).outputFile)
+}
+
+val populateNodeModules = task<Copy>("populateNodeModules") {
+    dependsOn(compileKotlin2Js)
+    from((tasks.getByName("compileKotlin2Js", Kotlin2JsCompile::class)).destinationDir)
+
+    configurations["testCompileClasspath"].forEach {
+        from(zipTree(it.absolutePath).matching { include("*.js") })
+    }
+
+    into("$buildDir/node_modules")
 }
