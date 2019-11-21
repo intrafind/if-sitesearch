@@ -28,21 +28,23 @@ private fun main() {
     window.onload = {
         js("IFS.eventbus.addEventListener(IFS.jQuery.ifs.constants.events.SEARCHBAR_RENDERED_INITIALLY, function () { stats.com.intrafind.sitesearch.stats.initHelper(); }); ")
         window.setTimeout({
-            if (!isInitialized)
-                Stats()
+            if (!isInitialized) initHelper()
         }, 2_000)
     }
 }
 
+/**
+ * Used in native JS embedding.
+ */
 fun initHelper() {
     Stats()
 }
 
 private var isInitialized: Boolean = false
-private val sisHookInit: HTMLScriptElement = document.currentScript as HTMLScriptElement
+private val sisHookInit = document.currentScript
 
 class Stats {
-    private val analyticsTrackingId: String? = sisHookInit.getAttribute("data-analyticsTrackingId")
+    private val analyticsTrackingId: String? = (sisHookInit as HTMLScriptElement).getAttribute("data-analyticsTrackingId")
     private val sisSearchbar: HTMLInputElement = document.getElementById("ifs-sb-searchfield") as HTMLInputElement
 
     private val isDebugView = window.location.search.contains("debug-view")

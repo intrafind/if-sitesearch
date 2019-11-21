@@ -34,9 +34,6 @@ private fun main() {
     }
 }
 
-/**
- * Used in native JS embedding.
- */
 fun initHelper() {
     Stats()
 }
