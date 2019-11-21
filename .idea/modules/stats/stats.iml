@@ -2,7 +2,7 @@
 <module external.linked.project.id=":stats" external.linked.project.path="$MODULE_DIR$/../../../stats" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="if-sitesearch" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
-      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" pureKotlinSourceFolders="$MODULE_DIR$/../../../stats/src/test/kotlin;/home/alex/my/project/intrafind/if-sitesearch/stats/src/main/kotlin">
+      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false">
         <testOutputPath>$MODULE_DIR$/../../../stats/build/classes/kotlin/test/stats_test.js</testOutputPath>
         <compilerSettings />
         <compilerArguments>
@@ -34,8 +34,9 @@
     <output-test url="file://$MODULE_DIR$/../../../stats/out/test/classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../../stats">
-      <sourceFolder url="file://$MODULE_DIR$/../../../stats/src/main/kotlin" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../stats/src/test/kotlin" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../stats/src/main/kotlin" type="kotlin-source" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../stats/src/test/kotlin" type="kotlin-test" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../stats/src/main/resources" type="kotlin-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../../stats/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../stats/build" />
       <excludeFolder url="file://$MODULE_DIR$/../../../stats/out" />

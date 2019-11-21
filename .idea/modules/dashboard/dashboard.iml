@@ -2,7 +2,7 @@
 <module external.linked.project.id=":dashboard" external.linked.project.path="$MODULE_DIR$/../../../dashboard" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="if-sitesearch" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
-      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" pureKotlinSourceFolders="$MODULE_DIR$/../../../dashboard/src/test/kotlin;/home/alex/my/project/intrafind/if-sitesearch/dashboard/src/main/kotlin">
+      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false">
         <testOutputPath>$MODULE_DIR$/../../../dashboard/build/classes/kotlin/test/dashboard_test.js</testOutputPath>
         <compilerSettings />
         <compilerArguments>
@@ -34,8 +34,8 @@
     <output-test url="file://$MODULE_DIR$/../../../dashboard/out/test/classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../../dashboard">
-      <sourceFolder url="file://$MODULE_DIR$/../../../dashboard/src/main/kotlin" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../dashboard/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../dashboard/src/main/kotlin" type="kotlin-source" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../dashboard/src/main/resources" type="kotlin-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../../dashboard/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../dashboard/build" />
       <excludeFolder url="file://$MODULE_DIR$/../../../dashboard/out" />

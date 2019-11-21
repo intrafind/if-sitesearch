@@ -19,7 +19,7 @@ rootProject.name = "if-sitesearch"
 include(
         "service",
 
-        "js-jest-test",
+        "jest",
         "stats",
         "payment",
         "gadget",

@@ -4,6 +4,7 @@
   :payment:build \
   :dashboard:build \
   :stats:build \
+  :jest:build \
   :gadget:build \
   --parallel \
   --continuous \

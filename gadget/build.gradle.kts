@@ -62,7 +62,7 @@ tasks {
         println(this.name)
         val servicePath = "${project(":service").projectDir}/src/main/resources/static/app"
         doFirst {
-            configurations["compile"].files.forEach { file ->
+            configurations["compileClasspath"].files.forEach { file ->
                 println("Deploy Kotlin JS Runtime")
                 copy {
                     println("UnZIP JAR: ${file.absolutePath}")

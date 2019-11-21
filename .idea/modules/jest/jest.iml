@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":js-jest-test" external.linked.project.path="$MODULE_DIR$/../../../js-jest-test" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="if-sitesearch" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":jest" external.linked.project.path="$MODULE_DIR$/../../../jest" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="if-sitesearch" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
-      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" pureKotlinSourceFolders="$MODULE_DIR$/../../../js-jest-test/src/test/kotlin;/home/alex/my/project/intrafind/if-sitesearch/js-jest-test/src/main/kotlin">
-        <testOutputPath>$MODULE_DIR$/../../../js-jest-test/build/classes/kotlin/test/js-jest-test_test.js</testOutputPath>
+      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false">
+        <testOutputPath>$MODULE_DIR$/../../../jest/build/classes/kotlin/test/jest_test.js</testOutputPath>
         <compilerSettings />
         <compilerArguments>
-          <option name="outputFile" value="$MODULE_DIR$/../../../js-jest-test/build/classes/kotlin/main/js-jest-test.js" />
+          <option name="outputFile" value="$MODULE_DIR$/../../../jest/build/classes/kotlin/main/jest.js" />
           <option name="noStdlib" value="true" />
           <option name="sourceMap" value="true" />
           <option name="sourceMapEmbedSources" value="always" />
@@ -30,16 +30,16 @@
     </facet>
   </component>
   <component name="NewModuleRootManager">
-    <output url="file://$MODULE_DIR$/../../../js-jest-test/out/production/classes" />
-    <output-test url="file://$MODULE_DIR$/../../../js-jest-test/out/test/classes" />
+    <output url="file://$MODULE_DIR$/../../../jest/out/production/classes" />
+    <output-test url="file://$MODULE_DIR$/../../../jest/out/test/classes" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../js-jest-test">
-      <sourceFolder url="file://$MODULE_DIR$/../../../js-jest-test/src/main/kotlin" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../js-jest-test/src/test/kotlin" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../js-jest-test/src/main/resources" type="java-resource" />
-      <excludeFolder url="file://$MODULE_DIR$/../../../js-jest-test/.gradle" />
-      <excludeFolder url="file://$MODULE_DIR$/../../../js-jest-test/build" />
-      <excludeFolder url="file://$MODULE_DIR$/../../../js-jest-test/out" />
+    <content url="file://$MODULE_DIR$/../../../jest">
+      <sourceFolder url="file://$MODULE_DIR$/../../../jest/src/main/kotlin" type="kotlin-source" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../jest/src/test/kotlin" type="kotlin-test" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../jest/src/main/resources" type="kotlin-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../jest/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../jest/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../jest/out" />
     </content>
     <orderEntry type="jdk" jdkName="Kotlin SDK" jdkType="KotlinSDK" />
     <orderEntry type="sourceFolder" forTests="false" />

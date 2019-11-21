@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/dashboard/dashboard.iml" filepath="$PROJECT_DIR$/.idea/modules/dashboard/dashboard.iml" group="if-sitesearch/dashboard" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gadget/gadget.iml" filepath="$PROJECT_DIR$/.idea/modules/gadget/gadget.iml" group="if-sitesearch/gadget" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/if-sitesearch.iml" filepath="$PROJECT_DIR$/.idea/modules/if-sitesearch.iml" group="if-sitesearch" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/js-jest-test/js-jest-test.iml" filepath="$PROJECT_DIR$/.idea/modules/js-jest-test/js-jest-test.iml" group="if-sitesearch/js-jest-test" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jest/jest.iml" filepath="$PROJECT_DIR$/.idea/modules/jest/jest.iml" group="if-sitesearch/jest" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/payment.iml" filepath="$PROJECT_DIR$/.idea/modules/payment.iml" group="if-sitesearch/payment" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/service/service.iml" filepath="$PROJECT_DIR$/.idea/modules/service/service.iml" group="if-sitesearch/service" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/stats/stats.iml" filepath="$PROJECT_DIR$/.idea/modules/stats/stats.iml" group="if-sitesearch/stats" />
