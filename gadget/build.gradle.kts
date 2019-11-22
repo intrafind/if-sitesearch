@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
 plugins {
-    id("kotlin2js") version "1.3.50"
+    id("kotlin2js")
 }
 
 apply {
@@ -26,10 +26,10 @@ apply {
 }
 
 dependencies {
-    val kotlinVersion = "1.3.50"
+    val kotlinVersion = "1.3.60"
 
-    compile("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion")
-    compile("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
 }
 
 tasks {
@@ -62,7 +62,7 @@ tasks {
         println(this.name)
         val servicePath = "${project(":service").projectDir}/src/main/resources/static/app"
         doFirst {
-            configurations["compile"].files.forEach { file ->
+            configurations["compileClasspath"].files.forEach { file ->
                 println("Deploy Kotlin JS Runtime")
                 copy {
                     println("UnZIP JAR: ${file.absolutePath}")

@@ -1,0 +1,63 @@
+<!--
+  ~ Copyright 2019 IntraFind Software AG. All rights reserved.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+<meta charset="utf-8"/>
+<title>Analytics</title>
+<!--<head>-->
+
+<!--    <script src="/app/runtime/kotlin.meta.js"></script>-->
+<!--    <script src="/app/runtime/kotlin-test.js"></script>-->
+<!--    <script src="/app/runtime/kotlin-test.meta.js"></script>-->
+<!--<script src="/app/stats/stats.js"></script>-->
+<!--<script src="/app/stats/stats.meta.js"></script>-->
+<!--<script src="/app/stats/stats_test.js"></script>-->
+<!--<script src="/app/stats/stats_test.meta.js"></script>-->
+<!--</head>-->
+<h1>Google Analytics Integration Test</h1>
+
+<!--BEGIN "Search Bar Integration Code"-->
+<div class="searchbar" id="sitesearch-searchbar">
+    <div id="ifs-searchbar"></div>
+    <script src="https://cdn.sitesearch.cloud/searchbar/2018-09-18/app/js/app.js"></script>
+    <script>
+        IFS.initClient({
+            customConfig: {
+                overwrite: {
+                    "appLang": "en"
+                }
+            },
+            configurl: "https://cdn.sitesearch.cloud/searchbar/2018-09-18/config/sitesearch.json",
+            siteId: "3a5dfd07-a463-45f8-863b-dfc3c9f09152"
+        });
+    </script>
+</div>
+<!--END "Search Bar Integration Code"-->
+
+
+<script src="/app/runtime/kotlin.js"></script>
+<script
+        data-analyticsTrackingId="UA-38123085-3"
+        src="/app/stats/stats.js"
+></script>
+
+<h2>Enable "Site search Tracking" in Google Analytics</h2>
+<p>
+    As a query paramter provide "query".
+</p>
+<img src="Google%20Analytics%20Integration.png" title="Google Analytics Integration">

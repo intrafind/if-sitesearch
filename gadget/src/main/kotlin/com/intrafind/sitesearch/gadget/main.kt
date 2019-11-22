@@ -255,7 +255,7 @@ private fun validateDomain() {
             classifyUrlAsValid(false)
         }
         notificationCenter.textContent = ""
-        console.info(validationResult.statusCode)
+        console.info("validationResult.statusCode: ${validationResult.statusCode}")
     }
 }
 
