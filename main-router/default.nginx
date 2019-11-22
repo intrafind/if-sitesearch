@@ -49,21 +49,21 @@ http {
         }
     }
 
-    server {
-        listen 443 ssl http2;
-        listen [::]:443 ssl http2;
-        server_name docker-registry.sitesearch.cloud;
-
-        include /etc/nginx/snippets/ssl.conf;
-
-        auth_basic "Docker Registry";
-        auth_basic_user_file /etc/nginx/.htpasswd; # supply this via env vars somehow or as raw file at build time
-
-        location / {
-            client_max_body_size 9G;
-            proxy_pass http://docker-registry:5000;
-        }
-    }
+#    server {
+#        listen 443 ssl http2;
+#        listen [::]:443 ssl http2;
+#        server_name docker-registry.sitesearch.cloud;
+#
+#        include /etc/nginx/snippets/ssl.conf;
+#
+#        auth_basic "Docker Registry";
+#        auth_basic_user_file /etc/nginx/.htpasswd; # supply this via env vars somehow or as raw file at build time
+#
+#        location / {
+#            client_max_body_size 9G;
+#            proxy_pass http://docker-registry:5000;
+#        }
+#    }
 
     server {
         listen 443 ssl http2;
@@ -95,35 +95,35 @@ http {
         }
     }
 
-    server {
-        listen 443 ssl http2;
-        listen [::]:443 ssl http2;
-        server_name docker-registry.intrafind.net;
-
-        include /etc/nginx/snippets/ssl.conf;
-        client_max_body_size 9G;
-
-        location / {
-            auth_basic "Docker Registry";
-            auth_basic_user_file /etc/nginx/.htpasswd;
-
-            proxy_pass http://docker-registry:5000;
-        }
-
-        location /datev/ {
-            auth_basic "Docker Registry";
-            auth_basic_user_file /etc/nginx/.htpasswd-datev;
-
-            proxy_pass http://docker-registry:5000/v2/datev/;
-        }
-
-        location /bfst/ {
-            auth_basic "Docker Registry";
-            auth_basic_user_file /etc/nginx/.htpasswd-bfst;
-
-            proxy_pass http://docker-registry:5000/v2/bfst/;
-        }
-    }
+#    server {
+#        listen 443 ssl http2;
+#        listen [::]:443 ssl http2;
+#        server_name docker-registry.intrafind.net;
+#
+#        include /etc/nginx/snippets/ssl.conf;
+#        client_max_body_size 9G;
+#
+#        location / {
+#            auth_basic "Docker Registry";
+#            auth_basic_user_file /etc/nginx/.htpasswd;
+#
+#            proxy_pass http://docker-registry:5000;
+#        }
+#
+#        location /datev/ {
+#            auth_basic "Docker Registry";
+#            auth_basic_user_file /etc/nginx/.htpasswd-datev;
+#
+#            proxy_pass http://docker-registry:5000/v2/datev/;
+#        }
+#
+#        location /bfst/ {
+#            auth_basic "Docker Registry";
+#            auth_basic_user_file /etc/nginx/.htpasswd-bfst;
+#
+#            proxy_pass http://docker-registry:5000/v2/bfst/;
+#        }
+#    }
 
     server {
         listen 443 ssl http2;
@@ -178,6 +178,33 @@ http {
             #            proxy_cache maven_cache;
             client_max_body_size 3G;
             root /srv/maven-repository;
+        }
+    }
+
+    server {
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
+        server_name docker-registry-auth.intrafind.net;
+
+        include /etc/nginx/snippets/ssl.conf;
+
+        location /auth {
+            proxy_pass http://docker-auth:5001/auth;
+        }
+    }
+
+    server {
+        listen      443 ssl http2;
+        listen [::]:443 ssl http2;
+        server_name  docker-registry.intrafind.net;
+
+        include /etc/nginx/snippets/ssl.conf;
+
+        client_max_body_size 0;
+        chunked_transfer_encoding on;
+
+        location /v2 {
+            proxy_pass http://registry:5000;
         }
     }
 
