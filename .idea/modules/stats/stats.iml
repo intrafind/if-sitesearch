@@ -6,7 +6,7 @@
         <testOutputPath>$MODULE_DIR$/../../../stats/build/classes/kotlin/test/stats_test.js</testOutputPath>
         <compilerSettings />
         <compilerArguments>
-          <option name="outputFile" value="$MODULE_DIR$/../../../service/build/resources/main/static/app/stats/stats.js" />
+          <option name="outputFile" value="$MODULE_DIR$/../../../stats/build/classes/kotlin/main/stats.js" />
           <option name="noStdlib" value="true" />
           <option name="sourceMap" value="true" />
           <option name="sourceMapEmbedSources" value="always" />

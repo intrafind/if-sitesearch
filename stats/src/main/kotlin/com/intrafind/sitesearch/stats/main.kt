@@ -36,15 +36,13 @@ private fun main() {
 /**
  * Used in native JS embedding.
  */
-fun initHelper() {
-    Stats()
-}
+fun initHelper() = Stats()
 
 private var isInitialized: Boolean = false
 private val sisHookInit = document.currentScript
 
 class Stats {
-    private val analyticsTrackingId: String? = (sisHookInit as HTMLScriptElement).getAttribute("data-analyticsTrackingId")
+    val analyticsTrackingId: String? = (sisHookInit as HTMLScriptElement).getAttribute("data-analyticsTrackingId")
     private val sisSearchbar: HTMLInputElement = document.getElementById("ifs-sb-searchfield") as HTMLInputElement
 
     private val isDebugView = window.location.search.contains("debug-view")

@@ -30,7 +30,7 @@
     <orderEntry type="library" name="Gradle: edu.uci.ics:crawler4j:4.4.0" level="project" />
     <orderEntry type="library" name="Gradle: com.github.crawler-commons:crawler-commons:1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.rometools:rome:1.12.2" level="project" />
-    <orderEntry type="library" name="Gradle: com.caucho:hessian:4.0.62" level="project" />
+    <orderEntry type="library" name="Gradle: com.caucho:hessian:4.0.63" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-webflux:2.1.9.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-undertow:2.1.9.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: io.springfox:springfox-swagger2:2.9.2" level="project" />

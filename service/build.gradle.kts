@@ -51,7 +51,7 @@ dependencies {
 
     implementation("com.rometools:rome:1.12.2")
 
-    implementation("com.caucho:hessian:4.0.62")
+    implementation("com.caucho:hessian:4.0.63")
 
     implementation("org.springframework.boot:spring-boot-starter-webflux:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-undertow:$springBootVersion") {
@@ -72,7 +72,7 @@ dependencies {
     implementation("org.jsoup:jsoup:1.12.1")
 
     implementation("org.mnode.mstor:mstor:1.0.0")
-    implementation("com.google.oauth-client:google-oauth-client-jetty:1.30.1")
+    implementation("com.google.oauth-client:google-oauth-client-jetty:1.30.4")
     implementation("com.google.apis:google-api-services-gmail:v1-rev20190602-1.30.1")
 }
 
