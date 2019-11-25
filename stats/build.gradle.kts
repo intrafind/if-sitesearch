@@ -35,7 +35,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
 }
 
-val artifactPath = "${project(":service").buildDir}/resources/main/static/app" // the only module specific property
+internal val artifactPath = "${project(":service").buildDir}/resources/main/static/app" // the only module specific property
 project.file("$artifactPath/${project.name}").delete()
 
 val compileKotlin2Js = tasks.named<Kotlin2JsCompile>("compileKotlin2Js") {
@@ -85,7 +85,7 @@ val compileTestKotlin2Js = tasks.named<Kotlin2JsCompile>("compileTestKotlin2Js")
 }
 
 node {
-    version = "12.13.0"
+    version = "12.13.1"
     download = true
 }
 
