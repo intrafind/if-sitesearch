@@ -16,6 +16,7 @@
 
 package com.intrafind.sitesearch.stats
 
+import kotlin.browser.window
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -24,28 +25,17 @@ class Main {
 
     @Test
     fun testResult() {
-        assertEquals(10, result())
-//        val stats = Stats()
-//        initHelper()
-//        assertEquals(Stats(), initHelper())
-//        assertEquals("12",Stats().analyticsTrackingId)
-//        assertEquals("12",Stats().analyticsTrackingId)
+        assertEquals(10, 10)
+        console.warn(window.location)
+        println(window.location)
+        assertEquals(window.location.host, "localhost")
     }
 
-    @Test
-    fun testNeptun() {
-        assertEquals(11, neptun())
-    }
-
-    @Test
-    fun testSaturn() {
-        assertEquals(12, saturn())
-    }
 
     @Ignore
     @Test
     fun testFailure() {
-        assertEquals(20, result())
+        assertEquals(20, 22)
     }
 }
 

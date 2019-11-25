@@ -19,13 +19,11 @@
 <html lang="en">
 <meta charset="utf-8"/>
 <title>Analytics</title>
-<!--    <script src="/app/runtime/kotlin.meta.js"></script>-->
-<!--    <script src="/app/runtime/kotlin-test.js"></script>-->
-<!--    <script src="/app/runtime/kotlin-test.meta.js"></script>-->
-<!--<script src="/app/stats/stats.js"></script>-->
-<!--<script src="/app/stats/stats.meta.js"></script>-->
-<script src="/app/stats/stats_test.js"></script>
-<script src="/app/stats/stats_test.meta.js"></script>
+<script src="/app/runtime/kotlin.js"></script>
+<script src="/app/runtime/kotlin.meta.js"></script>
+<script src="/app/runtime/kotlin-test.js"></script>
+<script src="/app/runtime/kotlin-test.meta.js"></script>
+
 <h1>Google Analytics Integration Test</h1>
 
 <!--BEGIN "Search Bar Integration Code"-->
@@ -46,15 +44,17 @@
 </div>
 <!--END "Search Bar Integration Code"-->
 
-
-<script src="/app/runtime/kotlin.js"></script>
+<h2>Enable "Site search Tracking" in Google Analytics</h2>
+<p>
+    As a query paramter provide "query".
+</p>
 <script
         data-analyticsTrackingId="UA-38123085-3"
         src="/app/stats/stats.js"
 ></script>
 
-<h2>Enable "Site search Tracking" in Google Analytics</h2>
-<p>
-    As a query paramter provide "query".
-</p>
 <img src="Google%20Analytics%20Integration.png" title="Google Analytics Integration">
+
+<script src="/app/stats/stats.meta.js"></script>
+<script src="/app/stats/stats_test.js"></script>
+<script src="/app/stats/stats_test.meta.js"></script>

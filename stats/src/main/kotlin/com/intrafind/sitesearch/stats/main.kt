@@ -42,7 +42,7 @@ private var isInitialized: Boolean = false
 private val sisHookInit = document.currentScript
 
 class Stats {
-    val analyticsTrackingId: String? = (sisHookInit as HTMLScriptElement).getAttribute("data-analyticsTrackingId")
+    private val analyticsTrackingId: String? = (sisHookInit as HTMLScriptElement).getAttribute("data-analyticsTrackingId")
     private val sisSearchbar: HTMLInputElement = document.getElementById("ifs-sb-searchfield") as HTMLInputElement
 
     private val isDebugView = window.location.search.contains("debug-view")

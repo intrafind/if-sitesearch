@@ -76,7 +76,24 @@ val compileKotlin2Js = tasks.named<Kotlin2JsCompile>("compileKotlin2Js") {
 
 val compileTestKotlin2Js = tasks.named<Kotlin2JsCompile>("compileTestKotlin2Js") {
     kotlinOptions {
+        sourceMap = true
+        sourceMapEmbedSources = "always"
         moduleKind = "umd"
+        noStdlib = true
+    }
+    doLast {
+        copy {
+            from(sourceSets.main.get().resources)
+            into("$artifactPath/${project.name}/resources")
+        }
+        copy {
+            from(sourceSets.main.get().output)
+            into("$artifactPath/${project.name}")
+        }
+        copy {
+            from(sourceSets.test.get().output)
+            into("$artifactPath/${project.name}")
+        }
     }
 }
 
