@@ -19,7 +19,6 @@ rootProject.name = "if-sitesearch"
 include(
         "service",
 
-        "jest",
         "stats",
         "payment",
         "gadget",

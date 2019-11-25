@@ -35,19 +35,6 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
 }
 
-node {
-    version = "12.13.0"
-    download = true
-}
-
-tasks.test {
-    dependsOn(runJest)
-}
-
-val installJest = task<NpmTask>("installJest") {
-    setNpmCommand("install", "--save-dev", "jest")
-}
-
 val artifactPath = "${project(":service").buildDir}/resources/main/static/app" // the only module specific property
 project.file("$artifactPath/${project.name}").delete()
 
@@ -95,6 +82,19 @@ val compileTestKotlin2Js = tasks.named<Kotlin2JsCompile>("compileTestKotlin2Js")
             into("$artifactPath/${project.name}")
         }
     }
+}
+
+node {
+    version = "12.13.0"
+    download = true
+}
+
+tasks.test {
+    dependsOn(runJest)
+}
+
+val installJest = task<NpmTask>("installJest") {
+    setNpmCommand("install", "--save-dev", "jest")
 }
 
 val runDceKotlinJs = tasks.named<KotlinJsDce>("runDceKotlinJs") {
