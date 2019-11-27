@@ -33,7 +33,7 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id === "kotlin2js") {
-                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.60")
+                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61")
             }
             if (requested.id.id === "com.github.node-gradle.node") {
                 useModule("com.github.node-gradle:gradle-node-plugin:2.2.0")

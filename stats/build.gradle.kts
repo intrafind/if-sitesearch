@@ -29,7 +29,7 @@ apply {
 }
 
 dependencies {
-    val kotlinVersion = "1.3.60"
+    val kotlinVersion = "1.3.61"
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
