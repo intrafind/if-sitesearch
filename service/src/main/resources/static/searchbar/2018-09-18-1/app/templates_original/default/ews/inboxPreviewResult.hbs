@@ -1,0 +1,30 @@
+<div class="ifs-ews-result-preview preview-result" data-preview-result-index="{{index}}" data-favorite="{{favoredString}}" data-score="{{score}}">
+    <div class="ifs-ews-result-type-icon">
+        <i class="ifs-icons ifs-icon-inbox"></i>
+    </div>
+    <div class="ifs-ellipsis">{{{from}}}</div>
+    <a class="ifs-ews-link" href="{{exchangeurl}}" target="_blank"><div class="ifs-ews-colored-info ifs-ellipsis">{{subject}}</div></a>
+    <div class="ifs-ews-result-details">
+        <label>{{msg 'ifs.ews.to'}}:</label><div class="ifs-ellipsis">{{{to}}}</div>
+        {{#if cc}}
+        <label>{{msg 'ifs.ews.cc'}}:</label><div class="ifs-ellipsis">{{{cc}}}</div>
+        {{/if}}
+        {{#if sent}}
+        <label>{{msg 'ifs.ews.date.sent'}}:</label><div x-ms-format-detection="none">{{{dateTime sent}}}</div>
+        {{/if}}
+        {{#if received}}
+        <label>{{msg 'ifs.ews.date.received'}}:</label><div x-ms-format-detection="none">{{{dateTime received}}}</div>
+        {{/if}}
+    </div>
+    <div class="ifs-ews-result-info-icons">
+        {{#if priority}}
+        <div><i class="ifs-icons ifs-icon-priority-{{priority}}"></i></div>
+        {{/if}}
+        {{#ifCond hasAttachements '===' 'true'}}
+        <div><i class="ifs-icons ifs-icon-attachment"></i></div>
+        {{/ifCond}}
+    <!--
+        <div><i class="ifs-icons ifs-icon-flag"></i></div>
+    -->
+    </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="ifs-person-result-preview preview-result" data-preview-result-index="{{index}}" data-favorite="{{favoredString}}" data-score="{{score}}">
+
+    <a href="javascript:void(0);" class="ifs-person-thumb" data-action="open-preview-result" data-detail-template="{{detailTemplate}}">
+        <img src="{{thumbnail}}">
+    </a>
+
+    <div class="ifs-person-data">
+        {{#if title}}
+        <a href="javascript:void(0);" class="ifs-person-data-name ifs-ellipsis" data-action="open-preview-result" data-detail-template="{{detailTemplate}}">
+            {{{title}}}
+            <i class="ifs-icons ifs-icon-keyboard_arrow_right"></i>
+        </a>
+        {{else}}
+        <div class="ifs-person-data-name">
+            {{{title}}}
+        </div>
+        {{/if}}
+
+        <div class="ifs-person-data-wrapper">
+            <div class="ifs-person-data-department ifs-ellipsis">
+                {{{department}}} {{{deptname}}}
+            </div>
+
+
+            {{#if phone}}
+            <a href="javascript:void(0);" data-action="call-external" data-call-type="tel" data-call-param="{{phoneClean}}" class="ifs-person-data-tel">
+                <i class="ifs-icons ifs-icon-phone"></i>
+                <span>{{phone}}</span>
+            </a>
+            {{/if}}
+            {{#if mobile}}
+            <a href="javascript:void(0);" data-action="call-external" data-call-type="tel" data-call-param="{{mobileClean}}" class="ifs-person-data-cell">
+                <i class="ifs-icons ifs-icon-smartphone"></i>
+                <span>{{mobile}}</span>
+            </a>
+            {{/if}}
+
+        </div>
+
+        <div class="ifs-person-data-icons">
+            {{#if location}}
+            <a target="_blank" href="{{location}}" data-toggle="tooltip" title="{{msg 'ifs.tooltip.people'}}">
+                <i class="ifs-icons ifs-icon-account_box"></i>
+            </a>
+            {{/if}}
+            {{#if email}}
+            <a href="javascript:void(0);" data-action="call-external" data-call-type="mailto" data-call-param="{{emailHelper email}}" data-toggle="tooltip" title="{{msg 'ifs.tooltip.mail'}}">
+                <i class="ifs-icons ifs-icon-mail"></i>
+            </a>
+            {{/if}}
+            {{#if location}}
+            <a href="javascript:void(0);" data-action="hit-forward" data-hiturl="{{location}}" data-toggle="tooltip"
+               title="{{msg 'ifs.tooltip.share'}}">
+                <i class="ifs-icons ifs-icon-share"></i>
+            </a>
+            {{/if}}
+        </div>
+    </div>
+
+</div>

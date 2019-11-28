@@ -1,0 +1,44 @@
+<div id="ifs-dp-wrapper">
+    <div class="ifs-dp-window">
+        <div class="ifs-dp-header">
+            <div class="ifs-dp-actions">
+                <div class="ifs-dropdown left">
+                    <button type="button" id="ifs-dropdown-preview-more" class="ifs-button dropdown-toggle" data-toggle="if-dropdown" aria-haspopup="true" aria-expanded="true">
+                        <i class="ifs-icons ifs-icon-more_vert"></i>
+                    </button>
+                    <ul class="ifs-dropdown-menu" aria-labelledby="dropdown-preview-more">
+                        <li>
+                            <a href="{{hitUrl}}" target="_blank">
+                                <span data-globalize="ifs.btn.open"></span>
+                            </a>
+                            <i class="ifs-icons ifs-icon-open_in_new"></i>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" data-hiturl="<{{hitUrl}}>" data-action="hit-forward">
+                                <span data-globalize="ifs.btn.forward"></span>
+                            </a>
+                            <i class="ifs-icons ifs-icon-forward"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="ifs-dp-pager">
+
+            </div>
+            <div class="ifs-dp-close">
+                <button type="button" class="ifs-button" data-action="close-modal">
+                    <i class="ifs-icons ifs-icon-close"></i>
+                </button>
+            </div>
+        </div>
+        <div class="ifs-dp-body ifs-dp-body-custom">
+            <div class="ifs-dp-contentwrapper no-scroll">
+                <iframe class="ifs-custom-preview"
+                        src="{{customPreviewUrl}}"
+                        frameborder="0"
+                        width="100%"
+                        height="100%"></iframe>
+            </div>
+        </div>
+    </div>
+</div>

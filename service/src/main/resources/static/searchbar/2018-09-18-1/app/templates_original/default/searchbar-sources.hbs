@@ -1,0 +1,17 @@
+{{#if roleExists}}
+    <div class="ifs-dropdown ifs-dropdown-sources triangle left">
+        <div id="ifs-sb-btn-sources" class="ifs-button"  aria-haspopup="true" aria-expanded="true"  data-globalize="ifs.btn.sources" data-globalize-target="title" title="">
+            <label id="ifs-current-sources" data-value="{{default.value}}">{{default.name}}</label>
+            <span class="ifs-triangle"></span>
+        </div>
+        <ul id="ifs-sb-sources" class="ifs-dropdown-menu" aria-labelledby="sb-sources" role="menu">
+            {{#each sourcesList}}
+                <li {{#if default}}class="active"{{/if}}>
+                    <a href="javascript:void(0);" data-value="{{value}}">
+                        <span>{{name}}</span>
+                    </a>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+{{/if}}

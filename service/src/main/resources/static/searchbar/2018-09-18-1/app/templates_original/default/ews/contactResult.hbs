@@ -1,0 +1,41 @@
+<div class="ifs-media ifs-tpl-ews" data-index="{{integer}}" data-score="{{score}}">
+    <div class="ifs-media-left">
+        <div class="ifs-ews-result-type-icon">
+            <i class="ifs-icons ifs-icon-contact"></i>
+        </div>
+
+        <div class="ifs-ews-result-info-icons">
+            <div></div>
+            <div></div>
+            <div><i class="ifs-icons ifs-icon-flag"></i></div>
+        </div>
+    </div>
+    <div class="ifs-media-body">
+        <div>
+            <div>max.mustermann@example.com</div>
+            <div class="ifs-ews-colored-info">Max Mustermann</div>
+            <p class="ifs-textbody ifs-break-all" x-ms-format-detection="none">
+                49 89 12 34 56 789<br>
+                151 12 34 56 789
+            </p>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        </div>
+        <div class="ifs-ews-details">
+            <div class="ifs-ews-result-details-head">Details</div>
+            <div class="ifs-ews-result-details">
+                <label>{{ msg 'ifs.ews.position'}}:</label><div>Jobtitel</div>
+                <label>{{ msg 'ifs.ews.category'}}:</label><div>Geschäftliche Kontakte</div>
+                <label>{{ msg 'ifs.ews.address'}}:</label><div>Strasse Nr.<br>PLZ Ort</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ifs-media-right">
+        {{{hitMenu}}}
+        {{#if favoredBool}}
+            <div class="ifs-media-favorite">
+                <i class="ifs-icons ifs-icon-star_rate"></i>
+            </div>
+        {{/if}}
+    </div>
+</div>

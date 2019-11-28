@@ -1,0 +1,32 @@
+<div id="ifs-dp-wrapper">
+    <div class="ifs-dp-window">
+        <div class="ifs-dp-header">
+            <h3 class="ifs-ews-header">{{msg 'ifs.ews.login.description'}}</h3>
+            <div class="ifs-dp-close">
+                <button type="button" class="ifs-button" data-action="close-modal">
+                    <i class="ifs-icons ifs-icon-close"></i>
+                </button>
+            </div>
+        </div>
+        <div class="ifs-dp-body">
+            <div class="ifs-dp-contentwrapper ifs-ews-login">
+                <form id="ifs-ews-login">
+                    <div>
+                        <label>{{msg 'ifs.ews.mail'}}</label>
+                        <input type="text" id="mail" name="email"/>
+                    </div>
+                    <div>
+                        <label>{{msg 'ifs.ews.pw'}}</label>
+                        <input type="password" id="pw" name="pass"/>
+                    </div>
+                    {{#if xhr.responseJSON.errMsg}}
+                     <div class="ifs-ews-login-error" id="ifs-ews-err-message">{{msg 'ifs.ews.error.login'}}</div>
+                    {{/if}}
+                    <div>
+                        <input id="ifs-ews-resend-query" type="submit" class="ifs-button" value="{{msg 'ifs.ews.login'}}" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

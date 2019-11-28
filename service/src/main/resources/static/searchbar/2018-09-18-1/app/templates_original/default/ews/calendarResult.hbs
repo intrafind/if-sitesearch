@@ -1,0 +1,54 @@
+<div class="ifs-media ifs-tpl-ews" data-index="{{integer}}" data-score="{{score}}">
+    <div class="ifs-media-left">
+        <div class="ifs-ews-result-type-icon">
+            <i class="ifs-icons ifs-icon-calendar"></i>
+        </div>
+
+        <div class="ifs-ews-result-info-icons">
+            {{#if priority}}
+            <div><i class="ifs-icons ifs-icon-priority-{{priority}}"></i></div>
+            {{/if}}
+            {{#ifCond hasAttachements '===' 'true'}}
+            <div><i class="ifs-icons ifs-icon-attachment"></i></div>
+            {{/ifCond}}
+            <!--<div><i class="ifs-icons ifs-icon-flag"></i></div>-->
+        </div>
+    </div>
+    <div class="ifs-media-body">
+        <div>
+            <div>
+                <div>{{from}}</div>
+                <a class="ifs-ews-link" href="{{exchangeurl}}" target="_blank"><div class="ifs-ews-colored-info">{{subject}}</div></a>
+                <!--<p class="ifs-textbody ifs-break-all" x-ms-format-detection="none">-->
+                    <!--dd.mm.yy - hh:mm - dd.mm.yy - hh:mm-->
+                <!--</p>-->
+                <p>{{{preview}}}</p>
+            </div>
+        </div>
+        <div class="ifs-ews-details">
+            <div class="ifs-ews-result-details-head">{{msg 'ifs.ews.details'}}</div>
+            <div class="ifs-ews-result-details">
+                {{#if sent}}
+                <label>{{msg 'ifs.ews.date.sent'}}:</label><div x-ms-format-detection="none">{{{dateTime sent}}}</div>
+                {{/if}}
+                {{#if received}}
+                <label>{{msg 'ifs.ews.date.received'}}:</label><div x-ms-format-detection="none">{{{dateTime received}}}</div>
+                {{/if}}
+                <!--<label>{{msg 'ifs.ews.date'}}:</label><div x-ms-format-detection="none">dd.mm.yy - hh:mm</div>-->
+                <!--<label>{{msg 'ifs.ews.category'}}:</label><div>Wöchentliche Meetings</div>-->
+                {{#if to}}
+                <label>{{msg 'ifs.ews.participants'}}:</label><div>{{to}}</div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+    <div class="ifs-media-right">
+        {{{hitMenu}}}
+        {{#if favoredBool}}
+            <div class="ifs-media-favorite">
+                <i class="ifs-icons ifs-icon-star_rate"></i>
+            </div>
+        {{/if}}
+    </div>
+</div>

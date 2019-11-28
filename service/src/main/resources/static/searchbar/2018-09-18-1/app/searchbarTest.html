@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <link rel="shortcut icon" href="favicon.ico?v=3">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-57x57.png?v=3">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-114x114.png?v=3">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-144x144.png?v=3">
+    <title>Searchbar</title>
+    <link rel="stylesheet" type="text/css" href="css/app.css" media="all"/>
+
+    <style>
+        body {
+            height: 100%;
+            overflow: scroll;
+            background-color: #f1f4f6;
+        }
+
+        .ifs-main-test {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+
+        .jsonData {
+            margin-top: 20px;
+            width: 100%;
+            height: 100%;
+            min-height: 100px;
+            min-width: 100px;
+        }
+
+        .config-buttons {
+            display: flex;
+        }
+
+        .log {
+            display: flex;
+            margin: 10px;
+        }
+
+        .initClient {
+            display: flex;
+        }
+
+        .config-button {
+            margin: 3px;
+        }
+
+        .section {
+            display: flex;
+            width: 50%;
+            flex-direction: column;
+            margin: 10px;
+        }
+
+        .info {
+            display: flex;
+            margin: 10px;
+        }
+
+        #utilities {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .config-json {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+<div id="project-info"></div>
+
+<div class="ifs-main-test">
+    <div id="searchbar" class="ifs-searchbar"></div>
+    <div id="ifs-searchareas" class="ifs-searchareas"></div>
+    <div id="resultlist" class="ifs-resultlist-wrapper"></div>
+</div>
+
+<div id="utilities">
+    <div class="row">
+        <div class="info">
+            <div>
+                <label>Config-Url:</label>
+                <input id="configurl" type="text" name="configurl" value="/data/config.json" disabled>
+            </div>
+            <div class="config-buttons">
+                <button id="btnInitSearchbar" class="config-button" onclick="initSearchbar()">Init Searchbar</button>
+            </div>
+        </div>
+        <div class="log">
+            <div>LOG:</div>
+            <div id="infoMessage"></div>
+        </div>
+        <div class="initClient">
+            <div class="section">
+                <label>IFS.initClient (OVERWRITE):</label>
+                <textarea id="initClientOverwrite" class="jsonData"></textarea>
+            </div>
+            <div class="section">
+                <label>IFS.initClient (DEFAULT):</label>
+                <textarea id="initClientTextArea" class="jsonData" disabled>
+    {
+      sbTarget: '#searchbar',
+      rlTarget: '#resultlist',
+      configurl: 'DO_NOT_TOUCH!_WILL_BE_REPLACED',
+      sitesearch: false,
+      cors: true,
+      withCredentials: true,
+      preview: {
+        getCustomPreviewUrl: function(hit) {
+          return "http://www.example.com/"
+        },
+        shouldUseCustomPreview: function(hit){
+          return hit.integer === 2;
+        }
+      }
+    }
+            </textarea>
+            </div>
+        </div>
+    </div>
+    <div class="config-json">
+        <label>config.json:</label>
+        <textarea id="configTextArea" class="jsonData"></textarea>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="js/app.js"></script>
+
+<script type="text/javascript">
+  // adjust height to content
+  var initClient = document.getElementById('initClientTextArea');
+  var overwrite = document.getElementById('initClientOverwrite');
+
+  initClient.style.height = initClient.scrollHeight + 'px';
+  overwrite.style.height = initClient.scrollHeight + 'px';
+
+  IFS.$.get("if-app-searchbarDEV/data/meta.json")
+    .done(function(data){
+      IFS.$('#project-info').empty().html("<p>Git Commit Hash: " + data.git_commit + "<br /> Build Number: " + data.build_number + "</p>");
+    });
+
+  function initSearchbar() {
+    IFS.$('#utilities').css('display', 'none');
+    IFS.$('#btnInitSearchbar').prop("disabled", true);
+
+    try {
+      var overwrite = IFS.$('#initClientOverwrite').val();
+      if (overwrite.length > 0){
+        eval("window.clientOverwrite = " + overwrite);
+      }
+
+      eval("window.clientOptions = " + IFS.$('#initClientTextArea').val());
+      eval("window.configObject = " + IFS.$('#configTextArea').val());
+    } catch (e) {
+      var msg = "Could not evaluate clientOptions for IFS.initClient!";
+      document.getElementById('infoMessage').innerText = msg;
+      throw new Error(e);
+    }
+
+    window.clientOptions.configurl = window.configObject;
+    var clientOptions = IFS.$.extend(true, {}, window.clientOptions, window.clientOverwrite);
+    IFS.initClient(clientOptions);
+
+  };
+
+  (function ($) {
+    function displayMsg(text) {
+      $('#infoMessage').empty().text(text);
+    }
+
+    function setTextField(data) {
+      var configTextArea = $('#configTextArea');
+      var setData = data;
+      if (typeof setData !== 'string') {
+        setData = JSON.stringify(data, null, 2)
+      }
+      configTextArea.val(setData);
+      configTextArea.text(setData);
+      // adjust height to content
+      configTextArea.height(configTextArea[0].scrollHeight);
+
+    }
+
+    function loadConfig(configurl) {
+      $.ajax({
+        url: configurl,
+        type: 'GET',
+        crossDomain: true,
+        withCredentials: true
+      })
+        .done(function (data) {
+          setTextField(data);
+          displayMsg("success loading data");
+          if (window.location.href.indexOf('config=true') === -1) {
+            IFS.jQuery('#utilities').hide();
+            initSearchbar();
+          }
+        })
+        .fail(function (err) {
+          displayMsg("error loading data:" + JSON.stringify(err, null, 2));
+        });
+    }
+
+    var configurl = document.getElementById('configurl').value;
+    loadConfig(configurl, $);
+  })(IFS.jQuery);
+</script>
+
+
+</body>
+</html>

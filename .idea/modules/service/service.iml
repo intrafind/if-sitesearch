@@ -20,9 +20,6 @@
       <excludeFolder url="file://$MODULE_DIR$/../../../service/out" />
       <excludeFolder url="file://$MODULE_DIR$/../../../service/src/main/resources/static/app" />
     </content>
-    <content url="file://$MODULE_DIR$/../../../service/build/generated/sources/annotationProcessor/java/test">
-      <sourceFolder url="file://$MODULE_DIR$/../../../service/build/generated/sources/annotationProcessor/java/test" isTestSource="true" generated="true" />
-    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.9.RELEASE" level="project" />

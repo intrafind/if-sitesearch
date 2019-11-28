@@ -1,0 +1,28 @@
+<form id="if-search" name="if-search" onsubmit="javascript:void(0);" class="ifs-main-form{{#if mobileState}} ifs-result-dropdown-mobile{{/if}}">
+    <div class="typeahead__container">
+
+        <!-- implement sources -->
+        <div id="ifs-sources-field">
+            <!--sources field-->
+        </div>
+
+        <div class="ifs-centerfield">
+            <div class="typeahead__searchfield">
+                <input id="ifs-sb-searchfield" class="js-typeahead-input" name="q" type="search" maxlength="{{inputMaxLength}}" data-globalize="ifs.text.sbhelp" data-globalize-target="placeholder" placeholder="" autocomplete="off"/>
+                <div class="typeahead__button ifs-buttongroup">
+                    <button type="submit" class="ifs-button ifs-btn-perform-search" id="ifs-perform-search" data-globalize="ifs.btn.search" data-globalize-target="title" title=""  data-action="search-button">
+                        <i class="ifs-icons ifs-icon-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- implement settings -->
+        <div id="ifs-setting-field">
+            <!--setting field-->
+        </div>
+
+    </div>
+</form>
+
+<div id="ifs-rl-modal"></div>

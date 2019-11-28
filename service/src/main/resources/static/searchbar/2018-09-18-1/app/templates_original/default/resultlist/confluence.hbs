@@ -1,0 +1,52 @@
+<div class="ifs-media ifs-tpl-crawler" data-favorite="{{favoredString}}" data-index="{{integer}}" data-score="{{score}}">
+
+    <div class="ifs-media-left">
+        <a class="avatar" href="javascript:void(0);" data-action="preview" {{#if shouldUseCustomPreview}}data-preview-custom="{{customPreviewUrl}}"{{/if}} data-preview-id="{{urlbase64}}" data-hiturl="{{folder}}{{filename}}">
+            <div class="ifs-media-left-preview-hover"></div>
+            <div class="ifs-media-left-preview">
+                <i class="ifs-icons ifs-icon-search"></i>
+            </div>
+            <img src="{{authenticateIfJWTPresent thumbnail}}">
+        </a>
+    </div>
+
+    <div class="ifs-media-body">
+        <div>
+            {{#if docUrl}}
+            <a target="_blank" href="{{docUrl}}" class="ifs-break-all ifs-visited ifs-demi">{{{docTitle}}}</a>
+            {{else}}
+            <a target="_blank" href="{{deepurl}}" class="ifs-break-all ifs-visited ifs-demi">{{{docTitle}}}</a>
+            {{/if}}
+            <p class="ifs-media-modified">
+                {{#if toplevelParent}}<a href="{{toplevelParentUrl}}">{{toplevelParent}}</a>&nbsp;/{{/if}}{{#if directParentTitle}}...&nbsp;/&nbsp;<a href="{{directParentUrl}}">{{directParentTitle}}</a>, {{/if}}
+                {{#if author}} {{author}}, {{/if}}
+                {{modified}}
+            </p>
+
+            {{#if body}}
+                <p class="ifs-textbody ifs-break-all">{{{body}}}</p>
+            {{/if}}
+
+            {{#if category}}
+                <p class="ifs-break-all">{{{category}}}</p>
+            {{/if}}
+
+            {{#each labels}}
+                {{this}}
+            {{/each}}
+
+            <a target="_blank" href="{{parent_space_url}}" title="{{parent_space_url}}" class="ifs-media-deepurl truncate pathname ifs-break-all">{{parent_space_path}}</a>
+        </div>
+    </div>
+
+    <div class="ifs-media-favorite">
+        <i class="ifs-icons{{#if favoredBool}} ifs-icon-star_rate{{/if}}"></i>
+    </div>
+
+    {{#if hitMenu}}
+    <div class="ifs-media-right">
+        {{{hitMenu}}}
+    </div>
+    {{/if}}
+
+</div>

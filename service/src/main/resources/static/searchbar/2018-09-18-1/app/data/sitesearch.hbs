@@ -1,0 +1,49 @@
+<script id="facets-template" type="text/x-handlebars-template">
+<style>
+    .if-teaser-highlight {
+        font-weight: bold;
+    }
+</style>
+
+<li class="media ifs-tpl-crawler {{#if mobilePhoneState}}tpl-mobile{{/if}}" data-favorite="{{favoredString}}" data-index="{{integer}}" data-score="{{score}}">
+
+   <div class="ifs-favorite-label {{#if favoredBool}} state-true {{/if}}">
+       <i class="glyphicons glyphicons-star"></i>
+   </div>
+
+   {{#if mobilePhoneState}}
+   <div class="ifs-swipe-area">
+   {{/if}}
+
+   <div class="media-body">
+       <h4 class="media-heading ifs-dont-break">
+           {{#if title}}
+               <a href="{{urlRaw}}">{{{title}}}</a>
+           {{else}}
+               <a href="{{urlRaw}}">{{filename}}</a>
+           {{/if}}
+       </h4>
+       <div class="flex-truncate">
+           <p>
+               {{modified}}
+           </p>
+       </div>
+       {{#if body}}
+           <p class="ifs-textbody">{{{body}}}</p>
+       {{/if}}
+       <a href="{{urlRaw}}">
+           <p title="{{urlRaw}}">{{{url}}}</p>
+       </a>
+   </div>
+
+
+   {{#if mobilePhoneState}}
+   </div>
+   {{/if}}
+
+
+   {{#if hitMenu}}
+       {{{hitMenu}}}
+   {{/if}}
+</li>
+</script>

@@ -1,0 +1,103 @@
+<script id="facets-template" type="text/x-handlebars-template">
+<style>
+    .if-teaser-highlight {
+        font-weight: bold;
+    }
+</style>
+
+<li class="media ifs-tpl-crawler {{#if mobilePhoneState}}tpl-mobile{{/if}}" data-favorite="{{favoredString}}" data-index="{{integer}}" data-score="{{score}}">
+
+   <div class="ifs-favorite-label {{#if favoredBool}} state-true {{/if}}">
+       <i class="glyphicons glyphicons-star"></i>
+   </div>
+
+   {{#if mobilePhoneState}}
+   <div class="ifs-swipe-area">
+   {{/if}}
+
+   <div class="media-body">
+       <h4 class="media-heading ifs-dont-break">
+           {{#if title}}
+               <a href="{{urlRaw}}">{{{title}}}</a>
+           {{else}}
+               <a href="{{urlRaw}}">{{filename}}</a>
+           {{/if}}
+       </h4>
+       <div class="flex-truncate">
+           <p>
+               {{modified}}
+           </p>
+       </div>
+       {{#if body}}
+           <p class="ifs-textbody">{{{body}}}</p>
+       {{/if}}
+       <a href="{{urlRaw}}">
+           <p title="{{urlRaw}}">{{{url}}}</p>
+       </a>
+   </div>
+
+
+   {{#if mobilePhoneState}}
+   </div>
+   {{/if}}
+
+   {{#if hitMenu}}
+       {{{hitMenu}}}
+   {{/if}}
+</li>
+</script>
+
+<script id="crawler-thumbnails" type="text/x-handlebars-template">
+    <div class="ifs-media ifs-tpl-crawler" data-favorite="{{favoredString}}" data-index="{{integer}}" data-score="{{score}}">
+
+        <style>
+            .ifs-media-left > a {
+                height: 80px;
+                justify-content: center;
+                margin-top: 40px;
+                overflow: hidden;
+                width: 80px;
+            }
+
+            .ifs-media-left > a > img {
+                height: 100%;
+                width: auto !important;
+            }
+
+            @media (max-width: 1024px) {
+                .ifs-media-left > a {
+                    height: 60px;
+                    margin-top: 48px;
+                    width: 60px;
+                }
+            }
+        </style>
+
+        <div class="ifs-media-left">
+            {{#if thumbnail}}
+            <a href="{{urlRaw}}" target="_blank">
+                <img src="{{thumbnail}}">
+            </a>
+            {{/if}}
+        </div>
+
+        <div class="ifs-media-body">
+            <div>
+                <a target="_blank" href="{{urlRaw}}" class="ifs-break-all ifs-visited ifs-demi">{{{title}}}</a>
+
+                {{#if body}}
+                    <p class="ifs-textbody ifs-break-all">{{{body}}}</p>
+                {{/if}}
+
+                <a target="_blank" href="{{urlRaw}}" title="{{urlRaw}}" class="ifs-media-deepurl truncate pathname ifs-break-all">{{{url}}}</a>
+            </div>
+        </div>
+
+        {{#if hitMenu}}
+            <div class="ifs-media-right">
+                {{{hitMenu}}}
+            </div>
+        {{/if}}
+
+    </div>
+</script>

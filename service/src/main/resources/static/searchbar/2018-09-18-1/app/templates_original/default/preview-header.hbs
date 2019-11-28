@@ -1,0 +1,33 @@
+<div class="ifs-dp-actions">
+    {{{ menu }}}
+</div>
+<div class="ifs-dp-pager">
+    {{#if showMatchPager}}
+    <button type="button" class="ifs-button ifs-no-border" data-action="match-prev" data-page-id="" data-globalize="ifs.btn.prevmatchingpage" data-globalize-target="title">
+        <i class="ifs-icons ifs-icon-keyboard_arrow_left"></i>
+    </button>
+    <div class="ifs-dropdown left">
+        <button type="button" class="ifs-button ifs-no-border" data-toggle="if-dropdown" aria-haspopup="true" aria-expanded="false">
+            <label data-globalize="ifs.label.matchingpages"></label>
+            <span class="ifs-triangle"></span>
+        </button>
+        <ul class="ifs-dropdown-menu ifs-matching-pages">
+            {{# each this.hitPages}}
+            <li>
+                <a href="javascript:void(0);" data-action="change-page" data-page-id="{{this}}">
+                    {{this}}
+                </a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+    <button type="button" class="ifs-button ifs-no-border" data-action="match-next" data-page-id="" data-globalize="ifs.btn.nextmatchingpage" data-globalize-target="title">
+        <i class="ifs-icons ifs-icon-keyboard_arrow_right"></i>
+    </button>
+    {{/if}}
+</div>
+<div class="ifs-dp-close">
+    <button type="button" class="ifs-button" data-action="close-modal">
+        <i class="ifs-icons ifs-icon-close"></i>
+    </button>
+</div>

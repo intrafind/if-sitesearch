@@ -1,0 +1,88 @@
+<div class="ifs-filter {{#if expanded}} open {{/if}}"
+     data-selection-type="multiple" data-filter-category="{{label}}">
+    <button
+            type="button"
+            class="ifs-filterbutton"
+            data-toggle="if-filterbox"
+            aria-haspopup="true"
+            title="{{label}}"
+            data-facet-name="{{facetname}}"
+            aria-expanded="false">
+        <span class="ifs-filterbutton-label">{{label}}</span>
+        <span class="ifs-enabled-count"></span>
+        <span class="ifs-triangle"></span>
+    </button>
+
+    <div class="ifs-filterbox {{#if searchable}}fixed-height{{/if}}">
+
+        {{#if searchable}}
+            <div class="ifs-fi-body ifs-fi-searchable">
+                <form name="if-search">
+                    <div class="typeahead__container result hint filter">
+                        <div class="typeahead__field">
+                                    <span class="typeahead__query">
+                                        <input data-facet-searchbar="{{facetname}}"
+                                               class="ifs-fi-searchable js-typeahead-input"
+                                               name="q" type="search" autocomplete="off"
+                                        />
+                                    </span>
+                            <div class="typeahead__button">
+                                <button type="submit"
+                                        data-globalize="ifs.btn.search" data-globalize-target="title"
+                                        title="Search">
+                                    <i class="ifs-icons ifs-icon-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="typeahead__container result hint filter ifs-searchable-facet-result"
+                     data-facet-results="{{facetname}}"></div>
+                <ul class="ifs-fi-list" data-active-facets-container="{{facetname}}">
+                    <!-- list all enabled values first -->
+                    {{#each facets}}
+                        {{#if enabled}}
+                            {{> facet-entry }}
+                        {{/if}}
+                    {{/each}}
+                    <!-- then all others -->
+                    {{#each facets}}
+                        {{#unless enabled}}
+                            {{> facet-entry }}
+                        {{/unless}}
+                    {{/each}}
+                </ul>
+            </div>
+        {{/if}}
+
+        {{#unless searchable}}
+            <div class="ifs-fi-body">
+                <ul class="ifs-fi-list">
+                    <!-- list all enabled values first -->
+                    {{#each facets}}
+                        {{#if enabled}}
+                            {{> facet-entry }}
+                        {{/if}}
+                    {{/each}}
+                    <!-- then all others -->
+                    {{#each facets}}
+                        {{#unless enabled}}
+                            {{> facet-entry }}
+                        {{/unless}}
+                    {{/each}}
+                </ul>
+            </div>
+        {{/unless}}
+
+        {{#if hasMore}}
+            <div data-action="more-entries" class="ifs-more-facets">{{ msg "ifs.label.filter.more" }}</div>
+        {{/if}}
+
+        <div class="ifs-fi-footer{{#if searchable}} active{{/if}}">
+            <button type="button" data-filter-name="{{facetname}}" data-action="perform">
+                {{msg "ifs.filter.accept"}}
+            </button>
+        </div>
+
+    </div>
+</div>

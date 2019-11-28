@@ -1,0 +1,56 @@
+<div class="ifs-rl-header">
+    <div class="ifs-rl-header-left">
+        <div class="ifs-rl-headeractions">
+            {{#if facetsEnabled}}
+            <div class="ifs-facets-hide-button" data-type="filter">
+                <button type="button" class="ifs-button {{#if showFilter}}active{{/if}}" data-action="show-filter" data-globalize="ifs.btn.showfilter" data-globalize-target="title">
+                    {{#if isFacetsExternal}}
+                    <i class="ifs-icons ifs-icon-chevron_double_left" aria-hidden="true"></i>
+                    {{else}}
+                    <i class="ifs-icons ifs-icon-chevron_double_up" aria-hidden="true"></i>
+                    {{/if}}
+                </button>
+            </div>
+            <div class="ifs-buttongroup">
+                <button type="button" class="ifs-button badge ifs-filter-reset-all" data-action="reset-filters">
+                    <i class="ifs-icons ifs-icon-filter_reset"></i>
+                        <span class="ifs-badge">{{filterCount}}</span>
+                    </button>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+    <div class="ifs-rl-header-right">
+        <h4>
+            <span>{{categoryTitle}}</span>
+            <span class="ifs-hitcount" data-hitcount-raw="{{hitCountRaw}}">{{hitCount}}</span>
+        </h4>
+        <div data-type="sort">
+            <div class="ifs-dropdown right">
+                <button type="button" class="ifs-button" data-toggle="if-dropdown" data-globalize="ifs.btn.sort" data-globalize-target="title" title="">
+                    <i class="ifs-icons ifs-icon-sort_by_attributes"></i>
+                </button>
+                <ul class="ifs-dropdown-menu" aria-labelledby="examplePanelDropdown" role="menu">
+                    <li role="presentation" {{#ifCond sortParams.sSortOrder '===' "ascending"}} class="active" {{/ifCond}}>
+                        <a href="javascript:void(0);" data-action="sort" data-sort-order="ascending" data-sort-field="_long.datelastmodified" data-sort-id="sort-1" role="menuitem">
+                            <span data-globalize="ifs.btn.date.asc"></span>
+                        </a>
+                        <i class="ifs-icons ifs-icon-arrow_upward" aria-hidden="true"></i>
+                    </li>
+                    <li role="presentation" {{#ifCond sortParams.sSortOrder '===' "descending"}} class="active" {{/ifCond}}>
+                        <a href="javascript:void(0);" data-action="sort" data-sort-order="descending" data-sort-field="_long.datelastmodified" data-sort-id="sort-2" role="menuitem">
+                            <span data-globalize="ifs.btn.date.desc"></span>
+                        </a>
+                        <i class="ifs-icons ifs-icon-arrow_downward" aria-hidden="true"></i>
+                    </li>
+                    <li role="presentation" {{#unless sortParams.sSortOrder}} class="active" {{/unless}}>
+                        <a href="javascript:void(0);" data-action="sort" data-sort-order="relevance" data-sort-field="relevance" data-sort-id="sort-3" role="menuitem">
+                            <span data-globalize="ifs.btn.relevance"></span>
+                        </a>
+                        <i class="ifs-icons ifs-icon-line_weight" aria-hidden="true"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

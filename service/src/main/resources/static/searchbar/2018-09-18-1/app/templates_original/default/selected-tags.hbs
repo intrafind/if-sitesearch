@@ -1,0 +1,12 @@
+{{# each categories}}
+    <div class="ifs-show-selected-tags" data-category="{{{category}}}">
+        {{# each facets}}
+            {{#if enabled}}
+            <span  class="ifs-tag">
+                <label>{{{term}}}</label>
+                <i class="ifs-icons ifs-icon-close"></i>
+            {{/if}}
+        </span>
+        {{/each}}
+    </div>
+{{/each}}

@@ -1,0 +1,33 @@
+<div class="ifs-media ifs-tpl-images" data-favorite="{{favoredString}}" data-index="{{integer}}"  data-score="{{score}}">
+
+    <div class="ifs-media-left">
+        <a href="javascript:void(0);" data-action="preview" {{#if shouldUseCustomPreview}}data-preview-custom="{{customPreviewUrl}}"{{/if}} data-preview-id="{{urlbase64}}" data-hiturl="{{folder}}{{filename}}">
+            <div class="ifs-media-left-preview-hover"></div>
+            <div class="ifs-media-left-preview">
+                <i class="ifs-icons ifs-icon-search"></i>
+            </div>
+            <img src="{{authenticateIfJWTPresent thumbnail}}">
+        </a>
+    </div>
+    
+    <div class="ifs-media-body">
+        <div>
+            <p class="ifs-media-headline ifs-break-all ifs-demi">{{{title}}}</p>
+
+            <p class="ifs-media-modified">{{fileext}} | {{size}} | {{width}} x {{height}} | {{modified}}</p>
+
+            <a href="{{folder}}{{filename}}" target="_blank" class="ifs-media-deepurl truncate pathname ifs-break-all" title="{{folder}}{{filename}}">{{folder}}{{filename}}</a>
+        </div>
+    </div>
+
+    <div class="ifs-media-favorite">
+        <i class="ifs-icons{{#if favoredBool}} ifs-icon-star_rate{{/if}}"></i>
+    </div>
+
+    {{#if hitMenu}}
+    <div class="ifs-media-right">
+        {{{hitMenu}}}
+    </div>
+    {{/if}}
+
+</div>

@@ -1,0 +1,7 @@
+<div id="requesterror" {{#if displayErrors}}class="alert alert-danger" {{/if}}>
+    {{#if displayErrors}}
+        <h1>ERROR</h1>
+        <p>Could not retrieve data: <a href="{{url}}" target="_blank" >Click to see error response</a></p>
+        <p>See console log for error objects!</p>
+    {{/if}}
+</div>

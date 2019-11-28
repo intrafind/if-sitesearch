@@ -1,0 +1,16 @@
+<li {{#if enabled}}class="active" {{/if}}data-filter-value="{{#if value}}{{value}}{{else}}{{term}}{{/if}}" title="{{term}}">
+    <span class="ifs-facet-label">{{msg term}}</span>
+    <i class="ifs-icons ifs-icon-done"></i>
+</li>
+{{# if showDatePicker}}
+    <div class="ifs-date-picker-wrapper">
+        <div>
+            <input id="ifs-from-date" type="text" class="ifs-fi-daterange" placeholder="{{msg 'ifs.datechooser.from'}}">
+            <i class="ifs-icons ifs-icon-daterange" aria-hidden="true"></i>
+        </div>
+        <div>
+            <input id="ifs-to-date" type="text" class="ifs-fi-daterange" placeholder="{{msg 'ifs.datechooser.to'}}">
+            <i class="ifs-icons ifs-icon-daterange" aria-hidden="true"></i>
+        </div>
+    </div>
+{{/if}}

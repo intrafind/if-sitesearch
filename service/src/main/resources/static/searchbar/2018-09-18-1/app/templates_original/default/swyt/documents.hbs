@@ -1,0 +1,21 @@
+<div class="ifs-media">
+    <div class="ifs-media-left">
+        <span data-action="preview" {{#if shouldUseCustomPreview}}data-preview-custom="{{customPreviewUrl}}"{{/if}} data-preview-id="{{urlbase64}}">
+            <!--img is blank.png -->
+            <img src="{{rootDir}}/{{iconPath}}/{{fileExtension}}.png"
+                 onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAWBJREFUeNpi/P//PwMyKJ68eL+ytLgDA4ng/eevDO8+fVnQlxeXiE8dun1gAWRcNGnR/v9kgJ0nL/7vXLzhP1D/fEIOQMZMDFQEarKSDBqyEgmEHIEMqOoAIT4eBl1lOZIcQVUH8HBxMogJCZDkCKo6gIOdlUGAl5skR1DVASzMzAxcHGwkOYKJmJRKLGZiZGRgZWEhyREs1AyBMzfuMdx9+pLhH9Axf//9Y/j9+w/D95+/GP4zMDJwc7CDHAFSlkjQAf/JsNxGX4Ph2Zv3eNVsOnwmgTgH/CfdCRxsrAxKUmJ41XCys9E2EZKVcKkVAsSA/0Q7gFbexeIxuobA0IkCYBYe4BCgVSr4T2wI/P1HI/uJTIT/hm0iJDYK/tIsFf4fWAcQHQL//v0f2ET4h1ZRQHQa+Pt3YEPg798BTgN/aOYAYtMAraKA+BAYtmmASAfsOn2JJg54/+krhhhAgAEAOOceVk7I96wAAAAASUVORK5CYII='">
+        </span>
+    </div>
+    <div class="ifs-media-body">
+        <h4 class="ifs-break-all">
+            {{#if url}}
+            <a href="{{url}}" target="_blank">{{filename}}</a>
+            {{else}}
+            <a href="javascript:void(0);" target="_blank">{{filename}}</a>
+            {{/if}}
+        </h4>
+        {{#if modified}}
+        <p>{{modified}}</p>
+        {{/if}}
+    </div>
+</div>

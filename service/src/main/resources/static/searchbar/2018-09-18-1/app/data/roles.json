@@ -1,0 +1,16 @@
+{
+  "results": [
+    {
+      "roles": [
+        "sb_sources",
+        "sb_settings",
+        "sb_searchType",
+        "sb_queryfit",
+        "sb_querydistance",
+        "sb_extendedAutocomplete",
+        "sb_synonyms",
+        "sb_translations"
+      ]
+    }
+  ]
+}

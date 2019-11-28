@@ -1,0 +1,129 @@
+{
+  "ajax": {
+    "baseUrl": "https://api.sitesearch.cloud/sites/{{siteId}}/",
+    "endpointSearch": "search",
+    "start": 0,
+    "limit": 20
+  },
+  "localstorage": {
+    "storagePrefix": "ifs_"
+  },
+  "components": {
+    "searchbar": {
+      "focusOnLoad" : false,
+      "linkToHelpPage": "http://www.intrafind.de",
+      "keepFocusOnInput": false,
+      "templatesUrl": "/config/sitesearch.hbs",
+      "inputMaxLength": 250,
+      "typeaheadProps": {
+        "maxItemPerGroup": 4,
+        "loadingAnimation": false,
+        "hint": false,
+        "highlight": false,
+        "filter": false,
+        "searchOnFocus": false,
+        "delay": 0,
+        "minLength": 0,
+        "maxItem": 0,
+        "backdrop": {
+          "background-color": "#000000",
+          "opacity": "0.3",
+          "filter": "alpha(opacity=30)"
+        }
+      },
+      "categories": [
+        "autocomplete"
+      ],
+      "facets": {
+        "template": "app/templates/default/filters.hbs",
+        "filterItemTemplate": "app/templates/default/filter-item.hbs",
+        "facetEntryTemplate": "app/templates/default/facet-entry.hbs",
+        "visible": false,
+        "enabled": false,
+        "expanded": [],
+        "searchable": []
+      },
+      "tabbar": {
+        "tabbar_template": "app/templates/default/tabbar.hbs",
+        "items":  []
+      },
+      "searchbar_template": "app/templates/sitesearch/searchbar.hbs",
+      "group_template": "app/templates/default/groups.hbs",
+      "roles": {
+        "url": "/data/sitesearch-roles.json"
+      },
+      "settings_template": "app/templates/default/searchbar-settings.hbs",
+      "sources_template": "app/templates/default/searchbar-sources.hbs",
+      "indexfields": {
+        "template": "app/templates/default/indexfields.hbs"
+      },
+      "resultlist": {
+        "scrollContainer": "#ifs-rl-modal",
+        "scrollReloadsBeforeButtonAppears" : 1000,
+        "cache": {
+          "enabled": false,
+          "maxEntries": 200,
+          "maxAgeInMs": 900000
+        },
+        "templates": {
+          "resultlistWrapper": "app/templates/sitesearch/resultlist/resultlist-wrapper.hbs",
+          "resultlistContainer": "app/templates/sitesearch/resultlist/resultlist-container.hbs",
+          "resultlistHeader": "app/templates/sitesearch/resultlist/resultlist-header.hbs",
+          "didyoumean": "app/templates/default/resultlist/didyoumean.hbs",
+          "noresults": "app/templates/sitesearch/resultlist/noresults.hbs",
+          "modalTemplate": "app/templates/default/previewmodal.hbs",
+          "previewContainer": "app/templates/default/preview.hbs",
+          "requestErrors": "app/templates/default/request-error.hbs",
+          "customPreviewContainer": "app/templates/default/custom-preview.hbs",
+          "previewHeader": "app/templates/default/preview-header.hbs",
+          "previewBody": "app/templates/default/preview-body.hbs",
+          "previewFooter": "app/templates/default/preview-footer.hbs",
+          "hitMenu": "app/templates/default/resultlist/hit-menu.hbs"
+        },
+        "initialConnector": "all",
+        "multiple": true,
+        "showHeader": false,
+        "isQuerySharedBetweenTabs": true,
+        "connectors": {
+          "all": {
+            "title": "ifs.category.all",
+            "query": {
+              "filter": {
+              }
+            }
+          }
+        },
+        "resulttype": {
+          "all": {
+            "title": "ifs.category.all",
+            "hitTemplate": "app/templates/sitesearch/resultlist/crawler.hbs",
+            "showMenu": false
+          }
+        }
+      },
+      "searchdropdown": {
+        "updateOnClick": false,
+        "categories": {
+          "autocomplete": {
+            "name": "autocomplete",
+            "wrapperTemplate": "app/templates/default/swyt/autocomplete-wrapper.hbs",
+            "itemTemplate": "app/templates/sitesearch/swyt/term.hbs",
+            "display": [ "term" ],
+            "delay": 50,
+            "minLength": 3,
+            "searchOnClick": true,
+            "type": "autocomplete"
+          }
+        }
+      }
+    }
+  },
+  "plugins": {
+    "css": [],
+    "js": []
+  },
+  "defaultLang": "en",
+  "appLang": "de",
+  "rootDir": ".",
+  "debug": false
+}

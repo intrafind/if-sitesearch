@@ -1,0 +1,15 @@
+<div class="ifs-media ifs-tpl-default" data-index="{{integer}}">
+    <div class="ifs-media-body">
+        <div>
+            <p class="ifs-media-headline ifs-break-all ifs-demi">{{{title}}}</p>
+            <p class="ifs-media-modified ifs-break-all">{{type}}</p>
+            {{#if text}}
+                <p class="ifs-textbody ifs-break-all">{{{text}}}</p>
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="ifs-media-favorite">
+        <i class="ifs-icons{{#if favoredBool}} ifs-icon-star_rate{{/if}}"></i>
+    </div>
+</div>
