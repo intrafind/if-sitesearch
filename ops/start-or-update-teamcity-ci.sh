@@ -33,4 +33,5 @@ start_ci_agent() {
 start_ci_agent merkur
 start_ci_agent venus
 
+sleep 20
 sudo ~/BuildAgent/bin/agent.sh start # run localhost-agent on host machine
