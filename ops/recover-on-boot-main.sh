@@ -23,3 +23,5 @@ docker start gitlab-shared-runner3
 docker start gitlab-shared-runner4
 
 docker start main-router
+
+docker exec gitlab gitlab-ctl restart
