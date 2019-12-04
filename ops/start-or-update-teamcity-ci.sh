@@ -35,3 +35,6 @@ start_ci_agent venus
 
 sleep 20
 sudo ~/BuildAgent/bin/agent.sh start # run localhost-agent on host machine
+
+sleep 20
+docker exec main-router nginx -s reload
