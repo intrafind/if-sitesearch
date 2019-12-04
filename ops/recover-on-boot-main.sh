@@ -4,6 +4,7 @@ mount -o discard,defaults /dev/disk/by-id/scsi-0HC_Volume_1441441 /mnt/elk
 mount -o discard,defaults /dev/disk/by-id/scsi-0HC_Volume_1458716 /mnt/docker-registry
 mount -o discard,defaults /dev/disk/by-id/scsi-0HC_Volume_1459052 /mnt/maven
 mount -o discard,defaults /dev/disk/by-id/scsi-0HC_Volume_3236434 /mnt/ca-backup
+mount -o discard,defaults /dev/disk/by-id/scsi-0HC_Volume_3724737 /mnt/gitlab-server
 
 sysctl -w vm.max_map_count=262144 # required for Elasticsearch
 
