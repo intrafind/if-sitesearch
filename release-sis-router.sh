@@ -4,6 +4,11 @@ docker_network=sitesearch
 docker_redirect_image=router
 docker_tag=latest
 
+if [ "$*" != "" ]; then
+    docker_tag="$*"
+    echo "Router image tag is : " $docker_tag
+fi
+
 docker network create $docker_network
 cd docker-router
 sudo rm -rf letsencrypt

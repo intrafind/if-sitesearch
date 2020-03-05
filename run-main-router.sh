@@ -13,9 +13,3 @@ docker run -d --name $docker_redirect_image \
     -v /mnt/maven/repository:/srv/maven-repository \
     --network $docker_network \
     docker-registry.intrafind.net/intrafind/${docker_redirect_image}:${docker_tag}
-
-docker rm -f docker-registry
-docker run -d --name docker-registry \
-    -v /mnt/docker-registry/_data:/var/lib/registry \
-    --network $docker_network \
-    registry:2
