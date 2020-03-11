@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 IntraFind Software AG. All rights reserved.
+ * Copyright 2020 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -110,20 +110,6 @@ private fun updateSiteProfile() {
     req.send(JSON.stringify(profile))
     req.onload = {
         fetchProfile()
-    }
-}
-
-@JsName("regenerateSiteSecret")
-private fun regenerateSiteSecret() {
-    val req = XMLHttpRequest()
-    req.open("GET", "https://api.muctool.de/entropy")
-    req.send()
-    req.onload = {
-        val newlyGeneratedSiteSecret: String = JSON.parse<dynamic>(req.responseText).uuid
-        profile.secret = newlyGeneratedSiteSecret
-        updateSiteProfile()
-        window.location.search = window.location.search.replace(siteSecret, newlyGeneratedSiteSecret)
-        ""
     }
 }
 

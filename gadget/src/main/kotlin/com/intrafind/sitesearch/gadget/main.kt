@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 IntraFind Software AG. All rights reserved.
+ * Copyright 2020 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -120,7 +120,6 @@ private fun init() {
 
     applyAnalytics()
     enableProactiveValidation()
-    validateDomain()  // fix api.muctool.de first
 
     document.addEventListener("sis.triggerFirstUsageOwnershipEvent", {
         enableSearch(waitWhileCrawlerIsRunningMsg)
@@ -211,11 +210,9 @@ private fun enableProactiveValidation() {
         if (!(url.value.startsWith("http") || url.value.startsWith("https"))) {
             url.value = "https://${url.value}"
         }
-        validateDomain() // fix api.muctool.de first
     })
 
     url.addEventListener("change", {
-        validateDomain() // fix api.muctool.de first
     })
 
     // do not set keypress listeners on both `cssSelector` & `url` until Shadow DOM is not used instead of `document.createElement("html")`
@@ -240,24 +237,6 @@ private fun validateCssSelector() {
 }
 
 lateinit var pageBody: String
-private fun validateDomain() {
-    notificationCenter.textContent = "${url.value} ...validating domain."
-    val req = XMLHttpRequest()
-    req.open("GET", "https://api.muctool.de/curl?url=${url.value}")
-    req.send()
-    req.onload = {
-        val validationResult = JSON.parse<dynamic>(req.responseText)
-        if (allowedToCrawl(req)) {
-            pageBody = validationResult.body as String
-            classifyUrlAsValid(true)
-            validateCssSelector()
-        } else {
-            classifyUrlAsValid(false)
-        }
-        notificationCenter.textContent = ""
-        console.info("validationResult.statusCode: ${validationResult.statusCode}")
-    }
-}
 
 private fun allowedToCrawl(xhr: XMLHttpRequest): Boolean {
     if (xhr.status.equals(200)) {
