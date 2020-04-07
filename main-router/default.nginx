@@ -49,22 +49,6 @@ http {
         }
     }
 
-#    server {
-#        listen 443 ssl http2;
-#        listen [::]:443 ssl http2;
-#        server_name docker-registry.sitesearch.cloud;
-#
-#        include /etc/nginx/snippets/ssl.conf;
-#
-#        auth_basic "Docker Registry";
-#        auth_basic_user_file /etc/nginx/.htpasswd; # supply this via env vars somehow or as raw file at build time
-#
-#        location / {
-#            client_max_body_size 9G;
-#            proxy_pass http://docker-registry:5000;
-#        }
-#    }
-
     server {
         listen 443 ssl http2;
         listen [::]:443 ssl http2;
@@ -94,36 +78,6 @@ http {
             proxy_pass http://ops-elasticsearch:9200;
         }
     }
-
-#    server {
-#        listen 443 ssl http2;
-#        listen [::]:443 ssl http2;
-#        server_name docker-registry.intrafind.net;
-#
-#        include /etc/nginx/snippets/ssl.conf;
-#        client_max_body_size 9G;
-#
-#        location / {
-#            auth_basic "Docker Registry";
-#            auth_basic_user_file /etc/nginx/.htpasswd;
-#
-#            proxy_pass http://docker-registry:5000;
-#        }
-#
-#        location /datev/ {
-#            auth_basic "Docker Registry";
-#            auth_basic_user_file /etc/nginx/.htpasswd-datev;
-#
-#            proxy_pass http://docker-registry:5000/v2/datev/;
-#        }
-#
-#        location /bfst/ {
-#            auth_basic "Docker Registry";
-#            auth_basic_user_file /etc/nginx/.htpasswd-bfst;
-#
-#            proxy_pass http://docker-registry:5000/v2/bfst/;
-#        }
-#    }
 
     server {
         listen 443 ssl http2;
@@ -205,6 +159,23 @@ http {
 
         location /v2 {
             proxy_pass http://docker-registry:5000;
+        }
+    }
+
+    server {
+        listen      443 ssl http2;
+        listen [::]:443 ssl http2;
+        server_name  ca-on-premise.intrafind.net;
+
+        include /etc/nginx/snippets/ssl.conf;
+        client_max_body_size 25G;
+
+        location / {
+            auth_basic "Contract Analyzer on premise";
+            auth_basic_user_file /etc/nginx/.htpasswd;
+
+            root /srv/download;
+            autoindex on;
         }
     }
 
