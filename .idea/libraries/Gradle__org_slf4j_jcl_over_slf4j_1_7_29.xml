@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.slf4j:jcl-over-slf4j:1.7.29">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/jcl-over-slf4j/1.7.29/d6dca1ec36f28ecf286241deadc790c2d4c8eaa0/jcl-over-slf4j-1.7.29.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/jcl-over-slf4j/1.7.29/4c208b41b3ad7d72d9ea14b72a6e56b898e5ffd/jcl-over-slf4j-1.7.29-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

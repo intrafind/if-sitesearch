@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 IntraFind Software AG. All rights reserved.
+ * Copyright 2020 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@
 plugins {
     java
     idea
-    id("me.champeau.gradle.jmh") version "0.5.0-rc-1"
+    id("me.champeau.gradle.jmh") version "0.5.0"
     id("io.morethan.jmhreport") version "0.9.0"
-    id("org.springframework.boot") version "2.1.9.RELEASE"
-    id("io.spring.dependency-management") version "1.0.8.RELEASE"
-    id("com.google.cloud.tools.jib") version "1.6.1"
+    id("org.springframework.boot") version "2.1.10.RELEASE"
+    id("io.spring.dependency-management") version "1.0.9.RELEASE"
+    id("com.google.cloud.tools.jib") version "2.0.0"
 }
 
 idea {
@@ -37,7 +37,7 @@ java {
 }
 
 dependencies {
-    val springBootVersion = "2.1.9.RELEASE"
+    val springBootVersion = "2.1.10.RELEASE"
     val swaggerVersion = "2.9.2"
     val tikaVersion = "1.22"
 
