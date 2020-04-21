@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 IntraFind Software AG. All rights reserved.
+ * Copyright 2020 IntraFind Software AG. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package com.intrafind.sitesearch;
 
 import com.intrafind.sitesearch.dto.Subscription;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -45,6 +46,7 @@ public class SubscriptionTest {
     /**
      * Use https://www.+Application.SIS_DOMAIN/pricing?affiliate=sis-integration_test to create an affiliate ID cookie.
      */
+    @Ignore("WooCommerce has been canceled. Hence this test started to fail.")
     @Test
     public void subscribeViaSite() {
         final var orderId = "699";
