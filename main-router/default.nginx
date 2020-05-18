@@ -110,7 +110,7 @@ http {
             proxy_set_header X-Forwarded-Protocol $scheme;
             proxy_set_header X-Url-Scheme $scheme;
             proxy_set_header X-Forwarded-Ssl on;
-            client_max_body_size 1G;
+            client_max_body_size 10G;
             proxy_pass http://gitlab;
         }
     }
