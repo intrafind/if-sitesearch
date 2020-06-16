@@ -29,7 +29,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_13">
     <output url="file://$MODULE_DIR$/../../../stats/out/production/classes" />
     <output-test url="file://$MODULE_DIR$/../../../stats/out/test/classes" />
     <exclude-output />
