@@ -115,26 +115,6 @@ http {
         }
     }
 
-#    server {
-#        listen 443 ssl http2;
-#        listen [::]:443 ssl http2;
-#        server_name maven.intrafind.net;
-#
-#        include /etc/nginx/snippets/ssl.conf;
-#
-#        auth_basic "Restricted";
-#        auth_basic_user_file /etc/nginx/.htpasswd; # supply this via env vars somehow or as raw file at build time
-#
-#        location / {
-#            dav_methods PUT DELETE MKCOL COPY MOVE;
-#            create_full_put_path on;
-#            dav_access user:rw group:rw all:r;
-#            #            proxy_cache maven_cache;
-#            client_max_body_size 3G;
-#            root /srv/maven-repository;
-#        }
-#    }
-
     server {
         listen 443 ssl http2;
         listen [::]:443 ssl http2;
@@ -176,6 +156,18 @@ http {
 
             root /srv/download;
             autoindex on;
+        }
+    }
+
+    server {
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
+        server_name sourcegraph.intrafind.net;
+
+        include /etc/nginx/snippets/ssl.conf;
+
+        location / {
+            proxy_pass http://sourcegraph:7080;
         }
     }
 
