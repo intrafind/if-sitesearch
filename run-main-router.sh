@@ -4,6 +4,11 @@ docker_network=main
 docker_redirect_image=main-router
 docker_tag=latest
 
+if [ "$*" != "" ]; then
+    docker_tag="$*"
+    echo "Router image tag is : " $docker_tag
+fi
+
 chmod -R o+x /mnt/ca-on-premise
 docker pull docker-registry.intrafind.net/intrafind/${docker_redirect_image}:${docker_tag}
 docker rm -f $docker_redirect_image
