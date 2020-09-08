@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-function If_Sis_searchbar()
+function sis_searchbar()
 {
     echo '<div id="sitesearch-searchbar" class="searchbar" style="display: none;">
         <div id="ifs-searchbar" class="ifs-component ifs-sb"></div>
         </div>';
 }
 
-function applyTransporterCookies()
+function sis_apply_transporter_cookies()
 {
     setcookie("sis-siteId", get_option("if_sis_siteId"));
     $cookieSafeCssSelector = base64_encode(get_option("sis_cssSelector"));
     setrawcookie("sisDefaultWordPressSearchbarSelector", $cookieSafeCssSelector);
 }
 
-applyTransporterCookies();
-add_action('wp_footer', 'If_Sis_searchbar');
+sis_apply_transporter_cookies();
+add_action('wp_footer', 'sis_searchbar');

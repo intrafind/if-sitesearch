@@ -23,10 +23,10 @@ require_once 'searchbar.php';
  *
  * @return site url
  */
-function getSiteUrl()
+function sis_get_site_url()
 {
     if (get_option("if_sis_url_for_crawling")) {
-        $if_sis_url_for_crawling = get_option("if_sis_url_for_crawling");
+        $if_sis_url_for_crawling = esc_url_raw(get_option("if_sis_url_for_crawling"));
     } else {
         $if_sis_url_for_crawling = get_site_url();
     }
@@ -35,11 +35,11 @@ function getSiteUrl()
 
 // actions
 if( current_user_can( 'manage_options' ) && isset( $_POST[ 'submit-form' ],  $_POST[ 'create-saveSetup' ] ) && wp_verify_nonce( $_POST[ 'submit-form' ], 'sis-nonce' ) ){
-    CreateSiS_Options_WP_DB();
+    sis_save_options();
 }
 
 if( current_user_can( 'manage_options' ) && isset( $_POST[ 'submit-form' ],  $_POST[ 'sis-removeSetup' ] ) && wp_verify_nonce( $_POST[ 'submit-form' ], 'sis-nonce' ) ){
-    deleteSiS_Options_WP_DB();
+    sis_delete_options();
 }
 
 /**
@@ -47,13 +47,13 @@ if( current_user_can( 'manage_options' ) && isset( $_POST[ 'submit-form' ],  $_P
  *
  * @return sis-url, sis-siteId and sis-siteSecret
  */
-function CreateSiS_Options_WP_DB()
+function sis_save_options()
 {
     //get data from fields
-    $if_sis_url_for_crawling = $_POST['sis-url'];
-    $if_sis_siteId = $_POST['sis-siteId'];
-    $if_sis_siteSecret = $_POST['sis-siteSecret'];
-    $sis_cssSelector = $_POST['sis-cssSelector'];
+    $if_sis_url_for_crawling = esc_url_raw($_POST['sis-url']);
+    $if_sis_siteId = sanitize_text_field($_POST['sis-siteId']);
+    $if_sis_siteSecret = sanitize_text_field($_POST['sis-siteSecret']);
+    $sis_cssSelector = sanitize_text_field($_POST['sis-cssSelector']);
     if (!get_option("if_sis_url_for_crawling")) {
         update_option("if_sis_url_for_crawling", $if_sis_url_for_crawling);
     } else {
@@ -74,9 +74,11 @@ function CreateSiS_Options_WP_DB()
     } else {
         update_option("sis_cssSelector", $sis_cssSelector);
     }
+	
+	echo '<meta http-equiv="refresh" content="0">';
 }
 
-function deleteSiS_Options_WP_DB()
+function sis_delete_options()
 {
     delete_option("if_sis_url_for_crawling");
     delete_option("if_sis_siteId");
@@ -84,7 +86,7 @@ function deleteSiS_Options_WP_DB()
     delete_option("sis_cssSelector");
 }
 
-function setSafeCssSelector()
+function sis_set_safe_css_selector()
 {
     if (get_option("sis_cssSelector")) {
         $sis_cssSelector = get_option("sis_cssSelector");
@@ -104,10 +106,9 @@ function setSafeCssSelector()
 <div class="form-wrapper" style="width: 500px;">
     <form method="POST">
         <h1>Site Search Setup</h1>
-        Website URL: <input type="text" id="sis-url" name="sis-url" value="<?php echo getSiteUrl(); ?>"
-            <?php if (get_option("if_sis_siteId")) echo "readonly"; ?>>
+        Website URL: <input type="text" id="sis-url" name="sis-url" value="<?php echo sis_get_site_url(); ?>">
         <br><br>
-        Site ID: <input type="text" id="sis-siteId" name="sis-siteId" readonly
+        Site ID: <input type="text" id="sis-siteId" name="sis-siteId" 
                         value="<?php echo get_option("if_sis_siteId"); ?>">
         <br><br>
         Site Secret: <input type="text" id="sis-siteSecret" name="sis-siteSecret" readonly
@@ -121,7 +122,7 @@ function setSafeCssSelector()
             Providing an invalid CSS selector disables the searchbar.
         </p>
         <input type="text" id="sis-cssSelector" name="sis-cssSelector"
-               value="<?php echo setSafeCssSelector(); ?>">
+               value="<?php echo sis_set_safe_css_selector(); ?>">
         <input type="submit" id="sis-save-setup" name="create-saveSetup" 
                value="Save Site Search Setup"
                style="display: none;">
@@ -140,7 +141,7 @@ function setSafeCssSelector()
     </p>
     <input type="submit"
            name="crawl" value="Crawl your site and save your Site Search setup"
-           onclick="registerSiteInSiS();"
+           onclick="SiSregisterSite();"
         <?php if (get_option("if_sis_siteId")) echo "style='display: none'"; ?>>
     <div id="triggerCrawler">
         <p id="sis-status"></p>
@@ -151,7 +152,7 @@ function setSafeCssSelector()
         <?php if (!get_option("if_sis_siteId")) echo "style='display: none'"; ?>>
     <br><br>
     <p>Search here before your visitors start searching...</p>
-    <div id="searchbar"><?php echo If_Sis_searchbar(); ?></div>
+    <div id="searchbar"><?php echo sis_searchbar(); ?></div>
     <br><br>
     <div>
         <p

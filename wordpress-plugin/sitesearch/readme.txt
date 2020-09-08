@@ -1,11 +1,11 @@
 === Site Search ==
 
-Contributors: bachka
+Contributors: intrafind, bachka
 Donate link: 
 Tags: site search, wordpress search, best search, autocomplete, autocompletion
 Requires at least: 4.0.0
-Tested up to: 4.9
-Stable tag: 1.0.0
+Tested up to: 5.5.1
+Stable tag: 1.0.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,3 +50,6 @@ Need help? Just [read our FAQ](https://sitesearch.cloud/faq/) or [chat with us](
 
 = 1.0.0 =
 * Initial release.
+= 1.1 =
+* Website-URL and Site-ID can now be changed.
+* Added Freemium use.

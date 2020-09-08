@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-function getCookieValueForKey(cookieKey) {
+function SiSgetCookieValueForKey(cookieKey) {
 	var keyWithExtension = cookieKey + "=";
 	var cookiePairs = document.cookie.split(';');
 	for (var index = 0; index < cookiePairs.length; index++) {
@@ -27,9 +27,9 @@ function getCookieValueForKey(cookieKey) {
 	return "";
 }
 
-var injectSearchbar = function () {
+var SiSinjectSearchbar = function () {
 
-    var sisDefaultWordPressSearchbarSelectorBase64 = getCookieValueForKey("sisDefaultWordPressSearchbarSelector");
+    var sisDefaultWordPressSearchbarSelectorBase64 = SiSgetCookieValueForKey("sisDefaultWordPressSearchbarSelector");
     var sisDefaultWordPressSearchbarSelector = atob(sisDefaultWordPressSearchbarSelectorBase64);
     console.warn("Site Search selector: " + sisDefaultWordPressSearchbarSelector);
     var defaultWordPressSearchbar = document.querySelector(sisDefaultWordPressSearchbarSelector);
@@ -40,12 +40,12 @@ var injectSearchbar = function () {
 
 		defaultWordPressSearchbar.appendChild(hiddenSiSsearchbar);
 	}
-    IFS.jQuery.ifs.shared.clientOptions.siteId = getCookieValueForKey("sis-siteId");
+    IFS.jQuery.ifs.shared.clientOptions.siteId = SiSgetCookieValueForKey("sis-siteId");
 };
 
 window.addEventListener("DOMContentLoaded", function () {
-	IFS.initClient({customConfig: {overwrite: {"appLang": "en"}},configurl: "https://cdn.sitesearch.cloud/searchbar/2018-07-18/config/sitesearch.json",siteId:getCookieValueForKey("sis-siteId")});
+	IFS.initClient({customConfig: {overwrite: {"appLang": "en"}},configurl: "https://cdn.sitesearch.cloud/searchbar/2018-07-18/config/sitesearch.json",siteId:SiSgetCookieValueForKey("sis-siteId"),"freemium":true});
     console.warn("DOMContentLoaded - before: " + IFS.jQuery.ifs.shared.clientOptions.siteId);
-    injectSearchbar();
+    SiSinjectSearchbar();
     console.warn("DOMContentLoaded - after: " + IFS.jQuery.ifs.shared.clientOptions.siteId);
 });

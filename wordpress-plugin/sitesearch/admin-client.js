@@ -15,7 +15,7 @@
  */
 
 
-var registerSiteInSiS = function () {
+var SiSregisterSite = function () {
     var status = document.getElementById("sis-status");
     status.textContent = "Crawling... please give us a minute or two.";
 
@@ -39,7 +39,7 @@ var registerSiteInSiS = function () {
             return {newSite, siteUrl};
         }
 
-        function crawlSite() {
+        function SiScrawlSite() {
             var {newSite, siteUrl} = setupCrawling();
             var siteCrawl = new XMLHttpRequest();
             siteCrawl.open("POST", "https://api.sitesearch.cloud/sites/" + newSite.siteId + "/crawl?siteSecret=" + newSite.siteSecret + "&url=" + siteUrl + "&token=1a46b7c0-8684-11e8-8f10-d74554b855dc&email=&sitemapsOnly=false&pageBodyCssSelector=body");
@@ -59,7 +59,7 @@ var registerSiteInSiS = function () {
             siteCrawl.send();
         }
 
-        crawlSite();
+        SiScrawlSite();
     };
     siteCreation.send();
 };
