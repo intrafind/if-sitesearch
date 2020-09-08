@@ -27,7 +27,7 @@ Plugin Name: Site Search
 Plugin URI: https://sitesearch.cloud
 Description: The Search that captures all important content of your website: Site Search is a secure and ready-to-use alternative for Google Site Search, which works reliably, quickly and safly. Site Search will index your website in real-time. No coding is required.
 Author: IntraFind Software AG
-Version: 1.1
+Version: 1.0.2
 Author URI: https://www.intrafind.de
 Text Domain: Site Search
 */
