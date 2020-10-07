@@ -42,14 +42,10 @@ import org.springframework.util.StringUtils;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 
@@ -153,10 +149,11 @@ public class SiteCrawler extends WebCrawler {
             if (isNoindexPage(parsedHtml)) {
                 return;
             }
-            final var htmlStrippedBody = extractTextFromMixedHtml(parsedHtml.getHtml(), pageBodyCssSelector);
-            final var title = parsedHtml.getTitle();
+            final var htmlContent      = Optional.ofNullable(getHtml(page)).orElse(parsedHtml.getHtml());
+            final var htmlStrippedBody = extractTextFromMixedHtml(htmlContent, pageBodyCssSelector);
+            final var title            = parsedHtml.getTitle();
 
-            final String thumbnail = enhancePageWithThumbnail(parsedHtml);
+            final String thumbnail       = enhancePageWithThumbnail(parsedHtml);
             final List<String> sisLabels = enhancePageWithLabels(parsedHtml);
 
             final var sitePage = new SitePage(
@@ -172,6 +169,17 @@ public class SiteCrawler extends WebCrawler {
         } else {
             LOG.warn("visit_ERROR - siteId: " + siteId + " - url: " + url);
         }
+    }
+
+    private String getHtml(Page page) {
+        try {
+            Optional<String> contentCharset = Optional.ofNullable(page.getContentCharset());
+            if (contentCharset.isPresent())
+                return new String(page.getContentData(), contentCharset.get());
+        } catch (UnsupportedEncodingException e) {
+            LOG.error(e.getMessage());
+        }
+        return null;
     }
 
     private String enhancePageWithThumbnail(HtmlParseData htmlParseData) {
