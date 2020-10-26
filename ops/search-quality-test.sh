@@ -16,10 +16,10 @@
 #
 
 # TODO: 1. get crawl list                                                       = DONE!
-#       2. get siteIds of successful crawled sites                              = DONE!
-#       3. get/extract site url                                                 =
-#       4. get search of site                                                   =
-#       5. compare with url => if there are not exact same url in search fail   =
+# TODO: 2. get siteIds of successful crawled sites                              = DONE!
+# TODO: 3. get/extract site url                                                 = DONE!
+# TODO: 4. get search of site                                                   =
+# TODO: 5. compare with url => if there are not exact same url in search fail   =
 
 apt-get update && apt-get install -y jq
 
@@ -34,9 +34,15 @@ cat site-crawl-status.json | jq .
 
 successCrawlStatusList=$(cat $SITE_CRAWL_STATUS_REPORT | jq -r '.sites[] | select (.pageCount | length != 0) | .siteId')
 
-echo $successCrawlStatusList
+#echo $successCrawlStatusList
 
 for i in ${successCrawlStatusList[@]}
 do
   echo "here we go:" $i
+  curl -X GET \
+      "https://${SIS_SERVICE_HOST}/sites/${i}/profile?siteSecret=${ADMIN_SITE_SECRET}" \
+      -o $PROFIL_DATA
+  # cat $PROFIL_DATA | jq .
+  siteUrl=$(cat $PROFIL_DATA | jq -r '.configs[] | select (.url | length != 0) | .url')
+  echo "Site URL: " $siteUrl
 done
