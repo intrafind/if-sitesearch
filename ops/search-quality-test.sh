@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-#
+
 # Copyright 2020 IntraFind Software AG. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,26 +15,24 @@
 # limitations under the License.
 #
 
-# TODO: 1. get crawl list                                                       = DONE!
-# TODO: 2. get siteIds of successful crawled sites                              = DONE!
-# TODO: 3. get/extract site url                                                 = DONE!
-# TODO: 4. get search of site                                                   =
-# TODO: 5. compare with url => if there are not exact same url in search fail   =
+# TODO: Fix multisite profile
 
 apt-get update && apt-get install -y jq
 
 SITE_CRAWL_STATUS_REPORT=site-crawl-status.json
+SIS_SERVICE_HOST=api.sitesearch.cloud
+PROFIL_DATA=profil-data.json
+SEARCH_RESULT=search.json
 
-# get all sites crawl status
+set -a successCrawlStatusList
+set -a failedSearchResult
+set -a searchResultUrl
+
 curl -X GET \
     "https://${SIS_SERVICE_HOST}/sites/crawl/status?serviceSecret=${ADMIN_SITE_SECRET}" \
     -o $SITE_CRAWL_STATUS_REPORT
 
-cat site-crawl-status.json | jq .
-
 successCrawlStatusList=$(cat $SITE_CRAWL_STATUS_REPORT | jq -r '.sites[] | select (.pageCount | length != 0) | .siteId')
-
-#echo $successCrawlStatusList
 
 for i in ${successCrawlStatusList[@]}
 do
@@ -42,7 +40,18 @@ do
   curl -X GET \
       "https://${SIS_SERVICE_HOST}/sites/${i}/profile?siteSecret=${ADMIN_SITE_SECRET}" \
       -o $PROFIL_DATA
-  # cat $PROFIL_DATA | jq .
-  siteUrl=$(cat $PROFIL_DATA | jq -r '.configs[] | select (.url | length != 0) | .url')
+  siteUrl=$(cat $PROFIL_DATA | jq -r '.configs[] | select (.url | length != 0) | .url' | sed 's:/*$::')
   echo "Site URL: " $siteUrl
+  curl -X GET \
+      "https://${SIS_SERVICE_HOST}/sites/${i}/search?sSearchTerm=%2A&query=%2A&_=1603728086174" \
+      -o $SEARCH_RESULT
+
+  echo "Search result: "
+  cat $SEARCH_RESULT | jq .
+  searchResultUrl=$(cat $SEARCH_RESULT | jq -r '.results[] | [.urlRaw]')
+
+  echo $searchResultUrl | jq .
+
+  echo $siteUrl
+  [[ " ${searchResultUrl[@]} " == *"${siteUrl}"* ]] && echo "true" || echo "false"
 done
