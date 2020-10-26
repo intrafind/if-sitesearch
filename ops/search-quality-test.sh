@@ -35,17 +35,27 @@ successCrawlStatusList=$(cat $SITE_CRAWL_STATUS_REPORT | jq -r '.sites[] | selec
 
 for i in ${successCrawlStatusList[@]}
 do
+  echo "here we go:" $i
   curl -X GET \
       "https://${SIS_SERVICE_HOST}/sites/${i}/profile?siteSecret=${ADMIN_SITE_SECRET}" \
       -o $PROFIL_DATA
 
-  siteUrl=$(cat $PROFIL_DATA | jq -r '.configs[] | select (.url | length != 0) | .url' | sed 's:/*$::')
-
+  siteUrl=$(cat $PROFIL_DATA | jq -r '[.configs[].url][0]' | sed 's:/*$::')
+  echo "First trimming : " $siteUrl
+  siteUrl=$(echo $siteUrl | sed -E -e 's_.*://([^/@]*@)?([^/:]+).*_\2_')
+  echo "Second trimming : " $siteUrl
+  siteUrl=$(awk -F. '{ if ($(NF-1) == "co") printf $(NF-2)"."; printf $(NF-1)"."$(NF)"\n";}' <<< ${siteUrl})
+  echo "Thirth trimming : " $siteUrl
   curl -X GET \
       "https://${SIS_SERVICE_HOST}/sites/${i}/search?sSearchTerm=%2A&query=%2A&_=1603728086174" \
       -o $SEARCH_RESULT
 
+  echo "Search result: "
+  cat $SEARCH_RESULT | jq .
   searchResultUrl=$(cat $SEARCH_RESULT | jq -r '.results[] | [.urlRaw]')
 
+  echo $searchResultUrl | jq .
+
+  echo $siteUrl
   [[ " ${searchResultUrl[@]} " == *"${siteUrl}"* ]] && echo "true" || echo "false"
 done
