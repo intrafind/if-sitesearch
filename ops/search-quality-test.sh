@@ -24,3 +24,13 @@ curl -X GET \
     "https://${SIS_SERVICE_HOST}/sites/crawl/status?serviceSecret=${ADMIN_SITE_SECRET}" \
     -o $SITE_CRAWL_STATUS_REPORT
 
+cat site-crawl-status.json | jq .
+
+successCrawlStatusList=$(cat $SITE_CRAWL_STATUS_REPORT | jq -r '.sites[] | select (.pageCount | length != 0) | .siteId')
+
+echo $successCrawlStatusList
+
+for i in ${successCrawlStatusList[@]}
+do
+  echo "here we go:" $i
+done
