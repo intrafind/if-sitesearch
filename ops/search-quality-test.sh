@@ -15,12 +15,11 @@
 # limitations under the License.
 #
 
-# TODO: Fix multisite profile
+# TODO: Fix multisite profile test results
 
 apt-get update && apt-get install -y jq
 
 SITE_CRAWL_STATUS_REPORT=site-crawl-status.json
-SIS_SERVICE_HOST=api.sitesearch.cloud
 PROFIL_DATA=profil-data.json
 SEARCH_RESULT=search.json
 
@@ -36,22 +35,17 @@ successCrawlStatusList=$(cat $SITE_CRAWL_STATUS_REPORT | jq -r '.sites[] | selec
 
 for i in ${successCrawlStatusList[@]}
 do
-  echo "here we go:" $i
   curl -X GET \
       "https://${SIS_SERVICE_HOST}/sites/${i}/profile?siteSecret=${ADMIN_SITE_SECRET}" \
       -o $PROFIL_DATA
+
   siteUrl=$(cat $PROFIL_DATA | jq -r '.configs[] | select (.url | length != 0) | .url' | sed 's:/*$::')
-  echo "Site URL: " $siteUrl
+
   curl -X GET \
       "https://${SIS_SERVICE_HOST}/sites/${i}/search?sSearchTerm=%2A&query=%2A&_=1603728086174" \
       -o $SEARCH_RESULT
 
-  echo "Search result: "
-  cat $SEARCH_RESULT | jq .
   searchResultUrl=$(cat $SEARCH_RESULT | jq -r '.results[] | [.urlRaw]')
 
-  echo $searchResultUrl | jq .
-
-  echo $siteUrl
   [[ " ${searchResultUrl[@]} " == *"${siteUrl}"* ]] && echo "true" || echo "false"
 done
