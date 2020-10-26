@@ -15,6 +15,12 @@
 # limitations under the License.
 #
 
+# TODO: 1. get crawl list                                                       = DONE!
+#       2. get siteIds of successful crawled sites                              = DONE!
+#       3. get/extract site url                                                 =
+#       4. get search of site                                                   =
+#       5. compare with url => if there are not exact same url in search fail   =
+
 apt-get update && apt-get install -y jq
 
 SITE_CRAWL_STATUS_REPORT=site-crawl-status.json
