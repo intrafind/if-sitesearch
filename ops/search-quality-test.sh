@@ -57,5 +57,5 @@ do
   echo $searchResultUrl | jq .
 
   echo $siteUrl
-  [[ " ${searchResultUrl[@]} " == *"${siteUrl}"* ]] && echo "true" || echo "false"
+  [[ " ${searchResultUrl[@]} " == *"${siteUrl}"* ]] && echo "SUCCESS" || echo "FAILURE"
 done
