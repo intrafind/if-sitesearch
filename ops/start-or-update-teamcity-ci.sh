@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 # Should be executed on the host with `~/BuildAgent` directory
-
-version=2020.1.3-linux
+# docker pull jetbrains/teamcity-server:2020.2
+version=latest
 service_name=teamcity-server
 network=main
 

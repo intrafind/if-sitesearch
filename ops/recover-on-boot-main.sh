@@ -12,11 +12,11 @@ docker start docker-auth
 docker start docker-registry
 #docker start main-router
 
-docker start teamcity-server
-rm /root/BuildAgent/logs/buildAgent.properties.lock
-/root/BuildAgent/bin/agent.sh start
-docker start teamcity-agent-venus
-docker start teamcity-agent-merkur
+#docker start teamcity-server
+#rm /root/BuildAgent/logs/buildAgent.properties.lock
+#/root/BuildAgent/bin/agent.sh start
+#docker start teamcity-agent-venus
+#docker start teamcity-agent-merkur
 
 docker-compose --file /srv/if-sitesearch/opt/docker-compose-elk.yaml -p main up -d
 
