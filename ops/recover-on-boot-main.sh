@@ -24,7 +24,7 @@ docker start gitlab
 docker start gitlab-shared-runner1
 docker start gitlab-shared-runner2
 docker start gitlab-shared-runner-venus
-docker start sourcegraph
+#docker start sourcegraph
 
 docker start main-router
 
