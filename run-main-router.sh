@@ -17,4 +17,5 @@ docker run -d --name $docker_redirect_image \
     -p 443:443 \
     -v /mnt/ca-on-premise:/srv/download \
     --network $docker_network \
+    --restart always \
     docker-registry.intrafind.net/intrafind/${docker_redirect_image}:${docker_tag}
