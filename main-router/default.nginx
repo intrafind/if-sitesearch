@@ -79,21 +79,21 @@ http {
         }
     }
 
-    server {
-        listen 443 ssl http2;
-        listen [::]:443 ssl http2;
-        server_name ci.sitesearch.cloud;
-
-        include /etc/nginx/snippets/ssl.conf;
-
-        location / {
-            # Bootstrapping router with these settings does not work.
-            #        proxy_set_header upgrade $http_upgrade;
-            #        proxy_set_header connection $connection_upgrade;
-
-            proxy_pass http://teamcity-server:8111;
-        }
-    }
+#    server {
+#        listen 443 ssl http2;
+#        listen [::]:443 ssl http2;
+#        server_name ci.sitesearch.cloud;
+#
+#        include /etc/nginx/snippets/ssl.conf;
+#
+#        location / {
+#            # Bootstrapping router with these settings does not work.
+#            #        proxy_set_header upgrade $http_upgrade;
+#            #        proxy_set_header connection $connection_upgrade;
+#
+#            proxy_pass http://teamcity-server:8111;
+#        }
+#    }
 
     server {
         listen 443 ssl http2;
