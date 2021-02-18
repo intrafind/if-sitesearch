@@ -10,7 +10,6 @@ sysctl -w vm.max_map_count=262144 # required for Elasticsearch
 
 docker start docker-auth
 docker start docker-registry
-#docker start main-router
 
 #docker start teamcity-server
 #rm /root/BuildAgent/logs/buildAgent.properties.lock
